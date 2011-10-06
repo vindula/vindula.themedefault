@@ -1,0 +1,44 @@
+<html metal:use-macro="here/main_template/macros/master">
+    <head>
+        <title>Listagem dos Usuarios</title>
+        <metal:js fill-slot="javascript_head_slot">
+		
+        </metal:js>		<metal:css fill-slot="style_slot">
+		
+		</metal:css>		
+    </head>
+    <metal:main fill-slot="main" tal:define="data view/load_list | python:{};">
+		<div id="interna" >
+		 <fieldset>
+                <legend> Ações  </legend>
+                <div style="float:left; width:100%">
+                    <!-- Botao: 'Nova Usuario' -->
+                    <div style="float:left; margin-left:4px">
+                        <form action="add-User" method="POST">
+                            <input  class="button-erp" type="submit" value="Novo Usuario" name="form.new">
+                        </form>
+                    </div>
+                </div>
+				<!-- Alerta -->
+                <div style="float:left; margin-top:60px" tal:condition="not: data">
+                    <p>
+                        Você não possui Usuarios cadastradas.
+                    </p>
+                </div>
+         </fieldset>
+         <!-- Listagem dos Usuarios -->
+         <fieldset tal:condition="data">
+           <legend> Usuarios cadastradas </legend>
+			<div class="border-esq" style="float:left; width:792; overflow:auto;">
+				<div class="border-dir" >
+	                <tal:repeat repeat="user data" >
+	                	<div style="border-bottom:solid 1px #99CC99; padding:5px;">
+					        <a tal:content="string: ${user/name} | ${user/email}" tal:attributes="href string:${context/absolute_url}/edit-User?id=${user/id}"></a><br />
+						</div>
+					</tal:repeat>
+				</div>    
+			</div>
+		 </fieldset>	   
+        </div>	
+    </metal:main>
+</html>

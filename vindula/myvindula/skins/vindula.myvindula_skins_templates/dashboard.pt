@@ -1,0 +1,29 @@
+<html metal:use-macro="here/main_template/macros/master">
+    <head>
+        <title>Edição do Usuario</title>
+        <metal:js fill-slot="javascript_head_slot">
+			<!--script type="text/javascript" src="" tal:attributes="src string:${here/portal_url}/++resource++liberiun.portal.erp.js/popup.js"></script-->
+        </metal:js>
+		<metal:css fill-slot="style_slot">
+			<!--link rel="stylesheet" href="" type="text/css" tal:attributes="href string:${here/portal_url}/++resource++liberiun.portal.erp.css/geral.css"-->
+		</metal:css>		
+    </head>
+    <metal:main fill-slot="main" tal:define="form_data view/load_form | python:{};
+		                                     errors form_data/errors | python:{};
+											 form_values form_data/data | python:{};">
+    	
+		<div id="interna" >    		
+			<div>
+				<a href="list-User"><p>Listagem dos usuario</p></a>
+				<a href="add-User"><p>adcionar usuario</p></a>
+			</div>
+			
+			
+		</div>
+		
+		<div id="Meuslinks"  metal:use-macro="here/template_meus_links/macros/meusLinks"></div>
+		
+		<div id="linksCorporativos"  metal:use-macro="here/template_links_corporativos/macros/LinksCorporativos"></div>
+		
+    </metal:main>
+</html>

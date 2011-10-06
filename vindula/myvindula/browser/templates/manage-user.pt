@@ -1,0 +1,88 @@
+<html metal:use-macro="here/main_template/macros/master">
+    <head>
+        <title>Edição do Usuario</title>
+        <metal:js fill-slot="javascript_head_slot">
+			
+        </metal:js>		<metal:css fill-slot="style_slot">
+			
+		</metal:css>		
+    </head>
+    <metal:main fill-slot="main" tal:define="form_data view/load_form | python:{};
+		                                     errors form_data/errors | python:{};
+											 form_values form_data/data | python:{};
+											 departamentos form_data/departametos|python:{};
+											 usernames form_data/usernames|python:{};
+											 config_myvindula form_data/config_myvindula|python:{};">
+    	
+		<div id="interna" >    		
+	        <form name="despesa" id="despesa" enctype="multipart/form-data" class="enableAutoFocus" action="add-User" method="POST">
+				
+				<!-- Botões de ação -->	
+			   	<fieldset>
+		            <legend>Ações</legend>		
+					<div style="float:left; width:100%">
+						<input style="width:100px" class="button-erp" type="submit" value="Salvar" name="form.submited">	
+						<input style="width:100px" class="button-erp" type="submit" value="Voltar" name="form.voltar">
+					</div>
+				</fieldset>
+	            <fieldset>
+	            	<legend>Informações gerais</legend>
+					<!-- ID da user--> 
+					<input tal:condition="request/id | nothing" id="id" type="hidden" value="" name="id" tal:attributes="value request/id | nothing">
+
+					<!-- Select Departamento --> 
+					<div class="field" tal:attributes="class python: view.field_class(errors, 'departamentos_id')" tal:condition="python: view.checaEstado(config_myvindula,'departamentos_id')">
+						<label for="departamentos_id">Departamentos</label>
+	                    <span class="fieldRequired" title="Obrigatório">(Obrigatório)</span>	
+	                    <div class="formHelp">Selecione o departamendo do funcionario.</div>
+						<div tal:content="errors/departamentos_id|nothing"></div>
+	                    <select name="departamentos_id" tal:define="id_request request/departamentos_id | form_values/departamentos_id | python:''">
+	                    	<option value="">-- Selecione --</option>
+	                        <tal:repeat repeat="departamento departamentos">
+					           	<option value=""
+										tal:content="departamento/nome | nothing" 
+										tal:attributes="value departamento/id | nothing;
+														selected python: str(id_request)==str(departamento.id) or default"></option>
+							</tal:repeat>
+	                    </select>
+					</div>
+					<input tal:condition="python: not view.checaEstado(config_myvindula,'departamentos_id')" id="departamentos_id" type="hidden" value="" name="departamentos_id" tal:attributes="value request/departamentos_id | form_values/departamentos_id | nothing">
+					<!-- Select usuario --> 
+					<div class="field" tal:attributes="class python: view.field_class(errors, 'username')"  tal:condition="python: view.checaEstado(config_myvindula,'username')">
+						<label for="username">Usernames</label>
+	                    <span class="fieldRequired" title="Obrigatório">(Obrigatório)</span>	
+	                    <div class="formHelp">Selecione um usuario do Plone.</div>
+						<div tal:content="errors/username|nothing"></div>
+	                    <select name="username" tal:define="id_request request/username | form_values/username | python:''">
+	                    	<option value="">-- Selecione --</option>
+	                        <tal:repeat repeat="username usernames">
+					           	<option value=""
+										tal:content="username/getName | nothing" 
+										tal:attributes="value username/getId | nothing;
+														selected python: str(id_request)==str(username.getId) or default"></option>
+							</tal:repeat>
+	                    </select>						
+	                </div>
+					<input tal:condition="python: not view.checaEstado(config_myvindula,'username')" id="username" type="hidden" value="" name="username" tal:attributes="value request/username | form_values/username | nothing">
+					
+					<tal:def define="html python:view.geraCampos(form_data)">
+						<tal:rep repeat="x html">
+							<div tal:content="structure x"/>
+						</tal:rep>
+					</tal:def>
+				
+				
+				
+				</fieldset>
+				<!-- Botões de ação -->	
+			   	<fieldset>
+		            <legend>Ações</legend>		
+					<div style="float:left; width:100%">
+						<input style="width:100px;" class="button-erp" type="submit" value="Salvar" name="form.submited">	
+						<input style="width:100px" class="button-erp" type="submit" value="Voltar" name="form.voltar">
+					</div>
+				</fieldset>
+			</form>
+		</div>
+    </metal:main>
+</html>
