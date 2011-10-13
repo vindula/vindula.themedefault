@@ -1,0 +1,98 @@
+*{
+	border:none;
+	font-family: Helvetica !important;
+	margin: 0;
+	padding:0;
+	text-decoration:none;
+}
+
+body{
+     background: url("../images/bk_body.jpg") no-repeat scroll 50% 0 #F7F5EA;
+    margin: 0;
+    width: 100%;
+}
+
+#geral{
+    margin: 0 auto !important;
+    width: 100%;
+}
+
+#pagina{
+    margin: 0 auto;
+    width: 1000px;
+}
+
+.visualClear{
+	clear:both;
+}
+
+#bk_cont{
+	background: url("../images/bk_conteudo.png") repeat scroll 0 0 transparent;
+}
+
+/* Barra Superior */
+
+#barra_superior{
+    background: none repeat scroll 0 0 #000000;
+    height: 30px;
+    margin: 0 0 20px;
+    width: 100%;
+}
+
+#cont_barra_superior{
+    height: 30px;
+    margin: 0 auto;
+    text-align: right;
+    width: 980px;
+}
+
+#cont_barra_superior ul{
+    list-style: none outside none;
+    padding: 3px 0 0;
+    vertical-align: middle;
+}
+
+#cont_barra_superior li{
+    color: #FFFFFF;
+    display: inline;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#cont_barra_superior li a{
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+#cont_barra_superior li a:visited {
+    color: #FFFFFF;
+}
+
+/* Barra Superior */
+
+
+/* Breadcrumb */
+
+#geral_breadcrumb{
+	padding: 40px 0 0 30px;
+}
+
+#geral_breadcrumb span{
+	color:#f58220;
+	font-size:12px;
+}
+
+#geral_breadcrumb span a{
+	color:#000000;
+	font-weight:bold;
+}
+
+.link_area{
+	font-weight:bold;
+}
+/* Breadcrumb */
+
+/* Rodapé */
+/* Rodapé */

@@ -1,0 +1,104 @@
+/* Topo */
+
+#topo{
+    background: url("../images/bk_topo.png") no-repeat scroll 0 0 transparent;
+    height: 96px;
+    width: 1000px;
+}
+
+.logo{
+    float: left;
+    margin: 30px 0 0 30px;
+}
+
+.geral_busca{
+    float: right;
+    font-size: 12px;
+    padding: 15px 30px 0 0;
+}
+
+#data h4{
+    color: #6D6D6D;
+    line-height: 16px;
+    margin: 0 0 5px;
+    text-align: right;
+}
+
+.campo_texto{
+    background: url("../images/lupa.gif") no-repeat scroll 1% 50% #ECEDED;
+    border: 1px solid #FFFFFF;
+    color: #000000;
+    float: left;
+    font-weight: bold;
+    height: 18px;
+    padding: 5px;
+    text-align: right;
+    width: 370px;
+}
+
+.bt_buscar{
+    background: none repeat scroll 0 0 #FAA61A;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    cursor: pointer;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    height: 30px;
+    width: 75px;
+}
+
+.campo_opcao{
+    color: #000000;
+    margin: 5px 5px 0 0;
+}
+/* Topo */
+
+
+/* Nav */
+
+#nav{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-bottom: 4px solid #000000;
+    margin: 0 20px 0 30px;
+    width: 940px;
+}
+
+#nav ul{ 
+	list-style: none outside none;
+}
+
+#nav a{
+	color:#000000;
+	font-size:14px;
+	font-weight:bold;
+}
+
+.nivel1 li{
+    float: left;
+    padding: 6px 20px;
+}
+
+.link_ativo a{
+	color:#FFFFFF !important;
+}
+
+.link_ativo{
+    background: none repeat scroll 0 0 #000000;
+    margin: 0 0 0 20px;
+}
+
+li ul {
+    background: none repeat scroll 0 0 #000000;
+    margin: 6px 0 0 -40px;
+    position: absolute;
+    width: 940px;
+	*margin: 24px 0 0 -94px;
+}
+
+.nivel2 li{
+	float:left;
+	display:block;
+}
+
+/* Nav */

@@ -1,0 +1,45 @@
+/* Rodapé */
+
+#rodape{
+	background: url("../images/bk_rodape.png") no-repeat scroll 0 0 transparent;
+    height: 121px;
+}
+
+#rodape form{
+    color: #FFFFFF;
+    margin: 20px 0 0;
+	*margin: 35px 0 0;
+}
+
+.info_rodape{
+    float: left;
+    margin: 35px 0 0 50px;
+}
+
+#rodape .logo {
+    float: left;
+    margin: 40px 0 0 30px;
+}
+
+.info_rodape li {
+    display: block;
+    margin: 0 0 0;
+	*margin: 0 0 5px 0;
+}
+
+.info_rodape li a{
+    color: #BCBEC0;
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#informacao{
+    margin: 10px 0 0;
+    text-align: center;
+}
+
+#informacao p{
+	color: #959595;
+    font-size: 12px;
+}
