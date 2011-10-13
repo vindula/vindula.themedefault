@@ -4,14 +4,14 @@
     i18n_domain="plone">
 
     <!-- My Vindula View -->
-    <browser:page
+    <!-- browser:page
         for="*"
         name="myvindula"
         class=".myvindulaview.MyVindulaView"
         permission="zope.Public"
         allowed_interface=".interfaces.IMyVindulaView"
         template="templates/myvindulaview.pt"
-        />
+        / -->
 		
 	 <!-- Manage Funcionarios View -->
     <browser:page

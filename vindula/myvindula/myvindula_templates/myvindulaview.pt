@@ -1,0 +1,111 @@
+<html>
+
+<body metal:use-macro="here/main_template/macros/master">
+
+<metal:block fill-slot="top_slot">
+        <tal:dummy tal:define="dummy python:request.set('disable_border',1)" />
+</metal:block>
+
+
+ <div class="cell width-full position-0" metal:fill-slot="content">         
+    
+    
+        <metal:use use-macro="context/@@myvindulapanel/macros/page"/>    
+
+
+<div tal:define="view python:context.restrictedTraverse('@@myvindula');
+                                         memberinfo context/portal_membership/getMemberInfo;
+										 member context/@@plone_portal_state/member;
+                                         name python:memberinfo['fullname'] or member.getId() or member.getId();
+                                         portrait python:context.portal_membership.getPersonalPortrait(member.getId());
+										 homeFolder python: context.portal_membership.getHomeFolder();
+										 ">
+
+
+    
+
+
+    <h1 class="documentFirstHeading">Welcome to Vindula <span tal:replace="name" /></h1>
+
+
+    <br />
+    
+    <div id="userimage">
+        <img src="defaultUser.png"
+             alt=""
+             border="0"
+             width="150"
+             height="200"
+             tal:attributes="src portrait/absolute_url" />
+        <br /><br />
+    </div>
+    
+    
+    
+    <tal:condition condition="not: view/checkHomeFolder">
+
+
+        <h1>You are not allowed to post comments, because your home folder are not set. Ask the Site Admin.</h1>
+
+
+    </tal:condition>
+    
+    <tal:condition condition="view/checkHomeFolder">
+        <fieldset id="fieldset-global-settings">
+            <legend
+                id="fieldsetlegend-global-settings">O que você está pensando agora?</legend>
+        
+        <div id="howareu" class="field">
+        	<form action="#"
+                method="post"
+                tal:attributes="action string:${context/absolute_url}/myvindula">
+        
+        
+        		<textarea name="howareu">
+        	
+        		</textarea>
+        
+        		<div class="formControls">
+        		  <input type="hidden" name="form.submitted:boolean" value="True" />
+        		  <input type="submit" name="submit" value="Publicar"         class="context"
+        		         i18n:attributes="value;" />
+        		</div>
+        
+            </form>
+        </div>
+        
+        
+        </fieldset>
+    
+    
+    
+        <ul tal:define="items python: homeFolder.objectValues()">	
+        	<li tal:repeat="item items">
+        		<img src="defaultUser.png"
+        		     alt=""
+        		     border="0"
+        		     width="50"
+        		     height="50"
+        		     tal:attributes="src portrait/absolute_url" />
+        		<span tal:replace="name" /><br /> 
+        		<span tal:replace="item/Title" />
+        	</li>
+        </ul>
+    </tal:condition>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+</div>
+</body>
+</html>

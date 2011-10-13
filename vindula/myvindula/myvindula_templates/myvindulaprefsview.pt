@@ -1,0 +1,30 @@
+<html>
+<body metal:use-macro="here/main_template/macros/master">
+
+<metal:block fill-slot="top_slot">
+        <tal:dummy tal:define="dummy python:request.set('disable_border',1)" />
+</metal:block>
+
+
+
+    
+    <div class="cell width-full position-0" metal:fill-slot="content">            
+    
+     
+    <metal:use use-macro="context/@@myvindulapanel/macros/page"/>    
+    
+        
+    <div id="content">
+        
+        <h1>Edit your Personal Informations</h1> 
+        
+        <metal:block use-macro="context/@@myvindulaprefs/@@ploneform-macros/titlelessform" />  
+    </div>
+    
+    
+    </div>    
+
+
+
+</body>
+</html>
