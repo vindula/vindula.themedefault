@@ -35,7 +35,6 @@ class MenuViewlet(grok.Viewlet):
             return L
     
     def getSubMenu(self, menu):
-        import pdb;pdb.set_trace()
         items = menu.objectValues('Folder')
         if items:
             L = []
