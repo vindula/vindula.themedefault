@@ -27,6 +27,7 @@ setup(name='vindula.myvindula',
       install_requires=[
           'setuptools',
           'plone.app.dexterity',
+          'storm'
           # -*- Extra requirements: -*-
       ],
       entry_points="""

@@ -13,7 +13,7 @@
   
   <!-- Register the browser directory -->
   <include package=".browser" />
-  <include file="skins.zcml" />
+
 
   <!-- Grok the package to initialise schema interfaces and content classes -->
   <grok:grok package="." />
@@ -22,6 +22,7 @@
 
   <!-- Register an extension profile to make the product installable
        in Plone -->
+       
   <genericsetup:registerProfile
       name="default"
       title="Vindula MyVindula"
@@ -30,12 +31,11 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
-  <!-- -*- extra stuff goes here -*- -->
+  <!-- Storm Configuration  -->
 
-	<store
-      name="myvindula"
-      uri="mysql://root:root@localhost/myvindulaDB"
-      />
+	<store name="myvindula" uri="sqlite:myvindulaDB"/>
+      
+      
 	  <!--mysql://usuario:senha@servidor/base_de_dados -->
 
 
