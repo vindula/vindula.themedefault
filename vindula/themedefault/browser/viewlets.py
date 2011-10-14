@@ -2,7 +2,8 @@
 from five import grok
 from zope.interface import Interface
 from plone.app.layout.viewlets.interfaces import IAboveContent
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+#from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from Products.CMFCore.utils import getToolByName
 
 grok.context(Interface) 
 
@@ -11,38 +12,40 @@ class MenuViewlet(grok.Viewlet):
     grok.require('zope2.View')
     grok.viewletmanager(IAboveContent) 
     
-    template_menu = ViewPageTemplateFile('viewlets_templates/menuviewlet.pt')
+    #template_menu = ViewPageTemplateFile('viewlets_templates/menuviewlet.pt')
     
-    def render(self):
-        return self.template_menu()
+    #def render(self):
+    #    return self.template_menu()
     
     def getMenu(self):
         portal = self.context.portal_url.getPortalObject()
-        menus = portal.objectValues('Folder')
+        menus = portal.objectValues('ATFolder')
         if menus:
             L = []
             for obj in menus:
-                D = {}
-                D['title'] = obj.Title()
-                D['url'] = obj.absolute_url()
-                if D['url'] in self.context.REQUEST.get('ACTUAL_URL'): 
-                    D['items'] = self.getSubMenu(obj)
-                    D['class'] = 'link_ativo'
-                else:
-                    D['items'] = []
-                    D['class'] = 'link_inativo'
-                L.append(D)
+                if self.checkObj(obj):
+                    D = {}
+                    D['obj'] = obj
+                    if obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL'): 
+                        D['class'] = 'link_ativo'
+                    else:
+                        D['class'] = 'link_inativo'
+                    L.append(D)
             return L
-    
-    def getSubMenu(self, menu):
-        items = menu.objectValues('Folder')
-        if items:
-            L = []
-            for obj in items:
-                D = {}
-                D['title'] = obj.Title()
-                D['url'] = obj.absolute_url()
-                L.append(D)
-            print L
-            return L
-            
+        
+    def getSubMenu(self):
+        L = []
+        if self.context != self.context.portal_url.getPortalObject():
+            submenus = self.context.objectValues('ATFolder')
+            for obj in submenus:
+                if self.checkObj(obj):
+                    L.append(obj)
+        return L
+
+    def checkObj(self, obj):
+        roles = self.context.portal_membership.getAuthenticatedMember().getRoles()
+        state = getToolByName(obj, 'portal_workflow').getInfoFor(obj, 'review_state', None)
+        if 'Anonymous' in roles and state == 'private':
+            return False
+        else:
+            return True

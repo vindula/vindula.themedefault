@@ -4,6 +4,7 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
 	xmlns:plone="http://namespaces.plone.org/plone"
 	xmlns:grok="http://namespaces.zope.org/grok"
+	xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="vindula.themedefault">
   
   <genericsetup:registerProfile
@@ -26,6 +27,10 @@
   <!-- Include the sub-packages that use their own configure.zcml files. -->
   <include package=".browser" />
   
- 
-
+  
+  <browser:resourceDirectory
+      name="vindula.themedefault.js"
+      directory="./static/js"
+      />	
+  
 </configure>

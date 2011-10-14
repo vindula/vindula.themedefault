@@ -2,6 +2,9 @@
 <rules xmlns="http://namespaces.plone.org/diazo" 
 	   xmlns:css="http://namespaces.plone.org/diazo/css" 
 	   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+    <!-- Pull in Plone CSS -->
+    <prepend theme="/html/head" content="/html/head/link | /html/head/style | /html/head/script " />
 	
     <!-- Prevent theme usage in zmi -->
     <rules css:if-content="#visual-portal-wrapper">
@@ -10,24 +13,14 @@
     <replace content="/html/head/title" theme="/html/head/title" />
     <replace content="/html/head/base" theme="/html/head/base" />
     <replace content="/html/head/meta" theme="/html/head/meta" />
-    <before content='/html/head' theme='/html/head' />
 	
-	
-	<!--copy content='//*[@id="viewlet-above-content"]/span' theme='//*[@id="portal-globalnav"]' /-->
-	
-	
-	
-	<copy content='//*[@id="navigation_menu"]' theme='//*[@id="nav"]' />
-	
-    <!-- Menu -->
-	<!--copy content='//*[@id="portal-globalnav"]/li' theme='//*[@id=""]' /-->
-	<!--merge attributes="class" css:theme="link-ativo" css:content="selected" /-->
-	
-	<copy content='//*[@id="portal-breadcrumbs"]/span' theme='//*[@id="geral_breadcrumb"]' />
-	
-	<replace css:content="#content" css:theme="#geral_colunas" />
-	
-	
-	
+	<!-- Portal top -->
+	<replace css:content="#portal-personaltools" css:theme="#data h4" />
+	<copy css:content="#menu_viewlet" css:theme="#nav" />
+	<copy css:content-children="#portal-breadcrumbs" css:theme="#geral_breadcrumb" />
 
+	<!-- Portal content -->
+	<!--copy css:content="#edit-bar" css:theme="#geral_colunas div" /-->
+	<copy css:content="#content" css:theme="#geral_colunas" />
+	
 </rules>

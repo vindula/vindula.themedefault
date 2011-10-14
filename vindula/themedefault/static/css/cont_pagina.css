@@ -1,6 +1,17 @@
 /* Cont Página */
 
 /* coluna Tipo 2 */
+#geral_colunas p{
+	color: #6D6D6D;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.colunaTipo1{
+    float: left;
+    padding: 0 13px 0 16px;
+    width: 708px;
+}
 
 .colunaTipo2{
     float: left;
@@ -20,7 +31,7 @@
 
 .contBoxTipo1{
     background: url("../images/conBoxTipo1.png") repeat-y scroll 0 0 transparent;
-    padding: 10px 20px;
+    padding: 15px 20px;
     width: 427px;
 }
 
@@ -60,8 +71,17 @@
     font-size: 12px;
 }
 
-.opcoes_destaque a img{
+.opcoes_destaque input{
+	*margin:0 -5px 0 0;
+}
 
+.anterior{
+	margin: 0 5px 0 0;
+	*margin: 0;
+}
+
+.proximo{
+	margin: 0 0 0 5px;
 }
 
 .titulo h2 {
@@ -71,9 +91,10 @@
 }
 
 .titulo_info h2{
+    color: #000000;
     font-weight: bold;
     line-height: 20px;
-    margin: 15px 0;
+    margin: 15px 0
 }
 
 .titulo_info h2 a{
@@ -128,13 +149,6 @@
     line-height: 16px;
 }
 
-.descricao_destaque p{
-    color: #6D6D6D;
-    font-size: 12px;
-    line-height: 16px;
-	text-align:justify;
-}
-
 .borderDif{
     border-bottom: 1px dashed #959595;
     padding: 0 0 10px;
@@ -145,6 +159,13 @@
     padding: 0 0 5px;
 }
 
+.marginDif{
+	*margin-bottom:-15px;
+}
+
+.marginDif1{
+	*margin-bottom:-5px;
+}
 
 /* coluna Tipo 3 */
 
@@ -182,6 +203,10 @@
     line-height: 16px;
 }
 
+.descricao_boxTipo2 p{
+ 	text-align: left !important;
+}
+
 .cont_info_boxTipo2 h4 a{
 	color:#000000;
 }
@@ -192,7 +217,7 @@
 }
 
 .info_boxTipo2{
-	 margin: 10px 0 0;
+    margin: 10px 0 0;
 }
 
 .img_infoboxTipo2{
@@ -214,8 +239,212 @@
 	vertical-align:top;
 }
 
-.descricao_boxTipo2 p{
-	color: #6D6D6D;
-	font-size: 12px;
-	line-height: 16px;
+h1, h2 {
+    letter-spacing: -0.03em;
 }
+
+.bt_curtir{
+	margin: 12px 0 0 0;
+}
+
+.bt_curtir input{
+    background: url("../images/bt_like.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    height: 24px;
+    width: 51px;
+}
+
+.descricao_boxTipo2 p span{
+	font-weight:bold;
+}
+
+.lista_itens_boxTipo2 p span{
+	font-weight:bold;
+}
+
+.img_descricao_item{
+    float: left;
+    margin: 0 19px 10px 0;
+    width: 50px;
+	*margin: 0 18px 10px 0;
+}
+
+.img_descricao_item p{
+	text-align:center;
+}
+
+.itens_boxTipo2{
+	 margin: 15px -10px 0 5px;
+	*margin: 15px 0 0 5px;	
+}
+
+.boderBottom1{
+    border-bottom: 1px solid #D1D3D4;
+    padding: 0 0 10px;
+}
+
+.boderTop1{
+    border-top: 1px solid #D1D3D4;
+    padding: 10px 0 0;
+	*padding: 5px 0 0;
+}
+
+.lista_itens_boxTipo2{
+	   margin: -5px 0 0;
+}
+
+.imagem{
+    border: 1px solid #CCCCCC;
+    width: 50px;
+}
+
+.opcao_dif a{
+    background: url("../images/ico_face.png") no-repeat scroll 0 0 transparent;
+    color: #6D6D6D;
+    font-size: 10px;
+    padding: 3px 0 3px 25px;
+}
+
+/* coluna  tipo 1 */
+
+.topoBoxTipo{
+	*margin:0 0 -12px 0;
+}
+
+.topoBoxTipo img{
+	*vertical-align:top;
+}
+
+.contBoxTipo{
+    background: url("../images/conBoxTipo.png") repeat-y scroll 0 0 transparent;
+    padding: 15px 20px;
+    width: 668px;
+}
+
+.info_data{
+	float:left;
+}
+
+.indicacao_comentario{
+	float:right;
+}
+
+.info_topoBoxTipo h4{
+	color: #F58220;
+    font-weight: normal;
+    line-height: 16px;
+}
+
+.descricao_titulo h4{
+	color: #F58220;
+    font-weight: normal;
+    line-height: 16px;
+}
+
+.descricao_titulo p{
+	font-weight:bold;
+	text-align:justify;
+}
+
+.descricao_destaque p{
+	text-align:justify;
+}
+
+.texto_pagina p{
+	margin: 0 0 20px;
+}
+
+.opcoes_noticia{
+    border-top: 1px dashed #959595;
+    margin: 15px 0;
+    padding: 10px 0 0;
+    width: 665px;
+	*margin: 15px 0 10px 0;
+}
+
+.opcoes_noticia h4{
+    color: #F58220;
+    float: left;
+    font-weight: normal;
+    line-height: 16px;
+    margin: 0 10px 0 0;
+}
+
+.opcao1{
+	float:right;
+}
+
+.opcao2{
+    float: right;
+    margin: 0 25px;
+}
+
+.titulo_area h2{
+	color: #F58220;
+    font-weight: bold;
+    line-height: 20px;
+}
+
+.titulo_area{
+    border-bottom: 1px solid #F58220;
+    padding: 0 0 10px;
+	margin:0 0 10px 0;
+}
+
+.bt_comentar{
+	margin:5px 0 0 0;
+}
+
+.bt_comentar input{
+    background: url("../images/bt_comentar.png") no-repeat scroll 0 0 transparent;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-weight: bold;
+    height: 37px;
+    padding: 0 0 2px;
+    text-transform: uppercase;
+    width: 97px;
+	*padding: 0;
+}
+
+.geral_lista_comentarios{
+	padding:0 0 20px 0;
+}
+
+.lista_comentarios{
+    background: none repeat scroll 0 0 #F8F8F8;
+    border: 1px solid #D1D3D4;
+    padding: 15px 20px 0 20px;
+	margin:20px 0 0 0;
+}
+
+.item_lista{
+    border-bottom: 1px dashed #959595;
+    margin: 0 0 15px;
+    padding: 0 0 15px;
+}
+
+.item_lista h4{
+	color: #F58220;
+    font-weight: normal;
+    line-height: 16px;
+}
+
+.item_lista h4 span{
+	color: #6D6D6D;
+	font-weight:bold;
+}
+
+.item_lista p{
+	margin: 5px 0 0;
+	text-align:justify;
+}
+
+.borderBottomNone{
+	border-bottom:none !important;
+}
+
+.paddingNone{
+	padding: 0 !important;
+}
+

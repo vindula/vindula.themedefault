@@ -1,22 +1,17 @@
-<div id="navigation_menu" tal:define="menus view/getMenu | nothing">		
-	<ul class="nivel1" tal:condition="menus">
-		
-		<li tal:attributes="class menu/class" tal:repeat="menu menus">
-			<a tal:content="menu/title" tal:attributes="href menu/url; alt menu/title">Menu</a>
-			
-			<ul class="nivel2" tal:condition="menu/items">
-				<li tal:repeat="item menu/items">
-					<a tal:content="item/title | string: teste" tal:attributes="href item/url| string: teste; alt item/title| string: teste">Submenu</a>
-				</li>
-			</ul>
-			
-			<!--ul class="nivel2">
-				<li>
-					<a href="http://google.com.br">Submenu</a>
-				</li>
-			</ul-->
+<div id="menu_viewlet" tal:define="menus view/getMenu | nothing;
+								   submenu view/getSubMenu | nothing">	
 	
+	<ul class="nivel1" tal:condition="menus">
+		<li tal:attributes="class menu/class" tal:repeat="menu menus">
+			<a tal:content="menu/obj/title" tal:attributes="href menu/obj/absolute_url; alt menu/obj/title">Menu</a>	
 		</li>
 	</ul>
+
+	<ul class="nivel2 link_ativo" tal:condition="submenu">
+		<li tal:repeat="item submenu">
+			<a tal:content="item/title" tal:attributes="href item/absolute_url; alt item/title">Submenu</a>
+		</li>
+	</ul>
+	
 	<div class="visualClear"></div>
 </div>

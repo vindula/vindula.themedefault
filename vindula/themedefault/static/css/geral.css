@@ -89,10 +89,13 @@ body{
 	font-weight:bold;
 }
 
-.link_area{
+.area{
 	font-weight:bold;
+}
+
+.area_opcao{
+	font-weight:normal !important;
 }
 /* Breadcrumb */
 
-/* Rodapé */
-/* Rodapé */
+
