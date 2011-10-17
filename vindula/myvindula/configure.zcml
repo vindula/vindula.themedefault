@@ -11,8 +11,8 @@
   <includeDependencies package="." />
 
   
-  <!-- Register the browser directory -->
-  <include package=".browser" />
+  <!-- Register the browser directory
+  <include package=".browser" /> -->
 
 
   <!-- Grok the package to initialise schema interfaces and content classes -->
@@ -33,8 +33,11 @@
 
   <!-- Storm Configuration  -->
 
-	<store name="myvindula" uri="sqlite:myvindulaDB"/>
-      
+   <!--store name="myvindula" uri="sqlite:myvindulaDB"/-->
+    
+   <store
+      name="myvindula"
+      uri="mysql://root:root@localhost/myvindulaDB" />  
       
 	  <!--mysql://usuario:senha@servidor/base_de_dados -->
 
