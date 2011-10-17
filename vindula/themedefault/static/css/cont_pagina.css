@@ -393,6 +393,7 @@ h1, h2 {
 
 .bt_comentar{
 	margin:5px 0 0 0;
+	border: none;
 }
 
 .bt_comentar input{

@@ -88,7 +88,7 @@
     margin: 0 0 0 20px;
 }
 
-li ul {
+div#topo li ul {
     background: none repeat scroll 0 0 #000000;
     margin: 6px 0 0 -40px;
     position: absolute;

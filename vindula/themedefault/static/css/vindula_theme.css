@@ -1,18 +1,48 @@
+/* Coluna Tipo 3 (Portlets) */
+div.colunaTipo3 div.portletWrapper {
+	padding-right: 16px;
+}
+
+div.colunaTipo3 div.managePortletsLink {
+	margin-right: 16px;
+}
+
+/* Edit bar color */
+#edit-bar {
+    background-color: #A6A6A6;
+    border: 0.25em solid #A6A6A6;
+	border-style: solid solid none;
+}
+
+#contentActionMenus {
+	background: none repeat scroll 0 0 #A6A6A6;
+}
+
+#contentActionMenus dl.actionMenu a, 
+#content-views  {
+	background-color: #A6A6A6;
+}
+
+#contentActionMenus dl.actionMenu.activated dd {
+	border-bottom: 0.5em solid #A6A6A6;
+	background-color: #A6A6A6;
+}
+
 /* Personal Tools */
-#portal-personaltools {
+div#data #portal-personaltools {
 	background:none;
 	font-size: 100%;
 	width: 100%;
 	padding-right: 0;
 }
 
-#portal-personaltools dd {
-	margin-top: 20px;
+div#data #portal-personaltools dd {
+	margin-top: 19px;
   	min-width: 145px;
     width: 145px;
 }
 
-#portal-personaltools dd a:hover {
+div#data #portal-personaltools dd a:hover {
 	background-color: #FFF;
 	background-repeat: repeat;
 	color: #000;	
@@ -20,16 +50,17 @@
 
 div#data #portal-personaltools a#user-name,
 div#data #portal-personaltools a#personaltools-login,
-dd.actionMenuContent a {
+div#data dd.actionMenuContent a {
 	color: #6D6D6D;
 	font-weight: bold;
-	line-height: 16px;
+	line-height: 15px;
 	text-align: right;
 	float: right;
+	width: 120px;
 }
 
-dd.actionMenuContent a {
-	width: 120px;
+div#data dd.actionMenuContent li a {
+	line-height: 2em;
 }
 
 /* Submenu */
@@ -44,4 +75,49 @@ dd.actionMenuContent a {
     position: absolute;
     width: 940px;
 	*margin: 24px 0 0 -94px;
+}
+
+/* LIBRARY */
+
+/* MARGINS */
+.margin-auto { margin: auto; }
+
+/* WIDTHS */
+.width965px { width: 965px; }
+
+/* HEIGHTS */
+.min-height150px { height: auto; min-height: 150px; }
+
+
+/* CONTENT TYPE ICON */
+.contenttype-file { background: url("http://localhost:8080/vidula/contenttypes-sprite.png") no-repeat scroll 0 -428px transparent; }
+.contenttype-document { background: no-repeat transparent 0px 4px url(http://localhost:8080/vidula/contenttypes-sprite.png); }
+.contenttype-event { background: no-repeat transparent 0px -212px url(http://localhost:8080/vidula/contenttypes-sprite.png); }
+.contenttype-folder { background: no-repeat transparent 0px -644px url(http://localhost:8080/vidula/contenttypes-sprite.png); }
+.contenttype-link { background: no-repeat transparent 0px -1076px url(http://localhost:8080/vidula/contenttypes-sprite.png); }
+.contenttype-news-item { background: no-repeat transparent 0px -1292px url(http://localhost:8080/vidula/contenttypes-sprite.png); }
+.contenttype-plone-site { background: no-repeat transparent 0px -1508px url(http://localhost:8080/vidula/contenttypes-sprite.png); }
+.contenttype-topic {background: no-repeat transparent 0px -1724px url(http://localhost:8080/vidula/contenttypes-sprite.png); }
+
+/* These should only appear in the add menu */
+#plone-contentmenu-factories .contenttype-file {
+    background: no-repeat transparent 0px -428px url(http://localhost:8080/vidula/contenttypes-sprite.png);
+}
+#plone-contentmenu-factories .contenttype-image {
+    background: no-repeat transparent 0px -860px url(http://localhost:8080/vidula/contenttypes-sprite.png);
+}
+
+.contenttype-document,
+.contenttype-event,
+.contenttype-folder,
+.contenttype-link,
+.contenttype-news-item,
+.contenttype-plone-site,
+.contenttype-topic,
+#plone-contentmenu-factories .contenttype-file,
+#plone-contentmenu-factories .contenttype-image {
+    line-height: 2em;
+    display: inline-block;
+    *display: block;
+    padding-left: 20px !important;
 }
