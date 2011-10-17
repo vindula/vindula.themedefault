@@ -33,8 +33,17 @@ class BaseView(BrowserView):
             except:
                 return False
                 
-    
-    
+#def checaEstado(self,config, campo):
+#       if 'id' in self.request.form.keys() and config != []:
+#           try:
+#               return config.__getattribute__(campo)
+#           except:
+#               return False
+#       else:
+#           return True
+       
+       
+       
     def getValue(self,campo,request,data):
         if campo in request.keys():
             return request.get(campo, '')

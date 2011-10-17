@@ -16,6 +16,18 @@ from vindula.myvindula.user import IFuncDetails
 
 
 
+class MyVindulaSearchForm(grok.View):
+    grok.context(INavigationRoot)
+    grok.require('zope2.View')
+    grok.name('myvindulasearchform')
+    
+    def update(self):
+        # disable Plone's editable border
+        self.request.set('disable_border', True)
+        
+
+    
+
 
 
 
@@ -115,7 +127,7 @@ class MyVindulaPrefsView(form.SchemaForm):
         # call the base class version - this is very important!
         super(MyVindulaPrefsView, self).update()
     
-    @button.buttonAndHandler(_(u'Order'))
+    @button.buttonAndHandler(_(u'Send'))
     def handleApply(self, action):
         data, errors = self.extractData()
         if errors:

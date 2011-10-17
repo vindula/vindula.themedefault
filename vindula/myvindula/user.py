@@ -185,3 +185,6 @@ class IFuncDetails(form.Schema):
             value_type=schema.Choice(values=[_(u'Margherita'), _(u'Pepperoni'), _(u'Hawaiian')]),
         required=False,
     ) 
+    
+    
+    
