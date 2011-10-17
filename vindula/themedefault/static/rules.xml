@@ -4,15 +4,16 @@
 	   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
     <!-- Pull in Plone CSS -->
-    <prepend theme="/html/head" content="/html/head/link | /html/head/style | /html/head/script " />
+    <prepend theme="/html/head" 
+	         content="/html/head/link | /html/head/style | /html/head/script | /html/head/title | /html/head/base | /html/head/meta" />
 	
     <!-- Prevent theme usage in zmi -->
     <rules css:if-content="#visual-portal-wrapper">
-        <theme href="theme_two.html" />
+		<rules css:if-content="#portal-column-two">
+        	<theme href="theme_two.html" />
+		</rules>
+		<theme href="theme_one.html" />
     </rules>
-    <replace content="/html/head/title" theme="/html/head/title" />
-    <replace content="/html/head/base" theme="/html/head/base" />
-    <replace content="/html/head/meta" theme="/html/head/meta" />
 	
 	<!-- Portal Top -->
 	<replace css:content="#portal-personaltools" css:theme="#data h4" />
@@ -21,6 +22,7 @@
 
 	<!-- Portal Column Content -->
 	<copy css:content-children="#portal-column-content" css:theme=".contBoxTipo" />
+	<copy css:content-children="#portal-column-content" css:theme=".contBox_colunaTotal" />
 	<drop css:content="#portal-column-content #viewlet-above-content" />
 	<drop attributes="class" css:content="#viewlet-below-content div" />
 	

@@ -356,10 +356,10 @@ h1, h2 {
 
 .opcoes_noticia{
     border-top: 1px dashed #959595;
-    margin: 15px 0;
+    margin: 15px 0 10px 0;
     padding: 10px 0 0;
-    width: 665px;
-	*margin: 15px 0 10px 0;
+	width:100%;
+	*margin: 15px 0 0px 0;
 }
 
 .opcoes_noticia h4{
@@ -393,7 +393,6 @@ h1, h2 {
 
 .bt_comentar{
 	margin:5px 0 0 0;
-	border: none;
 }
 
 .bt_comentar input{
@@ -406,6 +405,7 @@ h1, h2 {
     text-transform: uppercase;
     width: 97px;
 	*padding: 0;
+	border: none;
 }
 
 .geral_lista_comentarios{
@@ -447,5 +447,40 @@ h1, h2 {
 
 .paddingNone{
 	padding: 0 !important;
+}
+
+/* Alterações para página Notícias */
+
+.width1{
+	width:96%;
+}
+
+.colunaTotal{
+    margin: 0 20px;
+}
+
+.topoBox_colunaTotal{
+    padding: 20px 20px 0;
+}
+
+.bk_sombraTopo{
+    background: url("../images/sombra_cont_topo.png") repeat-x scroll center top #FFFFFF;
+}
+
+.bk_sombraEsquerda{
+    background: url("../images/sombra_cont_esquerda.png") repeat-y scroll left center transparent;
+    margin: 0 0 0 -3px;
+}
+
+.bk_sombraDireita{
+    background: url("../images/sombra_cont_direita.png") repeat-y scroll right center transparent;
+    margin: 0 -3px 0 0;
+    padding: 3px 0 0;
+	*position:relative;
+	*margin:0;
+}
+
+.contBox_colunaTotal{
+    padding: 5px 20px;
 }
 
