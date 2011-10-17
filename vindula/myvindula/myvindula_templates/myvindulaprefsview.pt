@@ -16,9 +16,12 @@
         
     <div id="content">
         
-        <h1>Edit your Personal Informations</h1> 
+        <h1>Edit your Personal Informations</h1>
+		
+		<!--p tal:define="content view/content"></p--> 
         
-        <metal:block use-macro="context/@@myvindulaprefs/@@ploneform-macros/titlelessform" />  
+        <metal:block use-macro="context/@@myvindulaprefs/@@ploneform-macros/titlelessform" />
+		  
     </div>
     
     
