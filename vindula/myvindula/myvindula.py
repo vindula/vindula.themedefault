@@ -35,7 +35,6 @@ class MyVindulaView(grok.View):
                  L.append(iten)
         
         return L
-   
     
     def checkHomeFolder(self):
         """ Check if exist homeFolder """
@@ -49,7 +48,6 @@ class MyVindulaView(grok.View):
         """ Receive itself from request and do some actions """
         form = self.request.form
         submitted = form.get('form.submitted', False)
-        
             
         if submitted:
             homefolder = self.context.portal_membership.getHomeFolder()

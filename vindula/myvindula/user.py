@@ -219,6 +219,7 @@ class IFuncDetails(form.Schema):
         description=_(u"Selecione o departamento do funcionario"),
         source=choiceDepartament,
         required=False,
+
     )
 
 class BaseStore(object):
