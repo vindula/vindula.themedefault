@@ -50,10 +50,16 @@ def valida_form(configuracao, form):
         elif configuracao[campo]['type'] == 'file':
             convertidos[campo] = valor
         
+        elif configuracao[campo]['type'] == int:
+            convertidos[campo] = int(valor)
+                    
         # logica para conversao de dados para unicode de acordo com a configuracao      
-        elif valor != '' and valor != '--NOVALUE--' and valor != '-- Selecione --': # se o campo nao estiver vazio, vai tentar converter 
+        elif valor != '' and valor != '--NOVALUE--' and valor != '-- Selecione --': # se o campo nao estiver vazio, vai tentar converter
             try:
-                convertidos[campo] = configuracao[campo]['type'](valor.strip()) # conversao do campo
+                if type(valor) == unicode:
+                    convertidos[campo] = valor.strip()
+                else:
+                    convertidos[campo] = configuracao[campo]['type'](valor.strip()) # conversao do campo
                 # "(valor)" == "(def __call__(self, *args, **kwargs):", callable
             except:
                 # Falhou ao converter para o tipo requerido

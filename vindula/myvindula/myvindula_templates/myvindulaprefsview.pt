@@ -4,30 +4,64 @@
 <metal:block fill-slot="top_slot">
         <tal:dummy tal:define="dummy python:request.set('disable_border',1)" />
 </metal:block>
-
-
-
     
     <div class="cell width-full position-0" metal:fill-slot="content">            
-    
-     
-    <metal:use use-macro="context/@@myvindulapanel/macros/page"/>    
-    
-        
-    <div id="content">
-        
-        <h1>Edit your Personal Informations</h1>
-		
-		<!--p tal:define="content view/content"></p--> 
-        
-        <metal:block use-macro="context/@@myvindulaprefs/@@ploneform-macros/titlelessform" />
-		  
-    </div>
-    
-    
+
+    	<metal:use use-macro="context/@@myvindulapanel/macros/page"/>    
+	    <div id="content" tal:define="form_data view/load_form | python:{};
+		                              errors form_data/errors | python:{};
+									  form_values form_data/data | python:{};
+									  departamentos form_data/departametos|python:{};
+									  username form_data/username|python:{};
+									  config_myvindula form_data/config_myvindula|python:{};">
+	        
+	        <h1>Edit your Personal Informations</h1>
+			<div id="interna" >    		
+		        <form name="myvindulaprefs" id="myvindulaprefs" enctype="multipart/form-data" class="enableAutoFocus" action="myvindulaprefs" method="POST">
+		            <fieldset>
+		            	<legend>Personal Information</legend>
+						<!-- ID da user--> 
+						<input id="username" type="hidden" value="" name="username" tal:attributes="value request/username| username |nothing">
+	
+						<!-- Select Departamento --> 
+						<div class="field" tal:attributes="class python: view.field_class(errors, 'Department_id')"
+										   tal:condition="python: view.checaEstado(config_myvindula,'Department_id')">
+							<label for="Department_id">Departamentos</label>
+		                    <span class="fieldRequired" title="Obrigatório">(Obrigatório)</span>	
+		                    <div class="formHelp">Selecione o departamendo do funcionario.</div>
+							<div tal:content="errors/Department_id|nothing"></div>
+		                    <select name="Department_id" tal:define="id_request request/Department_id | form_values/Department_id | python:''">
+		                    	<option value="">-- Selecione --</option>
+		                        <tal:repeat repeat="departamento departamentos">
+						           	<option value=""
+											tal:content="departamento/name | nothing" 
+											tal:attributes="value departamento/id | nothing;
+															selected python: str(id_request)==str(departamento.id) or default"></option>
+								</tal:repeat>
+		                    </select>
+						</div>
+						<input id="Department_id" type="hidden" value="" name="Department_id"
+								   tal:condition="python: not view.checaEstado(config_myvindula,'Department_id')"  
+								   tal:attributes="value request/Department_id | form_values/Department_id | nothing">
+						
+						<tal:def define="html python:view.geraCampos(form_data)">
+							<tal:rep repeat="x html">
+								<div tal:content="structure x"/>
+							</tal:rep>
+						</tal:def>
+					
+					</fieldset>
+					<!-- Botões de ação -->	
+				   	<fieldset>
+				   		<br/>
+						<div style="float:left; width:100%">
+							<input style="width:100px" class="button-erp" type="submit" value="Voltar" name="form.voltar">
+							<input style="width:100px;" class="button-erp" type="submit" value="Salvar" name="form.submited">
+						</div>
+					</fieldset>
+				</form>
+			</div>
+	    </div>
     </div>    
-
-
-
 </body>
 </html>

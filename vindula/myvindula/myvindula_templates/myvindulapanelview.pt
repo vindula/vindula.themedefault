@@ -11,15 +11,11 @@
 </head>
 
 <body>
-   
-
     
    <div class="cell width-full position-0" 
          metal:fill-slot="content">
          
    <metal:page metal:define-macro="page">
-
-
 
 
         <div id="edit-bar">
@@ -61,22 +57,7 @@
             <div class="contentActions">&nbsp;</div>
         </div>
     
-    
-
-    
       </metal:page>    
-    
-    
-<!--       <div id="content">
-          
-          <metal:use_form use-macro="python: path(context.restrictedTraverse('@@myvindulapanel').getMacroLink(request.get('section', 'myvindula')))"/> 
-          
-      </div> -->
-       
-      
-
-  
     </div>
-  
 </body>
 </html>

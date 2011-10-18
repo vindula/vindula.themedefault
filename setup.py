@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.1'
+version = '1.1'
 
 setup(name='vindula.myvindula',
       version=version,
@@ -27,7 +27,8 @@ setup(name='vindula.myvindula',
       install_requires=[
           'setuptools',
           'plone.app.dexterity',
-          'storm'
+          'storm',
+          #'megrok.z3cform.crud'
           # -*- Extra requirements: -*-
       ],
       entry_points="""
