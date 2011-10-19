@@ -15,3 +15,5 @@ vindula/themedefault/__init__.py
 vindula/themedefault/tests.py
 vindula/themedefault/browser/__init__.py
 vindula/themedefault/browser/viewlets.py
+vindula/themedefault/content/__init__.py
+vindula/themedefault/content/homepage.py

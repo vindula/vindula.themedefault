@@ -2,7 +2,7 @@
 from five import grok
 from zope.interface import Interface
 from plone.app.layout.viewlets.interfaces import IAboveContent
-#from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
 
 grok.context(Interface) 
@@ -12,10 +12,10 @@ class MenuViewlet(grok.Viewlet):
     grok.require('zope2.View')
     grok.viewletmanager(IAboveContent) 
     
-    #template_menu = ViewPageTemplateFile('viewlets_templates/menuviewlet.pt')
+    template = ViewPageTemplateFile('viewlets_templates/menuviewlet.pt')
     
-    #def render(self):
-    #    return self.template_menu()
+    def render(self):
+        return self.template()
     
     def getMenu(self):
         portal = self.context.portal_url.getPortalObject()
