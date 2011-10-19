@@ -18,7 +18,7 @@
 
  
  <!-- class used for content items -->
- <property name="klass">vindula.themedefault.content.homepage.HomePage</property>
+ <property name="klass">vindula.themedefault.content.homepage.HomePage</property> 
  
  <!-- add permission -->
  <property name="add_permission">cmf.AddPortalContent</property>

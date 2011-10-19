@@ -35,9 +35,9 @@ class IHomePage(form.Schema):
     
 class HomePage(dexterity.Item):
     grok.implements(IHomePage)
-#    
-#    def getNews(self):
-#        return 'news'
+    
+    def getNews(self):
+        return 'news'
 
 # View
     
