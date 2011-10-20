@@ -1,6 +1,10 @@
 <html>
 <body metal:use-macro="here/main_template/macros/master">
 
+<metal:js fill-slot="javascript_head_slot">
+	<script type="text/javascript" src="mascara.js" 
+    tal:attributes="src string:${view/static}/mascara.js"></script>
+</metal:js>
 <metal:block fill-slot="top_slot">
         <tal:dummy tal:define="dummy python:request.set('disable_border',1)" />
 </metal:block>

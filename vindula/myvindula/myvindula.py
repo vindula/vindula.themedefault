@@ -16,7 +16,7 @@ from Products.statusmessages.interfaces import IStatusMessage
 
 from plone.z3cform.crud import crud
 
-from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, ModelsFuncDetails
+from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, ModelsFuncDetails, ImportUser
 from zope.component import getUtility
 
 class MyVindulaView(grok.View):
@@ -25,7 +25,12 @@ class MyVindulaView(grok.View):
     grok.name('myvindula')
 
     def get_prefs_user(self, user):
-        return ModelsFuncDetails().get_FuncDetails(user)
+        try:
+            user_id = unicode(user, 'utf-8')    
+        except:
+            user_id = user 
+
+        return ModelsFuncDetails().get_FuncDetails(user_id)
     
     def get_howareu(self, home_folder):
         folder = home_folder.objectValues()
@@ -35,6 +40,16 @@ class MyVindulaView(grok.View):
                  L.append(iten)
         
         return L
+    
+    def get_photo_user(self,prefs_user):
+        if prefs_user:
+            if prefs_user.photograph is not None and not ' ' in prefs_user.photograph:
+                return self.context.absolute_url()+'/'+prefs_user.photograph
+            else:
+                return self.context.absolute_url()+'/defaultUser.png'
+        else:
+            return self.context.absolute_url()+'/defaultUser.png'
+    
     
     def checkHomeFolder(self):
         """ Check if exist homeFolder """
@@ -115,3 +130,37 @@ class MyVindulaPrefsView(grok.View, BaseFunc):
         # disable Plone's editable border
         self.request.set('disable_border', True)
         return super(MyVindulaPrefsView, self).update()
+
+class MyVindulaImportUser(grok.View, BaseFunc):
+    grok.context(INavigationRoot)
+    grok.require('cmf.ManagePortal')
+    grok.name('myvindulaimportuser')
+    
+    ignoreContext = True
+    
+    label = _(u"users to import the database")
+    description = _(u"User import for plone site from mysql database.")   
+    
+    def load_form(self):
+        return ImportUser().databaseUser(self)
+
+    def update(self):
+        # disable Plone's editable border
+        self.request.set('disable_border', True)
+        return super(MyVindulaImportUser, self).update()
+    
+class AjaxView(grok.View):
+    grok.context(ISiteRoot)
+    grok.require('cmf.ManagePortal')
+    grok.name('ajax_view')
+    
+    def defaultMethod(self,form):
+        method = form.get('method',None)
+        method = getattr(self,method,None)
+        if method != None:
+            return method(form)
+        return None
+    
+    def importUser(self,form):
+        return ImportUser().importUser(self,form)
+    

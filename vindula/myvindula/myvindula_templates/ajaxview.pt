@@ -1,0 +1,10 @@
+<tal:ajax define="view python:view.defaultMethod(context.REQUEST.form)">
+	<div>
+		<p>
+			O usuario <span tal:content="view/fullname"></span>, login <span tal:content="view/username"></span>
+			email <span tal:content="view/email"></span> criado com sucesso 
+		</p>
+	</div>
+	
+</tal:ajax>                           
+

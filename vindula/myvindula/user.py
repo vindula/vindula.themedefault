@@ -279,9 +279,9 @@ class ModelsFuncDetails(Storm, BaseStore):
     #departamento = ReferenceSet(id, "Departamentos.departamentos_id")    
     
     def get_allFuncDetails(self):
-        data = self.store.find(ModelsFuncDetails)
+        data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username!=u'admin')
         if data.count() == 0:
-            return []
+            return None
         else:
             return data
     
@@ -290,7 +290,7 @@ class ModelsFuncDetails(Storm, BaseStore):
         if data:
             return data
         else:
-            return []
+            return None
         
 class ModelsDepartment(Storm, BaseStore):
     __storm_table__ = 'Department'
@@ -303,7 +303,7 @@ class ModelsDepartment(Storm, BaseStore):
     def get_department(self):
         data = self.store.find(ModelsDepartment)
         if data.count() == 0:
-            return []
+            return None
         else:
             return data
 
@@ -353,7 +353,7 @@ class ModelsConfgMyvindula(Storm, BaseStore):
         if data:
             return data
         else:
-            return []
+            return None
 
         
 class BaseFunc(BaseStore):
@@ -395,16 +395,16 @@ class BaseFunc(BaseStore):
     def getPhoto(self,campo,request,data):
         if campo in request.keys():
             if request.get(campo, None):
-                return request.get(campo, '')
+                return self.context.absolute_url()+'/'+request.get(campo, '')
             else:
-                return 'defaultUser.png'
+                return self.context.absolute_url()+'/'+'defaultUser.png'
         elif campo in data.keys():
-            if data.get(campo, None):
-                return data.get(campo,'')
+            if data.get(campo, None) and not ' ' in data.get(campo,None):
+                return self.context.absolute_url()+'/'+data.get(campo,'')
             else:
-                return 'defaultUser.png'
+                return self.context.absolute_url()+'/'+'defaultUser.png'
         else:
-            return 'defaultUser.png'        
+            return self.context.absolute_url()+'/'+'defaultUser.png'        
         
     def checked(self,campo,request,data):
         if campo in request.keys():
@@ -426,7 +426,7 @@ class BaseFunc(BaseStore):
             if type(data) == date:
                 return data.strftime('%d/%m/%Y')
             else:
-                return ''
+                return data
         else:
             if data_atual == True:
                 data = date.today()
@@ -448,17 +448,23 @@ class BaseFunc(BaseStore):
         
                 return datastr  
             else:
-                return ''        
+                return data
 
     def geraCampos(self,form_data):
-        html = []
         if form_data:
             errors = form_data.get('errors',None)
             data = form_data.get('data',None)
             campos = form_data.get('campos',None)
             config_myvindula = form_data.get('config_myvindula',None)
+            html=[]
+            i=0
+            while i < len(campos.keys())-2:
+                html.append(i)
+                i+=1
             for campo in campos.keys():
                 if campo != 'Department_id' and campo != 'username':
+                    
+                    index = campos[campo].get('ordem',0)
                     tmp = ""
                     tmp += "<!-- Campo %s -->"%(campo)
                     tmp += "<div class='%s'>"%(self.field_class(errors, campo))
@@ -476,9 +482,14 @@ class BaseFunc(BaseStore):
                                     tmp += "<img src='%s' style='width:100px;height:100px;' /><br />"%(self.getPhoto(campo,self.request,data))
                             else: 
                                  tmp += "<img src='%s' style='width:100px;height:100px;' /><br />"%(self.getPhoto(campo,self.request,data))
-                            tmp += "<input id='photograph' type='file' value='' name='photograph' size='25' />"
+                            tmp += "<input id='photograph' type='file' value='%s' name='photograph' size='25' />"%(self.getPhoto(campo,self.request,data))
+                        
                         elif campo == 'date_birth' or campo == 'admission_date':
-                            tmp += "<input id='%s' type='text' value='%s' name='%s' size='25'/>"%(campo,self.converte_data(self.getValue(campo,self.request,data),True),campo)
+                            tmp += """<input id='%s' type='text' maxlength='10' onKeyDown='Mascara(this,Data);' onKeyPress='Mascara(this,Data);' onKeyUp='Mascara(this,Data);'
+                                             value='%s' name='%s' size='25'/>"""%(campo,self.converte_data(self.getValue(campo,self.request,data),True),campo)
+
+                        elif campo == 'customised_message':
+                            tmp += "<textarea id='%s' name='%s' style='width: 672px; height: 81px;'>%s</textarea>"%(campo, campo, self.getValue(campo,self.request,data)) 
                             
                         else:
                             tmp += "<input id='%s' type='text' value='%s' name='%s' size='25'/>"%(campo,self.getValue(campo,self.request,data),campo)
@@ -488,8 +499,9 @@ class BaseFunc(BaseStore):
                         else:
                             tmp += "<input id='%s' type='hidden' value='%s' name='%s' size='25'/>"%(campo,self.getValue(campo,self.request,data),campo)
                         
-                    tmp += "</div>"    
-                    html.append(tmp)
+                    tmp += "</div>"
+                    html.pop(index)
+                    html.insert(index, tmp)    
             
             return html
 
@@ -514,13 +526,14 @@ class BaseFunc(BaseStore):
             return html
         
         
-    def uploadFile(self, path, file):
+    def uploadFile(self,ctx, path, file):
         """ function used to upload the file to the Plone site, 
            with the parameter where the file will be saved and the file will be saved
         """
         normalizer = getUtility(IIDNormalizer)
         name_file = normalizer.normalize(file.filename)    #unicode(file.filename, 'utf-8')) #takes the name of the file
         count = 0
+        
         while name_file in path.objectIds():
             name_file = name_file + '-' + str(count)
             count +=1
@@ -547,56 +560,55 @@ class BaseFunc(BaseStore):
                               'image': file}
                     path.invokeFactory(**objects)   
                     
+                ctx.context.portal_membership.changeMemberPortrait(file, path.id)
                 #takes the url of the file to save the database  
                 content = getattr(path, name_file, None)
                 url = ''
                 if content is not None:
-                    url = content.absolute_url() 
+                    url = '/'.join(content.getPhysicalPath()[2:])  
                 
                 return unicode(url)
                 
             except:
                 return None
                 
-                
-                
 class SchemaFunc(BaseFunc):
     def to_utf8(value):
         return unicode(value, 'utf-8')
 
-    campos = {'name'                  : {'required': False, 'type' : to_utf8, 'label':'Nome',                    'decription':u'Digite o Nome deste funcionaro'             }, #Campo Obrigatorio
-              'phone_number'          : {'required': False, 'type' : to_utf8, 'label':'Telefone',                'decription':u'Digite o Telefone do funcionaro'            },
-              'email'                 : {'required': False, 'type' : to_utf8, 'label':'Email',                   'decription':u'Digite o Email do funcionaro'               }, #Campo Obrigatorio
-              'employee_id'           : {'required': False, 'type' : to_utf8, 'label':'ID Funcionario',          'decription':u'Digite o ID do funcionaro'                  },
-              'date_birth'            : {'required': False, 'type' : date,    'label':'Data de Nacimento',       'decription':u'Digite a data de nascimneto do funcionaro'  }, #Campo Obrigatorio
-              'registration'          : {'required': False, 'type' : to_utf8, 'label':'Matricula',               'decription':u'Digite a matricula do funcionaro'           },
-              'enterprise'            : {'required': False, 'type' : to_utf8, 'label':'Empresa',                 'decription':u'Digite o nome da empresa do funcionaro'     },
-              'position'              : {'required': False, 'type' : to_utf8, 'label':'Cargo',                   'decription':u'Digite o cargo do funcionaro'               },
-              'admission_date'        : {'required': False, 'type' : date,    'label':'Data Admição',            'decription':u'Digite a data de admição do funcionaro'     },
-              'cost_center'           : {'required': False, 'type' : to_utf8, 'label':'Centro de Custo',         'decription':u'Digite o centro de custo do funcionaro'     },
-              'job_role'              : {'required': False, 'type' : to_utf8, 'label':'Job Role',                'decription':u'Digite o Job Role do funcionaro'            },
-              'organisational_unit'   : {'required': False, 'type' : to_utf8, 'label':'Organisational Unit',     'decription':u'Digite a Organisational Unit do funcionaro' },
-              'reports_to'            : {'required': False, 'type' : to_utf8, 'label':'Reporta-se a',            'decription':u'Digite a quem o funcionario se reporta'     },
-              'location'              : {'required': False, 'type' : to_utf8, 'label':'Localização',             'decription':u'Digite a localização do funcionaro'         },
-              'postal_address'        : {'required': False, 'type' : to_utf8, 'label':'Endereço Postal',         'decription':u'Digite o endereço do funcionaro'            },
-              'special_roles'         : {'required': False, 'type' : to_utf8, 'label':'Special Roles',           'decription':u'Digite o Special Roles do funcionaro'       },
-              'photograph'            : {'required': False, 'type' : 'file',  'label':'Foto',                    'decription':u'Coloque a foto do funcionaro'               },
-              'nickname'              : {'required': False, 'type' : to_utf8, 'label':'NickName',                'decription':u'Digite o nickname do funcionaro'            },
-              'pronunciation_name'    : {'required': False, 'type' : to_utf8, 'label':'Como pronuncia seu nome', 'decription':u'Como pronuncia o  nome do funcionaro'       },
-              'committess'            : {'required': False, 'type' : to_utf8, 'label':'Commitess',             'decription':u'Digite o Commitess do funcionaro'             },
-              'projetcs'              : {'required': False, 'type' : to_utf8, 'label':'Projetos',              'decription':u'Digite o Projetos do funcionaro'              },
-              'personal_information'  : {'required': False, 'type' : to_utf8, 'label':'Informações pessoais',  'decription':u'Digite as informações pessoais do funcionaro' },
-              'skills_expertise'      : {'required': False, 'type' : to_utf8, 'label':'Skills Expertise',      'decription':u'Digite o Skills Expertise do funcionaro'      },
-              'license_plate_numbers' : {'required': False, 'type' : to_utf8, 'label':'License Plate Numbers', 'decription':u'Digite a License Plate Numbers do funcionaro' },
-              'profit_centre'         : {'required': False, 'type' : to_utf8, 'label':'Profil Centre',         'decription':u'Digite o Profil Centre do funcionaro'         },
-              'languages'             : {'required': False, 'type' : to_utf8, 'label':'Linguages',             'decription':u'Digite a lingua do funcionaro'                },
-              'availability'          : {'required': False, 'type' : to_utf8, 'label':'Avaliação',             'decription':u'Digite a avaliação do funcionaro'             },
-              'papers_published'      : {'required': False, 'type' : to_utf8, 'label':'Artigo Publicados',     'decription':u'Digite os artigo puclicados do funcionaro'    },
-              'teaching_research'     : {'required': False, 'type' : to_utf8, 'label':'Teaching Research',     'decription':u'Digite o Teaching Research do funcionaro'     },
-              'delegations'           : {'required': False, 'type' : to_utf8, 'label':'Delegação',             'decription':u'Digite a delegação do funcionaro'             },
-              'resume'                : {'required': False, 'type' : to_utf8, 'label':'Resumo',                'decription':u'Digite um resumo do funcionaro'               },
-              'blogs'                 : {'required': False, 'type' : to_utf8, 'label':'Blogs',                 'decription':u'Digite o Blog do funcionaro'                  },
-              'customised_message'    : {'required': False, 'type' : to_utf8, 'label':'Menssagem Costumizada', 'decription':u'Digite uma menssagem do funcionaro'           },
+    campos = {'name'                  : {'required': False, 'type' : to_utf8, 'label':'Nome',                    'decription':u'Digite o Nome deste funcionaro',            'ordem':0},
+              'nickname'              : {'required': False, 'type' : to_utf8, 'label':'NickName',                'decription':u'Digite o nickname do funcionaro',           'ordem':1},
+              'phone_number'          : {'required': False, 'type' : to_utf8, 'label':'Telefone',                'decription':u'Digite o Telefone do funcionaro',           'ordem':2},
+              'email'                 : {'required': False, 'type' : 'email', 'label':'Email',                   'decription':u'Digite o Email do funcionaro',              'ordem':3},
+              'employee_id'           : {'required': False, 'type' : to_utf8, 'label':'ID Funcionario',          'decription':u'Digite o ID do funcionaro',                 'ordem':4},
+              'date_birth'            : {'required': False, 'type' : date,    'label':'Data de Nacimento',       'decription':u'Digite a data de nascimneto do funcionaro', 'ordem':5},
+              'registration'          : {'required': False, 'type' : to_utf8, 'label':'Matricula',               'decription':u'Digite a matricula do funcionaro',          'ordem':6},
+              'enterprise'            : {'required': False, 'type' : to_utf8, 'label':'Empresa',                 'decription':u'Digite o nome da empresa do funcionaro',    'ordem':7},
+              'position'              : {'required': False, 'type' : to_utf8, 'label':'Cargo',                   'decription':u'Digite o cargo do funcionaro',              'ordem':8},
+              'admission_date'        : {'required': False, 'type' : date,    'label':'Data Admição',            'decription':u'Digite a data de admição do funcionaro',    'ordem':9},
+              'cost_center'           : {'required': False, 'type' : to_utf8, 'label':'Centro de Custo',         'decription':u'Digite o centro de custo do funcionaro',    'ordem':10},
+              'job_role'              : {'required': False, 'type' : to_utf8, 'label':'Job Role',                'decription':u'Digite o Job Role do funcionaro',           'ordem':11},
+              'organisational_unit'   : {'required': False, 'type' : to_utf8, 'label':'Organisational Unit',     'decription':u'Digite a Organisational Unit do funcionaro','ordem':12},
+              'reports_to'            : {'required': False, 'type' : to_utf8, 'label':'Reporta-se a',            'decription':u'Digite a quem o funcionario se reporta',    'ordem':13},
+              'location'              : {'required': False, 'type' : to_utf8, 'label':'Localização',             'decription':u'Digite a localização do funcionaro',        'ordem':14},
+              'postal_address'        : {'required': False, 'type' : to_utf8, 'label':'Endereço Postal',         'decription':u'Digite o endereço do funcionaro',           'ordem':15},
+              'special_roles'         : {'required': False, 'type' : to_utf8, 'label':'Special Roles',           'decription':u'Digite o Special Roles do funcionaro',      'ordem':16},
+              'photograph'            : {'required': False, 'type' : 'file',  'label':'Foto',                    'decription':u'Coloque a foto do funcionaro',              'ordem':17},
+              'pronunciation_name'    : {'required': False, 'type' : to_utf8, 'label':'Como pronuncia seu nome', 'decription':u'Como pronuncia o  nome do funcionaro',      'ordem':18},
+              'committess'            : {'required': False, 'type' : to_utf8, 'label':'Commitess',             'decription':u'Digite o Commitess do funcionaro',            'ordem':19},
+              'projetcs'              : {'required': False, 'type' : to_utf8, 'label':'Projetos',              'decription':u'Digite o Projetos do funcionaro',             'ordem':20},
+              'personal_information'  : {'required': False, 'type' : to_utf8, 'label':'Informações pessoais',  'decription':u'Digite as informações pessoais do funcionaro','ordem':21},
+              'skills_expertise'      : {'required': False, 'type' : to_utf8, 'label':'Skills Expertise',      'decription':u'Digite o Skills Expertise do funcionaro',     'ordem':22},
+              'license_plate_numbers' : {'required': False, 'type' : to_utf8, 'label':'License Plate Numbers', 'decription':u'Digite a License Plate Numbers do funcionaro','ordem':23},
+              'profit_centre'         : {'required': False, 'type' : to_utf8, 'label':'Profil Centre',         'decription':u'Digite o Profil Centre do funcionaro',        'ordem':24},
+              'languages'             : {'required': False, 'type' : to_utf8, 'label':'Linguages',             'decription':u'Digite a lingua do funcionaro',               'ordem':25},
+              'availability'          : {'required': False, 'type' : to_utf8, 'label':'Avaliação',             'decription':u'Digite a avaliação do funcionaro',            'ordem':26},
+              'papers_published'      : {'required': False, 'type' : to_utf8, 'label':'Artigo Publicados',     'decription':u'Digite os artigo puclicados do funcionaro',   'ordem':27},
+              'teaching_research'     : {'required': False, 'type' : to_utf8, 'label':'Teaching Research',     'decription':u'Digite o Teaching Research do funcionaro',    'ordem':28},
+              'delegations'           : {'required': False, 'type' : to_utf8, 'label':'Delegação',             'decription':u'Digite a delegação do funcionaro',            'ordem':29},
+              'resume'                : {'required': False, 'type' : to_utf8, 'label':'Resumo',                'decription':u'Digite um resumo do funcionaro',              'ordem':30},
+              'blogs'                 : {'required': False, 'type' : to_utf8, 'label':'Blogs',                 'decription':u'Digite o Blog do funcionaro',                 'ordem':31},
+              'customised_message'    : {'required': False, 'type' : to_utf8, 'label':'Menssagem Costumizada', 'decription':u'Digite uma menssagem do funcionaro',          'ordem':32},
               
               'username'              : {'required': False, 'type' : to_utf8,  'label':'Username'              }, #Campo Obrigatorio
               'Department_id'         : {'required': False, 'type' : int,     'label':'Departamento'           },} #Campo Obrigatorio
@@ -607,7 +619,11 @@ class SchemaFunc(BaseFunc):
         form = context.request # var tipo 'dict' que guarda todas as informacoes do formulario (keys,items,values)
         form_keys = form.keys() # var tipo 'list' que guarda todas as chaves do formulario (keys)
         campos = self.campos
-        user = unicode(context.context.portal_membership.getAuthenticatedMember().id, 'utf-8')
+        user = context.context.portal_membership.getAuthenticatedMember()
+        try:
+            user_id = unicode(user.id, 'utf-8')    
+        except:
+            user_id = user.id 
         
         # divisao dos dicionarios "errors" e "convertidos"
         form_data = {
@@ -615,7 +631,7 @@ class SchemaFunc(BaseFunc):
             'data': {},
             'campos':campos,
             'departametos': ModelsDepartment().get_department(),
-            'username' : user,
+            'username' : user_id,
             'config_myvindula':ModelsConfgMyvindula().get_configuration()}
         
         # se clicou no botao "Voltar"
@@ -637,7 +653,7 @@ class SchemaFunc(BaseFunc):
                         if form['photograph'].filename != '':
                             path = context.context.portal_membership.getHomeFolder()
                             file = data['photograph']
-                            photo = BaseFunc().uploadFile(path,file)
+                            photo = BaseFunc().uploadFile(context,path,file)
                             if photo:
                                 data['photograph'] = photo
                             else:
@@ -648,10 +664,9 @@ class SchemaFunc(BaseFunc):
                         else:
                             data['photograph'] = None      
                 
-                if user != 'acl_users':
+                if user_id != 'acl_users':
                     # editando...
-                    result = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username == user).one()
-
+                    result = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username == user_id).one()
                     if result:
                         if data['photograph'] is None:
                             data['photograph'] = result.photograph
@@ -666,7 +681,17 @@ class SchemaFunc(BaseFunc):
                         database = ModelsFuncDetails(**data)
                         self.store.add(database)
                         self.store.flush()
-                    
+                        
+                    #dicionario para edição do usuario do plone
+                    user_plone = {'fullname':data.get('name',''),
+                                  'email':data.get('email',''),
+                                  'home_page':data.get('blogs',''),
+                                  'location':data.get('location',''),
+                                  'description':data.get('customised_message',''),
+                                  'portrait':data.get('photograph','')}
+                        
+                    user.setMemberProperties(user_plone)
+                            
                 #Redirect back to the front page with a status message
                 IStatusMessage(context.request).addStatusMessage(_(u"Thank you for your order. We will contact you shortly"), "info")
                 context.request.response.redirect(success_url)
@@ -677,8 +702,8 @@ class SchemaFunc(BaseFunc):
                 return form_data
           
         # se for um formulario de edicao 
-        elif user != 'acl_users':    
-            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username == user).one()
+        elif user_id != 'acl_users':    
+            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username == user_id).one()
             D = {}
             for campo in campos.keys():
                 D[campo] = getattr(data, campo, '')
@@ -769,7 +794,6 @@ class SchemaConfgMyvindula(BaseFunc):
                       self.store.add(configuration)
                       self.store.flush()
                   
-                  
                   context.request.response.redirect(success_url)        
                        
               else:
@@ -789,3 +813,56 @@ class SchemaConfgMyvindula(BaseFunc):
         # se for um formulario de adicao
         else:
             return form_data
+
+
+class ImportUser(BaseFunc):
+    
+    def databaseUser(self,ctx):
+        db_user = ModelsFuncDetails().get_allFuncDetails()
+        plone_user = ctx.context.acl_users.getUserIds()
+        cont = 0 
+        D={}
+        for user in db_user:
+            if not user.username in plone_user: 
+                cont += 1
+               
+        D['user_new'] = cont
+        D['user_all'] = db_user.count()
+        D['user_plone'] = len(plone_user) 
+        return D
+        
+    def importUser(self,ctx,form):
+        db_user = ModelsFuncDetails().get_allFuncDetails()
+        plone_user = ctx.context.acl_users.getUserIds()
+        portal_member = ctx.context.portal_membership
+        D={}
+        index = int(form.get('numb_user','0'))
+        user = db_user[index]
+        
+        user_properties = {'fullname':user.name,
+                           'email':user.email,
+                           'home_page':user.blogs,
+                           'location':user.location,
+                           'description':user.customised_message,}
+       
+        if portal_member.getMemberById(user.username):
+            portal_member.getMemberById(user.username).setMemberProperties(user_properties)
+            
+        else:
+            
+            if user.username != '':
+                user_properties['username'] = user.username
+                user_properties['password'] = user.username
+                
+                portal_member.addMember(id=user.username,
+                                        password=user.username,
+                                        roles=("Member",),
+                                        domains="",
+                                        properties=user_properties)
+        
+        D['username'] = user.username
+        D['fullname'] = user.name
+        D['email'] = user.email
+            
+        return D
+                    

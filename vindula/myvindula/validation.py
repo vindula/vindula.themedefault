@@ -2,8 +2,11 @@
 
 from datetime import date
 from datetime import datetime
-
+import re
 from decimal import Decimal
+
+def to_utf8(value):
+    return unicode(value, 'utf-8')
 
 def valida_form(configuracao, form):
     # metodo que valida um sequencia de campos e retorna um dicionario
@@ -52,6 +55,16 @@ def valida_form(configuracao, form):
         
         elif configuracao[campo]['type'] == int:
             convertidos[campo] = int(valor)
+            
+        elif configuracao[campo]['type'] == 'email':
+            if(re.match('(.+)@(.+)\.(.+)',valor,re.IGNORECASE)):
+                if type(valor) == unicode:
+                    convertidos[campo] = valor.strip()
+                else:
+                    convertidos[campo] = to_utf8((valor.strip()))
+            else:
+                errors[campo] = u'E mail inválido, digite um email valido'
+            
                     
         # logica para conversao de dados para unicode de acordo com a configuracao      
         elif valor != '' and valor != '--NOVALUE--' and valor != '-- Selecione --': # se o campo nao estiver vazio, vai tentar converter

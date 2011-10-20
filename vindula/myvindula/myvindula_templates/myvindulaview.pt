@@ -25,9 +25,9 @@
 			             border="0"
 			             width="100"
 			             height="100"
-			             tal:attributes="src prefs_user/photograph | string:defaultUser.png;
-						 				 alt prefs_user/name;
-										 title prefs_user/name;" />
+			             tal:attributes="src python:view.get_photo_user(prefs_user);
+						 				 alt prefs_user/name|nothing;
+										 title prefs_user/name|nothing;" />
 			        <br /><br />
 			    </div>
 			    <tal:condition condition="not: view/checkHomeFolder">
@@ -59,11 +59,11 @@
 			        		<img src="defaultUser.png"
 			             		 alt="" border="0"
 			             		 width="50" height="50"
-			             		 tal:attributes="src prefs_user/photograph | string:defaultUser.png;
-						 						 alt prefs_user/name;
-												 title prefs_user/name;" />
+			             		 tal:attributes="src python:view.get_photo_user(prefs_user);
+						 						 alt prefs_user/name|nothing;
+												 title prefs_user/name|nothing;" />
 
-			        		<span tal:replace="name" /> - diz: <span tal:replace="item/Title" />
+			        		<span tal:replace="name" /> - diz: <span tal:replace="item/Title|nothing" />
 			        	</p>
 						<br />
 			        </div>
