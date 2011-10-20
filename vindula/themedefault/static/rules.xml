@@ -9,10 +9,20 @@
 	
     <!-- Prevent theme usage in zmi -->
     <rules css:if-content="#visual-portal-wrapper">
+
+		<!-- Content with Home Page object -->
+    	<rules css:if-content="#vindula-home-page">
+        	<theme href="theme_home.html" />
+			<drop css:content=".documentFirstHeading" />
+			<drop css:content="#viewlet-below-content-title" />
+		</rules>
+		<!-- Content with two columns -->
 		<rules css:if-content="#portal-column-two">
         	<theme href="theme_two.html" />
 		</rules>
+		<!-- Content with one column -->
 		<theme href="theme_one.html" />
+		
     </rules>
 	
 	<!-- Portal Top -->
@@ -21,6 +31,7 @@
 	<copy css:content-children="#portal-breadcrumbs" css:theme="#geral_breadcrumb" />
 
 	<!-- Portal Column Content -->
+	<copy css:content-children="#portal-column-content" css:theme=".contentHome" />
 	<copy css:content-children="#portal-column-content" css:theme=".contBoxTipo" />
 	<copy css:content-children="#portal-column-content" css:theme=".contBox_colunaTotal" />
 	<drop css:content="#portal-column-content #viewlet-above-content" />

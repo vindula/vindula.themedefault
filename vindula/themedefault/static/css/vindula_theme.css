@@ -144,6 +144,48 @@ div#topo .geral_busca{
 	height: 70px;
 }
 
+a { border: none !important; }
+a.leia-mais{ color:#000000 !important; }
+
+
+/* Gallery Cycle */
+div.gallery-cycle div.info {
+	width:427px;
+}
+
+.gallery-cycle-controls {
+	height: 21px;
+}
+
+.gallery-cycle-controls img {
+	cursor: pointer;
+	float: right;
+}
+div#cycle-nav {
+	margin-top: 1px;
+	float: right;
+	*float:none;
+}
+div#cycle-nav a {
+	margin-top:3px;
+	float:right;
+	width:16px;
+	height:16px;
+}
+div#cycle-nav a.activeSlide {
+	background-color: #999999;
+}
+
+.p-relative {
+	position:relative !important;
+}
+
+div.colunaTipo1 .managePortletsLink,
+div.colunaTotal .managePortletsLink,
+div.homePage .managePortletsLink {
+	width: 30%;
+	margin-top: 10px;
+}
 
 
 /* 

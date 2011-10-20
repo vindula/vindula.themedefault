@@ -27,6 +27,7 @@
 #geral_colunas{
     margin: 5px 0 0 10px;
     width: 980px;
+	padding-bottom: 1px;
 }
 
 .contBoxTipo1{
@@ -90,20 +91,10 @@
     line-height: 20px;
 }
 
-.titulo_info h2{
-    color: #000000;
+.titulo_info h2 {
     font-weight: bold;
     line-height: 20px;
     margin: 15px 0
-}
-
-.titulo_info h2 a{
-	color:#000000;
-}
-
-.titulo_info h2 a:hover{
-	color:#F58220;
-	text-decoration:underline;
 }
 
 .titulo_info h4{
@@ -112,21 +103,23 @@
     margin: 10px 0 5px;
 }
 
-.titulo_info h4 a{
-	color:#000000;
+.titulo_info h2 a,
+.titulo_info h4 a {
+	color:#000000 !important;
 }
 
-.titulo_info h4 a:hover{
-	color:#F58220;
-	text-decoration:underline;
+.titulo_info h2 a:hover,
+.titulo_info h4 a:hover {
+	color:#F58220 !important;
 }
+
 
 .img_info{
     float: left;
-    margin: 0 15px 0 0;
-    padding: 0 0 5px;
+    margin: 0 15px 15px 0;
+    padding: 3px;
     text-align: center;
-    width: 166px;
+	border: 3px double #CCCCCC;
 }
 
 .bk_cont_imgDestaque{
@@ -455,7 +448,8 @@ h1, h2 {
 	width:96%;
 }
 
-.colunaTotal{
+.colunaTotal,
+.contentHome {
     margin: 0 20px;
 }
 
