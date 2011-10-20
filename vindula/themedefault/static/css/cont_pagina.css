@@ -24,6 +24,20 @@
     width: 240px;
 }
 
+/* As duas regras abaixo sao usadas 
+ * no manage-portlets do conteudo 
+ * Home Page */
+.colunaTipo4{
+    float: left;
+    width: 240px;
+	margin-left: 20px;
+}
+
+.colunaManagePortlets {
+ 	float: left;
+    width: 460px;	
+}
+
 #geral_colunas{
     margin: 5px 0 0 10px;
     width: 980px;
@@ -167,18 +181,19 @@
 
 }
 
-.topoBoxTipo2{
-    background: url("../images/topoBoxTipo2.png") no-repeat scroll 0 0 transparent;
-    padding: 20px 0;
+.topoBoxTipo2 {
+    background: url("../images/topoBoxTipo2.png") no-repeat scroll 0 0 transparent !important;
+    padding: 20px 0 !important;;
     text-align: center;
     width: 228px;
 }
 
-.topoBoxTipo2 h2{
-	color:#FFFFFF;
+.topoBoxTipo2 h2 {
+	color:#FFFFFF !important;
+	font-size: 18px;
 }
 
-.contBoxTipo2{
+.contBoxTipo2 {
     background: url("../images/conBoxTipo2.png") repeat-y scroll 0 0 transparent;
     padding: 1px 13px 10px;
     width: 202px;
@@ -300,14 +315,18 @@ h1, h2 {
 
 /* coluna  tipo 1 */
 
-.topoBoxTipo{
+.topoBoxTipo,
+.bottomBoxTipo {
 	*margin:0 0 -12px 0;
 }
 
-.topoBoxTipo img{
+.topoBoxTipo img,
+.bottomBoxTipo img {
 	*vertical-align:top;
 }
-
+#vindula-home-page .topoBoxTipo{
+	margin-top: -10px;
+}
 .contBoxTipo{
     background: url("../images/conBoxTipo.png") repeat-y scroll 0 0 transparent;
     padding: 15px 20px;

@@ -123,8 +123,6 @@ div#data dd.actionMenuContent li a {
     float: left;
 	padding: 2px 12px;
     border: 4px solid #000000;
-    /*border-left: 4px solid #000000;
-    border-right: 4px solid #000000;*/
 }
 .nivel2 li.selected { background-color: #FFFFFF; }
 .nivel2 li.selected a { color: #000000 !important; }
@@ -145,7 +143,7 @@ div#topo .geral_busca{
 }
 
 a { border: none !important; }
-a.leia-mais{ color:#000000 !important; }
+a.leia-mais { color:#000000 !important; }
 
 
 /* Gallery Cycle */
@@ -180,11 +178,47 @@ div#cycle-nav a.activeSlide {
 	position:relative !important;
 }
 
-div.colunaTipo1 .managePortletsLink,
-div.colunaTotal .managePortletsLink,
-div.homePage .managePortletsLink {
+#manage-portlets-link .managePortletsLink {
 	width: 30%;
 	margin-top: 10px;
+}
+
+
+
+/* 
+ * * * PORTLETS
+ */
+.portletWrapper a { 
+	color:#000000 !important; 
+}
+.portletWrapper .portletHeader {
+    background: url("../images/topoBoxTipo2.png") no-repeat scroll 0 0 transparent !important;
+    padding: 20px 0 !important;;
+    text-align: center;
+    width: 228px;
+}
+.portletWrapper .portletHeader a {
+	color: #FFFFFF !important;
+	font-size: 18px;
+}
+.portletWrapper .portletItem {
+    background: url("../images/conBoxTipo2.png") repeat-y scroll 0 0 transparent;
+    padding: 15px !important;
+    width: 202px;
+}
+.portletWrapper div.portletStaticText {
+	background-color: #FFFFFF;
+ 	border: 2px solid #E0E0E0;
+    padding: 10px;
+	margin-bottom: 15px;
+	margin-top: 3px;
+}
+.portletWrapper .portletFooter {
+	background-image: url("../images/rodapeBoxTipo2.png");
+	background-position: left bottom;
+    background-repeat: no-repeat;
+	margin-top: -33px;
+	*margin-top: -38px;
 }
 
 
