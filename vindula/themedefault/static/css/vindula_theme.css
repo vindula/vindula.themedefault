@@ -195,4 +195,13 @@ div.homePage .managePortletsLink {
 /* Margins, widths and heights */
 .margin-auto { margin: auto; }
 .width965px { width: 965px; }
-.min-height150px { height: auto; min-height: 150px; }
+.min-height150px { height: auto; min-height: 150px;}
+.aling-right {text-align:right;}
+.even{background: #DDD;}
+.odd{background:#FFF}
+.portletItem h4 a{color: #000000;}
+.titulo_info_boxTipo2 h4 a{
+    color: #F58220;
+    font-weight: normal;
+    line-height: 16px;
+}
