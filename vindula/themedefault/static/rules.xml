@@ -33,13 +33,11 @@
 	<copy css:content-children="#portal-column-content" css:theme=".contBox_colunaTotal" />
 	<drop css:content="#portal-column-content #viewlet-above-content" />
 	<drop attributes="class" css:content="#viewlet-below-content div" />
-	<copy css:content=".managePortletsLink" css:theme="#manage-portlets-link" />
 	
 	<!-- Portal Column Content Home Page-->
 	<rules css:if-content="#vindula-home-page">
 		<copy css:content-children="#portal-column-content" css:theme="#contentHome" />
 		<drop css:content=".documentFirstHeading" />
-		<drop css:content="#viewlet-below-content" />
 		<drop css:content="#viewlet-below-content-title" />
 	</rules>
 	

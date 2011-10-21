@@ -1,54 +1,55 @@
 /* 
- * * * PLONE CSS UPDATES
+ * * * PLONE CSS UPDATES * * *
  */
 
-/* Coluna Tipo 3 (Portlets) */
-div.colunaTipo3 div.portletWrapper {
-	padding-right: 16px;
-}
-div.colunaTipo3 div.managePortletsLink {
-	margin-right: 16px;
-}
-
-/* Edit Bar Background Color */
+/* Edit Bar Background Color... */
 #edit-bar {
     background-color: #A6A6A6;
     border: 0.25em solid #A6A6A6;
 	border-style: solid solid none;
 }
+
 #contentActionMenus {
 	background: none repeat scroll 0 0 #A6A6A6;
 }
+
 #contentActionMenus dl.actionMenu a, 
 #content-views  {
 	background-color: #A6A6A6;
 }
+
 #contentActionMenus dl.actionMenu.activated dd {
 	border-bottom: 0.5em solid #A6A6A6;
 	background-color: #A6A6A6;
 }
+/* ...Edit Bar Background Color */
 
-/* Personal Tools */
+
+/* Personal Tools... */
 div#data #portal-personaltools {
 	background:none;
 	font-size: 100%;
 	width: 100%;
 	padding-right: 0;
 }
+
 #portal-personaltools dt { *margin-right: 15px; }
 #portal-personaltools dd {
 	*margin-right: 12px;
 }
+
 div#data #portal-personaltools dd {
 	margin-top: 19px;
   	min-width: 145px;
     width: 145px;
 }
+
 div#data #portal-personaltools dd a:hover {
 	background-color: #FFF;
 	background-repeat: repeat;
 	color: #000;	
 }
+
 div#data #portal-personaltools a#user-name,
 div#data #portal-personaltools a#personaltools-login,
 div#data dd.actionMenuContent a {
@@ -59,11 +60,14 @@ div#data dd.actionMenuContent a {
 	float: right;
 	width: 120px;
 }
+
 div#data dd.actionMenuContent li a {
 	line-height: 2em;
 }
+/* ...Personal Tools */
 
-/* Content Types Icons */
+
+/* Content Types Icons... */
 .contenttype-file { background: url(/contenttypes-sprite.png) no-repeat scroll 0 -428px transparent; }
 .contenttype-document { background: no-repeat transparent 0px 4px url(/contenttypes-sprite.png); }
 .contenttype-event { background: no-repeat transparent 0px -212px url(/contenttypes-sprite.png); }
@@ -77,9 +81,11 @@ div#data dd.actionMenuContent li a {
 #plone-contentmenu-factories .contenttype-file {
     background: no-repeat transparent 0px -428px url(/contenttypes-sprite.png);
 }
+
 #plone-contentmenu-factories .contenttype-image {
     background: no-repeat transparent 0px -860px url(/contenttypes-sprite.png);
 }
+
 .contenttype-document,
 .contenttype-event,
 .contenttype-folder,
@@ -94,113 +100,31 @@ div#data dd.actionMenuContent li a {
     *display: block;
     padding-left: 20px !important;
 }
+/* ...Content Types Icons */
 
 
-
-/* 
- * * * THEME CSS UPDATES
- */
-
-/* Menu */
-.nivel1 li.selected {
-    background: none repeat scroll 0 0 #000000;
-    margin: 0 0 0 20px;
-}
-.nivel1 li.selected a { color:#FFFFFF !important; }
-
-
-/* Submenu */
-.nivel2 {
-    background: none repeat scroll 0 0 #000000;
-    margin: 28px 0 0 0;
-    *margin: 0;
-    position: absolute;
-    width: 940px;
-}
-.nivel2 li a { color: #FFFFFF !important; }
-.nivel2 li,
-.nivel2 li.selected {
-    float: left;
-	padding: 2px 12px;
-    border: 4px solid #000000;
-}
-.nivel2 li.selected { background-color: #FFFFFF; }
-.nivel2 li.selected a { color: #000000 !important; }
-
-div#topo .logo{
-    float: left;
-	margin: 30px 246px 25px 30px;
-	width: 237px;
-	height:41px;
-}
-
-div#topo .geral_busca{
-    float: right;
-    font-size: 12px;
-	margin: 15px 30px 11px 0;
-	width: 457px;
-	height: 70px;
-}
-
-a { border: none !important; }
-a.leia-mais { color:#000000 !important; }
-
-
-/* Gallery Cycle */
-div.gallery-cycle div.info {
-	width:427px;
-}
-
-.gallery-cycle-controls {
-	height: 21px;
-}
-
-.gallery-cycle-controls img {
-	cursor: pointer;
-	float: right;
-}
-div#cycle-nav {
-	margin-top: 1px;
-	float: right;
-	*float:none;
-}
-div#cycle-nav a {
-	margin-top:3px;
-	float:right;
-	width:16px;
-	height:16px;
-}
-div#cycle-nav a.activeSlide {
-	background-color: #999999;
-}
-
-.p-relative {
-	position:relative !important;
-}
-
-#manage-portlets-link .managePortletsLink {
-	width: 30%;
-	margin-top: 10px;
-}
-
-
-
-/* 
- * * * PORTLETS
- */
+/* Portlets ... */
 .portletWrapper a { 
 	color:#000000 !important; 
 }
+
 .portletWrapper .portletHeader {
     background: url("../images/topoBoxTipo2.png") no-repeat scroll 0 0 transparent !important;
     padding: 20px 0 !important;;
     text-align: center;
     width: 228px;
-}
-.portletWrapper .portletHeader a {
 	color: #FFFFFF !important;
 	font-size: 18px;
 }
+
+.portletWrapper .portletHeader a{
+	color: #FFFFFF !important;
+}
+
+.portletWrapper .portletHeader a:hover {
+	color: #000000 !important;
+}
+
 .portletWrapper .portletItem {
     background: url("../images/conBoxTipo2.png") repeat-y scroll 0 0 transparent;
     padding: 15px !important;
@@ -220,10 +144,50 @@ div#cycle-nav a.activeSlide {
 	margin-top: -33px;
 	*margin-top: -38px;
 }
+/* ...Portlets */
 
 
 /* 
- * * * LIBRARY
+ * * * THEME CSS UPDATES * * *
+ */
+
+
+/* Gallery Cycle... */
+.gallery-cycle div.info {
+	width:427px;
+}
+
+.gallery-cycle-controls {
+	height: 21px;
+}
+
+.gallery-cycle-controls img {
+	cursor: pointer;
+	float: right;
+}
+.gallery-cycle-controls div#cycle-nav {
+	margin-top: 1px;
+	float: right;
+	*float:none;
+}
+.gallery-cycle-controls div#cycle-nav a {
+	margin-top:3px;
+	float:right;
+	width:16px;
+	height:16px;
+}
+.gallery-cycle-controls div#cycle-nav a.activeSlide {
+	background-color: #999999;
+}
+
+.p-relative {
+	position:relative !important;
+}
+/* ...Gallery Cycle */
+
+
+/* 
+ * * * LIBRARY * * *
  */
 
 /* Margins, widths and heights */

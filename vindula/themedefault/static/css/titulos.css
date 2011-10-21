@@ -1,8 +1,11 @@
-/* Títulos */
+/* 
+ * * * TITULOS * * *
+ */
 
-h1{
-	
+h1, h2 {
+    letter-spacing: -0.03em;
 }
+
 
 h2{
 	font-size:18px;
@@ -23,5 +26,3 @@ h5{
 h6{
 
 }
-
-/* Títulos */

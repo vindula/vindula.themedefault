@@ -1,4 +1,6 @@
-/* Topo */
+/* 
+ * * * TOPO * * *
+ */
 
 #topo{
     background: url("../images/bk_topo.png") no-repeat scroll 0 0 transparent;
@@ -6,25 +8,38 @@
     width: 1000px;
 }
 
-#rodape .logo{
-    float: left;
-    margin: 30px 0 0 30px;
-}
-
-#rodape .geral_busca{
-    float: right;
-    font-size: 12px;
-    padding: 15px 30px 0 0;
-}
-
-#data h4{
+#topo #data h4{
     color: #6D6D6D;
     line-height: 16px;
     margin: 0 0 5px;
     text-align: right;
 }
 
-.campo_texto{
+#topo li ul {
+    background: none repeat scroll 0 0 #000000;
+    margin: 6px 0 0 -40px;
+    position: absolute;
+    width: 940px;
+	*margin: 24px 0 0 -94px;
+}
+
+#topo .logo{
+    float: left;
+	margin: 30px 246px 25px 30px;
+	width: 237px;
+	height:41px;
+}
+
+/* Campo busca... */
+#topo .geral_busca{
+    float: right;
+    font-size: 12px;
+	margin: 15px 30px 11px 0;
+	width: 457px;
+	height: 70px;
+}
+
+.geral_busca .campo_texto{
     background: url("../images/lupa.gif") no-repeat scroll 1% 50% #ECEDED;
     border: 1px solid #FFFFFF;
     color: #000000;
@@ -36,7 +51,7 @@
     width: 370px;
 }
 
-.bt_buscar{
+.geral_busca .bt_buscar{
     background: none repeat scroll 0 0 #FAA61A;
     border: 1px solid #FFFFFF;
     color: #FFFFFF;
@@ -48,14 +63,16 @@
     width: 75px;
 }
 
-.campo_opcao{
+.geral_busca .campo_opcao{
     color: #000000;
     margin: 5px 5px 0 0;
 }
-/* Topo */
+/* ...Campo busca */
 
 
-/* Nav */
+/* 
+ * * * NAV * * *
+ */
 
 #nav{
     background: none repeat scroll 0 0 #FFFFFF;
@@ -68,37 +85,68 @@
 	list-style: none outside none;
 }
 
+/* Nivel 1... */
+#nav .nivel1 li{
+    float: left;
+    padding: 6px 20px;
+}
+
+#nav .nivel1 li.selected {
+    background: none repeat scroll 0 0 #000000;
+    margin: 0 0 0 20px;
+}
+
+#nav .nivel1 li.selected a { 
+	color:#FFFFFF !important; 
+}
+/* ...Nivel 1 */
+
+
+/* Nivel 2... */
+#nav .nivel2 {
+    background: none repeat scroll 0 0 #000000;
+    margin: 28px 0 0 0;
+    *margin: 0;
+    position: absolute;
+    width: 940px;
+}
+
+#nav .nivel2 li{
+	float:left;
+	display:block;
+}
+
+#nav .nivel2 li a { color: #FFFFFF !important; }
+#nav .nivel2 li,
+#nav .nivel2 li.selected {
+    float: left;
+	padding: 2px 12px;
+    border: 4px solid #000000;
+}
+
+#nav .nivel2 li.selected { 
+	background-color: #FFFFFF; 
+}
+
+#nav .nivel2 li.selected a { 
+	color: #000000 !important; 
+}
+/* ...Nivel 2 */
+
+
+/* Links menu... */
 #nav a{
 	color:#000000;
 	font-size:14px;
 	font-weight:bold;
 }
 
-.nivel1 li{
-    float: left;
-    padding: 6px 20px;
-}
-
-.link_ativo a{
-	color:#FFFFFF !important;
-}
-
-.link_ativo{
+#nav .link_ativo{
     background: none repeat scroll 0 0 #000000;
     margin: 0 0 0 20px;
 }
 
-div#topo li ul {
-    background: none repeat scroll 0 0 #000000;
-    margin: 6px 0 0 -40px;
-    position: absolute;
-    width: 940px;
-	*margin: 24px 0 0 -94px;
+#nav .link_ativo a{
+	color:#FFFFFF !important;
 }
-
-.nivel2 li{
-	float:left;
-	display:block;
-}
-
-/* Nav */
+/* ...Links menu */
