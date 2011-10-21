@@ -6,15 +6,15 @@
 			<tal:dummy tal:define="dummy python:request.set('disable_border',1)" />
 		</metal:block>
 
-		 <div class="cell width-full position-0" metal:fill-slot="content">         
+		 <div metal:fill-slot="content">         
 	        <metal:use use-macro="context/@@myvindulapanel/macros/page"/>    
 			<div tal:define="view python:context.restrictedTraverse('@@myvindula');
-                             memberinfo context/portal_membership/getMemberInfo;
-							 member context/@@plone_portal_state/member;
-                             name python:memberinfo['fullname'] or member.getId() or member.getId();
-                             portrait python:context.portal_membership.getPersonalPortrait(member.getId());
-							 homeFolder python: context.portal_membership.getHomeFolder();
-							 prefs_user python: view.get_prefs_user(member.getId());">
+							                             memberinfo context/portal_membership/getMemberInfo;
+														 member context/@@plone_portal_state/member;
+							                             name python:memberinfo['fullname'] or member.getId() or member.getId();
+							                             portrait python:context.portal_membership.getPersonalPortrait(member.getId());
+														 homeFolder python: context.portal_membership.getHomeFolder();
+														 prefs_user python: view.get_prefs_user(member.getId());">
 			
 			
 			    <h1 class="documentFirstHeading">Welcome to Vindula: <span tal:replace="name" /></h1>

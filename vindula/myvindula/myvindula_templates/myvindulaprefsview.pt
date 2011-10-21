@@ -9,7 +9,7 @@
         <tal:dummy tal:define="dummy python:request.set('disable_border',1)" />
 </metal:block>
     
-    <div class="cell width-full position-0" metal:fill-slot="content">            
+    <div metal:fill-slot="content">            
 
     	<metal:use use-macro="context/@@myvindulapanel/macros/page"/>    
 	    <div id="content" tal:define="form_data view/load_form | python:{};

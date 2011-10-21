@@ -16,10 +16,7 @@
          metal:fill-slot="content">
          
    <metal:page metal:define-macro="page">
-
-
         <div id="edit-bar">
-
             <h5 class="hiddenStructure"
                 i18n:translate="heading_views">Views</h5>
 

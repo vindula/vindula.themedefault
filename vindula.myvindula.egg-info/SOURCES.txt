@@ -16,15 +16,6 @@ vindula/myvindula/howareu.py
 vindula/myvindula/myvindula.py
 vindula/myvindula/user.py
 vindula/myvindula/validation.py
-vindula/myvindula/browser/__init__.py
-vindula/myvindula/browser/baseview.py
-vindula/myvindula/browser/interfaces.py
-vindula/myvindula/browser/managerConfig.py
-vindula/myvindula/browser/managerUser.py
-vindula/myvindula/browser/myvindulaview.py
-vindula/myvindula/browser/views.py
 vindula/myvindula/models/__init__.py
-vindula/myvindula/models/base.py
-vindula/myvindula/models/config_myvindula.py
-vindula/myvindula/models/departamentos.py
-vindula/myvindula/models/funcionarios.py
+vindula/myvindula/portlets/__init__.py
+vindula/myvindula/portlets/ramais.py

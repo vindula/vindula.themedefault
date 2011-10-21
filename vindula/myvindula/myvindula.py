@@ -164,3 +164,30 @@ class AjaxView(grok.View):
     def importUser(self,form):
         return ImportUser().importUser(self,form)
     
+class MyVindulaListUser(grok.View):
+    grok.context(ISiteRoot)
+    grok.require('zope2.View')
+    grok.name('myvindulalistuser')
+    
+    def load_list(self):
+        user = self.request.form.get('user','')
+        return ModelsFuncDetails().get_FuncDetails(unicode(user, 'utf-8'))
+
+    def getPhoto(self,photo):
+        if photo is not None and not ' ' in photo:
+                return self.context.absolute_url()+'/'+photo
+        else:
+                return self.context.absolute_url()+'/'+'defaultUser.png'
+
+class MyVindulalistAll(grok.View):
+    grok.context(ISiteRoot)
+    grok.require('zope2.View')
+    grok.name('myvindulalistall')
+    
+    def load_list(self):
+        form = self.request.form
+        title = form.get('title','').strip()
+        departamento= form.get('departamento','0')
+        ramal = form.get('ramal','').strip()
+        result = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),int(departamento),unicode(ramal, 'utf-8'))
+        return result

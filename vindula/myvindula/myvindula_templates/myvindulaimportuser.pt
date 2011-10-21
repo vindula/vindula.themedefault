@@ -20,36 +20,38 @@
 				tal:attributes="src string:${view/static}/ajax_importuser.js"></script>
 		<style type="text/css">
 				.display-none{display:none;}
-			
-		</style>				
-		 <h1>Edit the configuration register of user of plone</h1>
-		 <div class="cell width-full position-0">         
-				<tal:def define="load view/load_form">
-					<input type="hidden" id="portal_url" tal:attributes="value context/portal_url|nothing">
-					<p tal:content="string: Voce tem ${load/user_all|nothing} usuario cadastrado no banco de dados"></p>
-					<p tal:content="string: Voce tem ${load/user_plone|nothing} usuario cadastrado no Plone Site"></p>
-					
-					<p tal:content="string: Voce tem ${load/user_new|nothing} usuario não cadastrado"></p>
-					<input type="hidden" id="contUser" tal:attributes="value load/user_all|nothing">
-					<p>Deseja importar e atualizar estes novos usuarios?</p>
-					<!-- Botões de ação -->	
-				   	<fieldset>
-				   		<br/>
-						<div style="float:left; width:100%">
-							<input id="voltar" style="width:100px" class="button-erp" type="button" value="Voltar" name="form.voltar">
-							<input id="importUser" style="width:150px;" class="button-erp" type="button" value="Importar Usuarios" name="form.submited">
-						</div>
-					</fieldset>
-					
-					<div id="users_import">
+		</style>
+		<div id="content">				
+			 <h1>Edit the configuration register of user of plone</h1>
+			 <div id="interna">
+					<tal:def define="load view/load_form">
+						<input type="hidden" id="portal_url" tal:attributes="value context/portal_url|nothing">
+						<br />
+						<p tal:content="string: Voce tem ${load/user_all|nothing} usuario cadastrado no banco de dados"></p>
+						<p tal:content="string: Voce tem ${load/user_plone|nothing} usuario cadastrado no Plone Site"></p>
+						<p tal:content="string: Voce tem ${load/user_new|nothing} usuario não cadastrado"></p>
 						
-					</div>
-					<!-- Spinner -->
-					<div id="spinner" class="display-none">
-						<img src="" alt="spinner" tal:attributes="src string:${view/static}/ajaxLoader.gif" />
-					</div>	
-					
-				</tal:def>
+						<input type="hidden" id="contUser" tal:attributes="value load/user_all|nothing">
+						
+						<!-- Botões de ação -->	
+					   	<fieldset>
+					   		<legend>Deseja importar e atualizar estes novos usuarios?</legend>
+							<div style="float:left; width:100%">
+								<input id="voltar" style="width:100px" class="button-erp" type="button" value="Voltar" name="form.voltar">
+								<input id="importUser" style="width:150px;" class="button-erp" type="button" value="Importar Usuarios" name="form.submited">
+							</div>
+						</fieldset>
+						
+						<fieldset >
+					   		<legend>Usuarios ja processados</legend>
+							<div id="users_import"></div>
+							<!-- Spinner -->
+							<div id="spinner" class="display-none" style="text-align:center;">
+								<img src="" alt="spinner" align="center" tal:attributes="src string:${view/static}/ajaxLoader.gif" />
+							</div>	
+						</fieldset>
+					</tal:def>
+			</div>
 		</div>	
   </metal:main>
   </body>

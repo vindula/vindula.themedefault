@@ -274,9 +274,10 @@ class ModelsFuncDetails(Storm, BaseStore):
     resume = Unicode()
     blogs = Unicode()
     customised_message = Unicode()
-    Department_id = Int()  
+    Department_id = Int()
+    
   
-    #departamento = ReferenceSet(id, "Departamentos.departamentos_id")    
+    departamento = Reference(Department_id, "ModelsDepartment.id")    
     
     def get_allFuncDetails(self):
         data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username!=u'admin')
@@ -292,6 +293,56 @@ class ModelsFuncDetails(Storm, BaseStore):
         else:
             return None
         
+    def get_FuncBusca(self,name,department_id,phone):    
+        if name != '' and not ' ' in name or \
+            phone != '' and not ' ' in phone:
+            if department_id != 0:
+                data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"),
+                                                          ModelsFuncDetails.phone_number.like("%" + phone + "%"), 
+                                                          ModelsFuncDetails.Department_id==department_id)
+            else:
+                data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"), 
+                                                          ModelsFuncDetails.phone_number.like("%" + phone + "%"))
+            
+            if data.count() == 0:
+                return None
+            else:
+                return data    
+            
+        elif name != '' and not ' ' in name:
+           if department_id != 0:
+                data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"), 
+                                                          ModelsFuncDetails.Department_id==department_id)
+           else:
+                data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"), 
+                                                          ModelsFuncDetails.name.like("%" + phone + "%"))
+            
+            
+           if data.count() == 0:
+                return None
+           else:
+                return data
+        
+        elif phone != '' and not ' ' in phone:
+            if department_id != 0:
+                data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"),
+                                                          ModelsFuncDetails.phone_number.like("%" + phone + "%"),
+                                                          ModelsFuncDetails.Department_id==department_id)
+            else:
+                data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"),
+                                                          ModelsFuncDetails.phone_number.like("%" + phone + "%"))
+            
+            if data.count() == 0:
+                return None
+            else:
+                return data    
+            
+            
+                        
+        else:
+            return None
+        
+         
 class ModelsDepartment(Storm, BaseStore):
     __storm_table__ = 'Department'
  
