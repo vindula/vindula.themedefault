@@ -31,7 +31,7 @@
 }
 
 /* Campo busca... */
-#topo .geral_busca{
+#topo .geral_busca {
     float: right;
     font-size: 12px;
 	margin: 15px 30px 11px 0;
@@ -39,7 +39,11 @@
 	height: 70px;
 }
 
-.geral_busca .campo_texto{
+.geral_busca #portal-searchbox {
+	margin-top: 0;
+}
+
+.geral_busca #searchGadget {
     background: url("../images/lupa.gif") no-repeat scroll 1% 50% #ECEDED;
     border: 1px solid #FFFFFF;
     color: #000000;
@@ -51,7 +55,7 @@
     width: 370px;
 }
 
-.geral_busca .bt_buscar{
+.geral_busca .searchButton {
     background: none repeat scroll 0 0 #FAA61A;
     border: 1px solid #FFFFFF;
     color: #FFFFFF;
@@ -63,9 +67,55 @@
     width: 75px;
 }
 
+.geral_busca .searchSection {
+	 white-space: normal;
+	 color: #000000;
+	 font-size: 12px;
+}
+
+#rodape .geral_busca .searchSection label,
+#rodape .geral_busca .searchSection label:hover {
+	 color: #FFFFFF;
+}
+
+.geral_busca .searchSection #searchbox_currentfolder_only {
+	margin-right: 6px;
+	margin-top: 5px;
+}
+
 .geral_busca .campo_opcao{
     color: #000000;
     margin: 5px 5px 0 0;
+}
+
+.geral_busca #LSResult {
+	width: 257px;
+   	background-color: #E3E3E3;
+   	position: relative;
+    left: 268px;
+    *left: 236px;
+    top: -14px;
+	*top: -10px;  
+ 	/*position: absolute;
+    left: 1121px;
+    top: 130px;*/
+}
+
+#rodape .geral_busca #LSResult {
+    top: -102px;
+}
+
+.geral_busca #LSResult .livesearchContainer {
+	border: none;
+}
+
+.geral_busca #LSResult .livesearchContainer #livesearchLegend {
+	display: none;
+    /*background-color: #FAA61A;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;*/
 }
 /* ...Campo busca */
 

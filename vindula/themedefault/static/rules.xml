@@ -25,6 +25,9 @@
 	
 	<!-- Portal Top -->
 	<replace css:content="#portal-personaltools" css:theme="#data h4" />
+	<replace css:content="#portal-searchbox" css:theme="#portal-searchbox" />
+	<drop attributes="class" css:content="#searchGadget" />
+	<drop attributes="placeholder" css:content="#searchGadget" />
 	<copy css:content="#menu_viewlet" css:theme="#nav" />
 	<copy css:content-children="#portal-breadcrumbs" css:theme="#geral_breadcrumb" />
 

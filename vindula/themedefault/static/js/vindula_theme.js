@@ -38,4 +38,9 @@ $j(document).ready(function(){
 	 $j('div#form-widgets-local_medianews-input-fields span.label').text( function(index, text) {
 	 	if ($j(this).text() == '(nothing)') $j(this).text('Em todo o portal');
 	 } )
+	 
+	 $j('div#form-widgets-image-input-fields span.label').text( function(index, text) {
+	 	if ($j(this).text() == '(nothing)') $j(this).text('Nenhuma imagem');
+	 } )
+	 
 });

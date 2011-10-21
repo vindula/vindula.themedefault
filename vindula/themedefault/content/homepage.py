@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from five import grok
 from zope import schema
-from plone.directives import dexterity, form
+from plone.directives import form
 from plone.formwidget.contenttree import ObjPathSourceBinder
 from vindula.themedefault import MessageFactory as _
 from z3c.relationfield.schema import RelationList, RelationChoice
@@ -46,7 +46,7 @@ class IHomePage(form.Schema):
         value_type=RelationChoice(
             title=_(u"Notícias em destaque"),
             source=ObjPathSourceBinder(
-                portal_type = 'News Item',  
+                portal_type = 'vindula.content.content.vindulanews',  
                 review_state='published'                                                  
                 )
             ),
@@ -131,14 +131,14 @@ class HomePageView(grok.View):
                 obj = new.to_object
                 D = {}
                 D['title'] = obj.Title()
-                D['summary'] = obj.Description()
+                D['summary'] = obj.summary
                 D['author'] = obj.getOwner().getUserName()
-                D['date'] = obj.effective_date.strftime('%d/%m/%Y - %H:%m')
+                D['date'] = obj.effective_date.strftime('%d/%m/%Y / %H:%m')
                 D['link'] = obj.absolute_url()
-                if obj.getImage() != '':
-                    D['image'] = obj.getImage().absolute_url() + '_mini'
-                else:
+                if obj.image is None:
                     D['image'] = ''
+                else:
+                    D['image'] = obj.image.to_object.absolute_url() + '/image_mini'
                 L.append(D)
             return L
         
@@ -150,9 +150,9 @@ class HomePageView(grok.View):
                 obj = new.getObject()
                 D = {}
                 D['title'] = obj.Title()
-                D['summary'] = obj.Description()
+                D['summary'] = obj.summary
                 D['author'] = obj.getOwner().getUserName()
-                D['date'] = obj.effective_date.strftime('%d/%m/%Y - %H:%m')
+                D['date'] = obj.effective_date.strftime('%d/%m/%Y / %H:%m')
                 D['link'] = obj.absolute_url()
                 L.append(D)
                 
@@ -181,8 +181,7 @@ class HomePageView(grok.View):
         else:
             local = local.to_object.getPhysicalPath()
         self.pc = getToolByName(self.context, 'portal_catalog')
-        
-        news = self.pc(portal_type='News Item',
+        news = self.pc(portal_type='vindula.content.content.vindulanews',
                        review_state='published',
                        path={'query':'/'.join(local)},
                        sort_on='effective',

@@ -42,12 +42,15 @@ a:link {
 div#content a:link, 
 div#content a:visited,
 dl.portlet a:link,
-dl.portlet a:visited { 
+dl.portlet a:visited,
+.geral_busca #LSResult .livesearchContainer div.LSIEFix a:link, 
+.geral_busca #LSResult .livesearchContainer div.LSIEFix a:visited { 
 	color: #000000; 
 }
 
 div#content a:hover,
-dl.portlet a:hover { 
+dl.portlet a:hover,
+.geral_busca #LSResult .livesearchContainer div.LSIEFix a:hover { 
 	color: #F58220 !important; 
 	text-decoration: underline;
 }
