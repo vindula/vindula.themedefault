@@ -41,6 +41,7 @@
 
 .geral_busca #portal-searchbox {
 	margin-top: 0;
+	width:100%;
 }
 
 .geral_busca #searchGadget {
@@ -81,6 +82,7 @@
 .geral_busca .searchSection #searchbox_currentfolder_only {
 	margin-right: 6px;
 	margin-top: 5px;
+	*margin-top:0;
 }
 
 .geral_busca .campo_opcao{

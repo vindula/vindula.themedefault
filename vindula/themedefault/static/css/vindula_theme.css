@@ -158,7 +158,11 @@ div#data dd.actionMenuContent li a {
 }
 
 .gallery-cycle-controls {
-	height: 21px;
+	height:21px;
+ 	margin-top:-21px;
+	*margin-top:0;
+  	width:100%;
+	*width:auto;
 }
 
 .gallery-cycle-controls img {

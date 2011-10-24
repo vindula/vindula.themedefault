@@ -94,7 +94,7 @@
 							
 							<div class="opcoes_destaque marginDif" tal:condition="python: view.getOtherNews()['url'] != ''">
 								<a class="leia-mais" title="Ver todas as not&iacute;cias" 
-								   tal:attributes="href python: view.getOtherNews()['url']">todas as notcias</a>
+								   tal:attributes="href python: view.getOtherNews()['url']">todas as not&iacute;cias</a>
 							</div>
 							<div class="visualClear"></div>
 						</div>
