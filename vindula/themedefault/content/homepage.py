@@ -131,7 +131,9 @@ class HomePageView(grok.View):
                 obj = new.to_object
                 D = {}
                 D['title'] = obj.Title()
-                D['summary'] = obj.summary
+                D['summary'] = obj.summary[:350]
+                if len(D['summary']) == 350:
+                    D['summary'] += '...'
                 D['author'] = obj.getOwner().getUserName()
                 D['date'] = obj.effective_date.strftime('%d/%m/%Y / %H:%m')
                 D['link'] = obj.absolute_url()

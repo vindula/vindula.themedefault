@@ -139,6 +139,10 @@
 	border: 3px double #CCCCCC;
 }
 
+.img_info img {
+	max-height: 165px;
+}
+
 .bk_cont_imgDestaque{
     background: url("../images/bk_cont_imgDestaque.png") repeat-y scroll 0 0 transparent;
     width: 167px;

@@ -151,6 +151,10 @@
 #nav .nivel1 li.selected a { 
 	color:#FFFFFF !important; 
 }
+
+#nav li a:hover { 
+	color:#F58220 !important; 
+}
 /* ...Nivel 1 */
 
 
@@ -168,7 +172,7 @@
 	display:block;
 }
 
-#nav .nivel2 li a { color: #FFFFFF !important; }
+#nav .nivel2 li a { color: #FFFFFF; }
 #nav .nivel2 li,
 #nav .nivel2 li.selected {
     float: left;

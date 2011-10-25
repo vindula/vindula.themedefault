@@ -28,8 +28,11 @@
 	<replace css:content="#portal-searchbox" css:theme="#portal-searchbox" />
 	<drop attributes="class" css:content="#searchGadget" />
 	<drop attributes="placeholder" css:content="#searchGadget" />
-	<copy css:content="#menu_viewlet" css:theme="#nav" />
 	<copy css:content-children="#portal-breadcrumbs" css:theme="#geral_breadcrumb" />
+	
+	<!-- Viewlets -->
+	<copy css:content-children="#usefullinks_viewlet" css:theme="#barra_superior" />
+	<copy css:content-children="#menu_viewlet" css:theme="#nav" />
 
 	<!-- Portal Column Content -->
 	<copy css:content-children="#portal-column-content" css:theme=".contBoxTipo" />
@@ -53,7 +56,6 @@
 		<copy css:content-children="#portal-column-two" css:theme="#portletsLeft" />
 	</rules>
 	
-
 	<!-- Manage portlets Home Page -->
 	<rules css:if-content="body.portaltype-vindula-themedefault-content-homepage">
 		<rules css:if-content="body.template-manage-portlets">

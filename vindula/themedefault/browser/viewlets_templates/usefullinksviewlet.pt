@@ -1,0 +1,12 @@
+<div id="usefullinks_viewlet" tal:define="links viewlet/getLinks | nothing">	
+	<div id="cont_barra_superior" tal:condition="links">
+		<ul>
+			<li tal:repeat="link links">
+				<span tal:condition="not: repeat/link/start">&nbsp; / &nbsp;</span>
+				<a tal:attributes="title link/Description; alt link/title; href link/remote_url" 
+				   tal:content="link/title"
+				   target="_blank"></a>
+			</li>
+		</ul>
+	</div>
+</div>
