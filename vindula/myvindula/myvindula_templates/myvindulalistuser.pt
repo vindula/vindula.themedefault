@@ -12,7 +12,7 @@
 			<div id="interna" >
 				<h2 tal:content="form_data/name|nothing"></h2>
 				<p><strong>Department </strong><span tal:content="form_data/departamento/name|nothing"></span></p>
-				<img width="150px" height="150px" tal:define="photo form_data/photograph|nothingh" tal:attributes="src python:view.getPhoto(photo)">
+				<img width="150px" height="150px" tal:define="photo form_data/photograph|nothing" tal:attributes="src python:view.getPhoto(photo)">
 				<p><strong>Phone number </strong><span tal:content="form_data/phone_number|nothing"></span></p>								    			
 				<p><strong>Email </strong><span tal:content="form_data/email|nothing"></span></p>
 				<p><strong>Employee id </strong><span tal:content="form_data/employee_id|nothing"></span></p>
