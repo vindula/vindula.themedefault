@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<portlets
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="plone">
+    	
+	<portlet
+		addview="vindula.myvindula.PortletRamaisVindula"
+		title="Portlet Ramais Vindula"
+		description="Portlet Ramais Vindula"
+	    />		
+	
+	<portlet
+		addview="vindula.myvindula.PortletAniversariosVindula"
+		title="Portlet Aniversarios Vindula"
+		description="Portlet Aniversarios Vindula"
+	    />		
+		
+
+</portlets>

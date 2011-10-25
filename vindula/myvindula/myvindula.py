@@ -16,6 +16,7 @@ from Products.statusmessages.interfaces import IStatusMessage
 
 from plone.z3cform.crud import crud
 
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, ModelsFuncDetails, ImportUser
 from zope.component import getUtility
 
@@ -170,6 +171,7 @@ class MyVindulaListUser(grok.View):
     grok.name('myvindulalistuser')
     
     def load_list(self):
+        #vars = BaseFunc().getParametersFromURL(self)
         user = self.request.form.get('user','')
         return ModelsFuncDetails().get_FuncDetails(unicode(user, 'utf-8'))
 
@@ -186,6 +188,7 @@ class MyVindulalistAll(grok.View):
     
     def load_list(self):
         form = self.request.form
+        #vars = BaseFunc().getParametersFromURL(self)
         title = form.get('title','').strip()
         departamento= form.get('departamento','0')
         ramal = form.get('ramal','').strip()

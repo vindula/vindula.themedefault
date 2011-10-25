@@ -22,6 +22,9 @@ from Products.statusmessages.interfaces import IStatusMessage
 from vindula.myvindula.validation import valida_form
 from datetime import date
 
+#import sys
+#from storm.tracer import debug #
+
 class IFuncDetails(form.Schema):
     
     @grok.provider(IContextSourceBinder)
@@ -317,7 +320,6 @@ class ModelsFuncDetails(Storm, BaseStore):
                 data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"), 
                                                           ModelsFuncDetails.name.like("%" + phone + "%"))
             
-            
            if data.count() == 0:
                 return None
            else:
@@ -336,12 +338,39 @@ class ModelsFuncDetails(Storm, BaseStore):
                 return None
             else:
                 return data    
-            
-            
-                        
+                       
         else:
             return None
+    
+    def get_FuncBirthdays(self, date_start, date_end):
         
+        data = self.store.execute('Select * From FuncDetails Where DAY(date_birth) <= DAY(Date("%s")) AND MONTH(date_birth) <= MONTH(Date("%s")) AND DAY(date_birth) >= DAY(Date("%s")) AND MONTH(date_birth) >= MONTH(Date("%s")) ;'%(date_end,date_end,date_start,date_start)) 
+        
+#        debug(True, stream=sys.stdout)    
+#        data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.date_birth.like(date_end),
+#                                                  #ModelsFuncDetails.date_birth <= date_end.month,
+#                                                  #ModelsFuncDetails.date_birth >= date_start.day,
+#                                                  ModelsFuncDetails.date_birth.like(date_start)).order_by(ModelsFuncDetails.date_birth)
+
+        if data.rowcount != 0:
+            result=[]
+            for obj in data.get_all():
+                D={}
+                i = 0
+                columns = self.store.execute('SHOW COLUMNS FROM FuncDetails FROM myvindulaDB;')
+                for column in columns.get_all():
+                    if str(column[0]) == 'date_birth':
+                        D[str(column[0])] = obj[i].strftime('%d/%m/%Y')
+                    else:
+                        D[str(column[0])] = obj[i]
+                    i+=1
+            
+                result.append(D)       
+            
+            return result
+        else:
+            return None
+          
          
 class ModelsDepartment(Storm, BaseStore):
     __storm_table__ = 'Department'
@@ -357,6 +386,13 @@ class ModelsDepartment(Storm, BaseStore):
             return None
         else:
             return data
+        
+    def get_departmentByID(self,id):
+        data = self.store.find(ModelsDepartment, ModelsDepartment.id==int(id)).one()
+        if data:
+            return data
+        else:
+            return None
 
 class ModelsConfgMyvindula(Storm, BaseStore):
     __storm_table__ = 'ConfMyvindula'
@@ -442,6 +478,19 @@ class BaseFunc(BaseStore):
                 return ''
         else:
             return ''
+        
+    def getParametersFromURL(self, ctx):
+        traverse = ctx.context.REQUEST.get('traverse_subpath')
+        vars = {}
+        if traverse != None:
+            size = len(traverse)
+            counter = 0
+            for i in range(size/2):
+                position = i+counter
+                vars.update({traverse[position]:traverse[position+1]})
+                counter+=1
+        return vars
+                
     
     def getPhoto(self,campo,request,data):
         if campo in request.keys():
