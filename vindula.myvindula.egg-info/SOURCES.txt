@@ -18,4 +18,5 @@ vindula/myvindula/user.py
 vindula/myvindula/validation.py
 vindula/myvindula/models/__init__.py
 vindula/myvindula/portlets/__init__.py
+vindula/myvindula/portlets/aniversarios.py
 vindula/myvindula/portlets/ramais.py

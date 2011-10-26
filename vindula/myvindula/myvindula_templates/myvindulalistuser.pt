@@ -6,44 +6,178 @@
     
     <div metal:fill-slot="content">            
 	    <div id="content" tal:define="form_data view/load_list | python:{};">
-	        
-	        <h1>List Personal Informations</h1>
-			<br />
-			<div id="interna" >
-				<h2 tal:content="form_data/name|nothing"></h2>
-				<p><strong>Department </strong><span tal:content="form_data/departamento/name|nothing"></span></p>
-				<img width="150px" height="150px" tal:define="photo form_data/photograph|nothing" tal:attributes="src python:view.getPhoto(photo)">
-				<p><strong>Phone number </strong><span tal:content="form_data/phone_number|nothing"></span></p>								    			
-				<p><strong>Email </strong><span tal:content="form_data/email|nothing"></span></p>
-				<p><strong>Employee id </strong><span tal:content="form_data/employee_id|nothing"></span></p>
-				<p><strong>Date birth </strong><span tal:content="form_data/date_birth|nothing"></span></p>
-				<p><strong>Registration </strong><span tal:content="form_data/registration|nothing"></span></p>
-				<p><strong>Enterprise </strong><span tal:content="form_data/enterprise|nothing"></span></p>
-				<p><strong>Position </strong><span tal:content="form_data/position|nothing"></span></p>
-				<p><strong>Admission Date </strong><span tal:content="form_data/admission_date|nothing"></span></p>
-				<p><strong>Cost Center </strong><span tal:content="form_data/cost_center|nothing"></span></p>
-				<p><strong>Job Role </strong><span tal:content="form_data/job_role|nothing"></span></p>
-				<p><strong>Organisational Unit </strong><span tal:content="form_data/organisational_unit|nothing"></span></p>
-				<p><strong>Reports To </strong><span tal:content="form_data/reports_to|nothing"></span></p>
-				<p><strong>Location </strong><span tal:content="form_data/location|nothing"></span></p>
-				<p><strong>Postal address </strong><span tal:content="form_data/postal_address|nothing"></span></p>
-				<p><strong>Special roles </strong><span tal:content="form_data/special_roles|nothing"></span></p>
-				<p><strong>Nickname </strong><span tal:content="form_data/nickname|nothing"></span></p>
-				<p><strong>Pronunciation name </strong><span tal:content="form_data/pronunciation_name|nothing"></span></p>
-				<p><strong>Committess </strong><span tal:content="form_data/committess|nothing"></span></p>
-				<p><strong>Projetcs </strong><span tal:content="form_data/projetcs|nothing"></span></p>
-				<p><strong>Personal Information </strong><span tal:content="form_data/personal_information|nothing"></span></p>
-				<p><strong>Skills Expertise </strong><span tal:content="form_data/skills_expertise|nothing"></span></p>
-				<p><strong>License Plate Numbers </strong><span tal:content="form_data/license_plate_numbers|nothing"></span></p>
-				<p><strong>Profit Centre </strong><span tal:content="form_data/profit_centre|nothing"></span></p>
-				<p><strong>Languages </strong><span tal:content="form_data/languages|nothing"></span></p>
-				<p><strong>Availability </strong><span tal:content="form_data/availability|nothing"></span></p>
-				<p><strong>Papers Published </strong><span tal:content="form_data/papers_published|nothing"></span></p>
-				<p><strong>Teaching Research </strong><span tal:content="form_data/teaching_research|nothing"></span></p>
-				<p><strong>Delegations </strong><span tal:content="form_data/delegations|nothing"></span></p>
-				<p><strong>Resume </strong><span tal:content="form_data/resume|nothing"></span></p>
-				<p><strong>Blogs </strong><span tal:content="form_data/blogs|nothing"></span></p>
-				<p><strong>Customised Message </strong><span tal:content="form_data/customised_message|nothing"></span></p>
+	       
+			<div id="interna" class="userpage">
+				 <h2 class="h2title">Informa&ccedil;&otilde;es do Perfil</h2>
+	
+				<div class="titulo">
+					<h2 tal:content="form_data/name|nothing"></h2>
+				</div>
+				
+				<div class="department">
+					<span tal:content="form_data/departamento/name|nothing"></span>
+				</div>
+				
+				<!-- start: Personal Informations -->
+				<div id="personal">
+					<div id="photo">
+						<img tal:define="photo form_data/photograph|nothing" tal:attributes="src python:view.getPhoto(photo)">
+					</div>
+					<div id="data">
+						<div class="area"><span>Pessoal</span></div>
+						<table>
+							<tr>
+								<td class="field">ID</td>
+								<td class="value" tal:content="form_data/employee_id|nothing"></td>
+							</tr>
+							<tr>
+								<td class="field">Apelido</td>
+								<td class="value" tal:content="form_data/nickname|nothing"></td>
+							</tr>
+							<tr>
+								<td class="field">Pron&uacute;ncia do nome</td>
+								<td class="value" tal:content="form_data/pronunciation_name|nothing"></td>
+							</tr>
+							<tr>
+								<td class="field">Data de anivers&aacute;rio</td>
+								<td class="value" tal:content="form_data/date_birth|nothing"></td>
+							</tr>
+						</table>
+						<a id="send-mail" tal:attributes="href string:mailto:${form_data/email|nothing}">Enviar e-mail</a>
+					</div>
+				</div>
+				<!-- end: Personal Informations -->
+	
+				<!-- start: Others Informations -->
+				<!-- Contact -->
+				<div class="area"><span>Contato</span></div>
+				<img class="type-info" src="/++theme++vindula.themedefault/images/user_contact.png" />
+				<table>
+					<tr>
+						<td class="field">E-mail</td>
+						<td class="value" tal:content="form_data/email|nothing"></td>
+					</tr>
+					<tr>
+						<td class="field">Telefone</td>
+						<td class="value" tal:content="form_data/phone_number|nothing"></td>
+					</tr>
+					<tr>
+						<td class="field">Localiza&ccedil;&atilde;o</td>
+						<td class="value" tal:content="form_data/location|nothing"></td>
+					</tr>
+					<tr>
+						<td class="field">Endere&ccedil;o</td>
+						<td class="value" tal:content="form_data/postal_address|nothing"></td>
+					</tr>
+				</table>
+
+				
+				
+				<!-- Corporative -->
+				<div class="area"><span>Corporativo</span></div>
+				<img class="type-info" src="/++theme++vindula.themedefault/images/user_business.png" />
+				<table>
+					<tr>
+						<td class="field">Empresa</td>
+						<td class="value" tal:content="form_data/enterprise|nothing"></td>
+					</tr>
+					<tr>
+						<td class="field">Registro</td>
+						<td class="value" tal:content="form_data/registration|nothing"></td>
+					</tr>
+					<tr>
+						<td class="field">Cargo</td>
+						<td class="value" tal:content="form_data/position|nothing"></td>
+					</tr>
+					<tr>
+						<td class="field">Data de Admiss&atilde;o</td>
+						<td class="value" tal:content="form_data/admission_date|nothing"></td>
+					</tr>
+					<tr>
+						<td class="field">Centro de custo</td>
+						<td class="value" tal:content="form_data/cost_center|nothing"></td>
+					</tr>
+					<tr>
+						<td class="field">Centro de lucro</td>
+						<td class="value" tal:content="form_data/profit_centre|nothing"></td>
+					</tr>
+					<tr>
+						<td class="field">Job Role</td>
+						<td class="value" tal:content="form_data/job_role|nothing"></td>
+					</tr>
+					<tr>
+						<td class="field">Special roles</td>
+						<td class="value" tal:content="form_data/special_roles|nothing"></td>
+					</tr>
+					<tr>
+						<td class="field">Unidade organizacional</td>
+						<td class="value" tal:content="form_data/organisational_unit|nothing"></td>
+					</tr>
+					<tr>
+						<td class="field">Delega&ccedil;&otilde;es</td>
+						<td class="value" tal:content="form_data/delegations|nothing"></td>
+					</tr>	
+					<tr>
+						<td class="field">Reporta-se a</td>
+						<td class="value" tal:content="form_data/reports_to|nothing"></td>
+					</tr>
+				</table>
+				
+				<!-- Others -->
+				<div class="area"><span>Outras Informa&ccedil;&otilde;es</span></div>
+				<img class="type-info" src="/++theme++vindula.themedefault/images/user_others.png" />
+				<table>
+					<tr>
+						<td class="field">Committees</td>
+						<td class="value" tal:content="form_data/committess|nothing"></td>
+					</tr>
+					<tr>
+						<td class="field">Projetos</td>
+						<td class="value" tal:content="form_data/projetcs|nothing"></td>
+					</tr>			
+					<tr>
+						<td class="field">Informa&ccedil;&atilde;o pessoal</td>
+						<td class="value" tal:content="form_data/personal_information|nothing"></td>
+					</tr>
+					<tr>
+						<td class="field">Habilidades</td>
+						<td class="value" tal:content="form_data/skills_expertise|nothing"></td>
+					</tr>					
+					<tr>
+						<td class="field">N&uacute;meros de licen&ccedil;a</td>
+						<td class="value" tal:content="form_data/license_plate_numbers|nothing"></td>
+					</tr>
+					<tr>
+						<td class="field">Idiomas</td>
+						<td class="value" tal:content="form_data/languages|nothing"></td>
+					</tr>		
+					<tr>
+						<td class="field">Disponibilidade</td>
+						<td class="value" tal:content="form_data/availability|nothing"></td>
+					</tr>				
+					<tr>
+						<td class="field">Artigos publicados</td>
+						<td class="value" tal:content="form_data/papers_published|nothing"></td>
+					</tr>	
+					<tr>
+						<td class="field">Teaching Research</td>
+						<td class="value" tal:content="form_data/teaching_research|nothing"></td>
+					</tr>					
+					<tr>
+						<td class="field">Resumo</td>
+						<td class="value" tal:content="form_data/resume|nothing"></td>
+					</tr>	
+					<tr>
+						<td class="field">Blogs</td>
+						<td class="value" tal:content="form_data/blogs|nothing"></td>
+					</tr>				
+					<tr>
+						<td class="field">Mensagem personalizada</td>
+						<td class="value" tal:content="form_data/customised_message|nothing"></td>
+					</tr>
+				</table>
+				<!-- end: Others Informations -->
+
 			</div>
 	    </div>
     </div>    
