@@ -25,9 +25,12 @@
 
 #topo .logo{
     float: left;
-	margin: 30px 246px 25px 30px;
+	/*margin: 30px 246px 25px 30px;
 	width: 237px;
-	height:41px;
+	height:41px;*/
+	margin: 20px 253px 10px 40px;
+	width: 220px;
+	height:66px;
 }
 
 /* Campo busca... */

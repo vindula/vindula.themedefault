@@ -9,7 +9,8 @@
 
 #rodape .logo {
     float: left;
-    margin: 40px 0 0 30px;
+    /*margin: 40px 0 0 30px;*/
+	margin: 40px 0 0 50px;
 }
 
 #rodape form{
