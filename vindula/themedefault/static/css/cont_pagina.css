@@ -122,7 +122,8 @@
 .titulo_info h2 {
     font-weight: bold;
     line-height: 20px;
-    margin: 15px 0
+    margin: 15px 0;
+	color: #000000;
 }
 
 .titulo_info h4{
@@ -131,15 +132,19 @@
     margin: 10px 0 5px;
 }
 
-.img_info{
+.img_info,
+.gallery-cycle .img_info {
     float: left;
     margin: 0 15px 15px 0;
     padding: 3px;
     text-align: center;
+}
+
+.gallery-cycle .img_info {
 	border: 3px double #CCCCCC;
 }
 
-.img_info img {
+.gallery-cycle .img_info img {
 	max-height: 165px;
 }
 

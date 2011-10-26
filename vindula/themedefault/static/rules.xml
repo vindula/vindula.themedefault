@@ -64,5 +64,10 @@
 			<copy css:content-children="#portal-column-content" css:theme=".colunaManagePortlets" />
 		</rules>
 	</rules>
+	
+	<!-- Vindula News Content Type -->
+	<rules css:if-content="body.portaltype-vindula-content-content-vindulanews">
+		<drop css:content=".documentFirstHeading" />
+	</rules>
 
 </rules>
