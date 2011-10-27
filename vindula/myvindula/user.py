@@ -39,187 +39,177 @@ class IFuncDetails(form.Schema):
         
 
     name = schema.TextLine(
-        title=_(u"name"),
-        description=_(u"Digite o nome deste funcionario"),
+        title=_(u"Nome"),
+        description=_(u"Digite o nome do funcionário"),
         required=False,
     )
     phone_number = schema.TextLine(
         title=_(u"Telefone"),
-        description=_(u"Digite o Telefone do funcionario"),
+        description=_(u"Digite o telefone do funcionário"),
         required=False,
     )
     email = schema.TextLine(
-        title=_(u"E mail"),
-        description=_(u"Digite o E-mail do funcionario"),
+        title=_(u"E-mail"),
+        description=_(u"Digite o e-mail do funcionário"),
         required=False,
     )
     employee_id = schema.TextLine(
         title=_(u"Employee ID"),
-        description=_(u"Digite o ID do funcionario"),
+        description=_(u"Digite o ID do funcionário"),
         required=False,
     )
     date_birth = schema.Date(  #TextLine(
         title=_(u"Data de Nascimento"),
-        description=_(u"Digite a data de nascimneto do funcionario"),
+        description=_(u"Digite a data de nascimneto do funcionário"),
         required=False,
     )
 
     registration = schema.TextLine(
-        title=_(u"Matricula"),
-        description=_(u"Digite a data de nascimneto do funcionario"),
+        title=_(u"Matrícula"),
+        description=_(u"Digite o número de matrícula do funcionário"),
         required=False,
     )    
     
     enterprise = schema.TextLine(
         title=_(u"Empresa"),
-        description=_(u"Digite o nome da empresa do funcionario"),
+        description=_(u"Digite o nome da empresa do funcionário"),
         required=False,
     )                
     position = schema.TextLine(
         title=_(u"Cargo"),
-        description=_(u"Digite o cargo do funcionario"),
+        description=_(u"Digite o cargo do funcionário"),
         required=False,
     )    
     admission_date = schema.Date( #TextLine(
-        title=_(u"Data de Admissao"),
-        description=_(u"Digite a data de admissao do funcionario"),
+        title=_(u"Data de Admissão"),
+        description=_(u"Digite a data de admissão do funcionário"),
         required=False,
     )    
     cost_center = schema.TextLine(
         title=_(u"Centro de Custo"),
-        description=_(u"Digite o centro de custo do funcionario"),
+        description=_(u"Digite o centro de custo do funcionário"),
         required=False,
-    )    
-    job_role = schema.TextLine(
-        title=_(u"Job Role"),
-        description=_(u"Digite o 'Job Role' do funcionario"),
-        required=False,
-    )        
+    )          
     organisational_unit = schema.TextLine(
-        title=_(u"Organisational Unit"),
-        description=_(u"Digite o 'Organisational Unit' do funcionario"),
+        title=_(u"Unidade Organizacional"),
+        description=_(u"Digite a unidade organizacional do funcionário"),
         required=False,
     )
     reports_to = schema.TextLine(
         title=_(u"Reports to"),
-        description=_(u"Digite o 'Reports to' do funcionario"),
+        description=_(u"Digite o 'Reports to' do funcionário"),
         required=False,
     )    
     location = schema.TextLine(
         title=_(u"Localizacao"),
-        description=_(u"Digite a localizacao do funcionario"),
+        description=_(u"Digite a localização do funcionário"),
         required=False,
     )    
     postal_address = schema.TextLine(
         title=_(u"Endereco Postal"),
-        description=_(u"Digite o endereco do funcionario"),
+        description=_(u"Digite o endereco postal do funcionário"),
         required=False,
     )    
     special_roles = schema.TextLine(
         title=_(u"Special Roles"),
-        description=_(u"Digite o 'Special Roles' do funcionario"),
+        description=_(u"Digite o 'Special Roles' do funcionário"),
         required=False,
     )    
     photograph = NamedImage(
         title=_(u"Foto"),
-        description=_(u"Coloque a foto do funcionario"),
+        description=_(u"Coloque a foto do funcionário"),
         required=False,
     )    
     nickname = schema.TextLine(
         title=_(u"NickName"),
-        description=_(u"Digite o 'nickname' do funcionario"),
+        description=_(u"Digite o 'nickname' do funcionário"),
         required=False,
     )        
     pronunciation_name = schema.TextLine(
         title=_(u"Como pronuncia seu nome"),
-        description=_(u"Como pronuncia o  nome do funcionario"),
+        description=_(u"Como pronuncia o  nome do funcionário"),
         required=False,
     )        
     committess = schema.TextLine(
         title=_(u"Commitess"),
-        description=_(u"Digite o 'Commitess' do funcionario"),
+        description=_(u"Digite o 'Commitess' do funcionário"),
         required=False,
     )        
     projetcs = schema.TextLine(
         title=_(u"Projetos"),
-        description=_(u"Digite o Projeto do funcionario"),
+        description=_(u"Digite o Projeto do funcionário"),
         required=False,
     )        
     personal_information = schema.TextLine(
         title=_(u"Informacoes pessoais"),
-        description=_(u"Digite as informaoes pessoais do funcionario"),
+        description=_(u"Digite as informaoes pessoais do funcionário"),
         required=False,
     )        
     skills_expertise = schema.TextLine(
         title=_(u"Skills Expertise"),
-        description=_(u"Digite o 'Skills Expertise' do funcionario"),
+        description=_(u"Digite o 'Skills Expertise' do funcionário"),
         required=False,
-    )        
-    license_plate_numbers = schema.TextLine(
-        title=_(u"License Plate Numbers"),
-        description=_(u"Digite as 'License Plate Numbers' do funcionario"),
-        required=False,
-    )        
+    )               
     profit_centre = schema.TextLine(
         title=_(u"Profit Centre"),
-        description=_(u"Digite o 'Profit Centre' do funcionario"),
+        description=_(u"Digite o 'Profit Centre' do funcionário"),
         required=False,
     )        
     languages = schema.TextLine(
         title=_(u"Languages"),
-        description=_(u"Digite a 'Languages' do funcionario"),
+        description=_(u"Digite a 'Languages' do funcionário"),
         required=False,
     )        
     availability = schema.TextLine(
         title=_(u"Avaliacao"),
-        description=_(u"Digite a avaliacao do funcionario"),
+        description=_(u"Digite a avaliacao do funcionário"),
         required=False,
     )        
     papers_published = schema.TextLine(
         title=_(u"Artigo Publicados"),
-        description=_(u"Digite os artigo puclicados do funcionario"),
+        description=_(u"Digite os artigo puclicados do funcionário"),
         required=False,
     )        
     profit_centre = schema.TextLine(
         title=_(u"Profit Centre"),
-        description=_(u"Digite o 'Profit Centre' do funcionario"),
+        description=_(u"Digite o 'Profit Centre' do funcionário"),
         required=False,
     )        
     teaching_research = schema.TextLine(
         title=_(u"Teaching Research"),
-        description=_(u"Digite o 'Teaching Research' do funcionario"),
+        description=_(u"Digite o 'Teaching Research' do funcionário"),
         required=False,
     )
     delegations = schema.TextLine(
         title=_(u"Delegacao"),
-        description=_(u"Digite a delegacao do funcionario"),
+        description=_(u"Digite a delegacao do funcionário"),
         required=False,
     ) 
     resume = schema.TextLine(
         title=_(u"Resumo"),
-        description=_(u"Digite o resumo do funcionario"),
+        description=_(u"Digite o resumo do funcionário"),
         required=False,
     )          
     blogs = schema.TextLine(
         title=_(u"Blogs"),
-        description=_(u"Digite o blogs do funcionario"),
+        description=_(u"Digite o blogs do funcionário"),
         required=False,
     )          
     customised_message = schema.TextLine(
         title=_(u"Menssagem Costumizada"),
-        description=_(u"Digite uma menssagem do funcionario"),
+        description=_(u"Digite uma menssagem do funcionário"),
         required=False,
     )          
     
 #    username = schema.TextLine(
 #        title=_(u"Username"),
-#        description=_(u"Digite uma username do funcionario"),
+#        description=_(u"Digite uma username do funcionário"),
 #        required=False,
 #        )
 
     Department_id = schema.Choice(
         title=_(u"departamentos_id"),
-        description=_(u"Selecione o departamento do funcionario"),
+        description=_(u"Selecione o departamento do funcionário"),
         source=choiceDepartament,
         required=False,
 
@@ -254,7 +244,6 @@ class ModelsFuncDetails(Storm, BaseStore):
     position = Unicode()
     admission_date = Date()
     cost_center = Unicode()
-    job_role = Unicode()
     organisational_unit = Unicode()
     reports_to = Unicode()
     location = Unicode()
@@ -267,7 +256,6 @@ class ModelsFuncDetails(Storm, BaseStore):
     projetcs = Unicode()
     personal_information = Unicode()
     skills_expertise = Unicode()
-    license_plate_numbers = Unicode()
     profit_centre = Unicode()
     languages = Unicode()
     availability = Unicode()
@@ -409,7 +397,6 @@ class ModelsConfgMyvindula(Storm, BaseStore):
     position = Bool()
     admission_date = Bool()
     cost_center = Bool()
-    job_role = Bool()
     organisational_unit = Bool()
     reports_to = Bool()
     location = Bool()
@@ -422,7 +409,6 @@ class ModelsConfgMyvindula(Storm, BaseStore):
     projetcs = Bool()
     personal_information = Bool()
     skills_expertise = Bool()
-    license_plate_numbers = Bool()
     profit_centre = Bool()
     languages = Bool()
     availability = Bool()
@@ -676,41 +662,39 @@ class SchemaFunc(BaseFunc):
     def to_utf8(value):
         return unicode(value, 'utf-8')
 
-    campos = {'name'                  : {'required': False, 'type' : to_utf8, 'label':'Nome',                    'decription':u'Digite o Nome deste funcionaro',            'ordem':0},
-              'nickname'              : {'required': False, 'type' : to_utf8, 'label':'NickName',                'decription':u'Digite o nickname do funcionaro',           'ordem':1},
-              'phone_number'          : {'required': False, 'type' : to_utf8, 'label':'Telefone',                'decription':u'Digite o Telefone do funcionaro',           'ordem':2},
-              'email'                 : {'required': False, 'type' : 'email', 'label':'Email',                   'decription':u'Digite o Email do funcionaro',              'ordem':3},
-              'employee_id'           : {'required': False, 'type' : to_utf8, 'label':'ID Funcionario',          'decription':u'Digite o ID do funcionaro',                 'ordem':4},
-              'date_birth'            : {'required': False, 'type' : date,    'label':'Data de Nacimento',       'decription':u'Digite a data de nascimneto do funcionaro', 'ordem':5},
-              'registration'          : {'required': False, 'type' : to_utf8, 'label':'Matricula',               'decription':u'Digite a matricula do funcionaro',          'ordem':6},
-              'enterprise'            : {'required': False, 'type' : to_utf8, 'label':'Empresa',                 'decription':u'Digite o nome da empresa do funcionaro',    'ordem':7},
-              'position'              : {'required': False, 'type' : to_utf8, 'label':'Cargo',                   'decription':u'Digite o cargo do funcionaro',              'ordem':8},
-              'admission_date'        : {'required': False, 'type' : date,    'label':'Data Admição',            'decription':u'Digite a data de admição do funcionaro',    'ordem':9},
-              'cost_center'           : {'required': False, 'type' : to_utf8, 'label':'Centro de Custo',         'decription':u'Digite o centro de custo do funcionaro',    'ordem':10},
-              'job_role'              : {'required': False, 'type' : to_utf8, 'label':'Job Role',                'decription':u'Digite o Job Role do funcionaro',           'ordem':11},
-              'organisational_unit'   : {'required': False, 'type' : to_utf8, 'label':'Organisational Unit',     'decription':u'Digite a Organisational Unit do funcionaro','ordem':12},
-              'reports_to'            : {'required': False, 'type' : to_utf8, 'label':'Reporta-se a',            'decription':u'Digite a quem o funcionario se reporta',    'ordem':13},
-              'location'              : {'required': False, 'type' : to_utf8, 'label':'Localização',             'decription':u'Digite a localização do funcionaro',        'ordem':14},
-              'postal_address'        : {'required': False, 'type' : to_utf8, 'label':'Endereço Postal',         'decription':u'Digite o endereço do funcionaro',           'ordem':15},
-              'special_roles'         : {'required': False, 'type' : to_utf8, 'label':'Special Roles',           'decription':u'Digite o Special Roles do funcionaro',      'ordem':16},
-              'photograph'            : {'required': False, 'type' : 'file',  'label':'Foto',                    'decription':u'Coloque a foto do funcionaro',              'ordem':17},
-              'pronunciation_name'    : {'required': False, 'type' : to_utf8, 'label':'Como pronuncia seu nome', 'decription':u'Como pronuncia o  nome do funcionaro',      'ordem':18},
-              'committess'            : {'required': False, 'type' : to_utf8, 'label':'Commitess',             'decription':u'Digite o Commitess do funcionaro',            'ordem':19},
-              'projetcs'              : {'required': False, 'type' : to_utf8, 'label':'Projetos',              'decription':u'Digite o Projetos do funcionaro',             'ordem':20},
-              'personal_information'  : {'required': False, 'type' : to_utf8, 'label':'Informações pessoais',  'decription':u'Digite as informações pessoais do funcionaro','ordem':21},
-              'skills_expertise'      : {'required': False, 'type' : to_utf8, 'label':'Skills Expertise',      'decription':u'Digite o Skills Expertise do funcionaro',     'ordem':22},
-              'license_plate_numbers' : {'required': False, 'type' : to_utf8, 'label':'License Plate Numbers', 'decription':u'Digite a License Plate Numbers do funcionaro','ordem':23},
-              'profit_centre'         : {'required': False, 'type' : to_utf8, 'label':'Profil Centre',         'decription':u'Digite o Profil Centre do funcionaro',        'ordem':24},
-              'languages'             : {'required': False, 'type' : to_utf8, 'label':'Linguages',             'decription':u'Digite a lingua do funcionaro',               'ordem':25},
-              'availability'          : {'required': False, 'type' : to_utf8, 'label':'Avaliação',             'decription':u'Digite a avaliação do funcionaro',            'ordem':26},
-              'papers_published'      : {'required': False, 'type' : to_utf8, 'label':'Artigo Publicados',     'decription':u'Digite os artigo puclicados do funcionaro',   'ordem':27},
-              'teaching_research'     : {'required': False, 'type' : to_utf8, 'label':'Teaching Research',     'decription':u'Digite o Teaching Research do funcionaro',    'ordem':28},
-              'delegations'           : {'required': False, 'type' : to_utf8, 'label':'Delegação',             'decription':u'Digite a delegação do funcionaro',            'ordem':29},
-              'resume'                : {'required': False, 'type' : to_utf8, 'label':'Resumo',                'decription':u'Digite um resumo do funcionaro',              'ordem':30},
-              'blogs'                 : {'required': False, 'type' : to_utf8, 'label':'Blogs',                 'decription':u'Digite o Blog do funcionaro',                 'ordem':31},
-              'customised_message'    : {'required': False, 'type' : to_utf8, 'label':'Menssagem Costumizada', 'decription':u'Digite uma menssagem do funcionaro',          'ordem':32},
+    campos = {'name'                  : {'required': False, 'type' : to_utf8, 'label':'Nome',                   'decription':u'Digite o nome do funcionário',                   'ordem':0},
+              'nickname'              : {'required': False, 'type' : to_utf8, 'label':'Apelido',                'decription':u'Digite o apelido do funcionário',                'ordem':1},
+              'phone_number'          : {'required': False, 'type' : to_utf8, 'label':'Telefone',               'decription':u'Digite o telefone do funcionário',               'ordem':2},
+              'email'                 : {'required': False, 'type' : 'email', 'label':'E-mail',                 'decription':u'Digite o e-mail do funcionário',                 'ordem':3},
+              'employee_id'           : {'required': False, 'type' : to_utf8, 'label':'ID Funcionário',         'decription':u'Digite o ID do funcionário',                     'ordem':4},
+              'date_birth'            : {'required': False, 'type' : date,    'label':'Data de Nascimento',     'decription':u'Digite a data de nascimento do funcionário',     'ordem':5},
+              'registration'          : {'required': False, 'type' : to_utf8, 'label':'Matrícula',              'decription':u'Digite o número de matrícula do funcionário',    'ordem':6},
+              'enterprise'            : {'required': False, 'type' : to_utf8, 'label':'Empresa',                'decription':u'Digite o nome da empresa do funcionário',        'ordem':7},
+              'position'              : {'required': False, 'type' : to_utf8, 'label':'Cargo',                  'decription':u'Digite o cargo do funcionário',                  'ordem':8},
+              'admission_date'        : {'required': False, 'type' : date,    'label':'Data de Admissão',       'decription':u'Digite a data de admissão do funcionário',       'ordem':9},
+              'cost_center'           : {'required': False, 'type' : to_utf8, 'label':'Centro de Custo',        'decription':u'Digite o centro de custo do funcionário',        'ordem':10},
+              'organisational_unit'   : {'required': False, 'type' : to_utf8, 'label':'Unidade organizacional', 'decription':u'Digite a unidade organizacional do funcionário', 'ordem':11},
+              'reports_to'            : {'required': False, 'type' : to_utf8, 'label':'Reporta-se a',           'decription':u'Digite a quem o funcionário se reporta',         'ordem':12},
+              'location'              : {'required': False, 'type' : to_utf8, 'label':'Localização',            'decription':u'Digite a localização do funcionário',            'ordem':13},
+              'postal_address'        : {'required': False, 'type' : to_utf8, 'label':'Endereço Postal',        'decription':u'Digite o endereço postal do funcionário',        'ordem':14},
+              'special_roles'         : {'required': False, 'type' : to_utf8, 'label':'Funções Especiais',      'decription':u'Digite as funções especiais do funcionário',     'ordem':15},
+              'photograph'            : {'required': False, 'type' : 'file',  'label':'Foto',                   'decription':u'Coloque a foto do funcionário',                  'ordem':16},
+              'pronunciation_name'    : {'required': False, 'type' : to_utf8, 'label':'Pronuncia do nome',      'decription':u'Como se pronuncia o  nome do funcionário',       'ordem':17},
+              'committess'            : {'required': False, 'type' : to_utf8, 'label':'Comissão',               'decription':u'Digite a comissão do funcionário',               'ordem':18},
+              'projetcs'              : {'required': False, 'type' : to_utf8, 'label':'Projetos',               'decription':u'Digite os projetos do funcionário',              'ordem':19},
+              'personal_information'  : {'required': False, 'type' : to_utf8, 'label':'Informações pessoais',   'decription':u'Digite as informações pessoais do funcionário',  'ordem':20},
+              'skills_expertise'      : {'required': False, 'type' : to_utf8, 'label':'Habilidades'          ,  'decription':u'Digite as habilidades do funcionário',           'ordem':21},
+              'profit_centre'         : {'required': False, 'type' : to_utf8, 'label':'Centro de Lucro',        'decription':u'Digite o centro de lucro do funcionário',        'ordem':22},
+              'languages'             : {'required': False, 'type' : to_utf8, 'label':'Idioma',                 'decription':u'Digite o idioma do funcionário',                 'ordem':23},
+              'availability'          : {'required': False, 'type' : to_utf8, 'label':'Disponibilidade',        'decription':u'Digite a disponibilidade do funcionário',        'ordem':24},
+              'papers_published'      : {'required': False, 'type' : to_utf8, 'label':'Artigos Publicados',     'decription':u'Digite os artigo publicados do funcionário',     'ordem':25},
+              'blogs'                 : {'required': False, 'type' : to_utf8, 'label':'Blogs',                  'decription':u'Digite os blogs do funcionário',                 'ordem':26},
+              'teaching_research'     : {'required': False, 'type' : to_utf8, 'label':'Personalizado 1',        'decription':u'Campo para personalizar',                        'ordem':27},
+              'resume'                : {'required': False, 'type' : to_utf8, 'label':'Personalizado 2',        'decription':u'Campo para personalizar',                        'ordem':28},
+              'delegations'           : {'required': False, 'type' : to_utf8, 'label':'Personalizado 3',        'decription':u'Campo para personalizar',                        'ordem':29},
+              'customised_message'    : {'required': False, 'type' : to_utf8, 'label':'Personalizado 4',        'decription':u'Campo para personalizar',                        'ordem':30},
               
-              'username'              : {'required': False, 'type' : to_utf8,  'label':'Username'              }, #Campo Obrigatorio
+              'username'              : {'required': False, 'type' : to_utf8, 'label':'Nome de Usuário'        },  #Campo Obrigatorio
               'Department_id'         : {'required': False, 'type' : int,     'label':'Departamento'           },} #Campo Obrigatorio
                     
     def registration_processes(self,context):
@@ -831,7 +815,6 @@ class SchemaConfgMyvindula(BaseFunc):
             'position'              : {'required': False, 'type' : bool, 'label':'Cargo',               },
             'admission_date'        : {'required': False, 'type' : bool, 'label':'Data Admição',        },
             'cost_center'           : {'required': False, 'type' : bool, 'label':'Centro de Custo',     },
-            'job_role'              : {'required': False, 'type' : bool, 'label':'Job Role',            },
             'organisational_unit'   : {'required': False, 'type' : bool, 'label':'Organisational Unit', },
             'reports_to'            : {'required': False, 'type' : bool, 'label':'Reporta-se a',        },
             'location'              : {'required': False, 'type' : bool, 'label':'Localização',         },
@@ -844,7 +827,6 @@ class SchemaConfgMyvindula(BaseFunc):
             'projetcs'              : {'required': False, 'type' : bool, 'label':'Projetos',              },
             'personal_information'  : {'required': False, 'type' : bool, 'label':'Informações pessoais',  },
             'skills_expertise'      : {'required': False, 'type' : bool, 'label':'Skills Expertise',      },
-            'license_plate_numbers' : {'required': False, 'type' : bool, 'label':'License Plate Numbers', },
             'profit_centre'         : {'required': False, 'type' : bool, 'label':'Profil Centre',         },
             'languages'             : {'required': False, 'type' : bool, 'label':'Linguages',             },
             'availability'          : {'required': False, 'type' : bool, 'label':'Avaliação',             },

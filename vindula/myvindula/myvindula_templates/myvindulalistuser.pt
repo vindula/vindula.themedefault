@@ -18,7 +18,7 @@
 					<span tal:content="form_data/departamento/name|nothing"></span>
 				</div>
 				
-				<!-- start: Personal Informations -->
+				<!-- start: Personal Information -->
 				<div id="personal">
 					<div id="photo">
 						<img tal:define="photo form_data/photograph|nothing" tal:attributes="src python:view.getPhoto(photo)">
@@ -46,9 +46,9 @@
 						<a id="send-mail" tal:attributes="href string:mailto:${form_data/email|nothing}">Enviar e-mail</a>
 					</div>
 				</div>
-				<!-- end: Personal Informations -->
+				<!-- end: Personal Information -->
 	
-				<!-- start: Others Informations -->
+				<!-- start: Others Information -->
 				<!-- Contact -->
 				<div class="area"><span>Contato</span></div>
 				<img class="type-info" src="/++theme++vindula.themedefault/images/user_contact.png" />
@@ -102,11 +102,7 @@
 						<td class="value" tal:content="form_data/profit_centre|nothing"></td>
 					</tr>
 					<tr>
-						<td class="field">Job Role</td>
-						<td class="value" tal:content="form_data/job_role|nothing"></td>
-					</tr>
-					<tr>
-						<td class="field">Special roles</td>
+						<td class="field">Funções Especiais</td>
 						<td class="value" tal:content="form_data/special_roles|nothing"></td>
 					</tr>
 					<tr>
@@ -128,7 +124,7 @@
 				<img class="type-info" src="/++theme++vindula.themedefault/images/user_others.png" />
 				<table>
 					<tr>
-						<td class="field">Committees</td>
+						<td class="field">Comissão</td>
 						<td class="value" tal:content="form_data/committess|nothing"></td>
 					</tr>
 					<tr>
@@ -143,10 +139,6 @@
 						<td class="field">Habilidades</td>
 						<td class="value" tal:content="form_data/skills_expertise|nothing"></td>
 					</tr>					
-					<tr>
-						<td class="field">N&uacute;meros de licen&ccedil;a</td>
-						<td class="value" tal:content="form_data/license_plate_numbers|nothing"></td>
-					</tr>
 					<tr>
 						<td class="field">Idiomas</td>
 						<td class="value" tal:content="form_data/languages|nothing"></td>
@@ -176,7 +168,7 @@
 						<td class="value" tal:content="form_data/customised_message|nothing"></td>
 					</tr>
 				</table>
-				<!-- end: Others Informations -->
+				<!-- end: Others Information -->
 
 			</div>
 	    </div>

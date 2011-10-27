@@ -19,7 +19,7 @@
 									  username form_data/username|python:{};
 									  config_myvindula form_data/config_myvindula|python:{};">
 	        
-	        <h1>Edit your Personal Informations</h1>
+	        <h1>Edit your Personal Information</h1>
 			<div id="interna" >    		
 		        <form name="myvindulaprefs" id="myvindulaprefs" enctype="multipart/form-data" class="enableAutoFocus" action="myvindulaprefs" method="POST">
 		            <fieldset>
