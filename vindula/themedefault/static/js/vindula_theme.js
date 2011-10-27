@@ -42,5 +42,21 @@ $j(document).ready(function(){
 	 $j('div#form-widgets-image-input-fields span.label').text( function(index, text) {
 	 	if ($j(this).text() == '(nothing)') $j(this).text('Nenhuma imagem');
 	 } )
+	var flag = 0;
+	$j('div#comentar').hide();
+	$j('input#comentar').click(function(){
+		if (flag == 0){
+			$j('div#comentar').slideDown('slow');
+			flag = 1;	
+		}else{
+			$j('div#comentar').slideUp('slow');
+			flag = 0;
+		};
+		
+		
+	});
+	
+	
+	
 	 
 });

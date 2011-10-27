@@ -35,7 +35,7 @@
 	<copy css:content-children="#portal-column-content" css:theme=".contBoxTipo" />
 	<copy css:content-children="#portal-column-content" css:theme=".contBox_colunaTotal" />
 	<drop css:content="#portal-column-content #viewlet-above-content" />
-	<drop attributes="class" css:content="#viewlet-below-content div" />
+	<!--drop attributes="class" css:content="#viewlet-below-content div" /-->
 	
 	<!-- Portal Column Content Home Page-->
 	<rules css:if-content="#vindula-home-page">

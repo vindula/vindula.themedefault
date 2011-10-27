@@ -122,3 +122,37 @@ dl.portlet a:hover,
 }
 */
 /* ...Breadcrumb */
+
+  
+ /* -- Area de Comentario Padrão Plone  --*/
+.display-none{display:none;}
+.geral_lista_comentarios .name-user{
+	line-height:32px; 	
+ }
+ #bt_comentar{
+    background: url("../images/bt_comentar.png") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-weight: bold;
+    height: 37px;
+    padding: 0 0 2px;
+    text-transform: uppercase;
+    width: 97px;
+}
+#comentar #form-buttons-comment, 
+#comentar #form-buttons-cancel{
+	background: url("../images/bt_comentar.png") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-weight: bold;
+    height: 37px;
+    padding: 0 0 2px;
+    text-transform: uppercase;
+    width: 97px;
+}
+/* Area MyVindula */
+.cont_superior .documentFirstHeading{
+	color: #F58220;
+}
