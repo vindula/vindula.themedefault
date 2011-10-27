@@ -74,7 +74,8 @@ dl.portlet a:hover,
 
 #barra_superior #cont_barra_superior ul{
     list-style: none outside none;
-    padding: 3px 0 0;
+    padding: 9px 0 0;
+	*padding: 3px 0 0;
     vertical-align: middle;
 }
 
@@ -94,6 +95,10 @@ dl.portlet a:hover,
 
 #barra_superior #cont_barra_superior li a:visited {
     color: #FFFFFF;
+}
+
+#barra_superior #cont_barra_superior li a:hover {
+    color: #F58220;
 }
 /* ...Barra Superior: favoritos */
 

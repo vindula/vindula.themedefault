@@ -1,9 +1,13 @@
 <?xml version="1.0"?>
 <object>
-	<order manager="plone.abovecontent" skinname="*">
-		
- 		<viewlet name="vindula.themedefault.menu" 
-		         insert-before="plone.path_bar"/>
-				 
+	
+	<order manager="plone.portalheader" skinname="*">
+ 		<viewlet name="vindula.themedefault.usefullinks" insert-before="plone.skip_links"/>
 	</order>
+	
+	
+	<order manager="plone.abovecontent" skinname="*">
+ 		<viewlet name="vindula.themedefault.menu" insert-before="plone.path_bar"/>
+	</order>
+	
 </object> 

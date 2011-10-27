@@ -47,15 +47,8 @@
 						<div class="gallery-cycle">
 							
 							<tal:highlight-news repeat="new view/getHighlightedNews">
-								
-								<tal:position condition="repeat/new/start">
-									<tal:relative define="global position string:info p-relative"/>
-								</tal:position>
-								<tal:position condition="not: repeat/new/start">
-									<tal:absolute define="global position string:info"/>
-								</tal:position>
-								
-								<div tal:attributes="class position"> 
+
+								<div class="info"> 
 									<input id="cycle-timeout" type="hidden" tal:attributes="value context/time_transitionsnews">
 									<div class="titulo_info">
 										<h2>
@@ -94,7 +87,7 @@
 							
 							<div class="opcoes_destaque marginDif" tal:condition="python: view.getOtherNews()['url'] != ''">
 								<a class="leia-mais" title="Ver todas as not&iacute;cias" 
-								   tal:attributes="href python: view.getOtherNews()['url']">todas as notcias</a>
+								   tal:attributes="href python: view.getOtherNews()['url']">todas as not&iacute;cias</a>
 							</div>
 							<div class="visualClear"></div>
 						</div>

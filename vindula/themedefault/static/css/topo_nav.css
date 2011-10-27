@@ -25,9 +25,12 @@
 
 #topo .logo{
     float: left;
-	margin: 30px 246px 25px 30px;
+	/*margin: 30px 246px 25px 30px;
 	width: 237px;
-	height:41px;
+	height:41px;*/
+	margin: 20px 253px 10px 40px;
+	width: 220px;
+	height:66px;
 }
 
 /* Campo busca... */
@@ -41,6 +44,7 @@
 
 .geral_busca #portal-searchbox {
 	margin-top: 0;
+	width:100%;
 }
 
 .geral_busca #searchGadget {
@@ -81,6 +85,7 @@
 .geral_busca .searchSection #searchbox_currentfolder_only {
 	margin-right: 6px;
 	margin-top: 5px;
+	*margin-top:0;
 }
 
 .geral_busca .campo_opcao{
@@ -149,6 +154,10 @@
 #nav .nivel1 li.selected a { 
 	color:#FFFFFF !important; 
 }
+
+#nav li a:hover { 
+	color:#F58220 !important; 
+}
 /* ...Nivel 1 */
 
 
@@ -166,7 +175,7 @@
 	display:block;
 }
 
-#nav .nivel2 li a { color: #FFFFFF !important; }
+#nav .nivel2 li a { color: #FFFFFF; }
 #nav .nivel2 li,
 #nav .nivel2 li.selected {
     float: left;
