@@ -44,7 +44,7 @@
                     <a href=""
                        tal:attributes="href string:${context/portal_url}/@@myvindulaprefs"
                        i18n:translate="">
-                        Personal Informations
+                        Personal Information
                     </a>
                 </li>
 

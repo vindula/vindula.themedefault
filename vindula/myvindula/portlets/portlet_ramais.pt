@@ -5,9 +5,14 @@
 	<div class="contBoxTipo2">
 		<div id="busca-portlet">
 			<form action="" method="post">
-		    	<h4>Nome:</h4><input type="text" name="title" size="26" tal:attributes="value python: request.get('title', '')"/>
-		        <h4>Ramal:</h4><input type="text" name="ramal" size="26" tal:attributes="value python: request.get('ramal', '')"/>
-		          <h4>Departamento:</h4>
+				<br />
+		    	<h4>Nome:</h4>
+				<input type="text" name="title" size="26" tal:attributes="value python: request.get('title', '')"/>
+		        <br /><br />
+				<h4>Ramal:</h4>
+				<input type="text" name="ramal" size="26" tal:attributes="value python: request.get('ramal', '')"/>
+		         <br /><br />
+				 <h4>Departamento:</h4>
 		          <select size="1" id="departamento" name="departamento" style="width:100%;">
 		            <option value="0" >Todos ...</option>
 		            <tal:departamentos tal:repeat="item view/list_departamentos">
@@ -18,6 +23,7 @@
 		                </option>
 		            </tal:departamentos>
 		          </select>
+				  <br /><br />
 				  <div class="aling-right"> 
 				  	<input type="submit" name="SearchSubmit" value="Buscar" class="context" i18n:attributes="value"/>
 				  </div>

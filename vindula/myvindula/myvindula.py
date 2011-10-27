@@ -122,7 +122,7 @@ class MyVindulaPrefsView(grok.View, BaseFunc):
     
     ignoreContext = True
     
-    label = _(u"Personal Informations")
+    label = _(u"Personal Information")
     description = _(u"Change your available information below.")   
     
     def load_form(self):

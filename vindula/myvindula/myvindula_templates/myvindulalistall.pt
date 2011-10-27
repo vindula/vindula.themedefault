@@ -7,7 +7,7 @@
     <div metal:fill-slot="content">            
 	    <div id="content" tal:define="form_data view/load_list | python:{};">
 	        
-	        <h1>List Personal Informations</h1>
+	        <h1>List Personal Information</h1>
 			<br />
 			<div id="interna" >
 				<tal:rep repeat="item form_data">
