@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+	<import-steps>
+		<import-step id="vindula.myvindula.user_folder" 
+					 version="20111026-01"
+	                 handler="vindula.myvindula.setuphandlers.user_folder"
+	                 title="My Vindula: Abilia a criação das pastas dos usuarios">
+	    	<dependency step="componentregistry"/>
+		</import-step>
+		
+		
+		
+	</import-steps>

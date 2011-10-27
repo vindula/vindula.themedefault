@@ -44,8 +44,10 @@ class MyVindulaView(grok.View):
     
     def get_photo_user(self,prefs_user):
         if prefs_user:
-            if prefs_user.photograph is not None and not ' ' in prefs_user.photograph:
-                return self.context.absolute_url()+'/'+prefs_user.photograph
+            if prefs_user.photograph is not None and \
+                not ' ' in prefs_user.photograph  and \
+                not prefs_user.photograph == '':
+                return self.context.absolute_url()+'/'+prefs_user.photograph + '/image_thumb'
             else:
                 return self.context.absolute_url()+'/defaultUser.png'
         else:

@@ -8,7 +8,7 @@
 
 		 <div metal:fill-slot="content">         
 	        <metal:use use-macro="context/@@myvindulapanel/macros/page"/>    
-			<div tal:define="view python:context.restrictedTraverse('@@myvindula');
+			<div id="content" tal:define="view python:context.restrictedTraverse('@@myvindula');
 							                             memberinfo context/portal_membership/getMemberInfo;
 														 member context/@@plone_portal_state/member;
 							                             name python:memberinfo['fullname'] or member.getId() or member.getId();
@@ -16,57 +16,72 @@
 														 homeFolder python: context.portal_membership.getHomeFolder();
 														 prefs_user python: view.get_prefs_user(member.getId());">
 			
-			
-			    <h1 class="documentFirstHeading">Welcome to Vindula: <span tal:replace="name" /></h1>
+				<div class="titulo_info cont_superior">
+					<h2 class="documentFirstHeading">Welcome to Vindula: <span tal:replace="name" /></h2>	
+				</div>			
+			    
 			    <br />
 			    <div id="userimage">
 			        <img src="defaultUser.png"
 			             alt=""
 			             border="0"
-			             width="100"
-			             height="100"
 			             tal:attributes="src python:view.get_photo_user(prefs_user);
 						 				 alt prefs_user/name|nothing;
 										 title prefs_user/name|nothing;" />
 			        <br /><br />
+					
 			    </div>
 			    <tal:condition condition="not: view/checkHomeFolder">
-			        <h1>You are not allowed to post comments, because your home folder are not set. Ask the Site Admin.</h1>
+			    	<dl class="portalMessage error">
+						<dt>Error</dt>
+            			<dd>You are not allowed to post comments, because your home folder are not set. Ask the Site Admin.</dd>
+					
+        			</dl>
 			    </tal:condition>
 			    
 			    <tal:condition condition="view/checkHomeFolder">
-			        <fieldset id="fieldset-global-settings">
-			            <legend
-			                id="fieldsetlegend-global-settings">O que você está pensando agora?</legend>
-			        
-				        <div id="howareu" class="field">
-				        	<form action="#"
-				                method="post"
-				                tal:attributes="action string:${context/absolute_url}/myvindula">
-				        		<textarea  style="width: 672px; height: 81px;" name="howareu"></textarea>
-				        		
-								<div class="formControls">
-				        		  <input type="hidden" name="form.submitted:boolean" value="True" />
-				        		  <input type="submit" name="submit" value="Publicar"         class="context"
-				        		         i18n:attributes="value;" />
-				        		</div>
-				            </form>
-				        </div>
-			        </fieldset>
-		    
-			        <div tal:define="items python: view.get_howareu(homeFolder)">	
-			        	<p tal:repeat="item items">
-			        		<img src="defaultUser.png"
-			             		 alt="" border="0"
-			             		 width="50" height="50"
-			             		 tal:attributes="src python:view.get_photo_user(prefs_user);
-						 						 alt prefs_user/name|nothing;
-												 title prefs_user/name|nothing;" />
-
-			        		<span tal:replace="name" /> - diz: <span tal:replace="item/Title|nothing" />
-			        	</p>
-						<br />
-			        </div>
+			    	<div class="lista_comentarios">
+				        <fieldset id="fieldset-global-settings">
+				            <legend
+				                id="fieldsetlegend-global-settings">O que você está pensando agora?</legend>
+				        
+					        <div id="howareu" class="field">
+					        	<form action="#"
+					                method="post"
+					                tal:attributes="action string:${context/absolute_url}/myvindula">
+					        		<textarea  style="width: 100%; height: 81px;" name="howareu"></textarea>
+					        		
+									<div class="formControls">
+					        		  <input type="hidden" name="form.submitted:boolean" value="True" />
+					        		  <input type="submit" name="submit" value="Publicar" id="bt_comentar" class="context"
+					        		         i18n:attributes="value;" />
+					        		</div>
+					            </form>
+					        </div>
+				        </fieldset>
+				        <tal:def define="items python: view.get_howareu(homeFolder)">
+							<tal:rep tal:repeat="item items">
+								<div class="comment item_lista">
+									<div class="commentImage">
+					                    <img src="defaultUser.png"
+						             		 alt="" border="0"
+						             		 height="30"
+						             		 tal:attributes="src python:view.get_photo_user(prefs_user);
+									 						 alt prefs_user/name|nothing;
+															 title prefs_user/name|nothing;" />
+					                </div>
+									<div class="documentByLine name-user">
+										<h4><span tal:replace="name" /> | 
+						                    <span tal:replace="python:item.modification_date.strftime('%d/%m/%Y')" />
+										</h4>
+					                </div>
+					                <div class="commentBody">
+					                    <p tal:replace="item/Title|nothing" />
+							  		</div>
+								</div>
+							</tal:rep> 
+				        </tal:def>
+					</div>
 			    </tal:condition>
 			</div>
 		</div>

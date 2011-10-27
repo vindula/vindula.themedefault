@@ -495,12 +495,12 @@ class BaseFunc(BaseStore):
     def getPhoto(self,campo,request,data):
         if campo in request.keys():
             if request.get(campo, None):
-                return self.context.absolute_url()+'/'+request.get(campo, '')
+                return self.context.absolute_url()+'/'+request.get(campo, '')  + '/image_thumb'
             else:
                 return self.context.absolute_url()+'/'+'defaultUser.png'
         elif campo in data.keys():
-            if data.get(campo, None) and not ' ' in data.get(campo,None):
-                return self.context.absolute_url()+'/'+data.get(campo,'')
+            if data.get(campo, None) and not ' ' in data.get(campo,None) and not data.get(campo,None) == '':
+                return self.context.absolute_url()+'/'+data.get(campo,'') + '/image_thumb'
             else:
                 return self.context.absolute_url()+'/'+'defaultUser.png'
         else:
@@ -551,7 +551,7 @@ class BaseFunc(BaseStore):
                 return data
 
     def geraCampos(self,form_data):
-        if form_data:
+        if type(form_data) == dict:
             errors = form_data.get('errors',None)
             data = form_data.get('data',None)
             campos = form_data.get('campos',None)
@@ -753,13 +753,16 @@ class SchemaFunc(BaseFunc):
                         if form['photograph'].filename != '':
                             path = context.context.portal_membership.getHomeFolder()
                             file = data['photograph']
-                            photo = BaseFunc().uploadFile(context,path,file)
-                            if photo:
-                                data['photograph'] = photo
+                            if path:
+                                photo = BaseFunc().uploadFile(context,path,file)
+                                if photo:
+                                    data['photograph'] = photo
+                                else:
+                                    access_denied = context.context.absolute_url() + '/@@myvindulaprefs?error=1'
+                                    return context.request.response.redirect(access_denied)
                             else:
-                                IStatusMessage(context.request).addStatusMessage(_(u'Error when trying to upload the file.'),"erro")
-                                access_denied = context.context.absolute_url() + '/@@myvindulaprefs'
-                                context.request.response.redirect(access_denied) 
+                                access_denied = context.context.absolute_url() + '/@@myvindulaprefs?error=2'
+                                return context.request.response.redirect(access_denied)
                             
                         else:
                             data['photograph'] = None      

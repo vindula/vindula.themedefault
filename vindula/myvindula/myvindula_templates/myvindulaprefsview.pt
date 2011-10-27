@@ -20,6 +20,17 @@
 									  config_myvindula form_data/config_myvindula|python:{};">
 	        
 	        <h1>Edit your Personal Informations</h1>
+			<dl class="portalMessage error" tal:condition="context/REQUEST/error|nothing">
+				<tal:cont condition="python:context.REQUEST.error=='1'">
+					<dt>Error</dt>
+            		<dd>Error when trying to upload the file.</dd>
+				</tal:cont>
+				<tal:cont condition="python:context.REQUEST.error=='2'">
+					<dt>Error</dt>
+            		<dd>You do not have permission to add a photograph, because your home directory is not defined. Ask the site administrator.</dd>
+				</tal:cont>	
+        	</dl>
+
 			<div id="interna" >    		
 		        <form name="myvindulaprefs" id="myvindulaprefs" enctype="multipart/form-data" class="enableAutoFocus" action="myvindulaprefs" method="POST">
 		            <fieldset>
