@@ -15,19 +15,7 @@ class UsefulLinksViewlet(grok.Viewlet):
 
     def getLinks(self):
         portal = self.context.portal_url.getPortalObject()
-        if not 'links' in portal.objectIds():
-            portal.invokeFactory('Folder', 
-                                  id='links', 
-                                  title='Links Úteis',
-                                  excludeFromNav = True)
-            
-            pasta = portal['links']
-            portal_workflow = getToolByName(portal, 'portal_workflow')
-            pasta.setConstrainTypesMode(1)
-            pasta.setLocallyAllowedTypes(('Link',))
-            portal_workflow.doActionFor(pasta, 'publish')
-            
-        else:
+        if 'links' in portal.objectIds():
             pasta = portal['links']
             self.pc = getToolByName(self.context, 'portal_catalog')
             links = self.pc(path={'query':'/'.join(pasta.getPhysicalPath())},
