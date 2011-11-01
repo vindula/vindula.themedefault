@@ -131,10 +131,11 @@ dl.portlet a:hover,
   
  /* -- Area de Comentario Padrão Plone  --*/
 .display-none{display:none;}
+.text-aling{text-align:right;}
 .geral_lista_comentarios .name-user{
 	line-height:32px; 	
  }
- #bt_comentar{
+ .bt_comments{
     background: url("../images/bt_comentar.png") no-repeat scroll 0 0 transparent;
     border: medium none;
     color: #FFFFFF;
@@ -160,4 +161,16 @@ dl.portlet a:hover,
 /* Area MyVindula */
 .cont_superior .documentFirstHeading{
 	color: #F58220;
+}
+.comments-cont{
+	margin-left:20px;
+}
+#like{
+	float:right;
+	font-size:11px;
+}
+#like .link{
+	cursor:pointer;
+	color:#F58220;
+	font-weight:bolder;
 }
