@@ -3,10 +3,22 @@
 		<import-step id="vindula.myvindula.user_folder" 
 					 version="20111026-01"
 	                 handler="vindula.myvindula.setuphandlers.user_folder"
-	                 title="My Vindula: Abilia a criação das pastas dos usuarios">
+	                 title="My Vindula: Habilia a criação das pastas dos usuarios">
 	    	<dependency step="componentregistry"/>
 		</import-step>
-		
+		<import-step id="vindula.myvindula.set_AllowedType_Members" 
+					 version="20111031-01"
+	                 handler="vindula.myvindula.setuphandlers.set_AllowedType_Members"
+	                 title="My Vindula: Restringe conteudos nas pastas dos usuarios">
+	    	<dependency step="componentregistry"/>
+		</import-step>
+		<import-step id="vindula.myvindula.set_field_default" 
+					 version="20111031-01"
+	                 handler="vindula.myvindula.setuphandlers.set_field_default"
+	                 title="My Vindula: Hablita campos padrão para edição pelo usuario">
+	    	<dependency step="componentregistry"/>
+		</import-step>
+				
 		
 		
 	</import-steps>

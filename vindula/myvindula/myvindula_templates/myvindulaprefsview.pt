@@ -38,13 +38,13 @@
 						<input id="username" type="hidden" value="" name="username" tal:attributes="value request/username| username |nothing">
 	
 						<!-- Select Departamento --> 
-						<div class="field" tal:attributes="class python: view.field_class(errors, 'Department_id')"
-										   tal:condition="python: view.checaEstado(config_myvindula,'Department_id')">
-							<label for="Department_id">Departamentos</label>
+						<div class="field" tal:attributes="class python: view.field_class(errors, 'vin_myvindula_department_id')"
+										   tal:condition="python: view.checaEstado(config_myvindula,'vin_myvindula_department_id')">
+							<label for="vin_myvindula_department_id">Departamentos</label>
 		                    <span class="fieldRequired" title="Obrigatório">(Obrigatório)</span>	
 		                    <div class="formHelp">Selecione o departamendo do funcionario.</div>
-							<div tal:content="errors/Department_id|nothing"></div>
-		                    <select name="Department_id" tal:define="id_request request/Department_id | form_values/Department_id | python:''">
+							<div tal:content="errors/vin_myvindula_department_id|nothing"></div>
+		                    <select name="vin_myvindula_department_id" tal:define="id_request request/vin_myvindula_department_id | form_values/vin_myvindula_department_id | python:''">
 		                    	<option value="">-- Selecione --</option>
 		                        <tal:repeat repeat="departamento departamentos">
 						           	<option value=""
@@ -54,9 +54,9 @@
 								</tal:repeat>
 		                    </select>
 						</div>
-						<input id="Department_id" type="hidden" value="" name="Department_id"
-								   tal:condition="python: not view.checaEstado(config_myvindula,'Department_id')"  
-								   tal:attributes="value request/Department_id | form_values/Department_id | nothing">
+						<input id="vin_myvindula_department_id" type="hidden" value="" name="vin_myvindula_department_id"
+								   tal:condition="python: not view.checaEstado(config_myvindula,'vin_myvindula_department_id')"  
+								   tal:attributes="value request/vin_myvindula_department_id | form_values/vin_myvindula_department_id | nothing">
 						
 						<tal:def define="html python:view.geraCampos(form_data)">
 							<tal:rep repeat="x html">

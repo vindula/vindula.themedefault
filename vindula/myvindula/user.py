@@ -20,7 +20,7 @@ from storm.locals import Store
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from Products.statusmessages.interfaces import IStatusMessage
 from vindula.myvindula.validation import valida_form
-from datetime import date
+from datetime import date , datetime 
 
 #import sys
 #from storm.tracer import debug #
@@ -223,18 +223,24 @@ class BaseStore(object):
         #Lazy initialization of the object
         for attribute, value in kwargs.items():
             if not hasattr(self, attribute):
-                
                 raise TypeError('unexpected argument %s' % attribute)
             else:
                 setattr(self, attribute, value)        
   
+        # divide o dicionario 'convertidos'
+        for key in kwargs:
+            setattr(self,key,kwargs[key])
+        # adiciona a data atual
+        self.date_creation = datetime.now()    
+  
     
 class ModelsFuncDetails(Storm, BaseStore):    
-    __storm_table__ = 'FuncDetails'
+    __storm_table__ = 'vin_myvindula_funcdetails'
     
     id = Int(primary=True)
     name = Unicode()
     phone_number = Unicode()
+    cell_phone = Unicode()
     email = Unicode()
     employee_id = Unicode()
     username = Unicode()
@@ -265,10 +271,9 @@ class ModelsFuncDetails(Storm, BaseStore):
     resume = Unicode()
     blogs = Unicode()
     customised_message = Unicode()
-    Department_id = Int()
+    vin_myvindula_department_id = Int()
     
-  
-    departamento = Reference(Department_id, "ModelsDepartment.id")    
+    departamento = Reference(vin_myvindula_department_id, "ModelsDepartment.id")    
     
     def get_allFuncDetails(self):
         data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username!=u'admin')
@@ -290,7 +295,7 @@ class ModelsFuncDetails(Storm, BaseStore):
             if department_id != 0:
                 data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"),
                                                           ModelsFuncDetails.phone_number.like("%" + phone + "%"), 
-                                                          ModelsFuncDetails.Department_id==department_id)
+                                                          ModelsFuncDetails.vin_myvindula_department_id==department_id)
             else:
                 data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"), 
                                                           ModelsFuncDetails.phone_number.like("%" + phone + "%"))
@@ -303,7 +308,7 @@ class ModelsFuncDetails(Storm, BaseStore):
         elif name != '' and not ' ' in name:
            if department_id != 0:
                 data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"), 
-                                                          ModelsFuncDetails.Department_id==department_id)
+                                                          ModelsFuncDetails.vin_myvindula_department_id==department_id)
            else:
                 data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"), 
                                                           ModelsFuncDetails.name.like("%" + phone + "%"))
@@ -317,7 +322,7 @@ class ModelsFuncDetails(Storm, BaseStore):
             if department_id != 0:
                 data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"),
                                                           ModelsFuncDetails.phone_number.like("%" + phone + "%"),
-                                                          ModelsFuncDetails.Department_id==department_id)
+                                                          ModelsFuncDetails.vin_myvindula_department_id==department_id)
             else:
                 data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"),
                                                           ModelsFuncDetails.phone_number.like("%" + phone + "%"))
@@ -332,7 +337,7 @@ class ModelsFuncDetails(Storm, BaseStore):
     
     def get_FuncBirthdays(self, date_start, date_end):
         
-        data = self.store.execute('Select * From FuncDetails Where DAY(date_birth) <= DAY(Date("%s")) AND MONTH(date_birth) <= MONTH(Date("%s")) AND DAY(date_birth) >= DAY(Date("%s")) AND MONTH(date_birth) >= MONTH(Date("%s")) ;'%(date_end,date_end,date_start,date_start)) 
+        data = self.store.execute('Select * From vin_myvindula_funcdetails Where DAY(date_birth) <= DAY(Date("%s")) AND MONTH(date_birth) <= MONTH(Date("%s")) AND DAY(date_birth) >= DAY(Date("%s")) AND MONTH(date_birth) >= MONTH(Date("%s")) ;'%(date_end,date_end,date_start,date_start)) 
         
 #        debug(True, stream=sys.stdout)    
 #        data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.date_birth.like(date_end),
@@ -345,7 +350,7 @@ class ModelsFuncDetails(Storm, BaseStore):
             for obj in data.get_all():
                 D={}
                 i = 0
-                columns = self.store.execute('SHOW COLUMNS FROM FuncDetails FROM myvindulaDB;')
+                columns = self.store.execute('SHOW COLUMNS FROM vin_myvindula_funcdetails FROM myvindulaDB;')
                 for column in columns.get_all():
                     if str(column[0]) == 'date_birth':
                         D[str(column[0])] = obj[i].strftime('%d/%m/%Y')
@@ -361,7 +366,7 @@ class ModelsFuncDetails(Storm, BaseStore):
           
          
 class ModelsDepartment(Storm, BaseStore):
-    __storm_table__ = 'Department'
+    __storm_table__ = 'vin_myvindula_department'
  
     id = Int(primary=True)
     name = Unicode()
@@ -383,14 +388,15 @@ class ModelsDepartment(Storm, BaseStore):
             return None
 
 class ModelsConfgMyvindula(Storm, BaseStore):
-    __storm_table__ = 'ConfMyvindula'
+    __storm_table__ = 'vin_myvindula_confgfuncdetails'
     
     id = Int(primary=True)
     name = Bool()
     phone_number = Bool()
+    cell_phone = Bool()
     email = Bool()
     employee_id = Bool()
-    username = Bool()
+    #username = Bool()
     date_birth = Bool()
     registration = Bool()
     enterprise = Bool()
@@ -418,7 +424,7 @@ class ModelsConfgMyvindula(Storm, BaseStore):
     resume = Bool()
     blogs = Bool()
     customised_message = Bool()
-    Department_id = Bool()  
+    vin_myvindula_department_id = Bool()  
 
     #loads data into DataBase    
     def get_configuration(self):
@@ -427,11 +433,197 @@ class ModelsConfgMyvindula(Storm, BaseStore):
             return data
         else:
             return None
+    
+    def set_configuration(self,**kwargs):
+        # adicionando...
+        config = ModelsConfgMyvindula(**kwargs)
+        self.store.add(config)
+        self.store.flush()                
 
+    
+class ModelsMyvindulaHowareu(Storm, BaseStore):
+    __storm_table__ = 'vin_myvindula_howareu'
+    
+    _name_class = "ModelsMyvindulaHowareu" 
+    
+    id = Int(primary=True)
+    username = Unicode()
+    date_creation = DateTime()
+    visible_area = Unicode()
+    text = Unicode()
+        
+    def set_myvindula_howareu(self,**kwargs):
+        D={}
+        D['username'] = unicode(kwargs.get('username',''), 'utf-8')
+        D['visible_area'] = unicode(kwargs.get('visible_area',''), 'utf-8')
+        D['text'] = unicode(kwargs.get('text',''), 'utf-8')
+        
+        # adicionando...
+        howareu = ModelsMyvindulaHowareu(**D)
+        self.store.add(howareu)
+        self.store.flush()
+    
+    def get_myvindula_howareu(self,**kwargs):
+        if kwargs.get('username',None):
+            user = kwargs.get('username','')
+            if type(user) != unicode:
+                user = unicode(kwargs.get('username',''), 'utf-8')
+            data = self.store.find(ModelsMyvindulaHowareu, ModelsMyvindulaHowareu.username==user)
+        
+        elif kwargs.get('visible_area',None):
+            visible_area = kwargs.get('visible_area','')
+            if type(visible_area) != unicode:
+                visible_area = unicode(kwargs.get('visible_area',''), 'utf-8')
+            data = self.store.find(ModelsMyvindulaHowareu, ModelsMyvindulaHowareu.visible_area==visible_area)
+        
+        
+        if data:
+            return data
+        else:
+            return None                             
+
+class ModelsMyvindulaComments(Storm, BaseStore):
+    __storm_table__ = 'vin_myvindula_comments'
+    
+    _name_class = "ModelsMyvindulaComments"     
+    
+    id = Int(primary=True)
+    username = Unicode()
+    date_creation = DateTime()
+    type = Unicode()
+    id_obj = Unicode()
+    isPlone = Bool()
+    text = Unicode()
+    
+    def set_myvindula_comments(self,**kwargs):
+        D={}
+        D['username'] = unicode(kwargs.get('username',''), 'utf-8')
+        D['type'] = unicode(kwargs.get('type',''), 'utf-8')
+        D['id_obj'] = unicode(kwargs.get('id_obj',''), 'utf-8')
+        D['isPlone'] = kwargs.get('isPlone',False)
+        D['text'] = unicode(kwargs.get('text',''), 'utf-8')
+        
+        # adicionando...
+        comments = ModelsMyvindulaComments(**D)
+        self.store.add(comments)
+        self.store.flush()        
+
+    def get_myvindula_comments(self,**kwargs):
+        id_obj = kwargs.get('id_obj','')
+        type_obj = kwargs.get('type','')
+        if type(id_obj) != unicode:
+            id_obj = unicode(id_obj)
+        if type(type_obj) != unicode:
+            type_obj = unicode(type_obj)
+        data = self.store.find(ModelsMyvindulaComments, ModelsMyvindulaComments.id_obj==id_obj,ModelsMyvindulaComments.type==type_obj)
+
+        if data.count > 0:
+            return data
+        else:
+            return None   
+
+class ModelsMyvindulaLike(Storm, BaseStore):
+    __storm_table__ = 'vin_myvindula_like'
+    
+    id = Int(primary=True)
+    username = Unicode()
+    date_creation = DateTime()
+    type = Unicode()
+    id_obj = Unicode()
+    isPlone = Bool()
+     
+    def set_myvindula_like(self,**kwargs):
+        D={}
+        D['username'] = unicode(kwargs.get('username',''), 'utf-8')
+        D['type'] = unicode(kwargs.get('type',''), 'utf-8')
+        D['id_obj'] = unicode(kwargs.get('id_obj',''), 'utf-8')
+        D['isPlone'] = eval(kwargs.get('isPlone','False'))
+        
+        # adicionando...
+        comments = ModelsMyvindulaLike(**D)
+        self.store.add(comments)
+        self.store.flush()        
+
+    def get_myvindula_like(self,**kwargs):
+        id_obj = kwargs.get('id_obj','')
+        type_obj = kwargs.get('type','')
+        if type(id_obj) != unicode:
+            id_obj = unicode(id_obj)
+        if type(type_obj) != unicode:
+            type_obj = unicode(type_obj)
+        data = self.store.find(ModelsMyvindulaLike, ModelsMyvindulaLike.id_obj==id_obj,ModelsMyvindulaLike.type==type_obj)
+
+        if data.count > 0:
+            return data
+        else:
+            return None   
+
+    def del_myvindula_like(self, **kwargs):
+        id_obj = kwargs.get('id_obj','')
+        username = kwargs.get('username','')
+        type_obj = kwargs.get('type','')
+        
+        if type(id_obj) != unicode:
+            id_obj = unicode(id_obj)
+        if type(username) != unicode:
+            username = unicode(username)
+        if type(type_obj) != unicode:
+            type_obj = unicode(type_obj)
+        
+        record = self.store.find(ModelsMyvindulaLike, ModelsMyvindulaLike.id_obj==id_obj,
+                                                      ModelsMyvindulaLike.type==type_obj,
+                                                      ModelsMyvindulaLike.username==username).one()
+        self.store.remove(record)
+        self.store.flush()
+
+
+class ModelsMyvindulaCourses(Storm, BaseStore):
+    __storm_table__ = 'vin_myvindula_courses'
+    
+    id = Int(primary=True)
+    title = Unicode()
+    length = Unicode()
+    
+    def get_allCourses(self):
+        data = self.store.find(ModelsMyvindulaCourses)
+        if data:
+            return data
+        else:
+            return None
+
+class ModelsMyvindulaLanguages(Storm, BaseStore):
+    __storm_table__ = 'vin_myvindula_languages'
+    
+    id = Int(primary=True)
+    title = Unicode()
+    level = Unicode()
+    
+    def get_allLanguages(self):
+        data = self.store.find(ModelsMyvindulaLanguages)
+        if data:
+            return data
+        else:
+            return None
+
+class ModelsMyvindulaFuncdetailCouses(Storm, BaseStore):
+    __storm_table__ = 'vin_myvindula_funcdetail_couses'
+    
+    id = Int(primary=True)
+    vin_myvindula_funcdetails_id = Int()
+    vin_myvindula_courses_id = Int()
+
+
+class ModelsMyvindulaFuncdetailLanguages(Storm, BaseStore):
+    __storm_table__ = 'vin_myvindula_funcdetail_languages'
+
+    id = Int(primary=True)
+    vin_myvindula_funcdetails_id = Int()
+    vin_myvindula_languages_id = Int()
+    
         
 class BaseFunc(BaseStore):
     #default class for standard functions
-        
+
     # define se aparece ou nao as mensagens e marcacoes de erros  
     def field_class(self, errors, field_name):
         if errors is not None:
@@ -542,13 +734,17 @@ class BaseFunc(BaseStore):
             data = form_data.get('data',None)
             campos = form_data.get('campos',None)
             config_myvindula = form_data.get('config_myvindula',None)
+            
+            languages = ModelsMyvindulaLanguages().get_allLanguages()
+            cursos = ModelsMyvindulaCourses().get_allCourses()
+            
             html=[]
             i=0
             while i < len(campos.keys())-2:
                 html.append(i)
                 i+=1
             for campo in campos.keys():
-                if campo != 'Department_id' and campo != 'username':
+                if campo != 'vin_myvindula_department_id' and campo != 'username':
                     
                     index = campos[campo].get('ordem',0)
                     tmp = ""
@@ -575,7 +771,25 @@ class BaseFunc(BaseStore):
                                              value='%s' name='%s' size='25'/>"""%(campo,self.converte_data(self.getValue(campo,self.request,data),True),campo)
 
                         elif campo == 'customised_message':
-                            tmp += "<textarea id='%s' name='%s' style='width: 672px; height: 81px;'>%s</textarea>"%(campo, campo, self.getValue(campo,self.request,data)) 
+                            tmp += "<textarea id='%s' name='%s' style='width: 100; height: 81px;'>%s</textarea>"%(campo, campo, self.getValue(campo,self.request,data)) 
+                         
+                        #elif campo == 'languages':
+                        #    tmp += "<select name='languages' multiple>"
+                        #    tmp += "      <option value="">-- Selecione --</option>"
+                        #    for language in languages:
+                        #        if str(self.getValue(campo,self.request,data)) == str(language.id):
+                        #            tmp += "<option value='%s' selected>%s</option>"%(language.id,language.title)
+                        #        else:
+                        #             tmp += "<option value='%s'>%s</option>"%(language.id,language.title)
+                        #     
+                        #elif campo == 'skills_expertise':
+                        #    tmp += "<select name='skills_expertise'>"
+                        #    tmp += "      <option value="">-- Selecione --</option>"
+                        #    for curso in cursos:
+                        #        if str(self.getValue(campo,self.request,data)) == str(curso.id):
+                        #            tmp += "<option value='%s' selected>%s</option>"%(curso.id,curso.title)
+                        #        else:
+                        #             tmp += "<option value='%s'>%s</option>"%(curso.id,curso.title)
                             
                         else:
                             tmp += "<input id='%s' type='text' value='%s' name='%s' size='25'/>"%(campo,self.getValue(campo,self.request,data),campo)
@@ -592,22 +806,29 @@ class BaseFunc(BaseStore):
             return html
 
     def geraConfCampos(self,form_data):
-        html = []
-        if form_data:
+        if type(form_data) == dict:
             errors = form_data.get('errors',None)
             data = form_data.get('data',None)
             campos = form_data.get('campos',None)
+            html = []
+            i=0
+            while i < len(campos.keys()):
+                html.append(i)
+                i+=1
             for campo in campos.keys():
-                if campo != 'id':
+                if campo != 'id' and campo != 'username':
+                    index = campos[campo].get('ordem',0)
                     tmp = ""
                     tmp += "<!-- Campo %s -->"%(campo)
                     tmp += "<div class='%s'>"%(self.field_class(errors, campo))
                     tmp += "   <label for='%s'>%s</label>"%(campo,campos[campo]['label'])
-                    tmp += "   <div class='formHelp'>Abilita a edição deste campo pelo funcionario.</div>"   
+                    tmp += "   <div class='formHelp'>Habilita a edição do campo '%s' pelo funcionário'</div>"%(campos[campo]['label'])   
                     tmp += "   <div >%s</div>"%(errors.get(campo,''))
                     tmp += "<input id='%s' type='checkbox' value='%s' name='%s' size='25' %s/>"%(campo,'true',campo,self.checked(campo,self.request,data))
-                    tmp += "</div>"    
-                    html.append(tmp)
+                    tmp += "</div>" 
+                    
+                    html.pop(index)
+                    html.insert(index, tmp)      
             
             return html
         
@@ -665,37 +886,38 @@ class SchemaFunc(BaseFunc):
     campos = {'name'                  : {'required': False, 'type' : to_utf8, 'label':'Nome',                   'decription':u'Digite o nome do funcionário',                   'ordem':0},
               'nickname'              : {'required': False, 'type' : to_utf8, 'label':'Apelido',                'decription':u'Digite o apelido do funcionário',                'ordem':1},
               'phone_number'          : {'required': False, 'type' : to_utf8, 'label':'Telefone',               'decription':u'Digite o telefone do funcionário',               'ordem':2},
-              'email'                 : {'required': False, 'type' : 'email', 'label':'E-mail',                 'decription':u'Digite o e-mail do funcionário',                 'ordem':3},
-              'employee_id'           : {'required': False, 'type' : to_utf8, 'label':'ID Funcionário',         'decription':u'Digite o ID do funcionário',                     'ordem':4},
-              'date_birth'            : {'required': False, 'type' : date,    'label':'Data de Nascimento',     'decription':u'Digite a data de nascimento do funcionário',     'ordem':5},
-              'registration'          : {'required': False, 'type' : to_utf8, 'label':'Matrícula',              'decription':u'Digite o número de matrícula do funcionário',    'ordem':6},
-              'enterprise'            : {'required': False, 'type' : to_utf8, 'label':'Empresa',                'decription':u'Digite o nome da empresa do funcionário',        'ordem':7},
-              'position'              : {'required': False, 'type' : to_utf8, 'label':'Cargo',                  'decription':u'Digite o cargo do funcionário',                  'ordem':8},
-              'admission_date'        : {'required': False, 'type' : date,    'label':'Data de Admissão',       'decription':u'Digite a data de admissão do funcionário',       'ordem':9},
-              'cost_center'           : {'required': False, 'type' : to_utf8, 'label':'Centro de Custo',        'decription':u'Digite o centro de custo do funcionário',        'ordem':10},
-              'organisational_unit'   : {'required': False, 'type' : to_utf8, 'label':'Unidade organizacional', 'decription':u'Digite a unidade organizacional do funcionário', 'ordem':11},
-              'reports_to'            : {'required': False, 'type' : to_utf8, 'label':'Reporta-se a',           'decription':u'Digite a quem o funcionário se reporta',         'ordem':12},
-              'location'              : {'required': False, 'type' : to_utf8, 'label':'Localização',            'decription':u'Digite a localização do funcionário',            'ordem':13},
-              'postal_address'        : {'required': False, 'type' : to_utf8, 'label':'Endereço Postal',        'decription':u'Digite o endereço postal do funcionário',        'ordem':14},
-              'special_roles'         : {'required': False, 'type' : to_utf8, 'label':'Funções Especiais',      'decription':u'Digite as funções especiais do funcionário',     'ordem':15},
-              'photograph'            : {'required': False, 'type' : 'file',  'label':'Foto',                   'decription':u'Coloque a foto do funcionário',                  'ordem':16},
-              'pronunciation_name'    : {'required': False, 'type' : to_utf8, 'label':'Pronuncia do nome',      'decription':u'Como se pronuncia o  nome do funcionário',       'ordem':17},
-              'committess'            : {'required': False, 'type' : to_utf8, 'label':'Comissão',               'decription':u'Digite a comissão do funcionário',               'ordem':18},
-              'projetcs'              : {'required': False, 'type' : to_utf8, 'label':'Projetos',               'decription':u'Digite os projetos do funcionário',              'ordem':19},
-              'personal_information'  : {'required': False, 'type' : to_utf8, 'label':'Informações pessoais',   'decription':u'Digite as informações pessoais do funcionário',  'ordem':20},
-              'skills_expertise'      : {'required': False, 'type' : to_utf8, 'label':'Habilidades'          ,  'decription':u'Digite as habilidades do funcionário',           'ordem':21},
-              'profit_centre'         : {'required': False, 'type' : to_utf8, 'label':'Centro de Lucro',        'decription':u'Digite o centro de lucro do funcionário',        'ordem':22},
-              'languages'             : {'required': False, 'type' : to_utf8, 'label':'Idioma',                 'decription':u'Digite o idioma do funcionário',                 'ordem':23},
-              'availability'          : {'required': False, 'type' : to_utf8, 'label':'Disponibilidade',        'decription':u'Digite a disponibilidade do funcionário',        'ordem':24},
-              'papers_published'      : {'required': False, 'type' : to_utf8, 'label':'Artigos Publicados',     'decription':u'Digite os artigo publicados do funcionário',     'ordem':25},
-              'blogs'                 : {'required': False, 'type' : to_utf8, 'label':'Blogs',                  'decription':u'Digite os blogs do funcionário',                 'ordem':26},
-              'teaching_research'     : {'required': False, 'type' : to_utf8, 'label':'Personalizado 1',        'decription':u'Campo para personalizar',                        'ordem':27},
-              'resume'                : {'required': False, 'type' : to_utf8, 'label':'Personalizado 2',        'decription':u'Campo para personalizar',                        'ordem':28},
-              'delegations'           : {'required': False, 'type' : to_utf8, 'label':'Personalizado 3',        'decription':u'Campo para personalizar',                        'ordem':29},
-              'customised_message'    : {'required': False, 'type' : to_utf8, 'label':'Personalizado 4',        'decription':u'Campo para personalizar',                        'ordem':30},
+              'cell_phone'            : {'required': False, 'type' : to_utf8, 'label':'Celular',                'decription':u'Digite o telefone celular do funcionário',       'ordem':3},
+              'email'                 : {'required': False, 'type' : 'email', 'label':'E-mail',                 'decription':u'Digite o e-mail do funcionário',                 'ordem':4},
+              'employee_id'           : {'required': False, 'type' : to_utf8, 'label':'ID Funcionário',         'decription':u'Digite o ID do funcionário',                     'ordem':5},
+              'date_birth'            : {'required': False, 'type' : date,    'label':'Data de Nascimento',     'decription':u'Digite a data de nascimento do funcionário',     'ordem':6},
+              'registration'          : {'required': False, 'type' : to_utf8, 'label':'Matrícula',              'decription':u'Digite o número de matrícula do funcionário',    'ordem':7},
+              'enterprise'            : {'required': False, 'type' : to_utf8, 'label':'Empresa',                'decription':u'Digite o nome da empresa do funcionário',        'ordem':8},
+              'position'              : {'required': False, 'type' : to_utf8, 'label':'Cargo',                  'decription':u'Digite o cargo do funcionário',                  'ordem':9},
+              'admission_date'        : {'required': False, 'type' : date,    'label':'Data de Admissão',       'decription':u'Digite a data de admissão do funcionário',       'ordem':10},
+              'cost_center'           : {'required': False, 'type' : to_utf8, 'label':'Centro de Custo',        'decription':u'Digite o centro de custo do funcionário',        'ordem':11},
+              'organisational_unit'   : {'required': False, 'type' : to_utf8, 'label':'Unidade organizacional', 'decription':u'Digite a unidade organizacional do funcionário', 'ordem':12},
+              'reports_to'            : {'required': False, 'type' : to_utf8, 'label':'Reporta-se a',           'decription':u'Digite a quem o funcionário se reporta',         'ordem':13},
+              'location'              : {'required': False, 'type' : to_utf8, 'label':'Localização',            'decription':u'Digite a localização do funcionário',            'ordem':14},
+              'postal_address'        : {'required': False, 'type' : to_utf8, 'label':'Endereço Postal',        'decription':u'Digite o endereço postal do funcionário',        'ordem':15},
+              'special_roles'         : {'required': False, 'type' : to_utf8, 'label':'Funções Especiais',      'decription':u'Digite as funções especiais do funcionário',     'ordem':16},
+              'photograph'            : {'required': False, 'type' : 'file',  'label':'Foto',                   'decription':u'Coloque a foto do funcionário',                  'ordem':17},
+              'pronunciation_name'    : {'required': False, 'type' : to_utf8, 'label':'Pronuncia do nome',      'decription':u'Como se pronuncia o  nome do funcionário',       'ordem':18},
+              'committess'            : {'required': False, 'type' : to_utf8, 'label':'Comissão',               'decription':u'Digite a comissão do funcionário',               'ordem':19},
+              'projetcs'              : {'required': False, 'type' : to_utf8, 'label':'Projetos',               'decription':u'Digite os projetos do funcionário',              'ordem':20},
+              'personal_information'  : {'required': False, 'type' : to_utf8, 'label':'Informações pessoais',   'decription':u'Digite as informações pessoais do funcionário',  'ordem':21},
+              'skills_expertise'      : {'required': False, 'type' : to_utf8, 'label':'Habilidades'          ,  'decription':u'Digite as habilidades do funcionário',           'ordem':22},
+              'profit_centre'         : {'required': False, 'type' : to_utf8, 'label':'Centro de Lucro',        'decription':u'Digite o centro de lucro do funcionário',        'ordem':23},
+              'languages'             : {'required': False, 'type' : to_utf8, 'label':'Idioma',                 'decription':u'Digite o idioma do funcionário',                 'ordem':24},
+              'availability'          : {'required': False, 'type' : to_utf8, 'label':'Disponibilidade',        'decription':u'Digite a disponibilidade do funcionário',        'ordem':25},
+              'papers_published'      : {'required': False, 'type' : to_utf8, 'label':'Artigos Publicados',     'decription':u'Digite os artigo publicados do funcionário',     'ordem':26},
+              'blogs'                 : {'required': False, 'type' : to_utf8, 'label':'Blogs',                  'decription':u'Digite os blogs do funcionário',                 'ordem':27},
+              'teaching_research'       : {'required': False, 'type' : to_utf8, 'label':'Personalizado 1',        'decription':u'Campo para personalizar',                      'ordem':28},
+              'resume'                  : {'required': False, 'type' : to_utf8, 'label':'Personalizado 2',        'decription':u'Campo para personalizar',                      'ordem':29},
+              'delegations'             : {'required': False, 'type' : to_utf8, 'label':'Personalizado 3',        'decription':u'Campo para personalizar',                      'ordem':30},
+              'customised_message'      : {'required': False, 'type' : to_utf8, 'label':'Personalizado 4',        'decription':u'Campo para personalizar',                      'ordem':31},
               
-              'username'              : {'required': False, 'type' : to_utf8, 'label':'Nome de Usuário'        },  #Campo Obrigatorio
-              'Department_id'         : {'required': False, 'type' : int,     'label':'Departamento'           },} #Campo Obrigatorio
+              'username'                : {'required': False, 'type' : to_utf8, 'label':'Nome de Usuário'        },  #Campo Obrigatorio
+              'vin_myvindula_department_id': {'required': False, 'type' : int,     'label':'Departamento'           },} #Campo Obrigatorio
                     
     def registration_processes(self,context):
         success_url = context.context.absolute_url() + '/@@myvindula'
@@ -774,8 +996,7 @@ class SchemaFunc(BaseFunc):
                                   'email':data.get('email',''),
                                   'home_page':data.get('blogs',''),
                                   'location':data.get('location',''),
-                                  'description':data.get('customised_message',''),
-                                  'portrait':data.get('photograph','')}
+                                  'description':data.get('customised_message','')}
                         
                     user.setMemberProperties(user_plone)
                             
@@ -808,41 +1029,43 @@ class SchemaFunc(BaseFunc):
         
 class SchemaConfgMyvindula(BaseFunc):
     
-    campos={'name'                  : {'required': False, 'type' : bool, 'label':'Nome',                },
-            'phone_number'          : {'required': False, 'type' : bool, 'label':'Telefone',            },
-            'email'                 : {'required': False, 'type' : bool, 'label':'Email',               },
-            'employee_id'           : {'required': False, 'type' : bool, 'label':'ID Funcionario',      },
-            'date_birth'            : {'required': False, 'type' : bool, 'label':'Data de Nacimento',   },
-            'registration'          : {'required': False, 'type' : bool, 'label':'Matricula',           },
-            'enterprise'            : {'required': False, 'type' : bool, 'label':'Empresa',             },
-            'position'              : {'required': False, 'type' : bool, 'label':'Cargo',               },
-            'admission_date'        : {'required': False, 'type' : bool, 'label':'Data Admição',        },
-            'cost_center'           : {'required': False, 'type' : bool, 'label':'Centro de Custo',     },
-            'organisational_unit'   : {'required': False, 'type' : bool, 'label':'Organisational Unit', },
-            'reports_to'            : {'required': False, 'type' : bool, 'label':'Reporta-se a',        },
-            'location'              : {'required': False, 'type' : bool, 'label':'Localização',         },
-            'postal_address'        : {'required': False, 'type' : bool, 'label':'Endereço Postal',     },
-            'special_roles'         : {'required': False, 'type' : bool, 'label':'Special Roles',       },
-            'photograph'            : {'required': False, 'type' : bool, 'label':'Foto',                },
-            'nickname'              : {'required': False, 'type' : bool, 'label':'NickName',            },
-            'pronunciation_name'    : {'required': False, 'type' : bool, 'label':'Como pronuncia seu nome',},
-            'committess'            : {'required': False, 'type' : bool, 'label':'Commitess',             },
-            'projetcs'              : {'required': False, 'type' : bool, 'label':'Projetos',              },
-            'personal_information'  : {'required': False, 'type' : bool, 'label':'Informações pessoais',  },
-            'skills_expertise'      : {'required': False, 'type' : bool, 'label':'Skills Expertise',      },
-            'profit_centre'         : {'required': False, 'type' : bool, 'label':'Profil Centre',         },
-            'languages'             : {'required': False, 'type' : bool, 'label':'Linguages',             },
-            'availability'          : {'required': False, 'type' : bool, 'label':'Avaliação',             },
-            'papers_published'      : {'required': False, 'type' : bool, 'label':'Artigo Publicados',     },
-            'teaching_research'     : {'required': False, 'type' : bool, 'label':'Teaching Research',     },
-            'delegations'           : {'required': False, 'type' : bool, 'label':'Delegação',             },
-            'resume'                : {'required': False, 'type' : bool, 'label':'Resumo',                },
-            'blogs'                 : {'required': False, 'type' : bool, 'label':'Blogs',                 },
-            'customised_message'    : {'required': False, 'type' : bool, 'label':'Menssagem Costumizada', },
-
-            'Department_id'         : {'required': False, 'type' : bool,  'label':'Departamento',         },}         
-    
-    
+    campos = {'vin_myvindula_department_id': {'required': False, 'type' : bool, 'label':'Departamento',      'ordem':0},
+              'name'                       : {'required': False, 'type' : bool, 'label':'Nome',              'ordem':1},
+              'nickname'                   : {'required': False, 'type' : bool, 'label':'Apelido',           'ordem':2},
+              'phone_number'               : {'required': False, 'type' : bool, 'label':'Telefone',          'ordem':3},
+              'cell_phone'                 : {'required': False, 'type' : bool, 'label':'Celular',           'ordem':4},
+              'email'                      : {'required': False, 'type' : bool, 'label':'E-mail',            'ordem':5},
+              'employee_id'                : {'required': False, 'type' : bool, 'label':'ID Funcionário',    'ordem':6},
+              'date_birth'            : {'required': False, 'type' : bool, 'label':'Data de Nascimento',     'ordem':7},
+              'registration'          : {'required': False, 'type' : bool, 'label':'Matrícula',              'ordem':8},
+              'enterprise'            : {'required': False, 'type' : bool, 'label':'Empresa',                'ordem':9},
+              'position'              : {'required': False, 'type' : bool, 'label':'Cargo',                  'ordem':10},
+              'admission_date'        : {'required': False, 'type' : bool, 'label':'Data de Admissão',       'ordem':11},
+              'cost_center'           : {'required': False, 'type' : bool, 'label':'Centro de Custo',        'ordem':12},
+              'organisational_unit'   : {'required': False, 'type' : bool, 'label':'Unidade organizacional', 'ordem':13},
+              'reports_to'            : {'required': False, 'type' : bool, 'label':'Reporta-se a',           'ordem':14},
+              'location'              : {'required': False, 'type' : bool, 'label':'Localização',            'ordem':15},
+              'postal_address'        : {'required': False, 'type' : bool, 'label':'Endereço Postal',        'ordem':16},
+              'special_roles'         : {'required': False, 'type' : bool, 'label':'Funções Especiais',      'ordem':17},
+              'photograph'            : {'required': False, 'type' : bool, 'label':'Foto',                   'ordem':18},
+              'pronunciation_name'    : {'required': False, 'type' : bool, 'label':'Pronuncia do nome',      'ordem':19},
+              'committess'            : {'required': False, 'type' : bool, 'label':'Comissão',               'ordem':20},
+              'projetcs'              : {'required': False, 'type' : bool, 'label':'Projetos',               'ordem':21},
+              'personal_information'  : {'required': False, 'type' : bool, 'label':'Informações pessoais',   'ordem':22},
+              'skills_expertise'      : {'required': False, 'type' : bool, 'label':'Habilidades'          ,  'ordem':23},
+              'profit_centre'         : {'required': False, 'type' : bool, 'label':'Centro de Lucro',        'ordem':24},
+              'languages'             : {'required': False, 'type' : bool, 'label':'Idioma',                 'ordem':25},
+              'availability'          : {'required': False, 'type' : bool, 'label':'Disponibilidade',        'ordem':26},
+              'papers_published'      : {'required': False, 'type' : bool, 'label':'Artigos Publicados',     'ordem':27},
+              'blogs'                 : {'required': False, 'type' : bool, 'label':'Blogs',                  'ordem':28},
+              'teaching_research'     : {'required': False, 'type' : bool, 'label':'Personalizado 1',        'ordem':29},
+              'resume'                : {'required': False, 'type' : bool, 'label':'Personalizado 2',        'ordem':30},
+              'delegations'           : {'required': False, 'type' : bool, 'label':'Personalizado 3',        'ordem':31},
+              'customised_message'    : {'required': False, 'type' : bool, 'label':'Personalizado 4',        'ordem':32},}
+              
+              #'username'              : {'required': False, 'type' : bool, 'label':'Nome de Usuário',}}
+              
+   
     def configuration_processes(self,context):
         success_url = context.context.absolute_url() + '/@@overview-controlpanel'
         access_denied = context.context.absolute_url() + '/@@myvindulaconfgs'
@@ -950,4 +1173,4 @@ class ImportUser(BaseFunc):
         D['email'] = user.email
             
         return D
-                    
+    

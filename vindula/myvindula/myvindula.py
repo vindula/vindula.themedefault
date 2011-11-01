@@ -17,7 +17,7 @@ from Products.statusmessages.interfaces import IStatusMessage
 from plone.z3cform.crud import crud
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, ModelsFuncDetails, ImportUser
+from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, ModelsDepartment,ModelsFuncDetails, ImportUser, ModelsMyvindulaHowareu, ModelsMyvindulaComments, ModelsMyvindulaLike
 from zope.component import getUtility
 
 class MyVindulaView(grok.View):
@@ -33,15 +33,34 @@ class MyVindulaView(grok.View):
 
         return ModelsFuncDetails().get_FuncDetails(user_id)
     
-    def get_howareu(self, home_folder):
-        folder = home_folder.objectValues()
-        L=[]
-        for iten in folder:
-            if iten.portal_type == 'vindula.myvindula.howareu':
-                 L.append(iten)
-        
-        return L
+    def get_howareu(self, user):
+#        folder = home_folder.objectValues()
+#        L=[]
+#        for iten in folder:
+#            if iten.portal_type == 'vindula.myvindula.howareu':
+#                 L.append(iten)
+#        
+#        return L
+        D={}
+        D['username'] = user
+        return ModelsMyvindulaHowareu().get_myvindula_howareu(**D)
     
+    def get_comments(self,id,type):
+        D={}
+        D['id_obj'] = id
+        D['type'] = type
+        return ModelsMyvindulaComments().get_myvindula_comments(**D)
+    
+    def get_like(self,id,type_obj):
+        D={}
+        D['id_obj'] = id
+        D['type'] = type_obj
+        return ModelsMyvindulaLike().get_myvindula_like(**D)
+    
+    def get_department(self):
+        return ModelsDepartment().get_department()
+         
+
     def get_photo_user(self,prefs_user):
         if prefs_user:
             if prefs_user.photograph is not None and \
@@ -68,9 +87,13 @@ class MyVindulaView(grok.View):
         submitted = form.get('form.submitted', False)
             
         if submitted:
-            homefolder = self.context.portal_membership.getHomeFolder()
-            howareu = form.get('howareu')
-            item = createContentInContainer(homefolder, "vindula.myvindula.howareu", title=howareu)
+#           homefolder = self.context.portal_membership.getHomeFolder()
+#           howareu = form.get('howareu')
+#           item = createContentInContainer(homefolder, "vindula.myvindula.howareu", title=howareu)
+            visible_area = form.get('visible_area')
+            if not eval(visible_area):
+                form['visible_area'] = form.get('departamento','0')
+            return  ModelsMyvindulaHowareu().set_myvindula_howareu(**form)        
 
 class MyVindulaPanelView(grok.View):
     grok.context(INavigationRoot)
@@ -196,3 +219,39 @@ class MyVindulalistAll(grok.View):
         ramal = form.get('ramal','').strip()
         result = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),int(departamento),unicode(ramal, 'utf-8'))
         return result
+
+class MyVindulaComments(grok.View):
+    grok.context(ISiteRoot)
+    grok.require('zope2.View')
+    grok.name('myvindula-comments')
+    
+    def update(self):
+        """ Receive itself from request and do some actions """
+        form = self.request.form
+        submitted = form.get('form.submitted-comment', False)
+            
+        if submitted:
+            ModelsMyvindulaComments().set_myvindula_comments(**form)         
+            redirect = self.context.absolute_url() + '/@@myvindula'
+            return self.request.response.redirect(redirect)
+        
+        
+class MyVindulaLike(grok.View):
+    grok.context(ISiteRoot)
+    grok.require('zope2.View')
+    grok.name('myvindula-like')
+    
+    def render(self):
+        pass
+    
+    def update(self):
+        """ Receive itself from request and do some actions """
+        form = self.request.form
+        dislike = form.get('dislike','False')
+
+        if eval(dislike):     
+            ModelsMyvindulaLike().del_myvindula_like(**form)
+  
+        else:
+            ModelsMyvindulaLike().set_myvindula_like(**form)
+
