@@ -162,6 +162,7 @@ dl.portlet a:hover,
 .cont_superior .documentFirstHeading{
 	color: #F58220;
 }
+
 .comments-cont{
 	margin-left:20px;
 }
@@ -174,3 +175,20 @@ dl.portlet a:hover,
 	color:#F58220;
 	font-weight:bolder;
 }
+
+/* Control Panel View... */
+div.controlpanel-links div {
+	margin-top: 20px;
+}
+
+div.controlpanel-links div img {
+	width: 40px;
+	height: 40px;
+ 	margin-right: 10px;
+}
+
+div.controlpanel-links div a {
+	vertical-align: super;
+}
+
+/* ...Control Panel View */

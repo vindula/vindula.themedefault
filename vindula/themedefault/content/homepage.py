@@ -15,7 +15,7 @@ class IHomePage(form.Schema):
     
     title = schema.TextLine(
         title=_(u"Título"),
-        description=u"Insira um nome para Home Page.",
+        description=_(u"Insira um nome para Home Page."),
         )
     
     # Fieldset News

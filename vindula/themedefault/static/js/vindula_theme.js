@@ -43,6 +43,18 @@ $j(document).ready(function(){
 	 $j('div#form-widgets-image-input-fields span.label').text( function(index, text) {
 	 	if ($j(this).text() == '(nothing)') $j(this).text('Nenhuma imagem');
 	 } )
+	 
+	 $j('div#form-widgets-structures-input-fields span.label').text( function(index, text) {
+	 	if ($j(this).text() == '(nothing)') $j(this).text('Nenhuma');
+	 } )
+	 
+	 $j('select option').text( function(index, text) {
+	 	if ($j(this).text() == 'no value') $j(this).text('--');
+	 } )
+	
+	
+	/* COMMENT BUTTON */
+	
 	var flag = 0;
 	$j('div#comentar').hide();
 	$j('input#comentar').click(function(){
@@ -54,10 +66,6 @@ $j(document).ready(function(){
 			flag = 0;
 		};
 		
-		
 	});
-	
-	
-	
 	 
 });
