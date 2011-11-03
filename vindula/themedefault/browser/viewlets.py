@@ -1,10 +1,27 @@
 # -*- coding: utf-8 -*-
 from five import grok
 from zope.interface import Interface
-from plone.app.layout.viewlets.interfaces import IAboveContent, IPortalHeader
+from plone.app.layout.viewlets.interfaces import IPortalHeader, IAboveContent, IPortalFooter
 from Products.CMFCore.utils import getToolByName
 
 grok.context(Interface) 
+
+# Viewlet for portal logo top
+
+class LogoTopViewlet(grok.Viewlet): 
+    grok.name('vindula.themedefault.logotop') 
+    grok.require('zope2.View')
+    grok.viewletmanager(IPortalHeader) 
+    
+
+# Viewlet for portal footer
+
+class FooterViewlet(grok.Viewlet): 
+    grok.name('vindula.themedefault.footer') 
+    grok.require('zope2.View')
+    grok.viewletmanager(IPortalFooter) 
+
+            
 
 # Viewlet for useful links
 

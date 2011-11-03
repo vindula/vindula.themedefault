@@ -1,0 +1,1 @@
+<div metal:use-macro="context/vindula-macro-logotop/macros/logotop"></div>

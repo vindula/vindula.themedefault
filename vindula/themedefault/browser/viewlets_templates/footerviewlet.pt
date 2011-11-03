@@ -1,0 +1,1 @@
+<div metal:use-macro="context/vindula-macro-footer/macros/footer"></div>

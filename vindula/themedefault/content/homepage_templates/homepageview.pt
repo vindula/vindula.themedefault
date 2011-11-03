@@ -21,7 +21,7 @@
 			<!-- start: NEWS -->
 			<div class="boxTipo1">
 				<div class="topoBoxTipo">
-					<img src="/++theme++vindula.themedefault/images/topoBoxTipo1.png" />
+					<img src="/++theme++vindula.themedefault/images/bkgs/topoBoxTipo1.png" />
 				</div>
 				<div class="contBoxTipo1">	
 				
@@ -36,9 +36,9 @@
 							<!-- Cycle Controls -->
 							<div class="opcoes_destaque marginDif1 gallery-cycle-controls" 
 								 tal:condition="python: len(view.getHighlightedNews()) > 1">
-								<img id="cycle-prev" src="/++theme++vindula.themedefault/images/seta_right.png" title="Anterior"/>
+								<img id="cycle-prev" src="/++theme++vindula.themedefault/images/buttons/seta_right.png" title="Anterior"/>
 								<div id="cycle-nav"><!-- --></div>
-								<img id="cycle-next" src="/++theme++vindula.themedefault/images/seta_left.png" title="Pr&oacute;xima"/>
+								<img id="cycle-next" src="/++theme++vindula.themedefault/images/buttons/seta_left.png" title="Pr&oacute;xima"/>
 							</div>
 							<div class="visualClear"></div>
 						</div>
@@ -145,7 +145,7 @@
 					
 				</div>
 				<div class="bottomBoxTipo">
-					<img src="/++theme++vindula.themedefault/images/bottomBoxTipo1.png" />
+					<img src="/++theme++vindula.themedefault/images/bkgs/bottomBoxTipo1.png" />
 				</div>
 			</div>
 			<!-- end: NEWS -->

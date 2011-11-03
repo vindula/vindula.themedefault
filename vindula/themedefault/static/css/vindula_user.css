@@ -102,11 +102,11 @@
 }
 
 .userpage table td.field {
-	background-image: url("../images/back_td.jpg");
+	background-image: url("../images/bkgs/back_td.jpg");
 	background-repeat: repeat-x;
 }
 
 .userpage table td.value {
-	background-image: url("../images/back_td2.jpg");
+	background-image: url("../images/bkgs/back_td2.jpg");
 	background-repeat: repeat-x;
 }

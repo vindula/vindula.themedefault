@@ -28,10 +28,10 @@ $j(document).ready(function(){
 		height:	240
 	});
 	
-	$j('div#cycle-nav a').html('<img src="/++theme++vindula.themedefault/images/cyclenav.png" />');
+	$j('div#cycle-nav a').html('<img src="/++theme++vindula.themedefault/images/buttons/cyclenav.png" />');
 	
 	
-	/* FILD NAME */
+	/* FILD NAME 
 	 $j('div#form-widgets-local_othernews-input-fields span.label').text( function(index, text) {
 	 	if ($j(this).text() == '(nothing)') $j(this).text('Em todo o portal');
 	 } )
@@ -47,11 +47,16 @@ $j(document).ready(function(){
 	 $j('div#form-widgets-structures-input-fields span.label').text( function(index, text) {
 	 	if ($j(this).text() == '(nothing)') $j(this).text('Nenhuma');
 	 } )
+	 */
 	 
 	 $j('select option').text( function(index, text) {
 	 	if ($j(this).text() == 'no value') $j(this).text('--');
 	 } )
 	
+	$j('div.autocompleteInputWidget span.option label span').text( function(index, text) {
+	 	if ($j(this).text() == '(nothing)') $j(this).text('Nenhum');
+	 } )
+
 	
 	/* COMMENT BUTTON */
 	

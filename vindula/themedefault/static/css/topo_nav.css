@@ -3,7 +3,7 @@
  */
 
 #topo{
-    background: url("../images/bk_topo.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/bkgs/bk_topo.png") no-repeat scroll 0 0 transparent;
     height: 96px;
     width: 1000px;
 }
@@ -25,13 +25,15 @@
 
 #topo .logo{
     float: left;
-	/*margin: 30px 246px 25px 30px;
-	width: 237px;
-	height:41px;*/
-	margin: 20px 253px 10px 40px;
-	width: 220px;
-	height:66px;
+	margin: 18px 43px 8px 40px;
+	width: 430px;
+	height:70px;
 }
+
+#topo .logo img {
+	max-height: 70px;
+	max-width: 430px;
+} 
 
 /* Campo busca... */
 #topo .geral_busca {
@@ -48,7 +50,7 @@
 }
 
 .geral_busca #searchGadget {
-    background: url("../images/lupa.gif") no-repeat scroll 1% 50% #ECEDED;
+    background: url("../images/icons/lupa.gif") no-repeat scroll 1% 50% #ECEDED;
     border: 1px solid #FFFFFF;
     color: #000000;
     float: left;

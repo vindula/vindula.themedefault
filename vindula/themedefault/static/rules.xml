@@ -24,15 +24,14 @@
     </rules>
 	
 	<!-- Portal Top -->
+	<copy css:content-children="#usefullinks_viewlet" css:theme="#barra_superior" />
+	<copy css:content-children="#macro_logotop" css:theme="#topo .logo" />
 	<replace css:content="#portal-personaltools" css:theme="#data h4" />
 	<replace css:content="#portal-searchbox" css:theme="#portal-searchbox" />
 	<drop attributes="class" css:content="#searchGadget" />
 	<drop attributes="placeholder" css:content="#searchGadget" />
-	<copy css:content-children="#portal-breadcrumbs" css:theme="#geral_breadcrumb" />
-	
-	<!-- Viewlets -->
-	<copy css:content-children="#usefullinks_viewlet" css:theme="#barra_superior" />
 	<copy css:content-children="#menu_viewlet" css:theme="#nav" />
+	<copy css:content-children="#portal-breadcrumbs" css:theme="#geral_breadcrumb" />
 
 	<!-- Portal Column Content -->
 	<copy css:content-children="#portal-column-content" css:theme=".contBoxTipo" />
@@ -69,5 +68,9 @@
 	<rules css:if-content="body.portaltype-vindula-content-content-vindulanews">
 		<drop css:content=".documentFirstHeading" />
 	</rules>
+	
+	<!-- Portal Footer -->
+	<copy css:content-children="#macro_logofooter" css:theme="#rodape .logo" />
+	<copy css:content-children="#macro_textfooter" css:theme="#informacao" />
 
 </rules>

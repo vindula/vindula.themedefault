@@ -109,7 +109,7 @@ div#data dd.actionMenuContent li a {
 }
 
 .portletWrapper .portletHeader {
-    background: url("../images/topoBoxTipo2.png") no-repeat scroll 0 0 transparent !important;
+    background: url("../images/bkgs/topoBoxTipo2.png") no-repeat scroll 0 0 transparent !important;
     padding: 20px 0 !important;;
     text-align: center;
     width: 228px;
@@ -126,7 +126,7 @@ div#data dd.actionMenuContent li a {
 }
 
 .portletWrapper .portletItem {
-    background: url("../images/conBoxTipo2.png") repeat-y scroll 0 0 transparent;
+    background: url("../images/bkgs/conBoxTipo2.png") repeat-y scroll 0 0 transparent;
     padding: 15px !important;
     width: 202px;
 }
@@ -138,11 +138,25 @@ div#data dd.actionMenuContent li a {
 	margin-top: 3px;
 }
 .portletWrapper .portletFooter {
-	background-image: url("../images/rodapeBoxTipo2.png");
+	background-image: url("../images/bkgs/rodapePortlet.png");
 	background-position: left bottom;
     background-repeat: no-repeat;
-	margin-top: -33px;
+	/*margin-top: -33px;
+	margin-top: -18px;*/
 	*margin-top: -38px;
+  	margin-top: -22px;
+    padding: 15px !important;
+    width: 202px;
+}
+dl.portletError { 
+	background: none; 
+}
+dl.portletError dd { 
+	background: url("../images/bkgs/conBoxTipo2.png") repeat-y scroll 0 0 transparent; 
+	width: 202px;
+}
+dl.portletError dd.portletFooter { 
+	margin-top: -18px;
 }
 /* ...Portlets */
 

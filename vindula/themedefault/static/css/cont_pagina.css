@@ -59,7 +59,7 @@
 /* ... */
 
 .contBoxTipo1{
-    background: url("../images/conBoxTipo1.png") repeat-y scroll 0 0 transparent;
+    background: url("../images/bkgs/conBoxTipo1.png") repeat-y scroll 0 0 transparent;
     padding: 15px 20px;
     width: 427px;
 }
@@ -149,7 +149,7 @@
 }
 
 .bk_cont_imgDestaque{
-    background: url("../images/bk_cont_imgDestaque.png") repeat-y scroll 0 0 transparent;
+    background: url("../images/bkgs/bk_cont_imgDestaque.png") repeat-y scroll 0 0 transparent;
     width: 167px;
 	*margin:-9px 0 0 0;
 }
@@ -194,7 +194,7 @@
 }
 
 .topoBoxTipo2 {
-    background: url("../images/topoBoxTipo2.png") no-repeat scroll 0 0 transparent !important;
+    background: url("../images/bkgs/topoBoxTipo2.png") no-repeat scroll 0 0 transparent !important;
     padding: 20px 0 !important;;
     text-align: center;
     width: 228px;
@@ -206,7 +206,7 @@
 }
 
 .contBoxTipo2 {
-    background: url("../images/conBoxTipo2.png") repeat-y scroll 0 0 transparent;
+    background: url("../images/bkgs/conBoxTipo2.png") repeat-y scroll 0 0 transparent;
     padding: 1px 13px 10px;
     width: 202px;
 }
@@ -248,17 +248,6 @@
 
 .rodapeBoxTipo2 img{
 	vertical-align:top;
-}
-
-.bt_curtir{
-	margin: 12px 0 0 0;
-}
-
-.bt_curtir input{
-    background: url("../images/bt_like.png") no-repeat scroll 0 0 transparent;
-    cursor: pointer;
-    height: 24px;
-    width: 51px;
 }
 
 .descricao_boxTipo2 p span{
@@ -305,13 +294,6 @@
     width: 50px;
 }
 
-.opcao_dif a{
-    background: url("../images/ico_face.png") no-repeat scroll 0 0 transparent;
-    color: #6D6D6D;
-    font-size: 10px;
-    padding: 3px 0 3px 25px;
-}
-
 .topoBoxTipo,
 .bottomBoxTipo {
 	*margin:0 0 -12px 0;
@@ -325,7 +307,8 @@
 	margin-top: -10px;
 }
 .contBoxTipo{
-    background: url("../images/conBoxTipo.png") repeat-y scroll 0 0 transparent;
+	float: left;
+    background: url("../images/bkgs/conBoxTipo.png") repeat-y scroll 0 0 transparent;
     padding: 15px 20px;
     width: 668px;
 }
@@ -405,7 +388,7 @@
 }
 
 .bt_comentar input{
-    background: url("../images/bt_comentar.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/buttons/bt_comentar.png") no-repeat scroll 0 0 transparent;
     color: #FFFFFF;
     cursor: pointer;
     font-weight: bold;
@@ -473,16 +456,16 @@
 }
 
 .bk_sombraTopo{
-    background: url("../images/sombra_cont_topo.png") repeat-x scroll center top #FFFFFF;
+    background: url("../images/bkgs/sombra_cont_topo.png") repeat-x scroll center top #FFFFFF;
 }
 
 .bk_sombraEsquerda{
-    background: url("../images/sombra_cont_esquerda.png") repeat-y scroll left center transparent;
+    background: url("../images/bkgs/sombra_cont_esquerda.png") repeat-y scroll left center transparent;
     margin: 0 0 0 -3px;
 }
 
 .bk_sombraDireita{
-    background: url("../images/sombra_cont_direita.png") repeat-y scroll right center transparent;
+    background: url("../images/bkgs/sombra_cont_direita.png") repeat-y scroll right center transparent;
     margin: 0 -3px 0 0;
     padding: 3px 0 0;
 	*position:relative;

@@ -7,7 +7,7 @@
  <!-- Basic metadata -->
  <property name="title" i18n:translate="">Home Page</property>
  <property name="description" i18n:translate="">Objeto de configuração da Home Page.</property>
- <property name="content_icon">/++theme++vindula.themedefault/images/homepage.png</property>
+ <property name="content_icon">/++theme++vindula.themedefault/images/icons/homepage.png</property>
  <property name="allow_discussion">True</property>
  <property name="global_allow">True</property>
  <property name="filter_content_types">True</property>
