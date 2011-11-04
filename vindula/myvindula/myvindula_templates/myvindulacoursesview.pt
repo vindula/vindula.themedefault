@@ -1,0 +1,24 @@
+<html>
+<body metal:use-macro="here/main_template/macros/master">
+<!--metal:block fill-slot="top_slot">
+        <tal:dummy tal:define="dummy python:request.set('disable_border',1)" />
+</metal:block-->
+    
+    <div metal:fill-slot="content">            
+	    <div id="content" tal:define="form_data view/load_list | python:{};">
+	        
+	        <h1>Listagem do Cursos Cadatrados</h1>
+			<br />
+			<div id="interna" >
+				<p><a tal:attributes="href string:${here/portal_url}/myvindula-manage-courses">Adicionar Novo curso</a></p>
+				<tal:rep repeat="item form_data">
+					<a tal:attributes="href string:${here/portal_url}/myvindula-manage-courses?id=${item/id}">
+						<h2 tal:content="item/title|nothing"></h2></a>
+					
+				</tal:rep>
+				
+			</div>
+	    </div>
+    </div>    
+</body>
+</html>

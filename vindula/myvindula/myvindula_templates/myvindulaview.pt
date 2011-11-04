@@ -70,8 +70,8 @@
 							                    	<option value="">-- Selecione --</option>
 		                        					<tal:repeat repeat="departamento departamentos">
 						           					<option value=""
-															tal:content="departamento/name | nothing" 
-															tal:attributes="value departamento/id | nothing;
+															tal:content="departamento/Title | nothing" 
+															tal:attributes="value departamento/UID | nothing;
 																			selected python: str(id_request)==str(departamento.id) or default"></option>
 													</tal:repeat>
 		                    					</select>

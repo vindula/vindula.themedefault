@@ -87,8 +87,13 @@ class Renderer(base.Renderer):
     def get_quantidade_portlet(self):
         return self.data.quantidade_portlet
         
-    def get_department(self, id):
-        return ModelsDepartment().get_departmentByID(id)        
+    def get_department(self, user):
+        try:
+            user_id = unicode(user, 'utf-8')    
+        except:
+            user_id = user
+        
+        return ModelsDepartment().get_departmentByUsername(user)        
 
     def birthdaysToday(self):
         type_filter = self.data.type_search

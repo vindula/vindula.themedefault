@@ -15,7 +15,13 @@
 				</div>
 				
 				<div class="department">
-					<span tal:content="form_data/departamento/name|nothing"></span>
+					<tal:def define="user form_data/username;
+									 departamentos python: view.get_department(user)">
+		        		<tal:rep repeat="departamento departamentos">
+		        			<span tal:content="departamento/Title">Departamento</span> |
+		        		</tal:rep>
+		        	</tal:def>
+					<!--span tal:content="form_data/departamento/name|nothing"></span-->
 				</div>
 				
 				<!-- start: Personal Information -->

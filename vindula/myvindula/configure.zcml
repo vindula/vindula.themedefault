@@ -35,7 +35,7 @@
     
    	<store
 	      name="myvindula"
-	      uri="mysql://root:root@localhost/myvindulaDB" />  
+	      uri="mysql://root:root@192.168.0.119/myvindulaDB" />  
       
 	  <!--mysql://usuario:senha@servidor/base_de_dados -->
 

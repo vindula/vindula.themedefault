@@ -95,7 +95,7 @@ CREATE TABLE `vin_myvindula_confgfuncdetails` (
   `resume` tinyint(1) DEFAULT '0',
   `blogs` tinyint(1) DEFAULT '0',
   `customised_message` tinyint(1) DEFAULT '0',
-  `vin_myvindula_department_id` tinyint(1) DEFAULT '0',
+  `vin_myvindula_department` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -106,7 +106,7 @@ CREATE TABLE `vin_myvindula_confgfuncdetails` (
 
 LOCK TABLES `vin_myvindula_confgfuncdetails` WRITE;
 /*!40000 ALTER TABLE `vin_myvindula_confgfuncdetails` DISABLE KEYS */;
-INSERT INTO `vin_myvindula_confgfuncdetails` VALUES (4,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,0,1,1,1,0,1,0,1,1,1,0,0,1,0,0,1,1);
+INSERT INTO `vin_myvindula_confgfuncdetails` VALUES (4,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,0,1,1,1,0,0,0,1,0,1,0,0,1,0,0,1,0);
 /*!40000 ALTER TABLE `vin_myvindula_confgfuncdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,7 +122,7 @@ CREATE TABLE `vin_myvindula_courses` (
   `title` varchar(45) NOT NULL,
   `length` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,7 +131,7 @@ CREATE TABLE `vin_myvindula_courses` (
 
 LOCK TABLES `vin_myvindula_courses` WRITE;
 /*!40000 ALTER TABLE `vin_myvindula_courses` DISABLE KEYS */;
-INSERT INTO `vin_myvindula_courses` VALUES (1,'lb 07','5'),(2,'lb 01','10');
+INSERT INTO `vin_myvindula_courses` VALUES (1,'lb 07','10'),(2,'lb 01','10'),(3,'lb 74','5'),(4,'administração','10');
 /*!40000 ALTER TABLE `vin_myvindula_courses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,11 +143,10 @@ DROP TABLE IF EXISTS `vin_myvindula_department`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vin_myvindula_department` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `description` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `uid_plone` varchar(45) NOT NULL,
+  `vin_myvindula_funcdetails_id` varchar(45) NOT NULL,
+  PRIMARY KEY (`uid_plone`,`vin_myvindula_funcdetails_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +155,7 @@ CREATE TABLE `vin_myvindula_department` (
 
 LOCK TABLES `vin_myvindula_department` WRITE;
 /*!40000 ALTER TABLE `vin_myvindula_department` DISABLE KEYS */;
-INSERT INTO `vin_myvindula_department` VALUES (1,'logistica','logistica'),(2,'administrativo','adminsitrativo'),(3,'financeiro','financeiro');
+INSERT INTO `vin_myvindula_department` VALUES ('54544314-2d32-4ecb-85db-45fac27aaf6e','fabio'),('54544314-2d32-4ecb-85db-45fac27aaf6e','rafaela'),('7ae6b87d-a2c1-4ed0-a4ed-95314230dd21','cesar'),('7ae6b87d-a2c1-4ed0-a4ed-95314230dd21','maumau'),('7ae6b87d-a2c1-4ed0-a4ed-95314230dd21','rafaela'),('b1a83cda-ab3c-44e9-9205-a372f5257143','cesar'),('b1a83cda-ab3c-44e9-9205-a372f5257143','fabio'),('b1a83cda-ab3c-44e9-9205-a372f5257143','maumau');
 /*!40000 ALTER TABLE `vin_myvindula_department` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,14 +167,11 @@ DROP TABLE IF EXISTS `vin_myvindula_funcdetail_couses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vin_myvindula_funcdetail_couses` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `vin_myvindula_funcdetails_id` int(11) NOT NULL,
   `vin_myvindula_courses_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_vin_myvindula_funcdetail_couses_vin_myvindula_funcdetails1` (`vin_myvindula_funcdetails_id`),
+  `vin_myvindula_funcdetail_username` varchar(45) NOT NULL,
+  PRIMARY KEY (`vin_myvindula_courses_id`,`vin_myvindula_funcdetail_username`),
   KEY `fk_vin_myvindula_funcdetail_couses_vin_myvindula_courses1` (`vin_myvindula_courses_id`),
-  CONSTRAINT `fk_vin_myvindula_funcdetail_couses_vin_myvindula_courses1` FOREIGN KEY (`vin_myvindula_courses_id`) REFERENCES `vin_myvindula_courses` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_vin_myvindula_funcdetail_couses_vin_myvindula_funcdetails1` FOREIGN KEY (`vin_myvindula_funcdetails_id`) REFERENCES `vin_myvindula_funcdetails` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_vin_myvindula_funcdetail_couses_vin_myvindula_courses1` FOREIGN KEY (`vin_myvindula_courses_id`) REFERENCES `vin_myvindula_courses` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -185,6 +181,7 @@ CREATE TABLE `vin_myvindula_funcdetail_couses` (
 
 LOCK TABLES `vin_myvindula_funcdetail_couses` WRITE;
 /*!40000 ALTER TABLE `vin_myvindula_funcdetail_couses` DISABLE KEYS */;
+INSERT INTO `vin_myvindula_funcdetail_couses` VALUES (1,'maumau'),(1,'rafaela'),(2,'cesar'),(2,'fabio'),(2,'maumau'),(3,'cesar'),(3,'fabio');
 /*!40000 ALTER TABLE `vin_myvindula_funcdetail_couses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,13 +193,10 @@ DROP TABLE IF EXISTS `vin_myvindula_funcdetail_languages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vin_myvindula_funcdetail_languages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `vin_myvindula_funcdetails_id` int(11) NOT NULL,
   `vin_myvindula_languages_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_vin_myvindula_funcdetail_languages_vin_myvindula_funcdetai1` (`vin_myvindula_funcdetails_id`),
+  `vin_myvindula_funcdetail_username` varchar(45) NOT NULL,
+  PRIMARY KEY (`vin_myvindula_languages_id`,`vin_myvindula_funcdetail_username`),
   KEY `fk_vin_myvindula_funcdetail_languages_vin_myvindula_languages1` (`vin_myvindula_languages_id`),
-  CONSTRAINT `fk_vin_myvindula_funcdetail_languages_vin_myvindula_funcdetai1` FOREIGN KEY (`vin_myvindula_funcdetails_id`) REFERENCES `vin_myvindula_funcdetails` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_vin_myvindula_funcdetail_languages_vin_myvindula_languages1` FOREIGN KEY (`vin_myvindula_languages_id`) REFERENCES `vin_myvindula_languages` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -213,6 +207,7 @@ CREATE TABLE `vin_myvindula_funcdetail_languages` (
 
 LOCK TABLES `vin_myvindula_funcdetail_languages` WRITE;
 /*!40000 ALTER TABLE `vin_myvindula_funcdetail_languages` DISABLE KEYS */;
+INSERT INTO `vin_myvindula_funcdetail_languages` VALUES (1,'maumau'),(1,'rafaela'),(2,'cesar'),(2,'fabio'),(2,'maumau'),(3,'cesar'),(3,'fabio');
 /*!40000 ALTER TABLE `vin_myvindula_funcdetail_languages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,10 +244,8 @@ CREATE TABLE `vin_myvindula_funcdetails` (
   `committess` varchar(45) DEFAULT NULL,
   `projetcs` varchar(45) DEFAULT NULL,
   `personal_information` varchar(45) DEFAULT NULL,
-  `skills_expertise` varchar(45) DEFAULT NULL,
   `license_plate_numbers` varchar(45) DEFAULT NULL,
   `profit_centre` varchar(45) DEFAULT NULL,
-  `languages` varchar(45) DEFAULT NULL,
   `availability` varchar(45) DEFAULT NULL,
   `papers_published` varchar(45) DEFAULT NULL,
   `teaching_research` varchar(45) DEFAULT NULL,
@@ -260,11 +253,8 @@ CREATE TABLE `vin_myvindula_funcdetails` (
   `resume` varchar(45) DEFAULT NULL,
   `blogs` varchar(45) DEFAULT NULL,
   `customised_message` text,
-  `vin_myvindula_department_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_vin_myvindula_funcdetails_vin_myvindula_department` (`vin_myvindula_department_id`),
-  CONSTRAINT `fk_vin_myvindula_funcdetails_vin_myvindula_department` FOREIGN KEY (`vin_myvindula_department_id`) REFERENCES `vin_myvindula_department` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -273,7 +263,7 @@ CREATE TABLE `vin_myvindula_funcdetails` (
 
 LOCK TABLES `vin_myvindula_funcdetails` WRITE;
 /*!40000 ALTER TABLE `vin_myvindula_funcdetails` DISABLE KEYS */;
-INSERT INTO `vin_myvindula_funcdetails` VALUES (12,'Cesar ausgusto','123453','12356564','cesar@cesar.com','gfhghfghfhgfh','cesar','1989-10-27','123456','dev','liberiun','dev','2011-10-27',NULL,'gfhfhhgf',NULL,'hfghgfh','r. coimbra','dev',NULL,NULL,'adsad','sadasdsa','fghfghfgh','dsadsadsd','dfdfsa',NULL,NULL,NULL,'sdfsaf','sdfsaf','sdafdf','safsdaf',NULL,'sdfsf','fhfghfxghfxhfhxfhf',1),(13,'Mauricio','324598','dfsfsfdsf','mauricio@mauricio.com',NULL,'maumau','1989-10-18','45632','sadasd','liberiun','asdad','2011-10-27',NULL,NULL,NULL,'asdadas','asdasd','asdasd','Members/maumau/logo_portal-jpeg',NULL,'sdasdasd','asdasd',NULL,'sadasd','asdsad',NULL,NULL,'asdada','sadsaffdfds','dsfdsf','sdfsf','sdfsfd','wqewqew','sdfsdf','ewrewrewrwreqwewqeqw',3),(14,'Fabio','36528',NULL,'fabio@fabio.com',NULL,'fabio','2011-10-27','121545','12321','121613','asdsad','2011-10-27',NULL,NULL,NULL,NULL,'sadasd','asdsad',NULL,NULL,'rtytryty','rtytryr',NULL,'hgfhg','gfhfh',NULL,NULL,NULL,'gfhgfh','fghfgh','fghfgh','fghgfh',NULL,'gfhfgh',NULL,3);
+INSERT INTO `vin_myvindula_funcdetails` VALUES (1,'Cesar ausgusto','123453','12356564','cesar@cesar.com','gfhghfghfhgfh','cesar','1989-11-01','123456','desenvolvimento','liberiun','desev','2011-10-27',NULL,'gfhfhhgf',NULL,'hfghgfh','r. coimbra','desev',NULL,NULL,'adsad','sadasdsa','fghfghfgh','dsadsadsd',NULL,'djakfhkajfdhkdfjkfdkj','sdfsaf','sdfsaf','sdafdf','safsdaf',NULL,'sdfsf','fhfghfxghfxhfhxfhf'),(2,'Mauricio','324598','dfsfsfdsf','mauricio@mauricio.com',NULL,'maumau','1989-11-01','45632','sadasd','liberiun','asdad','2011-10-27',NULL,NULL,NULL,'asdadas','asdasd','asdasd','Members/maumau/logo_portal-jpeg',NULL,'sdasdasd','asdasd',NULL,'sadasd',NULL,NULL,'sadsaffdfds','dsfdsf','sdfsf','sdfsfd','wqewqew','sdfsdf','ewrewrewrwreqwewqeqw'),(3,'Fabio','36528','12312456','fabio@fabio.com','23123123213131','fabio','2011-11-01','121545','12321','121613','asdsad','2011-10-27',NULL,NULL,NULL,NULL,'sadasd','asdsad',NULL,NULL,'rtytryty','rtytryr','srdfdsdf','hgfhg',NULL,'sdfsdff','gfhgfh','fghfgh','fghfgh','fghgfh',NULL,'gfhfgh','qweqweewssDDDsdsadsadDDDSA'),(4,'Rafaela Saconi','4452369','9163135','rafaela@liberiun.com','1423456','rafaela','1990-11-02','12345','dev','liberiun','desenvolvimneto','2010-01-01',NULL,'são paulo','[]','são paulo','091578','dev',NULL,'[]','rafa','fhgfgh','ghfghj','[]',NULL,'1245','12345','[]','[]','123345','[]','[]','sadasfdfdfdfdsfdsfsfddsfdsfsdf'),(5,'rafael','12345','1131787','','','rafael',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `vin_myvindula_funcdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -291,7 +281,7 @@ CREATE TABLE `vin_myvindula_howareu` (
   `visible_area` varchar(45) DEFAULT NULL,
   `text` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -300,7 +290,7 @@ CREATE TABLE `vin_myvindula_howareu` (
 
 LOCK TABLES `vin_myvindula_howareu` WRITE;
 /*!40000 ALTER TABLE `vin_myvindula_howareu` DISABLE KEYS */;
-INSERT INTO `vin_myvindula_howareu` VALUES (1,'maumau','2011-10-28 12:31:54','False','sdddsdad'),(3,'maumau','2011-10-28 14:29:24','False','sadasdadsad'),(4,'fabio','2011-10-31 11:20:53','False','Welcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: Fabio'),(7,'fabio','2011-10-31 11:24:58','False','Welcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: Fabio\r\n'),(8,'fabio','2011-10-31 11:27:14','False','A forma de comentar e curtir, terão seu funcionamento igual ao Facebook, e o layout deverá ser parecido em sua organização, porém, deve respeitar o default do Vindula.A forma de comentar e curtir, terão seu funcionamento igual ao Facebook, e o layout deverá ser parecido em sua organização, porém, deve respeitar o default do Vindula.'),(9,'fabio','2011-10-31 11:27:57','3','igual ao Facebook, e o layout deverá ser parecido em sua organização, porém, deve respeitar o default do Vindula.A forma de comentar e curtir, terão seu funcionamento igual ao Facebook, e o layout deverá ser parecido em sua organização, porém, deve respeitar o default do Vindula. '),(10,'cesar','2011-10-31 17:36:29','True','Welcome to Vindula: Cesar ausgustoWelcome to Vindula: Cesar ausgustoWelcome to Vindula: Cesar ausgustoWelcome to Vindula: Cesar ausgusto');
+INSERT INTO `vin_myvindula_howareu` VALUES (1,'maumau','2011-10-28 12:31:54','False','sdddsdad'),(3,'maumau','2011-10-28 14:29:24','False','sadasdadsad'),(4,'fabio','2011-10-31 11:20:53','False','Welcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: Fabio'),(7,'fabio','2011-10-31 11:24:58','False','Welcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: FabioWelcome to Vindula: Fabio\r\n'),(8,'fabio','2011-10-31 11:27:14','False','A forma de comentar e curtir, terão seu funcionamento igual ao Facebook, e o layout deverá ser parecido em sua organização, porém, deve respeitar o default do Vindula.A forma de comentar e curtir, terão seu funcionamento igual ao Facebook, e o layout deverá ser parecido em sua organização, porém, deve respeitar o default do Vindula.'),(9,'fabio','2011-10-31 11:27:57','3','igual ao Facebook, e o layout deverá ser parecido em sua organização, porém, deve respeitar o default do Vindula.A forma de comentar e curtir, terão seu funcionamento igual ao Facebook, e o layout deverá ser parecido em sua organização, porém, deve respeitar o default do Vindula. '),(10,'cesar','2011-10-31 17:36:29','True','Welcome to Vindula: Cesar ausgustoWelcome to Vindula: Cesar ausgustoWelcome to Vindula: Cesar ausgustoWelcome to Vindula: Cesar ausgusto'),(11,'cesar','2011-11-01 16:13:31','b1a83cda-ab3c-44e9-9205-a372f5257143','In nec tortor ut est mollis elementum. Integer faucibus luctus justo nec lacinia. Donec adipiscing blandit orci, eget imperdiet eros convallis sit amet. Nam id ipsum dolor. Praesent elit ipsum, imperdiet id feugiat eu, sodales ut ligula. Maecenas hendrerit luctus nulla ac tempus. Aliquam malesuada risus turpis, blandit tincidunt dolor. Mauris venenatis nisl sed justo tincidunt eget imperdiet neque euismod. Integer vitae mattis ipsum. Sed gravida ornare enim et aliquet. Praesent magna ante, mollis in facilisis nec, mollis congue lacus. Vestibulum viverra velit sodales mauris egestas laoreet. Nunc commodo elementum ornare. Quisque a mattis nisi. Nullam at lacinia nisi. Praesent vehicula sapien non justo aliquam sodales. '),(12,'rafaela','2011-11-04 10:38:02','True','Nunc in elit lectus, eu pulvinar neque. Ut malesuada aliquam risus lobortis varius. Suspendisse potenti. Nulla faucibus fringilla faucibus. Cras tincidunt fermentum elit eget elementum. Sed accumsan metus quis leo adipiscing malesuada. Ut consequat eleifend blandit. Pellentesque feugiat tincidunt nunc pharetra volutpat. Aliquam luctus tempor tincidunt. Vivamus ut dui libero. '),(13,'rafaela','2011-11-04 10:40:58','b1a83cda-ab3c-44e9-9205-a372f5257143','fermentum sit amet magna. Integer non odio ut ante ultrices egestas eu nec arcu. Suspendisse varius, risus vel sodales ullamcorper, lorem nulla lacinia tortor, eu tristique metus massa nec ligula. Vivamus in dolor ut eros dignissim ullamcorper. ');
 /*!40000 ALTER TABLE `vin_myvindula_howareu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -316,7 +306,7 @@ CREATE TABLE `vin_myvindula_languages` (
   `title` varchar(45) NOT NULL,
   `level` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -325,7 +315,7 @@ CREATE TABLE `vin_myvindula_languages` (
 
 LOCK TABLES `vin_myvindula_languages` WRITE;
 /*!40000 ALTER TABLE `vin_myvindula_languages` DISABLE KEYS */;
-INSERT INTO `vin_myvindula_languages` VALUES (1,'espanhol','basico'),(2,'ingles','intermediario'),(3,'ingles','basico');
+INSERT INTO `vin_myvindula_languages` VALUES (1,'espanhol','basico'),(2,'ingles - inter','intermediario'),(3,'ingles','basico'),(4,'espanho - inter','intermediario');
 /*!40000 ALTER TABLE `vin_myvindula_languages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -344,7 +334,7 @@ CREATE TABLE `vin_myvindula_like` (
   `id_obj` varchar(45) DEFAULT NULL,
   `isPlone` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -353,7 +343,7 @@ CREATE TABLE `vin_myvindula_like` (
 
 LOCK TABLES `vin_myvindula_like` WRITE;
 /*!40000 ALTER TABLE `vin_myvindula_like` DISABLE KEYS */;
-INSERT INTO `vin_myvindula_like` VALUES (2,'cesar','2011-10-28 16:55:55','ModelsMyvindulaHowareu','1',0),(4,'fabio','2011-10-28 16:58:06','ModelsMyvindulaHowareu','3',0),(10,'maumau','2011-10-31 11:10:40','ModelsMyvindulaComments','3',0),(11,'fabio','2011-10-31 11:29:52','ModelsMyvindulaHowareu','8',0),(12,'fabio','2011-10-31 11:31:22','ModelsMyvindulaComments','5',0),(13,'cesar','2011-10-31 17:36:34','ModelsMyvindulaHowareu','10',0),(14,'fabio','2011-10-31 18:06:49','ModelsMyvindulaHowareu','4',0);
+INSERT INTO `vin_myvindula_like` VALUES (2,'cesar','2011-10-28 16:55:55','ModelsMyvindulaHowareu','1',0),(4,'fabio','2011-10-28 16:58:06','ModelsMyvindulaHowareu','3',0),(10,'maumau','2011-10-31 11:10:40','ModelsMyvindulaComments','3',0),(11,'fabio','2011-10-31 11:29:52','ModelsMyvindulaHowareu','8',0),(12,'fabio','2011-10-31 11:31:22','ModelsMyvindulaComments','5',0),(13,'cesar','2011-10-31 17:36:34','ModelsMyvindulaHowareu','10',0),(14,'fabio','2011-10-31 18:06:49','ModelsMyvindulaHowareu','4',0),(15,'cesar','2011-11-01 16:13:50','ModelsMyvindulaHowareu','11',0),(16,'rafaela','2011-11-04 11:12:06','ModelsMyvindulaHowareu','12',0);
 /*!40000 ALTER TABLE `vin_myvindula_like` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -366,4 +356,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-11-01  9:32:43
+-- Dump completed on 2011-11-04 11:15:43

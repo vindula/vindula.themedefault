@@ -74,14 +74,23 @@ class Renderer(base.Renderer):
     
     def get_quantidade_portlet(self):
         return self.data.quantidade_portlet
+
+    def get_department(self, user):
+        try:
+            user_id = unicode(user, 'utf-8')    
+        except:
+            user_id = user
+        
+        return ModelsDepartment().get_departmentByUsername(user)      
+
             
 #    @view.memoize
     def busca_usuarios(self):
         form = self.request.form
         title = form.get('title','').strip()
-        departamento= form.get('departamento','0')
+        departamento= form.get('departamento','')
         ramal = form.get('ramal','').strip()
-        result = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),int(departamento),unicode(ramal, 'utf-8'))
+        result = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'))
         return result
     
     

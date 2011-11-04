@@ -10,6 +10,9 @@ from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from plone.dexterity.utils import createContentInContainer
 
+from zope.app.component.hooks import getSite
+from Products.CMFCore.utils import getToolByName
+
 from vindula.myvindula import MessageFactory as _
 
 #Imports regarding the connection of the database 'strom'
@@ -23,7 +26,7 @@ from vindula.myvindula.validation import valida_form
 from datetime import date , datetime 
 
 #import sys
-#from storm.tracer import debug #
+#from storm.tracer import debug #debug(True, stream=sys.stdout)
 
 class IFuncDetails(form.Schema):
     
@@ -261,9 +264,9 @@ class ModelsFuncDetails(Storm, BaseStore):
     committess = Unicode()
     projetcs = Unicode()
     personal_information = Unicode()
-    skills_expertise = Unicode()
+    #skills_expertise = Unicode()
     profit_centre = Unicode()
-    languages = Unicode()
+    #languages = Unicode()
     availability = Unicode()
     papers_published = Unicode()
     teaching_research =Unicode()
@@ -271,9 +274,9 @@ class ModelsFuncDetails(Storm, BaseStore):
     resume = Unicode()
     blogs = Unicode()
     customised_message = Unicode()
-    vin_myvindula_department_id = Int()
+    #vin_myvindula_department_id = Int()
     
-    departamento = Reference(vin_myvindula_department_id, "ModelsDepartment.id")    
+    departamento = Reference(username, "ModelsDepartment.vin_myvindula_funcdetails_id")    
     
     def get_allFuncDetails(self):
         data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username!=u'admin')
@@ -289,51 +292,22 @@ class ModelsFuncDetails(Storm, BaseStore):
         else:
             return None
         
-    def get_FuncBusca(self,name,department_id,phone):    
-        if name != '' and not ' ' in name or \
-            phone != '' and not ' ' in phone:
-            if department_id != 0:
-                data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"),
-                                                          ModelsFuncDetails.phone_number.like("%" + phone + "%"), 
-                                                          ModelsFuncDetails.vin_myvindula_department_id==department_id)
-            else:
-                data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"), 
-                                                          ModelsFuncDetails.phone_number.like("%" + phone + "%"))
-            
-            if data.count() == 0:
-                return None
-            else:
-                return data    
-            
-        elif name != '' and not ' ' in name:
-           if department_id != 0:
-                data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"), 
-                                                          ModelsFuncDetails.vin_myvindula_department_id==department_id)
-           else:
-                data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"), 
-                                                          ModelsFuncDetails.name.like("%" + phone + "%"))
-            
-           if data.count() == 0:
-                return None
-           else:
-                return data
-        
-        elif phone != '' and not ' ' in phone:
-            if department_id != 0:
-                data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"),
-                                                          ModelsFuncDetails.phone_number.like("%" + phone + "%"),
-                                                          ModelsFuncDetails.vin_myvindula_department_id==department_id)
-            else:
-                data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"),
-                                                          ModelsFuncDetails.phone_number.like("%" + phone + "%"))
-            
-            if data.count() == 0:
-                return None
-            else:
-                return data    
-                       
+    def get_FuncBusca(self,name,department_id,phone): 
+        if department_id != u'0':
+            origin = [ModelsFuncDetails, Join(ModelsDepartment, ModelsDepartment.vin_myvindula_funcdetails_id==ModelsFuncDetails.username)]
+            data = self.store.using(*origin).find(ModelsFuncDetails,  ModelsFuncDetails.name.like("%" + name + "%"),
+                                                                   ModelsFuncDetails.phone_number.like("%" + phone + "%"),
+                                                                   ModelsDepartment.uid_plone==department_id)
+
         else:
+            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"),
+                                                      ModelsFuncDetails.phone_number.like("%" + phone + "%"))
+        
+        if data.count() == 0:
             return None
+        else:
+            return data    
+            
     
     def get_FuncBirthdays(self, date_start, date_end):
         
@@ -368,24 +342,65 @@ class ModelsFuncDetails(Storm, BaseStore):
 class ModelsDepartment(Storm, BaseStore):
     __storm_table__ = 'vin_myvindula_department'
  
-    id = Int(primary=True)
-    name = Unicode()
-    description = Unicode()
+    __storm_primary__ = "uid_plone", "vin_myvindula_funcdetails_id"
+    
+    #id = Int(primary=True)
+    uid_plone = Unicode()
+    vin_myvindula_funcdetails_id = Unicode()
+
+    def set_department(self, **kwargs):
+        D={}
+        D['uid_plone'] = kwargs.get('UID','')
+        D['vin_myvindula_funcdetails_id'] = kwargs.get('funcdetails_id')
+        
+        # adicionando...
+        department = ModelsDepartment(**D)
+        self.store.add(department)
+        self.store.flush()        
     
     #loads data into the combo "departamento_id"    
     def get_department(self):
-        data = self.store.find(ModelsDepartment)
-        if data.count() == 0:
-            return None
-        else:
-            return data
+        urltool = getSite().portal_url
+        caminho = urltool.getPortalPath() #+'/jornal-da-caixa/banners-do-jornal';
+        ctool = getSite().portal_catalog
+        data = ctool(portal_type='vindula.content.content.orgstructure', 
+                      review_state='published',
+                      path=caminho)   
         
-    def get_departmentByID(self,id):
-        data = self.store.find(ModelsDepartment, ModelsDepartment.id==int(id)).one()
-        if data:
+        #data = self.store.find(ModelsDepartment)
+        if data: 
             return data
         else:
+            return []
+        
+    def get_departmentByUsername(self,user):
+        catalog = getToolByName(getSite(), 'portal_catalog')
+        datas = self.store.find(ModelsDepartment, ModelsDepartment.vin_myvindula_funcdetails_id==user)
+
+        if datas.count != 0:
+            L=[]
+            for data in datas:
+                obj = catalog({'UID':data.uid_plone})
+                L.append(obj[0])
+
+            return L
+        else:
             return None
+
+#    def get_departmentByID(self,id):
+#        data = self.store.find(ModelsDepartment, ModelsDepartment.id==int(id)).one()
+#        if data:
+#            return data
+#        else:
+#            return None
+        
+    def del_department(self, user):
+        results = self.store.find(ModelsDepartment, ModelsDepartment.vin_myvindula_funcdetails_id==user)
+        if results:
+            for result in results:
+                self.store.remove(result)
+                self.store.flush()
+        
 
 class ModelsConfgMyvindula(Storm, BaseStore):
     __storm_table__ = 'vin_myvindula_confgfuncdetails'
@@ -424,7 +439,7 @@ class ModelsConfgMyvindula(Storm, BaseStore):
     resume = Bool()
     blogs = Bool()
     customised_message = Bool()
-    vin_myvindula_department_id = Bool()  
+    vin_myvindula_department = Bool()  
 
     #loads data into DataBase    
     def get_configuration(self):
@@ -607,18 +622,72 @@ class ModelsMyvindulaLanguages(Storm, BaseStore):
 
 class ModelsMyvindulaFuncdetailCouses(Storm, BaseStore):
     __storm_table__ = 'vin_myvindula_funcdetail_couses'
+    __storm_primary__ = "vin_myvindula_funcdetail_username", "vin_myvindula_courses_id"
     
-    id = Int(primary=True)
-    vin_myvindula_funcdetails_id = Int()
+    #id = Int(primary=True)
+    vin_myvindula_funcdetail_username = Unicode()
     vin_myvindula_courses_id = Int()
+    
+    def get_funcdetailCouserByUsername(self, user):
+        data = self.store.find(ModelsMyvindulaFuncdetailCouses, ModelsMyvindulaFuncdetailCouses.vin_myvindula_funcdetail_username==user)
+        
+        if data:
+            return data
+        else:
+            return None
+    
+    def set_funcdetailCouser(self,**kwargs):
+        D={}
+        D['vin_myvindula_funcdetail_username']= kwargs.get('username','')
+        D['vin_myvindula_courses_id'] = int(kwargs.get('id_courses',''))
+    
+        # adicionando...
+        funcdetailCouser = ModelsMyvindulaFuncdetailCouses(**D)
+        self.store.add(funcdetailCouser)
+        self.store.flush()   
+        
+    
+    def del_funcdetailCouser(self, user):
+        results = self.store.find(ModelsMyvindulaFuncdetailCouses, ModelsMyvindulaFuncdetailCouses.vin_myvindula_funcdetail_username==user)
+        if results:
+            for result in results:
+                self.store.remove(result)
+                self.store.flush()        
 
 
 class ModelsMyvindulaFuncdetailLanguages(Storm, BaseStore):
     __storm_table__ = 'vin_myvindula_funcdetail_languages'
+    __storm_primary__ = "vin_myvindula_funcdetail_username", "vin_myvindula_languages_id"
 
-    id = Int(primary=True)
-    vin_myvindula_funcdetails_id = Int()
+    #id = Int(primary=True)
+    vin_myvindula_funcdetail_username = Unicode(primary=True)
     vin_myvindula_languages_id = Int()
+    
+    def get_funcdetailLanguagesByUsername(self, user):
+        data = self.store.find(ModelsMyvindulaFuncdetailLanguages, ModelsMyvindulaFuncdetailLanguages.vin_myvindula_funcdetail_username==user)
+        
+        if data:
+            return data
+        else:
+            return None
+    
+    
+    def set_funcdetailLanguages(self,**kwargs):
+        D={}
+        D['vin_myvindula_funcdetail_username']= kwargs.get('username','')
+        D['vin_myvindula_languages_id'] = int(kwargs.get('id_courses',''))
+    
+        # adicionando...
+        funcdetaillanguages = ModelsMyvindulaFuncdetailLanguages(**D)
+        self.store.add(funcdetaillanguages)
+        self.store.flush()   
+    
+    def del_funcdetailLanguages(self, user):
+        results = self.store.find(ModelsMyvindulaFuncdetailLanguages, ModelsMyvindulaFuncdetailLanguages.vin_myvindula_funcdetail_username==user)
+        if results:
+            for result in results:
+                self.store.remove(result)
+                self.store.flush()         
     
         
 class BaseFunc(BaseStore):
@@ -656,6 +725,26 @@ class BaseFunc(BaseStore):
                 return ''
         else:
             return ''
+    
+    def getValueList(self,campo,request,data):
+        if campo in request.keys():
+            if request.get(campo, None):
+                return request.get(campo,[])
+            else:
+                return []
+        elif data:
+            L = []
+            for i in data:
+                if campo == 'languages':
+                    L.append(i.vin_myvindula_languages_id)
+                elif campo == 'skills_expertise':
+                    L.append(i.vin_myvindula_courses_id)
+                else:
+                    L.append(i.id)
+                    
+            return L
+        else:
+            return []    
         
     def getParametersFromURL(self, ctx):
         traverse = ctx.context.REQUEST.get('traverse_subpath')
@@ -737,14 +826,18 @@ class BaseFunc(BaseStore):
             
             languages = ModelsMyvindulaLanguages().get_allLanguages()
             cursos = ModelsMyvindulaCourses().get_allCourses()
+            user = form_data.get('username','')
+            
+            funcdetailLanguages = ModelsMyvindulaFuncdetailLanguages().get_funcdetailLanguagesByUsername(user)
+            funcdetailCourse = ModelsMyvindulaFuncdetailCouses().get_funcdetailCouserByUsername(user)
             
             html=[]
             i=0
-            while i < len(campos.keys())-2:
+            while i < len(campos.keys())-1:
                 html.append(i)
                 i+=1
             for campo in campos.keys():
-                if campo != 'vin_myvindula_department_id' and campo != 'username':
+                if campo != 'vin_myvindula_department' and campo != 'username':
                     
                     index = campos[campo].get('ordem',0)
                     tmp = ""
@@ -772,30 +865,40 @@ class BaseFunc(BaseStore):
 
                         elif campo == 'customised_message':
                             tmp += "<textarea id='%s' name='%s' style='width: 100; height: 81px;'>%s</textarea>"%(campo, campo, self.getValue(campo,self.request,data)) 
-                         
-                        #elif campo == 'languages':
-                        #    tmp += "<select name='languages' multiple>"
-                        #    tmp += "      <option value="">-- Selecione --</option>"
-                        #    for language in languages:
-                        #        if str(self.getValue(campo,self.request,data)) == str(language.id):
-                        #            tmp += "<option value='%s' selected>%s</option>"%(language.id,language.title)
-                        #        else:
-                        #             tmp += "<option value='%s'>%s</option>"%(language.id,language.title)
-                        #     
-                        #elif campo == 'skills_expertise':
-                        #    tmp += "<select name='skills_expertise'>"
-                        #    tmp += "      <option value="">-- Selecione --</option>"
-                        #    for curso in cursos:
-                        #        if str(self.getValue(campo,self.request,data)) == str(curso.id):
-                        #            tmp += "<option value='%s' selected>%s</option>"%(curso.id,curso.title)
-                        #        else:
-                        #             tmp += "<option value='%s'>%s</option>"%(curso.id,curso.title)
+                        
+                        
+                        elif campo == 'languages':
+                            tmp += "<select name='languages' multiple style='width:200px;height:150px;' >"
+                            tmp += "      <option value="">-- Selecione --</option>"
+                            for language in languages:
+                                if language.id in self.getValueList(campo,self.request,funcdetailLanguages):
+                                    tmp += "<option value='%s' selected>%s</option>"%(language.id,language.title)
+                                else:
+                                     tmp += "<option value='%s'>%s</option>"%(language.id,language.title)
+                             
+                        elif campo == 'skills_expertise':
+                            tmp += "<select name='skills_expertise' multiple style='width:200px;height:150px;' >"
+                            tmp += "      <option value="">-- Selecione --</option>"
+                            for curso in cursos:
+                                if curso.id in self.getValueList(campo,self.request,funcdetailCourse):
+                                    tmp += "<option value='%s' selected>%s</option>"%(curso.id,curso.title)
+                                else:
+                                     tmp += "<option value='%s'>%s</option>"%(curso.id,curso.title)
                             
                         else:
                             tmp += "<input id='%s' type='text' value='%s' name='%s' size='25'/>"%(campo,self.getValue(campo,self.request,data),campo)
                     else:
                         if campo == 'date_birth' or campo == 'admission_date':
                             tmp += "<input id='%s' type='hidden' value='%s' name='%s' size='25'/>"%(campo,self.converte_data(self.getValue(campo,self.request,data),True),campo)
+                        
+                        elif campo == 'skills_expertise':
+                            for i in self.getValueList(campo,self.request,funcdetailCourse):
+                                tmp += "<input id='%s' type='hidden' value='%s' name='%s' size='25'/>"%(campo,i,campo)
+                            
+                        elif campo =='languages':
+                            for i in self.getValueList(campo,self.request,funcdetailLanguages):
+                                tmp += "<input id='%s' type='hidden' value='%s' name='%s' size='25'/>"%(campo,i,campo)
+                        
                         else:
                             tmp += "<input id='%s' type='hidden' value='%s' name='%s' size='25'/>"%(campo,self.getValue(campo,self.request,data),campo)
                         
@@ -829,6 +932,36 @@ class BaseFunc(BaseStore):
                     
                     html.pop(index)
                     html.insert(index, tmp)      
+            
+            return html
+        
+    def geraExtraCampos(self,form_data):
+        if type(form_data) == dict:
+            errors = form_data.get('errors',None)
+            data = form_data.get('data',None)
+            campos = form_data.get('campos',None)
+            
+            html=[]
+            i=0
+            while i < len(campos.keys()):
+                html.append(i)
+                i+=1
+            for campo in campos.keys():
+                   
+                    index = campos[campo].get('ordem',0)
+                    tmp = ""
+                    tmp += "<!-- Campo %s -->"%(campo)
+                    tmp += "<div class='%s'>"%(self.field_class(errors, campo))
+                    tmp += "   <label for='%s'>%s</label>"%(campo,campos[campo]['label'])
+                    if campos[campo]['required'] == True:
+                        tmp += "   <span class='fieldRequired' title='Obrigatório'>(Obrigatório)</span>"
+
+                    tmp += "   <div class='formHelp'>%s.</div>"%(campos[campo]['decription'])   
+                    tmp += "   <div >%s</div>"%(errors.get(campo,''))
+                    tmp += "<input id='%s' type='text' value='%s' name='%s' size='25'/>"%(campo,self.getValue(campo,self.request,data),campo)
+                    tmp += "</div>"
+                    html.pop(index)
+                    html.insert(index, tmp)    
             
             return html
         
@@ -916,12 +1049,12 @@ class SchemaFunc(BaseFunc):
               'delegations'             : {'required': False, 'type' : to_utf8, 'label':'Personalizado 3',        'decription':u'Campo para personalizar',                      'ordem':30},
               'customised_message'      : {'required': False, 'type' : to_utf8, 'label':'Personalizado 4',        'decription':u'Campo para personalizar',                      'ordem':31},
               
-              'username'                : {'required': False, 'type' : to_utf8, 'label':'Nome de Usuário'        },  #Campo Obrigatorio
-              'vin_myvindula_department_id': {'required': False, 'type' : int,     'label':'Departamento'           },} #Campo Obrigatorio
+              'username'                : {'required': False, 'type' : to_utf8, 'label':'Nome de Usuário'        },}  #Campo Obrigatorio
+              #'vin_myvindula_department_id': {'required': False, 'type' : int,     'label':'Departamento'           },} #Campo Obrigatorio
                     
     def registration_processes(self,context):
         success_url = context.context.absolute_url() + '/@@myvindula'
-        access_denied = context.context.absolute_url() + '/@@myvindulaprefs'
+        access_denied = context.context.absolute_url() + '/login'
         form = context.request # var tipo 'dict' que guarda todas as informacoes do formulario (keys,items,values)
         form_keys = form.keys() # var tipo 'list' que guarda todas as chaves do formulario (keys)
         campos = self.campos
@@ -973,6 +1106,32 @@ class SchemaFunc(BaseFunc):
                         else:
                             data['photograph'] = None      
                 
+                if 'vin_myvindula_department' in form_keys:
+                    ModelsDepartment().del_department(user_id)
+                    for departament in form['vin_myvindula_department']:
+                        D={}
+                        D['UID'] = unicode(departament,'utf-8')
+                        D['funcdetails_id'] = user_id
+                        ModelsDepartment().set_department(**D)
+                                             
+                if 'skills_expertise' in form_keys:
+                    ModelsMyvindulaFuncdetailCouses().del_funcdetailCouser(user_id)
+                    for curso in form['skills_expertise']:
+                        D={}
+                        D['username'] = user_id
+                        D['id_courses'] = int(curso)
+                        ModelsMyvindulaFuncdetailCouses().set_funcdetailCouser(**D)
+        
+                
+                if 'languages' in form_keys:
+                    ModelsMyvindulaFuncdetailLanguages().del_funcdetailLanguages(user_id)
+                    for languages in form['skills_expertise']:
+                        D={}
+                        D['username'] = user_id
+                        D['id_courses'] = int(languages)
+                        ModelsMyvindulaFuncdetailLanguages().set_funcdetailLanguages(**D)
+                
+                
                 if user_id != 'acl_users':
                     # editando...
                     result = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username == user_id).one()
@@ -980,7 +1139,6 @@ class SchemaFunc(BaseFunc):
                         if data['photograph'] is None:
                             data['photograph'] = result.photograph
                         
-                        #funcionario = result[0]
                         for campo in campos.keys():
                             value = data.get(campo, None)
                             setattr(result, campo, value)
@@ -1010,12 +1168,16 @@ class SchemaFunc(BaseFunc):
                 return form_data
           
         # se for um formulario de edicao 
-        elif user_id != 'acl_users':    
+        elif user_id != 'acl_users':
             data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username == user_id).one()
+            departaments = ModelsDepartment().get_departmentByUsername(user_id)
+            
             D = {}
             for campo in campos.keys():
                 D[campo] = getattr(data, campo, '')
               
+            D['vin_myvindula_department'] = departaments
+            
             if data:
                form_data['data'] = D
                return form_data
@@ -1029,13 +1191,13 @@ class SchemaFunc(BaseFunc):
         
 class SchemaConfgMyvindula(BaseFunc):
     
-    campos = {'vin_myvindula_department_id': {'required': False, 'type' : bool, 'label':'Departamento',      'ordem':0},
-              'name'                       : {'required': False, 'type' : bool, 'label':'Nome',              'ordem':1},
-              'nickname'                   : {'required': False, 'type' : bool, 'label':'Apelido',           'ordem':2},
-              'phone_number'               : {'required': False, 'type' : bool, 'label':'Telefone',          'ordem':3},
-              'cell_phone'                 : {'required': False, 'type' : bool, 'label':'Celular',           'ordem':4},
-              'email'                      : {'required': False, 'type' : bool, 'label':'E-mail',            'ordem':5},
-              'employee_id'                : {'required': False, 'type' : bool, 'label':'ID Funcionário',    'ordem':6},
+    campos = {'vin_myvindula_department': {'required': False, 'type' : bool, 'label':'Departamento',      'ordem':0},
+              'name'                    : {'required': False, 'type' : bool, 'label':'Nome',              'ordem':1},
+              'nickname'                : {'required': False, 'type' : bool, 'label':'Apelido',           'ordem':2},
+              'phone_number'            : {'required': False, 'type' : bool, 'label':'Telefone',          'ordem':3},
+              'cell_phone'              : {'required': False, 'type' : bool, 'label':'Celular',           'ordem':4},
+              'email'                   : {'required': False, 'type' : bool, 'label':'E-mail',            'ordem':5},
+              'employee_id'             : {'required': False, 'type' : bool, 'label':'ID Funcionário',    'ordem':6},
               'date_birth'            : {'required': False, 'type' : bool, 'label':'Data de Nascimento',     'ordem':7},
               'registration'          : {'required': False, 'type' : bool, 'label':'Matrícula',              'ordem':8},
               'enterprise'            : {'required': False, 'type' : bool, 'label':'Empresa',                'ordem':9},
@@ -1067,8 +1229,8 @@ class SchemaConfgMyvindula(BaseFunc):
               
    
     def configuration_processes(self,context):
-        success_url = context.context.absolute_url() + '/@@overview-controlpanel'
-        access_denied = context.context.absolute_url() + '/@@myvindulaconfgs'
+        success_url = context.context.absolute_url() + '/@@vindula-control-panel'
+        access_denied = context.context.absolute_url() + '/@@overview-controlpanel'
         form = context.request # var tipo 'dict' que guarda todas as informacoes do formulario (keys,items,values)
         form_keys = form.keys() # var tipo 'list' que guarda todas as chaves do formulario (keys)
         campos = self.campos
@@ -1089,7 +1251,7 @@ class SchemaConfgMyvindula(BaseFunc):
               # Inicia o processamento do formulario
               # chama a funcao que valida os dados extraidos do formulario (valida_form) 
               errors, data = valida_form(campos, context.request.form)  
-              
+
               if not errors:
                   if config:
                       for campo in campos.keys():
@@ -1174,3 +1336,174 @@ class ImportUser(BaseFunc):
             
         return D
     
+class ManageCourses(BaseFunc):
+    def to_utf8(value):
+        return unicode(value, 'utf-8')
+    
+    campos = {'title'  : {'required': True,  'type' : to_utf8, 'label':'Nome do Curso',     'decription':u'Digite o nome do curso',    'ordem':0},
+              'length' : {'required': False, 'type' : to_utf8, 'label':'Duração do Curso',  'decription':u'Digite a duração do curso', 'ordem':1},}
+    
+    def load_courses(self,ctx):
+        data = ModelsMyvindulaCourses().get_allCourses()
+        
+        if data:
+            return data
+        else:
+            return []
+        
+    
+    def registration_processes(self,ctx):
+        success_url = ctx.context.absolute_url() + '/@@vindula-control-panel'
+        access_denied = ctx.context.absolute_url() + '/overview-controlpanel'
+        form = ctx.request.form # var tipo 'dict' que guarda todas as informacoes do formulario (keys,items,values)
+        form_keys = form.keys() # var tipo 'list' que guarda todas as chaves do formulario (keys)
+        campos = self.campos
+        
+        # divisao dos dicionarios "errors" e "convertidos"
+        form_data = {
+            'errors': {},
+            'data': {},
+            'campos':campos,}
+        
+        # se clicou no botao "Voltar"
+        if 'form.voltar' in form_keys:
+            ctx.request.response.redirect(success_url)
+          
+        # se clicou no botao "Salvar"
+        elif 'form.submited' in form_keys:
+            # Inicia o processamento do formulario
+            # chama a funcao que valida os dados extraidos do formulario (valida_form) 
+            errors, data = valida_form(campos, form)  
+
+            if not errors:
+                
+                if 'id' in form_keys:
+                    # editando...
+                    id = int(form.get('id'))
+                    result = self.store.find(ModelsMyvindulaCourses, ModelsMyvindulaCourses.id == id).one()
+                    if result:
+                        for campo in campos.keys():
+                            value = data.get(campo, None)
+                            setattr(result, campo, value)
+
+                else:
+                    #adicionando...
+                    database = ModelsMyvindulaCourses(**data)
+                    self.store.add(database)
+                    self.store.flush()
+                        
+                #Redirect back to the front page with a status message
+                #IStatusMessage(ctx.request).addStatusMessage(_(u"Thank you for your order. We will contact you shortly"), "info")
+                ctx.request.response.redirect(success_url)
+                                   
+            else:
+                form_data['errors'] = errors
+                form_data['data'] = data
+                return form_data
+          
+        # se for um formulario de edicao 
+        elif 'id' in form_keys:
+
+            id = int(form.get('id'))
+            data = self.store.find(ModelsMyvindulaCourses, ModelsMyvindulaCourses.id == id).one()
+            
+            D = {}
+            for campo in campos.keys():
+                D[campo] = getattr(data, campo, '')
+              
+            if data:
+               form_data['data'] = D
+               return form_data
+            else:
+               return form_data
+              
+        # se o usuario não estiver logado
+        else:
+            return form_data
+    
+    
+class ManageLanguages(BaseFunc):
+    def to_utf8(value):
+        return unicode(value, 'utf-8')
+    
+    campos = {'title'  : {'required': True,  'type' : to_utf8, 'label':'Nome do Curso',   'decription':u'Digite o nome do curso',    'ordem':0},
+              'level'  : {'required': False, 'type' : to_utf8, 'label':'Nível do Curso',  'decription':u'Digite o nível do curso', 'ordem':1},}
+    
+    def load_languages(self,ctx):
+        data = ModelsMyvindulaLanguages().get_allLanguages()
+        
+        if data:
+            return data
+        else:
+            return []
+        
+    
+    def registration_processes(self,ctx):
+        success_url = ctx.context.absolute_url() + '/@@vindula-control-panel'
+        access_denied = ctx.context.absolute_url() + '/overview-controlpanel'
+        form = ctx.request.form # var tipo 'dict' que guarda todas as informacoes do formulario (keys,items,values)
+        form_keys = form.keys() # var tipo 'list' que guarda todas as chaves do formulario (keys)
+        campos = self.campos
+        
+        # divisao dos dicionarios "errors" e "convertidos"
+        form_data = {
+            'errors': {},
+            'data': {},
+            'campos':campos,}
+        
+        # se clicou no botao "Voltar"
+        if 'form.voltar' in form_keys:
+            ctx.request.response.redirect(success_url)
+          
+        # se clicou no botao "Salvar"
+        elif 'form.submited' in form_keys:
+            # Inicia o processamento do formulario
+            # chama a funcao que valida os dados extraidos do formulario (valida_form) 
+            errors, data = valida_form(campos, form)  
+
+            if not errors:
+                
+                if 'id' in form_keys:
+                    # editando...
+                    id = int(form.get('id'))
+                    result = self.store.find(ModelsMyvindulaLanguages, ModelsMyvindulaLanguages.id == id).one()
+                    if result:
+                        for campo in campos.keys():
+                            value = data.get(campo, None)
+                            setattr(result, campo, value)
+
+                else:
+                    #adicionando...
+                    database = ModelsMyvindulaLanguages(**data)
+                    self.store.add(database)
+                    self.store.flush()
+                        
+                #Redirect back to the front page with a status message
+                #IStatusMessage(ctx.request).addStatusMessage(_(u"Thank you for your order. We will contact you shortly"), "info")
+                ctx.request.response.redirect(success_url)
+                                   
+            else:
+                form_data['errors'] = errors
+                form_data['data'] = data
+                return form_data
+          
+        # se for um formulario de edicao 
+        elif 'id' in form_keys:
+
+            id = int(form.get('id'))
+            data = self.store.find(ModelsMyvindulaLanguages, ModelsMyvindulaLanguages.id == id).one()
+            
+            D = {}
+            for campo in campos.keys():
+                D[campo] = getattr(data, campo, '')
+              
+            if data:
+               form_data['data'] = D
+               return form_data
+            else:
+               return form_data
+              
+        # se o usuario não estiver logado
+        else:
+            return form_data
+        

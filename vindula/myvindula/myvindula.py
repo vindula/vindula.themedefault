@@ -17,7 +17,11 @@ from Products.statusmessages.interfaces import IStatusMessage
 from plone.z3cform.crud import crud
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, ModelsDepartment,ModelsFuncDetails, ImportUser, ModelsMyvindulaHowareu, ModelsMyvindulaComments, ModelsMyvindulaLike
+from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, ModelsDepartment, ModelsFuncDetails,\
+                                   ImportUser, ModelsMyvindulaHowareu, ModelsMyvindulaComments, ModelsMyvindulaLike,\
+                                   ManageCourses, ManageLanguages
+                                   
+                                   
 from zope.component import getUtility
 
 class MyVindulaView(grok.View):
@@ -206,6 +210,15 @@ class MyVindulaListUser(grok.View):
         else:
                 return self.context.absolute_url()+'/'+'defaultUser.png'
 
+    def get_department(self, user):
+        try:
+            user_id = unicode(user, 'utf-8')    
+        except:
+            user_id = user
+
+        return ModelsDepartment().get_departmentByUsername(user)     
+
+
 class MyVindulalistAll(grok.View):
     grok.context(ISiteRoot)
     grok.require('zope2.View')
@@ -220,22 +233,6 @@ class MyVindulalistAll(grok.View):
         result = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),int(departamento),unicode(ramal, 'utf-8'))
         return result
 
-class MyVindulaComments(grok.View):
-    grok.context(ISiteRoot)
-    grok.require('zope2.View')
-    grok.name('myvindula-comments')
-    
-    def update(self):
-        """ Receive itself from request and do some actions """
-        form = self.request.form
-        submitted = form.get('form.submitted-comment', False)
-            
-        if submitted:
-            ModelsMyvindulaComments().set_myvindula_comments(**form)         
-            redirect = self.context.absolute_url() + '/@@myvindula'
-            return self.request.response.redirect(redirect)
-        
-        
 class MyVindulaLike(grok.View):
     grok.context(ISiteRoot)
     grok.require('zope2.View')
@@ -255,3 +252,60 @@ class MyVindulaLike(grok.View):
         else:
             ModelsMyvindulaLike().set_myvindula_like(**form)
 
+class MyVindulaComments(grok.View):
+    grok.context(ISiteRoot)
+    grok.require('zope2.View')
+    grok.name('myvindula-comments')
+    
+    def update(self):
+        """ Receive itself from request and do some actions """
+        form = self.request.form
+        submitted = form.get('form.submitted-comment', False)
+            
+        if submitted:
+            ModelsMyvindulaComments().set_myvindula_comments(**form)         
+            redirect = self.context.absolute_url() + '/@@myvindula'
+            return self.request.response.redirect(redirect)
+
+
+class MyVindulaCoursesView(grok.View, BaseFunc):
+    grok.context(INavigationRoot)
+    grok.require('cmf.ManagePortal')
+    grok.name('myvindula-courses')
+    
+    def load_list(self):
+        return ManageCourses().load_courses(self)
+
+        
+class MyVindulaManageCoursesView(grok.View, BaseFunc):        
+    grok.context(INavigationRoot)
+    grok.require('cmf.ManagePortal')
+    grok.name('myvindula-manage-courses')    
+
+    def load_form(self):
+        return ManageCourses().registration_processes(self)      
+
+class MyVindulaLanguagesView(grok.View, BaseFunc):
+    grok.context(INavigationRoot)
+    grok.require('cmf.ManagePortal')
+    grok.name('myvindula-languages')
+    
+    def load_list(self):
+        return ManageLanguages().load_languages(self)
+
+        
+class MyVindulaManageLanguagesView(grok.View, BaseFunc):        
+    grok.context(INavigationRoot)
+    grok.require('cmf.ManagePortal')
+    grok.name('myvindula-manage-languages')    
+
+    def load_form(self):
+        return ManageLanguages().registration_processes(self)      
+
+        
+
+
+
+    
+    
+    

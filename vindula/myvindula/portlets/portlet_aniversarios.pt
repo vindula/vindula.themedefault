@@ -13,11 +13,20 @@
 				        <!--a href="" tal:attributes="href python: obj.getObject().absolute_url()" tal:content="obj/Title">Employee</a><br /-->
 						<p>
 							<span tal:content="obj/date_birth|nothing"></span> |
-				        	<span tal:define="id obj/Department_id" tal:content="python: view.get_department(id).name" >Departamento</span>
+				        	<tal:def define="user obj/username;
+											 departamentos python: view.get_department(user)">
+				        		<tal:rep repeat="departamento departamentos">
+				        			<span tal:content="departamento/Title">Departamento</span> |
+				        		</tal:rep>
+				        	</tal:def>
+							
 				      	</p>
 				</div>
       		</tal:results>
-		
+			<tal:notresults tal:condition="not: view/birthdaysToday">
+			<h4>Não há aniversariardes nos próximos dias</h4>				
+				
+			</tal:notresults>
       		<!--a tal:attributes="href string:${here/portal_url}/birthdaysWeek">Aniversariantes da Semana</a-->
 			
 			

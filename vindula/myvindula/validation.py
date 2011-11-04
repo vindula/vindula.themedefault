@@ -20,6 +20,7 @@ def valida_form(configuracao, form):
     for campo in configuracao.keys():
         valor = form.get(campo)   #configuracao[campo]['campo_form'], '')
         # logica para verificacao de obrigatoriedade de campo
+        
         if configuracao.get(campo).get('required', None) is not None:
             if configuracao[campo]['required'] == True: # configuracao: campo e obrigatorio
                 if valor == '' or valor.isspace(): # se o campo estiver vazio
@@ -68,15 +69,16 @@ def valida_form(configuracao, form):
                     
         # logica para conversao de dados para unicode de acordo com a configuracao      
         elif valor != '' and valor != '--NOVALUE--' and valor != '-- Selecione --': # se o campo nao estiver vazio, vai tentar converter
-            try:
-                if type(valor) == unicode:
-                    convertidos[campo] = valor.strip()
-                else:
-                    convertidos[campo] = configuracao[campo]['type'](valor.strip()) # conversao do campo
-                # "(valor)" == "(def __call__(self, *args, **kwargs):", callable
-            except:
-                # Falhou ao converter para o tipo requerido
-                errors[campo] = u'Erro ao converter o conteúdo do campo para um formato válido'
-                #errors[campo] = u'Não foi possível converter o campo %s para %s.' % (campo, configuracao[campo]['type'])
+            if campo != 'skills_expertise' and campo != 'languages':
+                try:
+                    if type(valor) == unicode:
+                        convertidos[campo] = valor.strip()
+                    else:
+                        convertidos[campo] = configuracao[campo]['type'](valor.strip()) # conversao do campo
+                    # "(valor)" == "(def __call__(self, *args, **kwargs):", callable
+                except:
+                    # Falhou ao converter para o tipo requerido
+                    errors[campo] = u'Erro ao converter o conteúdo do campo para um formato válido'
+                    #errors[campo] = u'Não foi possível converter o campo %s para %s.' % (campo, configuracao[campo]['type'])
 
     return errors, convertidos #retorna campos validados   
