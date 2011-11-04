@@ -40,6 +40,7 @@ div#data #portal-personaltools {
 
 div#data #portal-personaltools dd {
 	margin-top: 19px;
+	*margin-top: 4px;
   	min-width: 145px;
     width: 145px;
 }
@@ -59,6 +60,12 @@ div#data dd.actionMenuContent a {
 	text-align: right;
 	float: right;
 	width: 120px;
+}
+
+div#data #portal-personaltools a#user-name {
+	width: 457px;
+	*width: 439px;
+	height: 15px;
 }
 
 div#data dd.actionMenuContent li a {
@@ -144,7 +151,7 @@ div#data dd.actionMenuContent li a {
 	/*margin-top: -33px;
 	margin-top: -18px;*/
 	*margin-top: -38px;
-  	margin-top: -22px;
+  	margin-top: -25px;
     padding: 15px !important;
     width: 202px;
 }
@@ -159,6 +166,12 @@ dl.portletError dd.portletFooter {
 	margin-top: -18px;
 }
 /* ...Portlets */
+
+
+/* Adjustments... */
+div#viewlet-below-content div.row {
+	float:none;
+}
 
 
 /* 
