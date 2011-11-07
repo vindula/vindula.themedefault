@@ -105,7 +105,8 @@
 	*top: -10px;  
  	/*position: absolute;
     left: 1121px;
-    top: 130px;*/
+    top: 130px;*/	
+	z-index: 99;
 }
 
 #rodape .geral_busca #LSResult {

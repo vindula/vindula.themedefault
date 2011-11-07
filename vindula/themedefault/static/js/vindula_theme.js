@@ -31,7 +31,7 @@ $j(document).ready(function(){
 	$j('div#cycle-nav a').html('<img src="/++theme++vindula.themedefault/images/buttons/cyclenav.png" />');
 	
 	
-	/* FILD NAME */
+	/* ADJUSTMENTS */
 
 	$j('select option').text( function(index, text) {
 	 	if ($j(this).text() == 'no value') $j(this).text('--');
@@ -40,7 +40,9 @@ $j(document).ready(function(){
 	$j('div.autocompleteInputWidget span.option label span').text( function(index, text) {
 	 	if ($j(this).text() == '(nothing)') $j(this).text('Nenhum');
 	} )
-
+	
+	$j('dd.actionMenuContent a.contenttype-collection').attr("class", "contenttype-topic");
+	$j('dd.actionMenuContent a.contenttype-link img').hide();
 	
 	/* COMMENT BUTTON */
 	
