@@ -44,7 +44,7 @@
 		                    <span class="fieldRequired" title="Obrigatório">(Obrigatório)</span>	
 		                    <div class="formHelp">Selecione o departamendo do funcionario.</div>
 							<div tal:content="errors/vin_myvindula_department|nothing"></div>
-		                    <!--tal:cond condition="python:form_values.get('vin_myvindula_department',None)"-->
+		                    <tal:cond condition="python:form_values.get('vin_myvindula_department',None)">
 			                    <select multiple='multiple' style="width:200px;height:150px;" name="vin_myvindula_department" tal:define="id_request request/vin_myvindula_department | python: [ i.UID for i in form_values.get('vin_myvindula_department',[])] or []">
 			                    	<option value="">-- Selecione --</option>
 									<tal:repeat repeat="departamento departamentos">
@@ -56,15 +56,18 @@
 	
 									</tal:repeat>	
 			                    </select>
-	
-								
-		                    <!--/tal:cond-->
+		                    </tal:cond>
+							<tal:cond condition="python: not form_values.get('vin_myvindula_department',None)">
+								<span>N&atilde;o a departamentos cadastrados no portal, informe o administrador do site </span>
+							</tal:cond>
 														
 						</div>
 						<tal:cont condition="python: not view.checaEstado(config_myvindula,'vin_myvindula_department')">
+							<tal:cont condition="python: form_values.get('vin_myvindula_department',None)">
 								<tal:rep repeat="value request/vin_myvindula_department | python: [ i.UID for i in form_values.get('vin_myvindula_department',[])] or []">
 									<input id="vin_myvindula_department" type="hidden" value="" name="vin_myvindula_department" tal:attributes="value value">									
-								</tal:rep>							
+								</tal:rep>
+							</tal:cont>
 						</tal:cont>
 						
 						<tal:def define="html python:view.geraCampos(form_data)">
