@@ -129,6 +129,9 @@ class HomePageView(grok.View):
             L = []
             for new in news[:24]:
                 obj = new.to_object
+                if obj is None:
+                    news.remove(new)
+                    continue
                 D = {}
                 D['title'] = obj.Title()
                 D['summary'] = obj.summary[:350]

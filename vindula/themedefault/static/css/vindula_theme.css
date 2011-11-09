@@ -234,3 +234,8 @@ div#viewlet-below-content div.row {
     font-weight: normal;
     line-height: 16px;
 }
+
+/* Theme edit link */
+a.theme-edit {position:absolute; display:none;}
+a.theme-edit img {width:20px;}
+div#informacao a.theme-edit{margin-top:-30px;}

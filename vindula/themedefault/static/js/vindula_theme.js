@@ -44,6 +44,21 @@ $j(document).ready(function(){
 	$j('dd.actionMenuContent a.contenttype-collection').attr("class", "contenttype-topic");
 	$j('dd.actionMenuContent a.contenttype-link img').hide();
 	
+	
+	/* LINK THEME EDIT */
+	$j('div.logo').hover(function(){
+		$j('div.logo a.theme-edit').css("display", "inline");
+	},function() {
+		$j('div.logo a.theme-edit').css("display", "none");
+	});
+	
+	$j('div#informacao').hover(function(){
+		$j('div#informacao a.theme-edit').css("display", "inline");
+	},function() {
+		$j('div#informacao a.theme-edit').css("display", "none");
+	});
+
+	
 	/* COMMENT BUTTON */
 	
 	var flag = 0;
