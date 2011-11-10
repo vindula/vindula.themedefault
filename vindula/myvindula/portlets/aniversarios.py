@@ -18,6 +18,7 @@ from vindula.myvindula.user import ModelsDepartment, ModelsFuncDetails
 from datetime import date
 #import datetime
 from DateTime.DateTime import DateTime
+import calendar 
 
 class TypesSearch():
     """ Cria SimpleVocabulary """
@@ -115,8 +116,10 @@ class Renderer(base.Renderer):
         
         elif type_filter == 30:
             now = DateTime()
-            date_start = now.strftime('%Y-%m-01')
-            date_end = now.strftime('%Y-%m-31')
+                        
+            dia = calendar.monthrange(now.year(),now.month())[1]
+            date_start = now.strftime('%Y-%m-1')
+            date_end = now.strftime('%Y-%m-'+str(dia))
             
             results = ModelsFuncDetails().get_FuncBirthdays(date_start,date_end)
         
