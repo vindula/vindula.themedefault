@@ -57,7 +57,7 @@
 				<!-- start: Others Information -->
 				<!-- Contact -->
 				<div class="area"><span>Contato</span></div>
-				<img class="type-info" src="/++theme++vindula.themedefault/images/user_contact.png" />
+				<img class="type-info" tal:attributes="src string:${view/static}/user_contact.png" />
 				<table>
 					<tr>
 						<td class="field">E-mail</td>
@@ -81,7 +81,7 @@
 				
 				<!-- Corporative -->
 				<div class="area"><span>Corporativo</span></div>
-				<img class="type-info" src="/++theme++vindula.themedefault/images/user_business.png" />
+				<img class="type-info" tal:attributes="src string:${view/static}/user_business.png" />
 				<table>
 					<tr>
 						<td class="field">Empresa</td>
@@ -127,7 +127,7 @@
 				
 				<!-- Others -->
 				<div class="area"><span>Outras Informa&ccedil;&otilde;es</span></div>
-				<img class="type-info" src="/++theme++vindula.themedefault/images/user_others.png" />
+				<img class="type-info" tal:attributes="src string:${view/static}/user_others.png" />
 				<table>
 					<tr>
 						<td class="field">Comissão</td>
