@@ -165,6 +165,13 @@ dl.portletError dd {
 dl.portletError dd.portletFooter { 
 	margin-top: -18px;
 }
+dl.portlet form#portlet-ramais h4 {
+	margin: 5px 0;
+}
+
+dl.portlet form#portlet-ramais select {
+	margin-bottom: 10px;
+}
 /* ...Portlets */
 
 
