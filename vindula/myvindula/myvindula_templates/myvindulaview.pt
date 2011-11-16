@@ -67,7 +67,7 @@
 									  			<input type="radio" name="visible_area" value="False" >Somente do departamento:
 												<!-- Select Departamento --> 
 											    <select name="departamento" tal:define="id_request request/departamento | prefs_user/vin_myvindula_department_id | python:''">
-							                    	<option value="">-- Selecione --</option>
+							                    	<option value="True">-- Selecione --</option>
 		                        					<tal:repeat repeat="departamento departamentos">
 						           					<option value=""
 															tal:content="departamento/Title | nothing" 

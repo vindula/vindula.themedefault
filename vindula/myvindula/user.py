@@ -376,14 +376,16 @@ class ModelsDepartment(Storm, BaseStore):
     def get_departmentByUsername(self,user):
         catalog = getToolByName(getSite(), 'portal_catalog')
         datas = self.store.find(ModelsDepartment, ModelsDepartment.vin_myvindula_funcdetails_id==user)
-
-        if datas.count != 0:
+        if datas.count() != 0:
             L=[]
             for data in datas:
                 obj = catalog({'UID':data.uid_plone})
-                L.append(obj[0])
-
-            return L
+                if obj:
+                    L.append(obj[0])
+            if L:
+                return L
+            else:
+                return None
         else:
             return None
 
