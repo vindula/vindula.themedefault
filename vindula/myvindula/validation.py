@@ -25,6 +25,7 @@ def valida_form(configuracao, form):
             if configuracao[campo]['required'] == True: # configuracao: campo e obrigatorio
                 if valor == '' or valor.isspace(): # se o campo estiver vazio
                     errors[campo] = u'Este campo é obrigatório' # indica o campo vazio
+                    continue
                             
         if configuracao[campo]['type'] == date:
             if valor != '':   
@@ -55,7 +56,10 @@ def valida_form(configuracao, form):
             convertidos[campo] = valor
         
         elif configuracao[campo]['type'] == int:
-            convertidos[campo] = int(valor)
+            if valor != '':
+                convertidos[campo] = int(valor)
+            else:
+                errors[campo] = u'Opção inválida'
             
         elif configuracao[campo]['type'] == 'email':
             if(re.match('(.+)@(.+)\.(.+)',valor,re.IGNORECASE)):
@@ -67,7 +71,7 @@ def valida_form(configuracao, form):
                 errors[campo] = u'E mail inválido, digite um email valido'
             
                     
-        # logica para conversao de dados para unicode de acordo com a configuracao      
+        # logica para conversao de dados para unicode de acordo com a configuracao
         elif valor != '' and valor != '--NOVALUE--' and valor != '-- Selecione --': # se o campo nao estiver vazio, vai tentar converter
             if campo != 'skills_expertise' and campo != 'languages':
                 try:
