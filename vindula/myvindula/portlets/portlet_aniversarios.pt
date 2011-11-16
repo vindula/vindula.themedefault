@@ -1,38 +1,39 @@
-<div class="boxTipo2" tal:define="view view/data">
-	<div class="topoBoxTipo2">
-		<h2 tal:content="view/get_title">Portlet Title</h2>
-	</div>
-	<div class="contBoxTipo2">
+<dl class="portlet" tal:define="view view/data">
+
+    <dt class="portletHeader">
+        <span class="tile" tal:content="view/get_title">Portlet Title</span>
+    </dt>
+
+    <dd class="portletItem">
+    	
 		<div id="busca-portlet">
 			<tal:results tal:repeat="obj view/birthdaysToday">
-				<div tal:define="i repeat/obj/end" 
-						     tal:attributes="class python:view.getEnd(i);">
-				      <h4>
-				      	<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username|nothing}"
-										   tal:content="obj/name|nothing">func</a></h4>
-				        <!--a href="" tal:attributes="href python: obj.getObject().absolute_url()" tal:content="obj/Title">Employee</a><br /-->
-						<p>
-							<span tal:content="obj/date_birth|nothing"></span> |
-				        	<tal:def define="user obj/username;
-											 departamentos python: view.get_department(user)">
-				        		<tal:rep repeat="departamento departamentos">
-				        			<span tal:content="departamento/Title">Departamento</span> |
-				        		</tal:rep>
-				        	</tal:def>
-							
-				      	</p>
+				<div tal:define="i repeat/obj/end" tal:attributes="class python:view.getEnd(i);">
+					<h4>
+				    	<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username|nothing}"
+						   tal:content="obj/name|nothing">func</a>
+						<!--a href="" tal:attributes="href python: obj.getObject().absolute_url()" tal:content="obj/Title">Employee</a><br /-->
+					</h4>
+					
+					<span tal:content="obj/date_birth|nothing"></span> |
+					
+		        	<tal:def define="user obj/username;
+									 departamentos python: view.get_department(user)">
+		        		<tal:rep repeat="departamento departamentos">
+		        			<span tal:content="departamento/Title">Departamento</span> |
+		        		</tal:rep>
+		        	</tal:def>
+			      	
 				</div>
       		</tal:results>
 			<tal:notresults tal:condition="not: view/birthdaysToday">
-				<br />
 				<h4>N&atilde;o h&aacute; aniversariantes nos pr&oacute;ximos dias.</h4>						
 			</tal:notresults>
-      		<!--a tal:attributes="href string:${here/portal_url}/birthdaysWeek">Aniversariantes da Semana</a-->
-			
-			
+			<!--a tal:attributes="href string:${here/portal_url}/birthdaysWeek">Aniversariantes da Semana</a-->
 		</div>
-	</div>
-	<div class="rodapeBoxTipo2">
-		<img alt="" src="++theme++vindula.themedefault/images/bkgs/rodapeBoxTipo2.png"/>
-	</div>
-</div>
+
+    </dd>
+    
+    <dd class="portletFooter"></dd>
+
+</dl>
