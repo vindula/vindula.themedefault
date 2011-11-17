@@ -201,16 +201,16 @@ div#viewlet-below-content div.row {
 
 .gallery-cycle-controls img {
 	cursor: pointer;
-	float: right;
+	float: left;
 }
 .gallery-cycle-controls div#cycle-nav {
 	margin-top: 1px;
-	float: right;
+	float: left;
 	*float:none;
 }
 .gallery-cycle-controls div#cycle-nav a {
 	margin-top:3px;
-	float:right;
+	float:left;
 	width:16px;
 	height:16px;
 }
@@ -241,6 +241,9 @@ div#viewlet-below-content div.row {
     font-weight: normal;
     line-height: 16px;
 }
+.float-right { float:right; }
+.float-left { float:left; }
+.c-pointer { cursor:pointer; }
 
 /* Theme edit link */
 a.theme-edit {position:absolute; display:none;}

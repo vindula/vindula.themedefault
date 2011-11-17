@@ -36,9 +36,15 @@
 							<!-- Cycle Controls -->
 							<div class="opcoes_destaque marginDif1 gallery-cycle-controls" 
 								 tal:condition="python: len(view.getHighlightedNews()) > 1">
-								<img id="cycle-prev" src="/++theme++vindula.themedefault/images/buttons/seta_right.png" title="Anterior"/>
-								<div id="cycle-nav"><!-- --></div>
-								<img id="cycle-next" src="/++theme++vindula.themedefault/images/buttons/seta_left.png" title="Pr&oacute;xima"/>
+								<div class="float-right">
+									<div class="float-left c-pointer">
+										<img id="cycle-prev" src="/++theme++vindula.themedefault/images/buttons/seta_left.png" title="Anterior"/>
+									</div>
+									<div id="cycle-nav"><!-- --></div>
+									<div class="float-left c-pointer">
+										<img id="cycle-next" src="/++theme++vindula.themedefault/images/buttons/seta_right.png" title="Pr&oacute;xima"/>
+									</div>
+								</div>
 							</div>
 							<div class="visualClear"></div>
 						</div>

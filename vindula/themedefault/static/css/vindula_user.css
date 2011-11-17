@@ -11,7 +11,7 @@
 .userpage div.department {
     background-color: #FAA61A;
     clear: both;
-    height: 17px;
+    height: 10px;
   	padding-top: 1px;
 	*padding-top: 0;
 	*padding-bottom: 3px;
@@ -92,6 +92,7 @@
 	margin-bottom: 30px !important;
 	border-bottom: 2px solid #999999;
     border-top: 2px solid #999999;
+	max-width: 486px;
 }
 
 .userpage table td {
@@ -103,10 +104,10 @@
 
 .userpage table td.field {
 	background-image: url("../images/bkgs/back_td.jpg");
-	background-repeat: repeat-x;
+	background-repeat: repeat;
 }
 
 .userpage table td.value {
 	background-image: url("../images/bkgs/back_td2.jpg");
-	background-repeat: repeat-x;
+	background-repeat: repeat;
 }

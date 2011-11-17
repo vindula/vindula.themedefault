@@ -37,7 +37,8 @@ class UsefulLinksViewlet(grok.Viewlet):
             self.pc = getToolByName(self.context, 'portal_catalog')
             links = self.pc(path={'query':'/'.join(pasta.getPhysicalPath())},
                             portal_type='Link',
-                            review_state='published')
+                            review_state='published',
+                            sort_on="getObjPositionInParent")
             
             if links:
                 L = []
