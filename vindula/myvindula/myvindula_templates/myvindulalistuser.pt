@@ -4,9 +4,14 @@
         <tal:dummy tal:define="dummy python:request.set('disable_border',1)" />
 </metal:block>
     
-    <div metal:fill-slot="content">            
-	    <div id="content" tal:define="form_data view/load_list | python:{};">
-	       
+    <div metal:fill-slot="content" tal:define="member python:context.portal_membership.getAuthenticatedMember();
+											   form_data view/load_list | python:{};">
+    	
+		<tal:cond tal:condition="python: str(member)==form_data.username">
+			<metal:use use-macro="context/@@myvindulapanel/macros/page"/>                
+	    </tal:cond>
+		
+		<div id="content">
 			<div id="interna" class="userpage">
 				 <h2 class="h2title">Informa&ccedil;&otilde;es do Perfil</h2>
 	
@@ -15,10 +20,10 @@
 				</div>
 				
 				<div class="department">
-					<tal:def define="user form_data/username;
+					<tal:def define="user form_data/username|nothing;
 									 departamentos python: view.get_department(user)">
 		        		<tal:rep repeat="departamento departamentos">
-		        			<span tal:content="departamento/Title">Departamento</span> |
+		        			<span tal:content="departamento/Title|nothing">Departamento</span> |
 		        		</tal:rep>
 		        	</tal:def>
 					<!--span tal:content="form_data/departamento/name|nothing"></span-->

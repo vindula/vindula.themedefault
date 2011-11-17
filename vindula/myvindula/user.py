@@ -292,8 +292,11 @@ class ModelsFuncDetails(Storm, BaseStore):
         else:
             return None
         
-    def get_FuncBusca(self,name,department_id,phone): 
-        if department_id != u'0':
+    def get_FuncBusca(self,name,department_id,phone):
+        if department_id == u'0' and name == '' and phone == '':
+            data = self.store.find(ModelsFuncDetails)
+         
+        elif department_id != u'0':
             origin = [ModelsFuncDetails, Join(ModelsDepartment, ModelsDepartment.vin_myvindula_funcdetails_id==ModelsFuncDetails.username)]
             data = self.store.using(*origin).find(ModelsFuncDetails,  ModelsFuncDetails.name.like("%" + name + "%"),
                                                                    ModelsFuncDetails.phone_number.like("%" + phone + "%"),
@@ -607,6 +610,12 @@ class ModelsMyvindulaCourses(Storm, BaseStore):
             return data
         else:
             return None
+    
+    def set_courses(self,**kwargs):
+        # adicionando...
+        couses = ModelsMyvindulaCourses(**kwargs)
+        self.store.add(couses)
+        self.store.flush() 
 
 class ModelsMyvindulaLanguages(Storm, BaseStore):
     __storm_table__ = 'vin_myvindula_languages'
@@ -621,6 +630,12 @@ class ModelsMyvindulaLanguages(Storm, BaseStore):
             return data
         else:
             return None
+
+    def set_languages(self,**kwargs):
+        # adicionando...
+        languages = ModelsMyvindulaLanguages(**kwargs)
+        self.store.add(languages)
+        self.store.flush()         
 
 class ModelsMyvindulaFuncdetailCouses(Storm, BaseStore):
     __storm_table__ = 'vin_myvindula_funcdetail_couses'
@@ -1475,6 +1490,7 @@ class ManageLanguages(BaseFunc):
                             setattr(result, campo, value)
 
                 else:
+                    #ModelsMyvindulaLanguages().set_languages(**data)
                     #adicionando...
                     database = ModelsMyvindulaLanguages(**data)
                     self.store.add(database)

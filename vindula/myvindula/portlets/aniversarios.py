@@ -134,6 +134,12 @@ class Renderer(base.Renderer):
             return 'info_boxTipo2'
         else:
             return 'info_boxTipo2 borderDif'
+        
+    def getPhoto(self,photo):
+        if photo is not None and not ' ' in photo:
+                return '/'+photo
+        else:
+                return '/'+'defaultUser.png'    
 
     
         

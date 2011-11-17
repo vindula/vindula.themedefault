@@ -44,7 +44,31 @@
                     <a href=""
                        tal:attributes="href string:${context/portal_url}/@@myvindulaprefs"
                        i18n:translate="">
-                        Personal Information
+                        Editar Perfil
+                    </a>
+                </li>
+				<li id="contentview-user_data-personal-data"
+                    tal:define="member python:context.portal_membership.getAuthenticatedMember();
+					link context/@@myvindulapanel/getPersonalPrefsLink;
+                                selected python:view_name=='myvindulalistuser';"
+                    tal:condition="link|nothing"
+                    tal:attributes="class python:selected and 'selected' or 'plain'">
+                    <a href=""
+                       tal:attributes="href string:${context/portal_url}/@@myvindulalistuser?user=${member}"
+                       i18n:translate="">
+                        Visualizar Perfil
+                    </a>
+                </li>
+				<li id="contentview-user_data-personal-data"
+                    tal:define="member python:context.portal_membership.getAuthenticatedMember();
+					link context/@@myvindulapanel/getPersonalPrefsLink;
+                                selected python:view_name=='myvindulalistall';"
+                    tal:condition="link|nothing"
+                    tal:attributes="class python:selected and 'selected' or 'plain'">
+                    <a href=""
+                       tal:attributes="href string:${context/portal_url}/@@myvindulalistall"
+                       i18n:translate="">
+                        Todos os Usuários
                     </a>
                 </li>
 

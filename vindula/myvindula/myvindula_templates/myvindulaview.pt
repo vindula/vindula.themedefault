@@ -17,7 +17,8 @@
 							                             portrait python:context.portal_membership.getPersonalPortrait(member.getId());
 														 homeFolder python: context.portal_membership.getHomeFolder();
 														 prefs_user python: view.get_prefs_user(member.getId());
-														 departamentos python: view.get_department();">
+														 departamentos python: view.get_department();
+														 logado python:str(member)!='Anonymous User';">
 			
 				<div class="titulo_info cont_superior">
 					<h2 class="documentFirstHeading">Welcome to Vindula: <span tal:replace="name" /></h2>	
@@ -53,7 +54,8 @@
 					                method="post"
 					                tal:attributes="action string:${context/absolute_url}/myvindula">
 									<input type="hidden" id="username" name="username" value="" tal:attributes="value member/id|nothing">
-					        		<textarea  style="width: 100%; height: 81px;" name="text"></textarea>
+					        		
+									<textarea  style="width: 100%; height: 81px;" name="text"></textarea>
 					        		
 									<div class="formControls">
 										<div class="row">
@@ -81,28 +83,7 @@
 					            </form>
 					        </div>
 				        </fieldset>
-				        <!--tal:def define="items python: view.get_howareu(homeFolder)">
-							<tal:rep tal:repeat="item items">
-								<div class="comment item_lista">
-									<div class="commentImage">
-					                    <img src="defaultUser.png"
-						             		 alt="" border="0"
-						             		 height="30"
-						             		 tal:attributes="src python:view.get_photo_user(prefs_user);
-									 						 alt prefs_user/name|nothing;
-															 title prefs_user/name|nothing;" />
-					                </div>
-									<div class="documentByLine name-user">
-										<h4><span tal:replace="name" /> | 
-						                    <span tal:replace="python:item.modification_date.strftime('%d/%m/%Y')" />
-										</h4>
-					                </div>
-					                <div class="commentBody">
-					                    <p tal:replace="item/Title|nothing" />
-							  		</div>
-								</div>
-							</tal:rep> 
-				        </tal:def-->
+
 						<tal:def define="items python: view.get_howareu(member.id)">
 							<tal:rep tal:repeat="item items">
 								<div class="comment item_lista">
@@ -124,28 +105,17 @@
 											<input type="hidden" name="isPlone:boolean" id="isPlone" value="False" />
 											<input type="hidden" name="type" id="type" value="ModelsMyvindulaHowareu" />
 										</div>
-										<tal:def define="data_like python:view.get_like(item.id,item._name_class);
-														like_user python: data_like.find(username=unicode(member.getId())).count()">
-											<tal:cond condition="like_user">
-												<span tal:condition="python:data_like.count()>2" tal:content="python:'Voce é mais '+str(data_like.count()-1)+' pessoas já curtiram isso.'"></span>
-												<span tal:condition="python:data_like.count()==2" >Voce é mais uma pessoa curtiu isso.</span>
-												<span tal:condition="python:data_like.count()==1" >Voce curtiu isso.</span>
-												<span class="link" tal:attributes="id item/id|nothing" src="True">(Desfazer Curtir)</span>
-											</tal:cond>
-											<tal:cond condition="not: like_user">
-												<span tal:condition="python:data_like.count()>1" tal:content="python:str(data_like.count())+' pessoas já curtiram isso.'"></span>
-												<span tal:condition="python:data_like.count()==1" tal:content="python:str(data_like.count())+' pessoa curtiu isso.'"></span>
-												<span class="link" tal:attributes="id item/id|nothing">(Curtir)</span>
-												
-											</tal:cond>
-										</tal:def>	
+										<div metal:use-macro="context/myvindula-like-macro/macros/like" />
+
 									</div>
 									
 					                <div class="commentBody">
 					                    <p tal:replace="item/text|nothing" />
 							  		</div>
+									<!-- campos input necessario para a criação de comentariso -->
 									<div id="comments" >
 										<div tal:attributes="id item/id|nothing">
+											
 											<input type="hidden" name="isPlone:boolean" id="isPlone" value="False" />
 											<input type="hidden" name="type" id="type" value="ModelsMyvindulaHowareu" />
 										</div>
@@ -153,49 +123,8 @@
 										<div id="new-comments"></div>
 									</div>
 								</div>
-								<div class="comments-cont" tal:define="comments python:view.get_comments(item.id, item._name_class);">
-									<tal:rep repeat="comment comments">
-										<div class="comment item_lista" tal:define="user_comment python: view.get_prefs_user(comment.username);">
-											<div class="commentImage">
-							                    <img src="defaultUser.png"
-								             		 alt="" border="0"
-								             		 height="30"
-								             		 tal:attributes="src python:view.get_photo_user(user_comment);
-											 						 alt user_comment/name|nothing;
-																	 title user_comment/name|nothing;" />
-							                </div>
-											<div class="documentByLine name-user">
-												<h4><span tal:replace="user_comment/name|nothing" /> | 
-								                    <span tal:replace="python:comment.date_creation.strftime('%d/%m/%Y')" />
-												</h4>
-							                </div>
-											<div id="like">
-												<div tal:attributes="id comment/id|nothing">
-													<input type="hidden" name="isPlone:boolean" id="isPlone" value="False" />
-													<input type="hidden" name="type" id="type" value="ModelsMyvindulaComments" />
-												</div>
-												<tal:def define="data_like python:view.get_like(comment.id,comment._name_class);
-																like_user python: data_like.find(username=unicode(member.getId())).count()">
-													<tal:cond condition="like_user">
-														<span tal:condition="python:data_like.count()>2" tal:content="python:'Voce é mais '+str(data_like.count()-1)+' pessoas já curtiram isso.'"></span>
-														<span tal:condition="python:data_like.count()==2" >Voce é mais uma pessoa curtiu isso.</span>
-														<span tal:condition="python:data_like.count()==1" >Voce curtiu isso.</span>
-														<span class="link" tal:attributes="id comment/id|nothing" src="True">(Desfazer Curtir)</span>
-													</tal:cond>
-													<tal:cond condition="not: like_user">
-														<span tal:condition="python:data_like.count()>1" tal:content="python:str(data_like.count())+' pessoas já curtiram isso.'"></span>
-														<span tal:condition="python:data_like.count()==1" tal:content="python:str(data_like.count())+' pessoa curtiu isso.'"></span>
-														<span class="link" tal:attributes="id comment/id|nothing">(Curtir)</span>
-														
-													</tal:cond>
-												</tal:def>	
-											</div>
-							                <div class="commentBody">
-							                    <p tal:replace="comment/text|nothing" />
-									  		</div>
-										</div>
-									</tal:rep>
-								</div>
+								<div metal:use-macro="context/myvindula-comments-macro/macros/comments" />
+
 							</tal:rep>	
 				        </tal:def>
 					</div>

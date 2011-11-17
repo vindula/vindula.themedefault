@@ -6,22 +6,36 @@
 		<div id="busca-portlet">
 			<tal:results tal:repeat="obj view/birthdaysToday">
 				<div tal:define="i repeat/obj/end" 
-						     tal:attributes="class python:view.getEnd(i);">
-				      <h4>
-				      	<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username|nothing}"
-										   tal:content="obj/name|nothing">func</a></h4>
-				        <!--a href="" tal:attributes="href python: obj.getObject().absolute_url()" tal:content="obj/Title">Employee</a><br /-->
-						<p>
-							<span tal:content="obj/date_birth|nothing"></span> |
-				        	<tal:def define="user obj/username;
-											 departamentos python: view.get_department(user)">
-				        		<tal:rep repeat="departamento departamentos">
-				        			<span tal:content="departamento/Title">Departamento</span> |
-				        		</tal:rep>
-				        	</tal:def>
-							
-				      	</p>
+						     tal:attributes="class python:view.getEnd(i);" style="float:left;">
+					<div class="row">
+						<div class="commentImage cell width-3 position-0 ">
+		                    <img src="defaultUser.png"
+			             		 alt="" border="0"
+			             		 height="30"
+								 tal:define="photo obj/photograph|nothing"
+			             		 tal:attributes="src python:view.getPhoto(photo);
+						 						 alt obj/name|nothing;
+												 title obj/name|nothing;" />
+		                </div>						     	
+						<div class="content cell width-13 position-3 "> 				
+					      <h4>
+					      	<a tal:attributes="href string:/myvindulalistuser?user=${obj/username|nothing}"
+											   tal:content="obj/name|nothing">func</a></h4>
+					        <!--a href="" tal:attributes="href python: obj.getObject().absolute_url()" tal:content="obj/Title">Employee</a><br /-->
+							<p>
+								<span tal:content="obj/date_birth|nothing"></span> |
+					        	<tal:def define="user obj/username;
+												 departamentos python: view.get_department(user)">
+					        		<tal:rep repeat="departamento departamentos">
+					        			<span tal:content="departamento/Title">Departamento</span> |
+					        		</tal:rep>
+					        	</tal:def>
+								
+					      	</p>
+						</div>
+					</div>
 				</div>
+				<div class="visualClear"></div>
       		</tal:results>
 			<tal:notresults tal:condition="not: view/birthdaysToday">
 				<br />

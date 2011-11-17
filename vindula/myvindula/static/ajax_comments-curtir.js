@@ -2,6 +2,16 @@ $j = jQuery.noConflict();
 
 $j(document).ready(function(){
 	
+	$j("div.bt_comentar #comentar").click(function(){
+		$j('#comment-geral').css('display','block')
+		
+	});
+	$j("#comment-geral #cancel").click(function(){
+		$j('#comment-geral').css('display','none')
+		
+	});
+	
+	
 	$j('input.comments').click(function(){
 		var url = $j('#portal_url').val() + "/myvindula-comments";
 		var ctx = $j(this);
@@ -25,7 +35,7 @@ $j(document).ready(function(){
 	
 	$j('span.link').click(function(){
 		var url = $j('#portal_url').val() + "/myvindula-like";
-		var url_sucess = $j('#portal_url').val() + "/myvindula";
+		var url_sucess = $j('#context_url').val();
 		var ctx = $j(this);
 		
 		var username = $j('#username').val();
@@ -43,10 +53,5 @@ $j(document).ready(function(){
 			});
 	
 	});
-	
-	
-	
-	
-	
-	
+
 });

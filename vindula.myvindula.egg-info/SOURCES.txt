@@ -12,11 +12,12 @@ vindula.myvindula.egg-info/paster_plugins.txt
 vindula.myvindula.egg-info/requires.txt
 vindula.myvindula.egg-info/top_level.txt
 vindula/myvindula/__init__.py
-vindula/myvindula/howareu.py
+vindula/myvindula/behaviors.py
 vindula/myvindula/myvindula.py
 vindula/myvindula/setuphandlers.py
 vindula/myvindula/user.py
 vindula/myvindula/validation.py
+vindula/myvindula/browser/__init__.py
 vindula/myvindula/models/__init__.py
 vindula/myvindula/portlets/__init__.py
 vindula/myvindula/portlets/aniversarios.py

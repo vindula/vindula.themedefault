@@ -100,6 +100,12 @@ class Renderer(base.Renderer):
         else:
             return 'info_boxTipo2 borderDif'
         
+    def getPhoto(self,photo):
+        if photo is not None and not ' ' in photo:
+                return '/'+photo
+        else:
+                return '/'+'defaultUser.png'            
+        
 class AddForm(base.AddForm):
     """Portlet add form.
 
