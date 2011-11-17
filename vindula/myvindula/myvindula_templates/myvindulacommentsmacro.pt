@@ -1,0 +1,34 @@
+<metal:macro define-macro="comments">
+	<tal:def define="view_comments python:context.restrictedTraverse('@@myvindula-comments')">
+		<div class="comments-cont" tal:define="comments python:view_comments.get_comments(item.id, item._name_class);">
+			<tal:rep repeat="item comments">
+				<div class="comment item_lista" tal:define="user_comment python: view_comments.get_prefs_user(item.username);">
+					<div class="commentImage">
+		                <img src="defaultUser.png"
+		             		 alt="" border="0"
+		             		 height="30"
+		             		 tal:attributes="src python:view_comments.get_photo_user(user_comment);
+					 						 alt user_comment/name|nothing;
+											 title user_comment/name|nothing;" />
+		            </div>
+					<div class="documentByLine name-user">
+						<h4><span tal:replace="user_comment/name|nothing" /> | 
+		                    <span tal:replace="python:item.date_creation.strftime('%d/%m/%Y')" />
+						</h4>
+		            </div>
+					<div id="like" tal:condition="logado">
+						<div tal:attributes="id item/id|nothing">
+							<input type="hidden" name="isPlone:boolean" id="isPlone" value="False" />
+							<input type="hidden" name="type" id="type" value="ModelsMyvindulaComments" />
+						</div>
+						<div metal:use-macro="context/myvindula-like-macro/macros/like" />
+						
+					</div>
+		            <div class="commentBody">
+		                <p tal:replace="item/text|nothing" />
+			  		</div>
+				</div>
+			</tal:rep>
+		</div>
+	</tal:def>
+</metal:macro>								
