@@ -1,3 +1,9 @@
 setuptools
 plone.app.dexterity
 storm
+plone.behavior
+plone.directives.form
+zope.schema
+zope.interface
+zope.component
+rwproperty
