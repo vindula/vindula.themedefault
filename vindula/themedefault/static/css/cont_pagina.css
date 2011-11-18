@@ -154,12 +154,17 @@
 	*margin:-9px 0 0 0;
 }
 
-.bk_topo_imgDestaque img{
-	vertical-align:top;
+.bk_topo_imgDestaque {
+	background: url("../images/bkgs/bk_topo_imgDestaque.png") no-repeat scroll 0 0 transparent;
+}
+.bk_rodape_imgDestaque {
+	background: url("../images/bkgs/bk_rodape_imgDestaque.png") no-repeat scroll 0 0 transparent;
 }
 
-.bk_rodape_imgDestaque img{
-	vertical-align:top;
+.bk_topo_imgDestaque,
+.bk_rodape_imgDestaque {
+	width: 167px;
+	height: 9px;
 }
 
 .descricao_destaque h4{
