@@ -231,6 +231,41 @@ CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_funcdetail_languages` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
+-- -----------------------------------------------------
+-- Table `myvindulaDB`.`vin_food_specialty`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `myvindulaDB`.`vin_food_specialty` ;
+
+CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_food_specialty` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(45) NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `myvindulaDB`.`vin_food_restaurant`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `myvindulaDB`.`vin_food_restaurant` ;
+
+CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_food_restaurant` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(45) NULL ,
+  `address` VARCHAR(100) NULL ,
+  `phone_number` VARCHAR(45) NULL ,
+  `delivery` TINYINT(1)  NULL ,
+  `opening_hours` VARCHAR(45) NULL ,
+  `vin_food_specialty_id` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_vin_food_restaurant_vin_food_specialty1` (`vin_food_specialty_id` ASC) ,
+  CONSTRAINT `fk_vin_food_restaurant_vin_food_specialty1`
+    FOREIGN KEY (`vin_food_specialty_id` )
+    REFERENCES `myvindulaDB`.`vin_food_specialty` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
