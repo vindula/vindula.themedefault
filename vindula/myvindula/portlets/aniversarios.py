@@ -137,9 +137,9 @@ class Renderer(base.Renderer):
         
     def getPhoto(self,photo):
         if photo is not None and not ' ' in photo:
-                return '/'+photo
+                return self.context.absolute_url()+'/'+photo + '/image_thumb'
         else:
-                return '/'+'defaultUser.png'    
+                return self.context.absolute_url()+'/defaultUser.png'    
 
     
         

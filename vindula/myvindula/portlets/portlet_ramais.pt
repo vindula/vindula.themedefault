@@ -1,18 +1,15 @@
-<div class="boxTipo2" tal:define="view view/data">
-	<div class="topoBoxTipo2">
-		<h2 tal:content="view/title">portlet Ramais</h2>
-	</div>
-	<div class="contBoxTipo2">
+<dl class="portlet" tal:define="view view/data">
+	<dt class="portletHeader">
+		<h2 class="tile" tal:content="view/title">portlet Ramais</h2>
+	</dt>
+	<dd class="portletItem">
 		<div id="busca-portlet">
-			<form action="" method="post">
-				<br />
+			<form action="" method="post" id="portlet-ramais">
 		    	<h4>Nome:</h4>
 				<input type="text" name="title" size="26" tal:attributes="value python: request.get('title', '')"/>
-		        <br /><br />
 				<h4>Ramal:</h4>
 				<input type="text" name="ramal" size="26" tal:attributes="value python: request.get('ramal', '')"/>
-		         <br /><br />
-				 <h4>Departamento:</h4>
+				<h4>Departamento:</h4>
 		          <select size="1" id="departamento" name="departamento" style="width:100%;">
 		            <option value="0" >Todos ...</option>
 		            <tal:departamentos tal:repeat="item view/list_departamentos">
@@ -23,10 +20,9 @@
 		                </option>
 		            </tal:departamentos>
 		          </select>
-				  <br /><br />
-				  <div class="aling-right"> 
-				  	<input type="submit" name="SearchSubmit" value="Buscar" class="context" i18n:attributes="value"/>
-				  </div>
+			    <div class="aling-right"> 
+			  		<input type="submit" name="SearchSubmit" value="Buscar" class="context" i18n:attributes="value"/>
+			  	</div>
      	 	</form>
 		    <tal:results tal:define="quant view/get_quantidade_portlet;
 									 results view/busca_usuarios;">
@@ -35,13 +31,14 @@
 			    	<div>
 				      <tal:results tal:define="busca python:results[:int(quant)];"
 					  			   tal:repeat="obj busca" >
-						<div tal:define="i repeat/obj/end" 
-						     tal:attributes="class python:view.getEnd(i);" style="float:left;">
+						<div id="boxPortlet" tal:define="i repeat/obj/end" 
+						     				 tal:attributes="class python:view.getEnd(i);">
 							<div class="row">
 								<div class="commentImage cell width-3 position-0 ">
 				                    <img src="defaultUser.png"
 					             		 alt="" border="0"
-					             		 height="30"
+			             		 		 width="30"
+								 		 height="50"
 										 tal:define="photo obj/photograph|nothing"
 					             		 tal:attributes="src python:view.getPhoto(photo);
 								 						 alt obj/name|nothing;
@@ -85,8 +82,7 @@
 				</tal:cond>
 			</tal:results>
 		</div>
-	</div>
-	<div class="rodapeBoxTipo2">
-		<img alt="" src="++theme++vindula.themedefault/images/bkgs/rodapeBoxTipo2.png"/>
-	</div>
-</div>
+	</dd>
+	<dd class="portletFooter"></dd>
+</dl>
+

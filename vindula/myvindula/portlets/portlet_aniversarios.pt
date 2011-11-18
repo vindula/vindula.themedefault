@@ -1,25 +1,25 @@
-<div class="boxTipo2" tal:define="view view/data">
-	<div class="topoBoxTipo2">
-		<h2 tal:content="view/get_title">Portlet Title</h2>
-	</div>
-	<div class="contBoxTipo2">
+<dl class="portlet" tal:define="view view/data">
+	<dt class="portletHeader">
+		<h2 class="tile" tal:content="view/get_title">Portlet Title</h2>
+	</dt>
+	<dd class="portletItem">
 		<div id="busca-portlet">
 			<tal:results tal:repeat="obj view/birthdaysToday">
-				<div tal:define="i repeat/obj/end" 
-						     tal:attributes="class python:view.getEnd(i);" style="float:left;">
+				<div id="boxPortlet" tal:define="i repeat/obj/end" 
+						     tal:attributes="class python:view.getEnd(i);">
 					<div class="row">
 						<div class="commentImage cell width-3 position-0 ">
 		                    <img src="defaultUser.png"
 			             		 alt="" border="0"
-			             		 height="30"
+			             		 width="30"
+								 height="50"
 								 tal:define="photo obj/photograph|nothing"
 			             		 tal:attributes="src python:view.getPhoto(photo);
 						 						 alt obj/name|nothing;
 												 title obj/name|nothing;" />
 		                </div>						     	
 						<div class="content cell width-13 position-3 "> 				
-					      <h4>
-					      	<a tal:attributes="href string:/myvindulalistuser?user=${obj/username|nothing}"
+					      <h4>	<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username|nothing}"
 											   tal:content="obj/name|nothing">func</a></h4>
 					        <!--a href="" tal:attributes="href python: obj.getObject().absolute_url()" tal:content="obj/Title">Employee</a><br /-->
 							<p>
@@ -38,15 +38,10 @@
 				<div class="visualClear"></div>
       		</tal:results>
 			<tal:notresults tal:condition="not: view/birthdaysToday">
-				<br />
 				<h4>N&atilde;o h&aacute; aniversariantes nos pr&oacute;ximos dias.</h4>						
 			</tal:notresults>
       		<!--a tal:attributes="href string:${here/portal_url}/birthdaysWeek">Aniversariantes da Semana</a-->
-			
-			
 		</div>
-	</div>
-	<div class="rodapeBoxTipo2">
-		<img alt="" src="++theme++vindula.themedefault/images/bkgs/rodapeBoxTipo2.png"/>
-	</div>
-</div>
+	</dd>
+	<dd class="portletFooter"></dd>
+</dl>
