@@ -346,8 +346,61 @@ LOCK TABLES `vin_myvindula_like` WRITE;
 INSERT INTO `vin_myvindula_like` VALUES (2,'cesar','2011-10-28 16:55:55','ModelsMyvindulaHowareu','1',0),(4,'fabio','2011-10-28 16:58:06','ModelsMyvindulaHowareu','3',0),(10,'maumau','2011-10-31 11:10:40','ModelsMyvindulaComments','3',0),(11,'fabio','2011-10-31 11:29:52','ModelsMyvindulaHowareu','8',0),(12,'fabio','2011-10-31 11:31:22','ModelsMyvindulaComments','5',0),(13,'cesar','2011-10-31 17:36:34','ModelsMyvindulaHowareu','10',0),(14,'fabio','2011-10-31 18:06:49','ModelsMyvindulaHowareu','4',0),(15,'cesar','2011-11-01 16:13:50','ModelsMyvindulaHowareu','11',0),(16,'rafaela','2011-11-04 11:12:06','ModelsMyvindulaHowareu','12',0);
 /*!40000 ALTER TABLE `vin_myvindula_like` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+--
+-- Table structure for table `vin_food_restaurant`
+--
+
+DROP TABLE IF EXISTS `vin_food_restaurant`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vin_food_restaurant` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
+  `phone_number` varchar(45) DEFAULT NULL,
+  `delivery` tinyint(1) DEFAULT NULL,
+  `opening_hours` varchar(45) DEFAULT NULL,
+  `vin_food_specialty_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_vin_food_restaurant_vin_food_specialty1` (`vin_food_specialty_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vin_food_restaurant`
+--
+
+LOCK TABLES `vin_food_restaurant` WRITE;
+/*!40000 ALTER TABLE `vin_food_restaurant` DISABLE KEYS */;
+INSERT INTO `vin_food_restaurant` VALUES (1,'Yokamura','Av Dom Pedro II, Santo André, 123','45254785',1,'24hrs',4),(2,'teste','Av Utinga, Santo André, 124','14124412',1,'24hrs',1),(3,'Teste','Av Goias, São Caetano do Sul, 123','',1,'',2),(4,'teste','Rua das Moncoes, Santo André, 45','',0,'24hrs',1),(5,'Yotoka','Av Dom Pedro II, Santo André, 123','45254785',1,'24hrs',3),(6,'Yotoka','Av Dom Pedro II, Santo André, 123','45254785',1,'24hrs',3),(7,'Yotoka','Av Dom Pedro II, Santo André, 123','45254785',1,'24hrs',3),(8,'Yotoka','Av Dom Pedro II, Santo André, 123','45254785',1,'24hrs',3),(9,'Yotoka','Av Dom Pedro II, Santo André, 123','45254785',1,'24hrs',3),(10,'Yotoka','Av Dom Pedro II, Santo André, 123','45254785',1,'24hrs',3),(11,'Two Options','Rua das Paineiras, Santo André, SP, 12','14124412',0,'12 - 15',5);
+/*!40000 ALTER TABLE `vin_food_restaurant` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `vin_food_specialty`
+--
+
+DROP TABLE IF EXISTS `vin_food_specialty`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vin_food_specialty` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vin_food_specialty`
+--
+
+LOCK TABLES `vin_food_specialty` WRITE;
+/*!40000 ALTER TABLE `vin_food_specialty` DISABLE KEYS */;
+INSERT INTO `vin_food_specialty` VALUES (1,'Brasileira'),(2,'Italiana'),(3,'Chinesa'),(4,'Japonesa'),(5,'Arroz e Feijão'),(6,'Francesa'),(7,'Teste'),(8,'Lanches'),(9,'Frango'),(10,'Picanha'),(11,'Costela'),(12,'Londrina'),(13,'Frutos do mar');
+/*!40000 ALTER TABLE `vin_food_specialty` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

@@ -58,7 +58,7 @@
 			                    </select>
 		                    </tal:cond>
 							<tal:cond condition="python: not form_values.get('vin_myvindula_department',None)">
-								<span>N&atilde;o a departamentos cadastrados no portal, informe o administrador do site </span>
+								<span>N&atilde;o h&aacute; departamentos cadastrados no portal, informe o administrador do site </span>
 							</tal:cond>
 														
 						</div>
