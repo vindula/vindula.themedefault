@@ -1,27 +1,33 @@
 <dl class="portlet" tal:define="view view/data">
-	<dt class="portletHeader">
-		<h2 class="tile" tal:content="view/get_title">Portlet Title</h2>
-	</dt>
-	<dd class="portletItem">
-		<div id="busca-portlet" tal:define="quant view/get_quantidade_portlet;
-											results view/birthdaysToday;">
-			<tal:results tal:repeat="obj python:results[:int(quant)]">
+
+    <dt class="portletHeader">
+        <span class="tile" tal:content="view/get_title">Portlet Title</span>
+    </dt>
+    <dd class="portletItem" >
+		<div id="busca-portlet" class="portlet-birthday" tal:define="quant view/get_quantidade_portlet;
+														 			 results view/birthdaysToday;">
+				<tal:results tal:repeat="obj python:results[:int(quant)]">
+
 				<div id="boxPortlet" tal:define="i repeat/obj/end" 
-						     tal:attributes="class python:view.getEnd(i);">
+						     		 tal:attributes="class python:view.getEnd(i);">
 					<div class="row">
-						<div class="commentImage cell width-3 position-0 ">
-		                    <img src="defaultUser.png"
-			             		 alt="" border="0"
-			             		 width="30"
-								 height="50"
-								 tal:define="photo obj/photograph|nothing"
-			             		 tal:attributes="src python:view.getPhoto(photo);
-						 						 alt obj/name|nothing;
-												 title obj/name|nothing;" />
+						<div class="portlet-user-image cell width-3 position-0">
+							<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username|nothing}">
+			                    <img src="defaultUser.png"
+				             		 alt="" border="0"
+				             		 width="35"
+									 height="49"
+									 tal:define="photo obj/photograph|nothing"
+				             		 tal:attributes="src python:view.getPhoto(photo);
+							 						 alt obj/name|nothing;
+													 title obj/name|nothing;" />
+							</a>
 		                </div>						     	
-						<div class="content cell width-13 position-3 "> 				
-					      <h4>	<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username|nothing}"
-											   tal:content="obj/name|nothing">func</a></h4>
+						<div class="portlet-user-info cell width-13 position-4"> 				
+					      <h4>
+					      	<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username|nothing}"
+											   tal:content="obj/name|nothing">func</a>
+						  </h4>
 					        <!--a href="" tal:attributes="href python: obj.getObject().absolute_url()" tal:content="obj/Title">Employee</a><br /-->
 							<p>
 								<span tal:content="obj/date_birth|nothing"></span> |
@@ -31,7 +37,7 @@
 					        			<span tal:content="departamento/Title">Departamento</span> |
 					        		</tal:rep>
 					        	</tal:def>
-								
+
 					      	</p>
 						</div>
 					</div>
@@ -47,6 +53,9 @@
 				<h4>N&atilde;o h&aacute; aniversariantes nos pr&oacute;ximos dias.</h4>						
 			</tal:notresults>
 		</div>
-	</dd>
-	<dd class="portletFooter"></dd>
+
+    </dd>
+    
+    <dd class="portletFooter"></dd>
+
 </dl>

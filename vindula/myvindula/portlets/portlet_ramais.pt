@@ -1,8 +1,10 @@
 <dl class="portlet" tal:define="view view/data">
-	<dt class="portletHeader">
-		<h2 class="tile" tal:content="view/title">portlet Ramais</h2>
-	</dt>
-	<dd class="portletItem">
+    <dt class="portletHeader">
+        <span class="tile" tal:content="view/title">Portlet Title</span>
+    </dt>
+
+    <dd class="portletItem odd">
+
 		<div id="busca-portlet">
 			<form action="" method="post" id="portlet-ramais">
 		    	<h4>Nome:</h4>
@@ -10,63 +12,66 @@
 				<h4>Ramal:</h4>
 				<input type="text" name="ramal" size="26" tal:attributes="value python: request.get('ramal', '')"/>
 				<h4>Departamento:</h4>
-		          <select size="1" id="departamento" name="departamento" style="width:100%;">
-		            <option value="0" >Todos ...</option>
+		        <select size="1" id="departamento" name="departamento" style="width:100%;">
+		        	<option value="0" >Todos ...</option>
 		            <tal:departamentos tal:repeat="item view/list_departamentos">
-		                <option tal:define="id_request request/departamento | python:''" 
+		            	<option tal:define="id_request request/departamento | python:''" 
 								tal:attributes="value item/UID|nothing;
 								selected python: str(id_request)==str(item.UID) or default"
 								tal:content="item/Title|nothing">Marketing 
 		                </option>
 		            </tal:departamentos>
-		          </select>
-			    <div class="aling-right"> 
-			  		<input type="submit" name="SearchSubmit" value="Buscar" class="context" i18n:attributes="value"/>
-			  	</div>
+		        </select>
+				<div class="aling-right"> 
+					<input type="submit" name="SearchSubmit" value="Buscar" class="context" i18n:attributes="value"/>
+				</div>
      	 	</form>
-		    <tal:results tal:define="quant view/get_quantidade_portlet;
+			
+			<!-- Results -->
+			<tal:results tal:define="quant view/get_quantidade_portlet;
 									 results view/busca_usuarios;">
 				<tal:cond condition="results">									 	
 		    		<h4><strong i18n:translate="">Resultados</strong></h4>
 			    	<div>
-				      <tal:results tal:define="busca python:results[:int(quant)];"
-					  			   tal:repeat="obj busca" >
-						<div id="boxPortlet" tal:define="i repeat/obj/end" 
-						     				 tal:attributes="class python:view.getEnd(i);">
-							<div class="row">
-								<div class="commentImage cell width-3 position-0 ">
-				                    <img src="defaultUser.png"
-					             		 alt="" border="0"
-			             		 		 width="30"
-								 		 height="50"
-										 tal:define="photo obj/photograph|nothing"
-					             		 tal:attributes="src python:view.getPhoto(photo);
-								 						 alt obj/name|nothing;
-														 title obj/name|nothing;" />
-				                </div>
-								<div class="content cell width-13 position-3 "> 											     	      	
-						        	<h4><a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username}"
-										   tal:content="obj/name">func</a></h4>
-						        	<p><span tal:replace="obj/position|nothing" /><br />
-									
-									<tal:def define="user obj/username;
-													 departamentos python: view.get_department(user)">
-						        		<tal:rep repeat="departamento departamentos">
-						        			<span tal:content="departamento/Title">Departamento</span> |
-						        		</tal:rep>
-										<br />	
-						        	</tal:def>
-						        	<!--span tal:replace="obj/departamento/name|nothing" /><br /-->
-						        	
-									<span tal:replace="obj/phone_number|nothing" /><br />
-						        	<span tal:replace="obj/email|nothing" /><br />
-						      	  </p>
+				    	<tal:results tal:define="busca python:results[:int(quant)];"
+					  			   	  tal:repeat="obj busca" >
+							<div id="boxPortlet" tal:define="i repeat/obj/end" 
+						     					 tal:attributes="class python:view.getEnd(i);">
+								<div class="row">
+									<div class="portlet-user-image cell width-3 position-0">
+										<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username}">
+						                    <img src="defaultUser.png"
+							             		 alt="" border="0"
+					             		 		 width="35"
+										 		 height="49"
+												 tal:define="photo obj/photograph|nothing"
+							             		 tal:attributes="src python:view.getPhoto(photo);
+										 						 alt obj/name|nothing;
+																 title obj/name|nothing;" />
+										</a>
+					                </div>
+									<div class="portlet-user-info cell width-13 position-4"> 											     	      	
+							        	<h4><a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username}"
+											   tal:content="obj/name">func</a></h4>
+							        	<p>
+							        		<span tal:replace="obj/position|nothing" /><br />
+											<tal:def define="user obj/username;
+															 departamentos python: view.get_department(user)">
+								        		<tal:rep repeat="departamento departamentos">
+								        			<span tal:content="departamento/Title">Departamento</span> |
+								        		</tal:rep>
+												<br />	
+								        	</tal:def>
+							        		<!--span tal:replace="obj/departamento/name|nothing" /><br /-->
+	
+											<span tal:replace="obj/phone_number|nothing" /><br />
+							        		<span tal:replace="obj/email|nothing" /><br />
+							      	  	</p>
+									</div>
 								</div>
-							
-							 </div>
-						 </div>
-						 <div class="visualClear"></div>
-			      	  </tal:results>
+						 	</div>
+						 	<div class="visualClear"></div>
+			      		</tal:results>
 					</div>
 		    	<div class="titulo_info_boxTipo2 aling-right">
 			        <h4 tal:condition="python:results.count()>int(quant)">
@@ -78,14 +83,15 @@
 			       <p><strong i18n:translate=""><a href="http://portal.saraiva.com.br/corporativo/geral/servicos/consultas/busca-de-ramais/lista-de-ramais-filiais-editora">Lista de Filiais Editora</a></strong></p>
 			       <p><strong i18n:translate=""><a href="http://portal.saraiva.com.br/corporativo/geral/servicos/consultas/busca-de-ramais/lista-de-ramais-lojas-livraria">Lista de Lojas Livraria</a></strong></p>
 			    </dd-->
-			    
+
 				</tal:cond>
 			</tal:results>
 			<tal:notresults tal:condition="python: not view.busca_usuarios() and 'SearchSubmit' in context.REQUEST.form">
 				<h4>N&atilde;o h&aacute; Resultados.</h4>						
 			</tal:notresults>
 		</div>
-	</dd>
-	<dd class="portletFooter"></dd>
+ 
+    </dd>
+    
+    <dd class="portletFooter"></dd>
 </dl>
-
