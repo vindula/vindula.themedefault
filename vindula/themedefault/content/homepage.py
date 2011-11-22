@@ -3,6 +3,7 @@ from five import grok
 from zope import schema
 from plone.directives import form
 from plone.formwidget.contenttree import ObjPathSourceBinder
+from plone.app.textfield import RichText
 from vindula.themedefault import MessageFactory as _
 from z3c.relationfield.schema import RelationList, RelationChoice
 from Products.CMFCore.utils import getToolByName
@@ -16,6 +17,34 @@ class IHomePage(form.Schema):
     title = schema.TextLine(
         title=_(u"Título"),
         description=_(u"Insira um nome para Home Page."),
+        )
+    
+    content_top = RichText(
+        title=_(u"Conteúdo do Topo"),
+        description=_(u"Campo de preenchimento livre, seu conteúdo ficará posicionado no topo da página \
+                        acima das notícias em destaque."),
+        required=False,
+        )
+    
+    content_middle_top = RichText(
+        title=_(u"Conteúdo do Meio (ACIMA da listagem de notícias)"),
+        description=_(u"Campo de preenchimento livre, seu conteúdo ficará posicionado entre as notícias \
+                        de destaque e a listagem principal das demais notícias."),
+        required=False,
+        )
+    
+    content_middle_bottom = RichText(
+        title=_(u"Conteúdo do Meio (ABAIXO da listagem de notícias)"),
+        description=_(u"Campo de preenchimento livre, seu conteúdo ficará posicionado entre a listagem \
+                        principal das demais notícias e a área das outras notícias."),
+        required=False,
+        )
+    
+    content_bottom = RichText(
+        title=_(u"Conteúdo Inferior"),
+        description=_(u"Campo de preenchimento livre, seu conteúdo ficará posicionado no final da página \
+                        abaixo de todas as notícias."),
+        required=False,
         )
     
     # Fieldset News
@@ -112,7 +141,6 @@ class IHomePage(form.Schema):
         default=3,
         required=True,
         )
-    
     
 # View
     

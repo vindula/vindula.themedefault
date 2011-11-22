@@ -25,6 +25,9 @@
 				</div>
 				<div class="contBoxTipo1">	
 				
+					<!-- Content Top -->
+					<div tal:content="structure context/content_top/output|nothing">Text</div>
+					
 					<!-- START: Highlight News Cycle-->
 					<div class="contBoxDestaque" tal:condition="view/getHighlightedNews">
 						<div class="cont_superior">
@@ -81,8 +84,10 @@
 						</div>						
 					</div>
 					<!-- END: Highlight News Cycle -->
-					
-					
+								 
+					<!-- Content Middle Top -->
+					<div tal:content="structure context/content_middle_top/output|nothing">Text</div>
+										
 					<!-- START: Other News -->
 					<div class="contBoxDestaque" tal:condition="view/getOtherNews">
 						<div class="cont_superior">
@@ -123,6 +128,9 @@
 					</div>
 					<!-- END: Other News -->
 					
+					<!-- Content Middle Bottom -->
+					<div tal:content="structure context/content_middle_bottom/output|nothing">Text</div>
+					
 					<!-- START: Media News -->
 					<div class="contBoxDestaque" tal:condition="view/getMediaNews">
 						<div class="cont_superior">
@@ -148,6 +156,9 @@
 						</tal:media-news>								
 					</div>
 					<!-- END: Media News -->
+					
+					<!-- Content Bottom -->
+					<div tal:content="structure context/content_bottom/output|nothing">Text</div>
 					
 				</div>
 				<div class="bottomBoxTipo">
