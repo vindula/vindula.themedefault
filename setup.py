@@ -28,6 +28,8 @@ setup(name='vindula.myvindula',
           'setuptools',
           'plone.app.dexterity',
           'storm',
+          
+          'plone.namedfile[blobs]',
           #'megrok.z3cform.crud'
           # -*- Extra requirements: -*-
       ],

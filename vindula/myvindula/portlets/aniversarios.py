@@ -14,7 +14,7 @@ from zope.schema.vocabulary import SimpleTerm
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
 
-from vindula.myvindula.user import ModelsDepartment, ModelsFuncDetails
+from vindula.myvindula.user import BaseFunc, ModelsDepartment, ModelsFuncDetails
 from datetime import date
 #import datetime
 from DateTime.DateTime import DateTime
@@ -44,7 +44,7 @@ class IPortletAniversarios(IPortletDataProvider):
                                   description=unicode("Título que aparecerá no cabeçalho do portlet.", 'utf-8'),
                                   required=True)
     
-    quantidade_portlet = schema.TextLine(title=unicode("Quantidade de Items", 'utf-8'),
+    quantidade_portlet = schema.Int(title=unicode("Quantidade de Items", 'utf-8'),
                                   description=unicode("quantidade limite de item mostrado no portlet.", 'utf-8'),
                                   required=True)
    
@@ -83,6 +83,9 @@ class Renderer(base.Renderer):
     
     def get_title(self):
         return self.data.title_portlet
+    
+    def get_type_search(self):
+        return self.data.type_search
    
     
     def get_quantidade_portlet(self):
@@ -96,10 +99,7 @@ class Renderer(base.Renderer):
         
         return ModelsDepartment().get_departmentByUsername(user)        
 
-    def birthdaysToday(self):
-        type_filter = self.data.type_search
-        quant = self.data.quantidade_portlet
-        
+    def get_birthdaysToday(self, type_filter):
         if type_filter == 1:
             date_start = date.today().strftime('%Y-%m-%d')
             date_end = date.today().strftime('%Y-%m-%d')
@@ -124,7 +124,19 @@ class Renderer(base.Renderer):
             results = ModelsFuncDetails().get_FuncBirthdays(date_start,date_end)
         
         if results:
-            return results[:int(quant)]
+            return results #results[:int(quant)]
+        else:
+            return []
+
+
+    def birthdaysToday(self):
+        type_filter = self.data.type_search
+        #quant = self.data.quantidade_portlet
+        
+        results = self.get_birthdaysToday(type_filter)
+        
+        if results:
+            return results #results[:int(quant)]
         else:
             return []
         
@@ -137,9 +149,10 @@ class Renderer(base.Renderer):
         
     def getPhoto(self,photo):
         if photo is not None and not ' ' in photo:
-                return self.context.absolute_url()+'/'+photo + '/image_thumb'
+            return BaseFunc().get_imageVindulaUser(photo)
+            #return self.context.absolute_url()+'/'+photo #+ '/image_thumb'
         else:
-                return self.context.absolute_url()+'/defaultUser.png'    
+            return self.context.absolute_url()+'/defaultUser.png'    
 
     
         

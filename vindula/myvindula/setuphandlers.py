@@ -2,6 +2,10 @@
 
 from plone.app.controlpanel.security import SecurityControlPanelAdapter
 from vindula.myvindula.user import ModelsConfgMyvindula
+from Products.CMFCore.utils import getToolByName
+
+from zope.component import getUtility
+from plone.dexterity.interfaces import IDexterityFTI
 
 def user_folder(context):
     ctx = context.getSite()
@@ -12,7 +16,7 @@ def user_folder(context):
 
 def set_AllowedType_Members(context):
     portal = context.getSite()
-    Types = ['Folder','Image','RTRemoteVideo','RTInternalVideo', 'Document', 'File'] 
+    Types = ['vindula.myvindula.vindulaphotouser', 'Folder','Image','RTRemoteVideo','RTInternalVideo', 'Document', 'File',] 
     
     if 'Members' in portal.keys():
         folder_members = portal['Members']
@@ -20,6 +24,11 @@ def set_AllowedType_Members(context):
         folder_members.setImmediatelyAddableTypes(Types)
         folder_members.setLocallyAllowedTypes(Types)
         
+    #import pdb;pdb.set_trace()
+#    portal_workflow = getToolByName(portal, 'portal_workflow')
+#    portal_workflow.setChainForPortalTypes(pt_names = ('vindula.myvindula.vindulaphotouser',),
+#                                           chain=['one_state_workflow',])
+
         
         
 def set_field_default(context):

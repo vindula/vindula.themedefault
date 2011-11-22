@@ -12,11 +12,19 @@
         </property>
         <property name="visible">True</property>
        </object>
-       <object name="preferences" meta_type="CMF Action" i18n:domain="plone">
+       
+	   <object name="preferences" meta_type="CMF Action" i18n:domain="plone">
            <property name="visible">True</property>
-       </object>
-	   <object name="mystuff" meta_type="CMF Action" i18n:domain="plone">
+       
+	   </object>
+	   <object name="mystuff" meta_type="CMF Action" i18n:domain="plone" insert-after="myvindula">
            <property name="title" i18n:translate="">Meus conteúdos</property>
+  		   <property name="available_expr">python:member is not None</property>
+		   <property name="permissions">
+         		<element value="View"/>
+        	</property>
+		   <property name="url_expr">string:${portal/portal_membership/getHomeUrl}</property>
+		   <property name="visible">True</property>
        </object>
 	   
   </object>

@@ -81,6 +81,9 @@
 			    
 				</tal:cond>
 			</tal:results>
+			<tal:notresults tal:condition="python: not view.busca_usuarios() and 'SearchSubmit' in context.REQUEST.form">
+				<h4>N&atilde;o h&aacute; Resultados.</h4>						
+			</tal:notresults>
 		</div>
 	</dd>
 	<dd class="portletFooter"></dd>

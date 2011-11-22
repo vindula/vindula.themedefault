@@ -9,6 +9,7 @@ from plone.uuid.interfaces import IUUID
 from plone.dexterity.utils import createContentInContainer
 from plone.namedfile.field import NamedImage
 from Products.CMFCore.utils import getToolByName
+from zope.app.component.hooks import getSite
 
 from plone.directives import form
 from vindula.myvindula import MessageFactory as _
@@ -17,14 +18,16 @@ from zope import schema
 from Products.statusmessages.interfaces import IStatusMessage
 
 from plone.z3cform.crud import crud
+from datetime import date
+from DateTime.DateTime import DateTime 
+import calendar
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, ModelsDepartment, ModelsFuncDetails,\
                                    ImportUser, ModelsMyvindulaHowareu, ModelsMyvindulaComments, ModelsMyvindulaLike,\
                                    ManageCourses, ManageLanguages
                                    
-                                   
-from zope.component import getUtility
+
 
 class MyVindulaView(grok.View):
     grok.context(INavigationRoot)
@@ -47,14 +50,15 @@ class MyVindulaView(grok.View):
 
     def get_department(self):
         return ModelsDepartment().get_department()
-         
 
     def get_photo_user(self,prefs_user):
         if prefs_user:
             if prefs_user.photograph is not None and \
                 not ' ' in prefs_user.photograph  and \
                 not prefs_user.photograph == '':
-                return self.context.absolute_url()+'/'+prefs_user.photograph + '/image_thumb'
+                #return self.context.absolute_url()+'/'+prefs_user.photograph #+ '/image_thumb'
+                return BaseFunc().get_imageVindulaUser(prefs_user.photograph)
+            
             else:
                 return self.context.absolute_url()+'/defaultUser.png'
         else:
@@ -75,7 +79,6 @@ class MyVindulaView(grok.View):
         submitted = form.get('form.submitted', False)
             
         if submitted:
-
             visible_area = form.get('visible_area')
             if not eval(visible_area):
                 form['visible_area'] = form.get('departamento','0')
@@ -135,6 +138,11 @@ class MyVindulaPrefsView(grok.View, BaseFunc):
     description = _(u"Change your available information below.")   
     
     def load_form(self):
+        portal_workflow = getToolByName(getSite(), 'portal_workflow')
+        if not 'one_state_workflow' in portal_workflow.getChainForPortalType('vindula.myvindula.vindulaphotouser'):
+            portal_workflow.setChainForPortalTypes(pt_names = ('vindula.myvindula.vindulaphotouser',),
+                                                   chain=['one_state_workflow',])
+
         return SchemaFunc().registration_processes(self)
        
     
@@ -189,7 +197,8 @@ class MyVindulaListUser(grok.View):
 
     def getPhoto(self,photo):
         if photo is not None and not ' ' in photo:
-                return self.context.absolute_url()+'/'+photo
+                #return self.context.absolute_url()+'/'+photo
+                return BaseFunc().get_imageVindulaUser(photo)
         else:
                 return self.context.absolute_url()+'/'+'defaultUser.png'
 
@@ -215,6 +224,71 @@ class MyVindulalistAll(grok.View):
         ramal = form.get('ramal','').strip()
         result = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'))
         return result
+
+class MyVindulaListBirthdays(grok.View):
+    grok.context(ISiteRoot)
+    grok.require('zope2.View')
+    grok.name('myvindulalistbirthdays')
+    
+    def nome_filtro(self):
+        filtro = self.request.form.get('filtro',1)
+        if filtro == 1:
+            return "Dia"
+        elif filtro == 7:
+            return "Semana"
+        elif filtro == 30:
+            return "Mes"
+        else:
+            return ''
+    
+    def get_department(self, user):
+        try:
+            user_id = unicode(user, 'utf-8')    
+        except:
+            user_id = user
+        
+        return ModelsDepartment().get_departmentByUsername(user)     
+        
+    def get_birthdaysToday(self, type_filter):
+        results = []
+        if type_filter == 1:
+            date_start = date.today().strftime('%Y-%m-%d')
+            date_end = date.today().strftime('%Y-%m-%d')
+        
+            results = ModelsFuncDetails().get_FuncBirthdays(date_start,date_end)
+        
+        elif type_filter == 7:
+            now = DateTime()
+            dow = now.dow()
+            date_start = (now - dow).strftime('%Y-%m-%d')
+            date_end = (now - dow + 6).strftime('%Y-%m-%d')
+            
+            results = ModelsFuncDetails().get_FuncBirthdays(date_start,date_end)
+        
+        elif type_filter == 30:
+            now = DateTime()
+                        
+            dia = calendar.monthrange(now.year(),now.month())[1]
+            date_start = now.strftime('%Y-%m-1')
+            date_end = now.strftime('%Y-%m-'+str(dia))
+            
+            results = ModelsFuncDetails().get_FuncBirthdays(date_start,date_end)
+        
+        if results:
+            return results #results[:int(quant)]
+        else:
+            return []
+
+    
+    def load_list(self):
+        form = self.request.form
+        filtro = form.get('filtro',1)
+        results = self.get_birthdaysToday(int(filtro))
+        
+        if results:
+            return results
+        else:
+            return []
 
 class MyVindulaLike(grok.View):
     grok.context(ISiteRoot)
@@ -291,7 +365,8 @@ class MyVindulaComments(grok.View):
             if prefs_user.photograph is not None and \
                 not ' ' in prefs_user.photograph  and \
                 not prefs_user.photograph == '':
-                return self.context.absolute_url()+'/'+prefs_user.photograph + '/image_thumb'
+                return BaseFunc().get_imageVindulaUser(prefs_user.photograph)
+                #return self.context.absolute_url()+'/'+prefs_user.photograph # + '/image_thumb'
             else:
                 return self.context.absolute_url()+'/defaultUser.png'
         else:

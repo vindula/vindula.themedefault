@@ -4,7 +4,7 @@ from plone.directives import form
 
 from zope import schema
 from z3c.form import button
-from plone.namedfile.field import NamedImage
+from plone import namedfile
 
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
@@ -12,6 +12,7 @@ from plone.dexterity.utils import createContentInContainer
 
 from zope.app.component.hooks import getSite
 from Products.CMFCore.utils import getToolByName
+from plone.scale.storage import IImageScaleStorage
 
 from vindula.myvindula import MessageFactory as _
 
@@ -25,198 +26,9 @@ from Products.statusmessages.interfaces import IStatusMessage
 from vindula.myvindula.validation import valida_form
 from datetime import date , datetime 
 
+
 #import sys
 #from storm.tracer import debug #debug(True, stream=sys.stdout)
-
-class IFuncDetails(form.Schema):
-    
-    @grok.provider(IContextSourceBinder)
-    def choiceDepartament(context):
-        terms = []
-        departaments = ModelsDepartment().get_department()
-        if departaments != []:
-            for departament in departaments:
-                terms.append(SimpleVocabulary.createTerm(departament.id, str(departament.name)))
-                
-        return SimpleVocabulary(terms)    
-        
-
-    name = schema.TextLine(
-        title=_(u"Nome"),
-        description=_(u"Digite o nome do funcionário"),
-        required=False,
-    )
-    phone_number = schema.TextLine(
-        title=_(u"Telefone"),
-        description=_(u"Digite o telefone do funcionário"),
-        required=False,
-    )
-    email = schema.TextLine(
-        title=_(u"E-mail"),
-        description=_(u"Digite o e-mail do funcionário"),
-        required=False,
-    )
-    employee_id = schema.TextLine(
-        title=_(u"Employee ID"),
-        description=_(u"Digite o ID do funcionário"),
-        required=False,
-    )
-    date_birth = schema.Date(  #TextLine(
-        title=_(u"Data de Nascimento"),
-        description=_(u"Digite a data de nascimneto do funcionário"),
-        required=False,
-    )
-
-    registration = schema.TextLine(
-        title=_(u"Matrícula"),
-        description=_(u"Digite o número de matrícula do funcionário"),
-        required=False,
-    )    
-    
-    enterprise = schema.TextLine(
-        title=_(u"Empresa"),
-        description=_(u"Digite o nome da empresa do funcionário"),
-        required=False,
-    )                
-    position = schema.TextLine(
-        title=_(u"Cargo"),
-        description=_(u"Digite o cargo do funcionário"),
-        required=False,
-    )    
-    admission_date = schema.Date( #TextLine(
-        title=_(u"Data de Admissão"),
-        description=_(u"Digite a data de admissão do funcionário"),
-        required=False,
-    )    
-    cost_center = schema.TextLine(
-        title=_(u"Centro de Custo"),
-        description=_(u"Digite o centro de custo do funcionário"),
-        required=False,
-    )          
-    organisational_unit = schema.TextLine(
-        title=_(u"Unidade Organizacional"),
-        description=_(u"Digite a unidade organizacional do funcionário"),
-        required=False,
-    )
-    reports_to = schema.TextLine(
-        title=_(u"Reports to"),
-        description=_(u"Digite o 'Reports to' do funcionário"),
-        required=False,
-    )    
-    location = schema.TextLine(
-        title=_(u"Localizacao"),
-        description=_(u"Digite a localização do funcionário"),
-        required=False,
-    )    
-    postal_address = schema.TextLine(
-        title=_(u"Endereco Postal"),
-        description=_(u"Digite o endereco postal do funcionário"),
-        required=False,
-    )    
-    special_roles = schema.TextLine(
-        title=_(u"Special Roles"),
-        description=_(u"Digite o 'Special Roles' do funcionário"),
-        required=False,
-    )    
-    photograph = NamedImage(
-        title=_(u"Foto"),
-        description=_(u"Coloque a foto do funcionário"),
-        required=False,
-    )    
-    nickname = schema.TextLine(
-        title=_(u"NickName"),
-        description=_(u"Digite o 'nickname' do funcionário"),
-        required=False,
-    )        
-    pronunciation_name = schema.TextLine(
-        title=_(u"Como pronuncia seu nome"),
-        description=_(u"Como pronuncia o  nome do funcionário"),
-        required=False,
-    )        
-    committess = schema.TextLine(
-        title=_(u"Commitess"),
-        description=_(u"Digite o 'Commitess' do funcionário"),
-        required=False,
-    )        
-    projetcs = schema.TextLine(
-        title=_(u"Projetos"),
-        description=_(u"Digite o Projeto do funcionário"),
-        required=False,
-    )        
-    personal_information = schema.TextLine(
-        title=_(u"Informacoes pessoais"),
-        description=_(u"Digite as informaoes pessoais do funcionário"),
-        required=False,
-    )        
-    skills_expertise = schema.TextLine(
-        title=_(u"Skills Expertise"),
-        description=_(u"Digite o 'Skills Expertise' do funcionário"),
-        required=False,
-    )               
-    profit_centre = schema.TextLine(
-        title=_(u"Profit Centre"),
-        description=_(u"Digite o 'Profit Centre' do funcionário"),
-        required=False,
-    )        
-    languages = schema.TextLine(
-        title=_(u"Languages"),
-        description=_(u"Digite a 'Languages' do funcionário"),
-        required=False,
-    )        
-    availability = schema.TextLine(
-        title=_(u"Avaliacao"),
-        description=_(u"Digite a avaliacao do funcionário"),
-        required=False,
-    )        
-    papers_published = schema.TextLine(
-        title=_(u"Artigo Publicados"),
-        description=_(u"Digite os artigo puclicados do funcionário"),
-        required=False,
-    )        
-    profit_centre = schema.TextLine(
-        title=_(u"Profit Centre"),
-        description=_(u"Digite o 'Profit Centre' do funcionário"),
-        required=False,
-    )        
-    teaching_research = schema.TextLine(
-        title=_(u"Teaching Research"),
-        description=_(u"Digite o 'Teaching Research' do funcionário"),
-        required=False,
-    )
-    delegations = schema.TextLine(
-        title=_(u"Delegacao"),
-        description=_(u"Digite a delegacao do funcionário"),
-        required=False,
-    ) 
-    resume = schema.TextLine(
-        title=_(u"Resumo"),
-        description=_(u"Digite o resumo do funcionário"),
-        required=False,
-    )          
-    blogs = schema.TextLine(
-        title=_(u"Blogs"),
-        description=_(u"Digite o blogs do funcionário"),
-        required=False,
-    )          
-    customised_message = schema.TextLine(
-        title=_(u"Menssagem Costumizada"),
-        description=_(u"Digite uma menssagem do funcionário"),
-        required=False,
-    )          
-    
-#    username = schema.TextLine(
-#        title=_(u"Username"),
-#        description=_(u"Digite uma username do funcionário"),
-#        required=False,
-#        )
-
-    Department_id = schema.Choice(
-        title=_(u"departamentos_id"),
-        description=_(u"Selecione o departamento do funcionário"),
-        source=choiceDepartament,
-        required=False,
-
-    )
 
 class BaseStore(object):
    
@@ -784,7 +596,9 @@ class BaseFunc(BaseStore):
                 return self.context.absolute_url()+'/'+'defaultUser.png'
         elif campo in data.keys():
             if data.get(campo, None) and not ' ' in data.get(campo,None) and not data.get(campo,None) == '':
-                return self.context.absolute_url()+'/'+data.get(campo,'') + '/image_thumb'
+                #return self.context.absolute_url()+'/'+data.get(campo,'') + '/image_thumb'
+                return BaseFunc().get_imageVindulaUser(data.get(campo,''))
+                
             else:
                 return self.context.absolute_url()+'/'+'defaultUser.png'
         else:
@@ -987,10 +801,11 @@ class BaseFunc(BaseStore):
         """ function used to upload the file to the Plone site, 
            with the parameter where the file will be saved and the file will be saved
         """
+        portal_workflow = getToolByName(getSite(), 'portal_workflow')
         normalizer = getUtility(IIDNormalizer)
         name_file = normalizer.normalize(file.filename)    #unicode(file.filename, 'utf-8')) #takes the name of the file
         count = 0
-        
+        file2 = file
         while name_file in path.objectIds():
             name_file = name_file + '-' + str(count)
             count +=1
@@ -998,28 +813,19 @@ class BaseFunc(BaseStore):
         #starts the upload process     
         else:
             try:
-                #if image ...    
-                if name_file.endswith('png') or \
-                    name_file.endswith('jpg') or \
-                        name_file.endswith('gif'):                
+                img = file.xreadlines().read()
+                imagem = namedfile.NamedImage(img, filename=unicode(file.filename))
+                objects = {'type_name':'vindula.myvindula.vindulaphotouser',
+                          'id': name_file,
+                          'title':name_file,
+                          'photograph':imagem}
+
+#                ctx.context.portal_membership.changeMemberPortrait(file, path.id)
                     
-                    objects = {'type_name':'Image',
-                              'id': name_file,
-                              'title':name_file,
-                              'image': file}
-                    path.invokeFactory(**objects)   
-                    
-                #if file ...
-                else:
-                    objects = {'type_name':'Image',
-                              'id': name_file,
-                              'title':name_file,
-                              'image': file}
-                    path.invokeFactory(**objects)   
-                    
-                ctx.context.portal_membership.changeMemberPortrait(file, path.id)
+                path.invokeFactory(**objects)              
                 #takes the url of the file to save the database  
                 content = getattr(path, name_file, None)
+
                 url = ''
                 if content is not None:
                     url = '/'.join(content.getPhysicalPath()[2:])  
@@ -1028,6 +834,17 @@ class BaseFunc(BaseStore):
                 
             except:
                 return None
+
+    def get_imageVindulaUser(self,caminho):
+        local = caminho.split('/')
+        try:
+            ctx= getSite()[local[0]][local[1]][local[2]]
+            obj = ctx.restrictedTraverse('@@images').scale('photograph', width=120, height=120)
+        
+            return obj.url
+        except:
+            return ''
+
                 
 class SchemaFunc(BaseFunc):
     def to_utf8(value):

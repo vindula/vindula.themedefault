@@ -4,6 +4,11 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="vindula.content">
 
+  	<resourceDirectory
+    	  name="vindula.myvindula.images"
+      	  directory="images"
+      />
+
 	<!-- Necessario adicionar no buildout: eggs = z3c.jbot -->
     <include package="z3c.jbot" file="meta.zcml" />
     

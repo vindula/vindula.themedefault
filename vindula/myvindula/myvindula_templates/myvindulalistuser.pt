@@ -6,10 +6,12 @@
     
     <div metal:fill-slot="content" tal:define="member python:context.portal_membership.getAuthenticatedMember();
 											   form_data view/load_list | python:{};">
-    	
-		<tal:cond tal:condition="python: str(member)==form_data.username">
-			<metal:use use-macro="context/@@myvindulapanel/macros/page"/>                
-	    </tal:cond>
+    	<tal:cont tal:condition="form_data">
+	    	<tal:cond tal:condition="python: str(member)==form_data.username">
+				<metal:use use-macro="context/@@myvindulapanel/macros/page"/>                
+		    </tal:cond>	
+    	</tal:cont>
+		
 		
 		<div id="content">
 			<div id="interna" class="userpage">
@@ -62,7 +64,7 @@
 				<!-- start: Others Information -->
 				<!-- Contact -->
 				<div class="area"><span>Contato</span></div>
-				<img class="type-info" tal:attributes="src string:${view/static}/images/user_contact.png" />
+				<img class="type-info" tal:attributes="src string:${view/static}/imagens/user_contact.png" />
 				<table>
 					<tr>
 						<td class="field">E-mail</td>
@@ -86,7 +88,7 @@
 				
 				<!-- Corporative -->
 				<div class="area"><span>Corporativo</span></div>
-				<img class="type-info" tal:attributes="src string:${view/static}/images/user_business.png" />
+				<img class="type-info" tal:attributes="src string:${view/static}/imagens/user_business.png" />
 				<table>
 					<tr>
 						<td class="field">Empresa</td>
@@ -132,7 +134,7 @@
 				
 				<!-- Others -->
 				<div class="area"><span>Outras Informa&ccedil;&otilde;es</span></div>
-				<img class="type-info" tal:attributes="src string:${view/static}/images/user_others.png" />
+				<img class="type-info" tal:attributes="src string:${view/static}/imagens/user_others.png" />
 				<table>
 					<tr>
 						<td class="field">Comissão</td>

@@ -12,7 +12,7 @@ from plone.app.portlets.portlets import base
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
 
-from vindula.myvindula.user import ModelsDepartment, ModelsFuncDetails
+from vindula.myvindula.user import BaseFunc, ModelsDepartment, ModelsFuncDetails
 
 class IPortletRamais(IPortletDataProvider):
       
@@ -27,7 +27,7 @@ class IPortletRamais(IPortletDataProvider):
                                   description=unicode("Título que aparecerá no cabeçalho do portlet.", 'utf-8'),
                                   required=True)
     
-    quantidade_portlet = schema.TextLine(title=unicode("Quantidade de Items", 'utf-8'),
+    quantidade_portlet = schema.Int(title=unicode("Quantidade de Items", 'utf-8'),
                                   description=unicode("quantidade limite de item mostrado no portlet.", 'utf-8'),
                                   required=True)
     
@@ -102,9 +102,10 @@ class Renderer(base.Renderer):
         
     def getPhoto(self,photo):
         if photo is not None and not ' ' in photo:
-                return self.context.absolute_url()+'/'+photo + '/image_thumb'
+            return BaseFunc().get_imageVindulaUser(photo)
+            #return self.context.absolute_url()+'/'+photo # + '/image_thumb'
         else:
-                return self.context.absolute_url()+'/defaultUser.png'            
+            return self.context.absolute_url()+'/defaultUser.png'            
         
 class AddForm(base.AddForm):
     """Portlet add form.
