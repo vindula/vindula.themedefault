@@ -13,7 +13,7 @@
 				<p><a tal:attributes="href string:${here/portal_url}/myvindula-manage-languages">Adicionar novo Idioma</a></p>
 				<tal:rep repeat="item form_data">
 					<a tal:attributes="href string:${here/portal_url}/myvindula-manage-languages?id=${item/id}">
-						<h2 tal:content="item/title|nothing"></h2></a>
+						<h2 tal:content="string:${item/title|nothing} - ${item/level|nothing}"></h2></a>
 					
 				</tal:rep>
 				

@@ -703,18 +703,21 @@ class BaseFunc(BaseStore):
                             tmp += "      <option value="">-- Selecione --</option>"
                             for language in languages:
                                 if language.id in self.getValueList(campo,self.request,funcdetailLanguages):
-                                    tmp += "<option value='%s' selected>%s</option>"%(language.id,language.title)
+                                    lable = language.title +' - '+ language.level
+                                    tmp += "<option value='%s' selected>%s</option>"%(language.id,lable)
                                 else:
-                                     tmp += "<option value='%s'>%s</option>"%(language.id,language.title)
+                                     tmp += "<option value='%s'>%s</option>"%(language.id,lable)
                              
                         elif campo == 'skills_expertise':
                             tmp += "<select name='skills_expertise' multiple style='width:200px;height:150px;' >"
                             tmp += "      <option value="">-- Selecione --</option>"
                             for curso in cursos:
                                 if curso.id in self.getValueList(campo,self.request,funcdetailCourse):
-                                    tmp += "<option value='%s' selected>%s</option>"%(curso.id,curso.title)
+                                    lable = curso.title +' - '+ curso.level
+                                    tmp += "<option value='%s' selected>%s</option>"%(curso.id,lable)
                                 else:
-                                     tmp += "<option value='%s'>%s</option>"%(curso.id,curso.title)
+                                    lable = curso.title +' - '+ curso.level
+                                    tmp += "<option value='%s'>%s</option>"%(curso.id,lable)
                             
                         else:
                             tmp += "<input id='%s' type='text' value='%s' name='%s' size='25'/>"%(campo,self.getValue(campo,self.request,data),campo)
@@ -1260,8 +1263,8 @@ class ManageLanguages(BaseFunc):
     def to_utf8(value):
         return unicode(value, 'utf-8')
     
-    campos = {'title'  : {'required': True,  'type' : to_utf8, 'label':'Nome do Curso',   'decription':u'Digite o nome do curso',    'ordem':0},
-              'level'  : {'required': False, 'type' : to_utf8, 'label':'Nível do Curso',  'decription':u'Digite o nível do curso', 'ordem':1},}
+    campos = {'title'  : {'required': True,  'type' : to_utf8, 'label':'Nome do Idioma',   'decription':u'Digite o nome do idioma',  'ordem':0},
+              'level'  : {'required': False, 'type' : to_utf8, 'label':'Nível do Idioma',  'decription':u'Digite o nível do idioma', 'ordem':1},}
     
     def load_languages(self,ctx):
         data = ModelsMyvindulaLanguages().get_allLanguages()
