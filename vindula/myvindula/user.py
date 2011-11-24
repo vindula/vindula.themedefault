@@ -704,10 +704,10 @@ class BaseFunc(BaseStore):
                             for language in languages:
                                 if language.id in self.getValueList(campo,self.request,funcdetailLanguages):
                                     lable_language = language.title +' - '+ language.level
-                                    tmp += "<option value='%s' selected>%s</option>"%(language.id,lable)
+                                    tmp += "<option value='%s' selected>%s</option>"%(language.id,lable_language)
                                 else:
                                     lable_language = language.title +' - '+ language.level
-                                    tmp += "<option value='%s'>%s</option>"%(language.id,lable)
+                                    tmp += "<option value='%s'>%s</option>"%(language.id,lable_language)
                              
                         elif campo == 'skills_expertise':
                             tmp += "<select name='skills_expertise' multiple style='width:200px;height:150px;' >"
@@ -715,10 +715,10 @@ class BaseFunc(BaseStore):
                             for curso in cursos:
                                 if curso.id in self.getValueList(campo,self.request,funcdetailCourse):
                                     lable_curso = curso.title +' - '+ curso.length
-                                    tmp += "<option value='%s' selected>%s</option>"%(curso.id,lable)
+                                    tmp += "<option value='%s' selected>%s</option>"%(curso.id,lable_curso)
                                 else:
                                     lable_curso = curso.title +' - '+ curso.length
-                                    tmp += "<option value='%s'>%s</option>"%(curso.id,lable)
+                                    tmp += "<option value='%s'>%s</option>"%(curso.id,lable_curso)
                             
                         else:
                             tmp += "<input id='%s' type='text' value='%s' name='%s' size='25'/>"%(campo,self.getValue(campo,self.request,data),campo)
