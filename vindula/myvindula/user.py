@@ -1190,8 +1190,8 @@ class ManageCourses(BaseFunc):
         
     
     def registration_processes(self,ctx):
-        success_url = ctx.context.absolute_url() + '/@@vindula-control-panel'
-        access_denied = ctx.context.absolute_url() + '/overview-controlpanel'
+        success_url = ctx.context.absolute_url() + '/myvindula-courses'
+        access_denied = ctx.context.absolute_url() + '/@@vindula-control-panel'
         form = ctx.request.form # var tipo 'dict' que guarda todas as informacoes do formulario (keys,items,values)
         form_keys = form.keys() # var tipo 'list' que guarda todas as chaves do formulario (keys)
         campos = self.campos
@@ -1276,8 +1276,8 @@ class ManageLanguages(BaseFunc):
         
     
     def registration_processes(self,ctx):
-        success_url = ctx.context.absolute_url() + '/@@vindula-control-panel'
-        access_denied = ctx.context.absolute_url() + '/overview-controlpanel'
+        success_url = ctx.context.absolute_url() + '/myvindula-languages'
+        access_denied = ctx.context.absolute_url() + '/@@vindula-control-panel'
         form = ctx.request.form # var tipo 'dict' que guarda todas as informacoes do formulario (keys,items,values)
         form_keys = form.keys() # var tipo 'list' que guarda todas as chaves do formulario (keys)
         campos = self.campos
