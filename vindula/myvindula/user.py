@@ -703,20 +703,21 @@ class BaseFunc(BaseStore):
                             tmp += "      <option value="">-- Selecione --</option>"
                             for language in languages:
                                 if language.id in self.getValueList(campo,self.request,funcdetailLanguages):
-                                    lable = language.title +' - '+ language.level
+                                    lable_language = language.title +' - '+ language.level
                                     tmp += "<option value='%s' selected>%s</option>"%(language.id,lable)
                                 else:
-                                     tmp += "<option value='%s'>%s</option>"%(language.id,lable)
+                                    lable_language = language.title +' - '+ language.level
+                                    tmp += "<option value='%s'>%s</option>"%(language.id,lable)
                              
                         elif campo == 'skills_expertise':
                             tmp += "<select name='skills_expertise' multiple style='width:200px;height:150px;' >"
                             tmp += "      <option value="">-- Selecione --</option>"
                             for curso in cursos:
                                 if curso.id in self.getValueList(campo,self.request,funcdetailCourse):
-                                    lable = curso.title +' - '+ curso.length
+                                    lable_curso = curso.title +' - '+ curso.length
                                     tmp += "<option value='%s' selected>%s</option>"%(curso.id,lable)
                                 else:
-                                    lable = curso.title +' - '+ curso.length
+                                    lable_curso = curso.title +' - '+ curso.length
                                     tmp += "<option value='%s'>%s</option>"%(curso.id,lable)
                             
                         else:
