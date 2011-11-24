@@ -713,10 +713,10 @@ class BaseFunc(BaseStore):
                             tmp += "      <option value="">-- Selecione --</option>"
                             for curso in cursos:
                                 if curso.id in self.getValueList(campo,self.request,funcdetailCourse):
-                                    lable = curso.title +' - '+ curso.level
+                                    lable = curso.title +' - '+ curso.length
                                     tmp += "<option value='%s' selected>%s</option>"%(curso.id,lable)
                                 else:
-                                    lable = curso.title +' - '+ curso.level
+                                    lable = curso.title +' - '+ curso.length
                                     tmp += "<option value='%s'>%s</option>"%(curso.id,lable)
                             
                         else:
