@@ -150,11 +150,29 @@
 					</tr>
 					<tr>
 						<td class="field">Habilidades</td>
-						<td class="value" tal:content="form_data/skills_expertise|nothing"></td>
+						<td class="value"><!-- tal:content="form_data/skills_expertise|nothing"-->
+							<tal:def define="user form_data/username|nothing;
+									 cursos python: view.get_Courses(user)">
+								<tal:cont condition="cursos">
+					        		<tal:rep repeat="curso cursos">
+					        			<span tal:content="python:view.getCouses_byID(curso.vin_myvindula_courses_id).title">Departamento</span> <br />
+					        		</tal:rep>
+								</tal:cont>
+				        	</tal:def>
+						</td>
 					</tr>					
 					<tr>
 						<td class="field">Idiomas</td>
-						<td class="value" tal:content="form_data/languages|nothing"></td>
+						<td class="value"><!--tal:content="form_data/languages|nothing"-->
+							<tal:def define="user form_data/username|nothing;
+									 languages python: view.get_Languages(user)">
+								<tal:cont condition="languages">
+					        		<tal:rep repeat="language languages">
+					        			<span tal:content="python:view.getLanguages_byID(language.vin_myvindula_languages_id).title">Departamento</span> <br />
+					        		</tal:rep>
+								</tal:cont>
+				        	</tal:def>
+						</td>
 					</tr>		
 					<tr>
 						<td class="field">Disponibilidade</td>

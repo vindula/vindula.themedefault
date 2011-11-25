@@ -428,7 +428,15 @@ class ModelsMyvindulaCourses(Storm, BaseStore):
         couses = ModelsMyvindulaCourses(**kwargs)
         self.store.add(couses)
         self.store.flush() 
-
+        
+    def get_courses_byID(self,id):
+        data = self.store.find(ModelsMyvindulaCourses, ModelsMyvindulaCourses.id==id).one()
+        if data:
+            return data
+        else:
+            return None
+        
+        
 class ModelsMyvindulaLanguages(Storm, BaseStore):
     __storm_table__ = 'vin_myvindula_languages'
     
@@ -448,6 +456,13 @@ class ModelsMyvindulaLanguages(Storm, BaseStore):
         languages = ModelsMyvindulaLanguages(**kwargs)
         self.store.add(languages)
         self.store.flush()         
+
+    def get_languages_byID(self,id):
+        data = self.store.find(ModelsMyvindulaLanguages, ModelsMyvindulaLanguages.id==id).one()
+        if data:
+            return data
+        else:
+            return None        
 
 class ModelsMyvindulaFuncdetailCouses(Storm, BaseStore):
     __storm_table__ = 'vin_myvindula_funcdetail_couses'

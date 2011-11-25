@@ -25,7 +25,8 @@ import calendar
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, ModelsDepartment, ModelsFuncDetails,\
                                    ImportUser, ModelsMyvindulaHowareu, ModelsMyvindulaComments, ModelsMyvindulaLike,\
-                                   ManageCourses, ManageLanguages
+                                   ManageCourses, ManageLanguages, ModelsMyvindulaFuncdetailCouses,ModelsMyvindulaCourses,\
+                                   ModelsMyvindulaFuncdetailLanguages, ModelsMyvindulaLanguages
                                    
 
 
@@ -201,6 +202,37 @@ class MyVindulaListUser(grok.View):
                 return BaseFunc().get_imageVindulaUser(photo)
         else:
                 return self.context.absolute_url()+'/'+'defaultUser.png'
+
+    def get_department(self, user):
+        try:
+            user_id = unicode(user, 'utf-8')    
+        except:
+            user_id = user
+
+        return ModelsDepartment().get_departmentByUsername(user)     
+
+    def get_Courses(self, user):
+        try:
+            user_id = unicode(user, 'utf-8')    
+        except:
+            user_id = user
+
+        return ModelsMyvindulaFuncdetailCouses().get_funcdetailCouserByUsername(user)     
+    
+    def getCouses_byID(self,id):
+        return ModelsMyvindulaCourses().get_courses_byID(int(id))
+
+    def get_Languages(self, user):
+        try:
+            user_id = unicode(user, 'utf-8')    
+        except:
+            user_id = user
+
+        return ModelsMyvindulaFuncdetailLanguages().get_funcdetailLanguagesByUsername(user)     
+    
+    def getLanguages_byID(self,id):
+        return ModelsMyvindulaLanguages().get_languages_byID(int(id))
+
 
     def get_department(self, user):
         try:
