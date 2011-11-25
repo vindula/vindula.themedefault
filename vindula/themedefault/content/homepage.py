@@ -3,6 +3,7 @@ from five import grok
 from zope import schema
 from plone.directives import form
 from plone.formwidget.contenttree import ObjPathSourceBinder
+from plone.app.textfield import RichText
 from vindula.themedefault import MessageFactory as _
 from z3c.relationfield.schema import RelationList, RelationChoice
 from Products.CMFCore.utils import getToolByName
@@ -16,6 +17,34 @@ class IHomePage(form.Schema):
     title = schema.TextLine(
         title=_(u"Título"),
         description=_(u"Insira um nome para Home Page."),
+        )
+    
+    content_top = RichText(
+        title=_(u"Conteúdo do Topo"),
+        description=_(u"Campo de preenchimento livre, seu conteúdo ficará posicionado no topo da página \
+                        acima das notícias em destaque."),
+        required=False,
+        )
+    
+    content_middle_top = RichText(
+        title=_(u"Conteúdo do Meio (ACIMA da listagem de notícias)"),
+        description=_(u"Campo de preenchimento livre, seu conteúdo ficará posicionado entre as notícias \
+                        de destaque e a listagem principal das demais notícias."),
+        required=False,
+        )
+    
+    content_middle_bottom = RichText(
+        title=_(u"Conteúdo do Meio (ABAIXO da listagem de notícias)"),
+        description=_(u"Campo de preenchimento livre, seu conteúdo ficará posicionado entre a listagem \
+                        principal das demais notícias e a área das outras notícias."),
+        required=False,
+        )
+    
+    content_bottom = RichText(
+        title=_(u"Conteúdo Inferior"),
+        description=_(u"Campo de preenchimento livre, seu conteúdo ficará posicionado no final da página \
+                        abaixo de todas as notícias."),
+        required=False,
         )
     
     # Fieldset News
@@ -46,7 +75,7 @@ class IHomePage(form.Schema):
         value_type=RelationChoice(
             title=_(u"Notícias em destaque"),
             source=ObjPathSourceBinder(
-                portal_type = 'vindula.content.content.vindulanews',  
+                portal_type = ('vindula.content.content.vindulanews', 'News Item'),  
                 review_state='published'                                                  
                 )
             ),
@@ -113,7 +142,6 @@ class IHomePage(form.Schema):
         required=True,
         )
     
-    
 # View
     
 class HomePageView(grok.View):
@@ -134,16 +162,29 @@ class HomePageView(grok.View):
                     continue
                 D = {}
                 D['title'] = obj.Title()
-                D['summary'] = obj.summary[:350]
-                if len(D['summary']) == 350:
-                    D['summary'] += '...'
                 D['author'] = obj.getOwner().getUserName()
                 D['date'] = obj.effective_date.strftime('%d/%m/%Y / %H:%m')
                 D['link'] = obj.absolute_url()
-                if obj.image is None:
-                    D['image'] = ''
+                
+                if obj.portal_type == 'News Item':
+                    D['summary'] = obj.Description()[:350]
+                    
+                    if obj.getImage():
+                        D['image'] = obj.getImage().absolute_url() + '_mini' 
+                    else:
+                        D['image'] = '' 
+                    
                 else:
-                    D['image'] = obj.image.to_object.absolute_url() + '/image_mini'
+                    D['summary'] = obj.summary[:350]
+                    
+                    if obj.image:
+                        D['image'] = obj.image.to_object.absolute_url() + '/image_mini'
+                    else:
+                        D['image'] = ''
+                    
+                if len(D['summary']) == 350:
+                    D['summary'] += '...'
+
                 L.append(D)
             return L
         
@@ -155,10 +196,15 @@ class HomePageView(grok.View):
                 obj = new.getObject()
                 D = {}
                 D['title'] = obj.Title()
-                D['summary'] = obj.summary
                 D['author'] = obj.getOwner().getUserName()
                 D['date'] = obj.effective_date.strftime('%d/%m/%Y / %H:%m')
                 D['link'] = obj.absolute_url()
+                
+                if obj.portal_type == 'News Item':
+                    D['summary'] = obj.Description()
+                else:
+                    D['summary'] = obj.summary
+                     
                 L.append(D)
                 
             if self.context.local_othernews is None:
@@ -186,7 +232,7 @@ class HomePageView(grok.View):
         else:
             local = local.to_object.getPhysicalPath()
         self.pc = getToolByName(self.context, 'portal_catalog')
-        news = self.pc(portal_type='vindula.content.content.vindulanews',
+        news = self.pc(portal_type=('vindula.content.content.vindulanews', 'News Item'),
                        review_state='published',
                        path={'query':'/'.join(local)},
                        sort_on='effective',
