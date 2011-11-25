@@ -90,7 +90,17 @@ class Renderer(base.Renderer):
         title = form.get('title','').strip()
         departamento= form.get('departamento','')
         ramal = form.get('ramal','').strip()
-        result = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'))
+        
+        if type(title) != unicode:
+            title = unicode(title, 'utf-8')
+        
+        if type(departamento) != unicode:
+            departamento = unicode(departamento, 'utf-8')
+            
+        if type(ramal) != unicode:
+            ramal = unicode(ramal, 'utf-8')
+            
+        result = ModelsFuncDetails().get_FuncBusca(title,departamento,ramal)
         return result
     
     
