@@ -960,8 +960,13 @@ class SchemaFunc(BaseFunc):
                             data['photograph'] = None      
                 
                 if 'vin_myvindula_department' in form_keys:
+                    L = []
                     ModelsDepartment().del_department(user_id)
-                    for departament in form['vin_myvindula_department']:
+                    if not type(form['vin_myvindula_department']) == list:
+                        L.append(form['vin_myvindula_department'])
+                    else:
+                        L = form['vin_myvindula_department']
+                    for departament in L:
                         D={}
                         D['UID'] = unicode(departament,'utf-8')
                         D['funcdetails_id'] = user_id
