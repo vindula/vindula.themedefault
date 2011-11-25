@@ -175,6 +175,11 @@ dl.portlet a:hover,
 	color:#F58220;
 	font-weight:bolder;
 }
+#boxPortlet{
+	float:left;
+	width:100%;
+}
+
 
 /* Control Panel View... */
 div.controlpanel-links div {

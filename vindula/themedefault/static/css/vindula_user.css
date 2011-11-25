@@ -11,7 +11,7 @@
 .userpage div.department {
     background-color: #FAA61A;
     clear: both;
-    height: 10px;
+    /*height: 10px;*/
   	padding-top: 1px;
 	*padding-top: 0;
 	*padding-bottom: 3px;
