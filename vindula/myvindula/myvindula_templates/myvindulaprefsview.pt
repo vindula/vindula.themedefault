@@ -44,7 +44,7 @@
 		                    <span class="fieldRequired" title="Obrigatório">(Obrigatório)</span>	
 		                    <div class="formHelp">Selecione o departamendo do funcionario.</div>
 							<div tal:content="errors/vin_myvindula_department|nothing"></div>
-		                    <tal:cond condition="python:form_values.get('vin_myvindula_department',None)">
+		                    <tal:cond condition="departamentos">
 			                    <select multiple='multiple' style="width:200px;height:150px;" name="vin_myvindula_department" tal:define="id_request request/vin_myvindula_department | python: [ i.UID for i in form_values.get('vin_myvindula_department',[])] or []">
 			                    	<option value="">-- Selecione --</option>
 									<tal:repeat repeat="departamento departamentos">
@@ -57,7 +57,7 @@
 									</tal:repeat>	
 			                    </select>
 		                    </tal:cond>
-							<tal:cond condition="python: not form_values.get('vin_myvindula_department',None)">
+							<tal:cond condition="not: departamentos">
 								<span>N&atilde;o h&aacute; departamentos cadastrados no portal, informe o administrador do site </span>
 							</tal:cond>
 														

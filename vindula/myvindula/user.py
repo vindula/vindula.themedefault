@@ -200,9 +200,9 @@ class ModelsDepartment(Storm, BaseStore):
             if L:
                 return L
             else:
-                return None
+                return []
         else:
-            return None
+            return []
 
 #    def get_departmentByID(self,id):
 #        data = self.store.find(ModelsDepartment, ModelsDepartment.id==int(id)).one()
