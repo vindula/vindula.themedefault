@@ -113,7 +113,7 @@
 
 									</div>
 									
-					                <div class="commentBody">
+					                <div class="comment-body">
 					                    <p tal:replace="item/text|nothing" />
 							  		</div>
 									<!-- campos input necessario para a criação de comentariso -->

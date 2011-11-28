@@ -27,6 +27,7 @@
 	
 	<script type="text/javascript" src="" tal:attributes="src string:${view_coments/static}/ajax_comments-curtir.js"></script>
 	<script type="text/javascript" src="" tal:attributes="src string:${view_coments/static}/comments.js"></script>
+	<link rel="stylesheet" type="text/css" tal:attributes="href string:${view_coments/static}/myvindula_comments.css" />
 	<input type="hidden" id="portal_url" tal:attributes="value context/portal_url|nothing">	
 	<input type="hidden" id="context_url" tal:attributes="value context/absolute_url|nothing">
 	
@@ -37,7 +38,33 @@
 				<h2 tal:content="python:'Comentários ('+str(comments.count())+')'"></h2>
 			</div>
 			<div class="descricao_titulo">
-				<p>Donec nec elit ut nunc blandit convallis. Nullam quis odio eget erat tempus imperdiet et a est.</p>
+				<p>Fa&ccedil;a um coment&aacute;rio sobre o conte&uacute;do acima.</p>
+			</div>
+			
+			<p tal:condition="not: logado">
+				<span>Para comentar voc&ecirc; precisa estar autenticado,</span>
+				<span><a href="/login" alt="Acesse">clique aqui</a> para acessar.</span>
+			</p>
+
+			<!-- Comment Input -->
+			<div id="comment-geral" tal:condition="logado">
+				<form action="" name="save-coment" tal:attributes="action string:${context/absolute_url}/myvindula-comments">	
+					<input type="hidden" name="id_obj" tal:attributes="value view_coments/get_UID|nothing">
+					<input type="hidden" name="type" tal:attributes="value context/portal_type|nothing">
+					<input type="hidden" name="isPlone:boolean" value="True">	
+					<input type="hidden" name="username" value="" tal:attributes="value context/@@plone_portal_state/member|nothing">
+					<textarea  style="width: 100%; height: 81px;" name="text"></textarea>
+	
+					<div class="bt_comentar">
+						<input type="hidden" name="form.submitted-comment:boolean" value="True" />
+						<input type="submit" name="submit" value="Comentar" id="save-coment" />
+					</div>
+				</form>
+			</div>
+
+			<div class="descricao_titulo">
+				<p tal:condition="python: comments.count() > 0">J&aacute; comentaram...</p>
+				<p tal:condition="python: comments.count() == 0">Seja o primeiro a comentar!</p>
 			</div>
 			
 			<input type="hidden" id="username" name="username" value="" tal:attributes="value member">
@@ -67,39 +94,27 @@
 							</div>
 							<div metal:use-macro="context/myvindula-like-macro/macros/like" />
 						</div>
-		                <div class="commentBody">
+		                <div class="comment-body">
 		                    <p tal:replace="item/text|nothing" />
 				  		</div>
-						<div id="comments" tal:condition="logado">
+						<div id="comments">
 							<div tal:attributes="id item/id|nothing">
 								<input type="hidden" name="isPlone:boolean" id="isPlone" value="True" />
 								<input type="hidden" name="type" id="type" value="ModelsMyvindulaComments" />
 							</div>
-							<input type="button" value="Comentar" class="comments bt_comments" tal:attributes="id item/id|nothing" />
+							<input type="button" value="Responder" class="comments bt_comments" 
+								   tal:attributes="id item/id|nothing"
+							       tal:condition="logado" />
+							<tal:define define="number python:view_coments.get_comments(item.id, item._name_class).count()" 
+							            tal:on-error="nothing">
+								<span id="number-comments" tal:content="string: Respostas (${number})" 
+								                           tal:condition="python: number > 0"></span>
+							</tal:define>
 							<div id="new-comments"></div>
 						</div>
 						<div metal:use-macro="context/myvindula-comments-macro/macros/comments" />
 					</div>
 				</tal:rep>
-			</div>
-			<div class="bt_comentar" tal:condition="logado">
-				<input id="comentar" type="button" value="Comentar" class="">
-			</div>
-			<div id="comment-geral" style="display:none;" tal:condition="logado">
-				<form action="" name="save-coment" tal:attributes="action string:${context/absolute_url}/myvindula-comments">
-					
-					<input type="hidden" name="id_obj" tal:attributes="value view_coments/get_UID|nothing">
-					<input type="hidden" name="type" tal:attributes="value context/portal_type|nothing">
-					<input type="hidden" name="isPlone:boolean" value="True">	
-					<input type="hidden" name="username" value="" tal:attributes="value context/@@plone_portal_state/member|nothing">
-					<textarea  style="width: 100%; height: 81px;" name="text"></textarea>
-
-					<div class="formControls text-aling">
-					  <input type="hidden" name="form.submitted-comment:boolean" value="True" />
-					  <input type="button" name="cancel" value="Cancelar" id="cancel" class="context bt_comments"/>
-					  <input type="submit" name="submit" value="Publicar" id="save-coment" class="context bt_comments"/>
-					</div>
-				</form>
 			</div>
 		</div>
 	</div>
