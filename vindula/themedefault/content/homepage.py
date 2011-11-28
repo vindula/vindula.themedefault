@@ -207,7 +207,8 @@ class HomePageView(grok.View):
                      
                 L.append(D)
                 
-            if self.context.local_othernews is None:
+            if self.context.local_othernews is None or \
+               self.context.local_othernews.to_object is None:
                 url = ''
             else:
                 url = self.context.local_othernews.to_object.absolute_url()
@@ -227,7 +228,7 @@ class HomePageView(grok.View):
             return L
         
     def searchNews(self, local=None):
-        if local is None:
+        if local is None or local.to_object is None:
             local = self.context.portal_url.getPortalObject().getPhysicalPath()
         else:
             local = local.to_object.getPhysicalPath()

@@ -147,7 +147,7 @@
 .gallery-cycle .img_info img {
 	max-height: 165px;
 }
-
+/*
 .bk_cont_imgDestaque{
     background: url("../images/bkgs/bk_cont_imgDestaque.png") repeat-y scroll 0 0 transparent;
     width: 167px;
@@ -166,7 +166,7 @@
 	width: 167px;
 	height: 9px;
 }
-
+*/
 .descricao_destaque h4{
     color: #F58220;
     font-weight: normal;
@@ -481,4 +481,28 @@
 .contBox_colunaTotal{
     padding: 5px 20px;
 }
+
+#newsImageContainer{
+    float: left;
+    margin:0 1em 0 0;
+}
+
+#newsImageContainer img{
+	background-color: #FFFFFF;
+}
+
+#newsImageContainer #parent-fieldname-image{
+    border: 0.1em solid #EBEBEB;
+	margin: 0 0 0.5em;
+    padding: 0.1em;
+    -moz-box-shadow: 0 0 0.2em #BCBCBC;
+    -webkit-box-shadow: 0 0 0.2em #BCBCBC;
+    box-shadow: 0 0 0.15em #BCBCBC;
+}
+
+#newsImageContainer .bk_imagem{
+    padding: 0.04em;
+	text-align: center;
+}
+
 /* ...Alterações para página Notícias */
