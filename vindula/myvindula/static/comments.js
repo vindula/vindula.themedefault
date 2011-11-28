@@ -35,7 +35,15 @@ $j(document).ready(function(){
 		$j('li#perfil').addClass('selected');
 		$j('li#howareu').removeClass('selected');
 	});
-
-
-					
+	
+	
+	$j('div.geral_lista_comentarios span#number-comments').click(function() {
+		var comments = $j(this).parent().parent().find('.comments-cont');
+		
+		if (comments.css('display') == 'none') 
+			comments.show();
+		else 
+			comments.hide();
+	})
+				
 });	
