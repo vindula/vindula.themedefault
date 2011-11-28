@@ -463,11 +463,13 @@
 
 .bk_sombraTopo{
     background: url("../images/bkgs/sombra_cont_topo.png") repeat-x scroll center top #FFFFFF;
+	float:left;
 }
 
 .bk_sombraEsquerda{
     background: url("../images/bkgs/sombra_cont_esquerda.png") repeat-y scroll left center transparent;
     margin: 0 0 0 -3px;
+	float:left;
 }
 
 .bk_sombraDireita{
@@ -476,6 +478,7 @@
     padding: 3px 0 0;
 	*position:relative;
 	*margin:0;
+	float:left;
 }
 
 .contBox_colunaTotal{

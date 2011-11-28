@@ -1,5 +1,5 @@
 /* 
- * * * MY VINDULA USER VIEW * * *
+ * * * MY VINDULA LIST USER VIEW * * *
  */
 
 /* Prefs User*/
@@ -120,4 +120,30 @@
 .userpage table td.value {
 	background-image: url("../images/bkgs/back_td2.jpg");
 	background-repeat: repeat;
+}
+
+
+/* 
+ * * * MY VINDULA LIST ALL VIEW * * *
+ */
+
+.userlist {
+	float: left;
+	margin-bottom: 30px;
+}
+.userlist div.user {
+	float:left;
+	text-align: center;
+	width: 140px;
+	height: 110px;
+	margin: 12px;
+} 
+.userlist div.user img {
+	border: 1px solid #CCCCCC;
+	height: 89px;
+	width: 65px;
+}
+.userlist h2.h2title {
+	color: #000000;
+	margin-bottom: 10px;
 }
