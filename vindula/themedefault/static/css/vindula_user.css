@@ -2,6 +2,16 @@
  * * * MY VINDULA USER VIEW * * *
  */
 
+/* Prefs User*/
+
+#myvindulaprefs .boxSelecao{
+	width:200px;
+	height:150px;
+	padding:5px;
+	border:solid 1px #000;
+	overflow:auto;	
+}
+
 
 .userpage h2.h2title {
 	color: #000000;
