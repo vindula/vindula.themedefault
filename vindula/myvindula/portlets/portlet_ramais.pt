@@ -1,6 +1,6 @@
 <dl class="portlet" tal:define="view view/data">
     <dt class="portletHeader">
-        <span class="tile" tal:content="view/title">Portlet Title</span>
+        <span class="tile" tal:content="view/get_title">Portlet Title</span>
     </dt>
 
     <dd class="portletItem odd">
