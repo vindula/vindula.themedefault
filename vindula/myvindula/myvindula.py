@@ -186,22 +186,52 @@ class AjaxView(grok.View):
         return ImportUser().importUser(self,form)
     
 class MyVindulaListUser(grok.View):
-    grok.context(ISiteRoot)
+    #grok.context(ISiteRoot)
+    grok.context(Interface)
     grok.require('zope2.View')
     grok.name('myvindulalistuser')
+    
+    
+    def get_howareu(self, user):
+        member =  self.context.restrictedTraverse('@@plone_portal_state').member().getId();
+        user = self.request.form.get('user',str(member))
+        D={}
+        D['username'] = user
+        return ModelsMyvindulaHowareu().get_myvindula_howareu(**D)
     
     def load_list(self):
         #vars = BaseFunc().getParametersFromURL(self)
         member =  self.context.restrictedTraverse('@@plone_portal_state').member().getId();
         user = self.request.form.get('user',str(member))
         return ModelsFuncDetails().get_FuncDetails(unicode(user, 'utf-8'))
+        
+    def get_prefs_user(self, user):
+        try:
+            user_id = unicode(user, 'utf-8')    
+        except:
+            user_id = user 
+
+        return ModelsFuncDetails().get_FuncDetails(user_id)
 
     def getPhoto(self,photo):
-        if photo is not None and not ' ' in photo:
-                #return self.context.absolute_url()+'/'+photo
-                return BaseFunc().get_imageVindulaUser(photo)
+        prefs_user = self.get_prefs_user(photo)
+        if prefs_user:
+            if prefs_user.photograph is not None and \
+                not ' ' in prefs_user.photograph  and \
+                not prefs_user.photograph == '':
+                return BaseFunc().get_imageVindulaUser(prefs_user.photograph)
+                #return self.context.absolute_url()+'/'+prefs_user.photograph # + '/image_thumb'
+            else:
+                return self.context.absolute_url()+'/defaultUser.png'
         else:
-                return self.context.absolute_url()+'/'+'defaultUser.png'
+            return self.context.absolute_url()+'/defaultUser.png'
+        
+        
+#        if photo is not None and not ' ' in photo and not photo == '':
+#                #return self.context.absolute_url()+'/'+photo
+#                return BaseFunc().get_imageVindulaUser(photo)
+#        else:
+#                return self.context.absolute_url()+'/'+'defaultUser.png'
 
     def get_department(self, user):
         try:

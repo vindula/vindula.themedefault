@@ -10,6 +10,7 @@
 		 <div metal:fill-slot="content">         
 	        <metal:use use-macro="context/@@myvindulapanel/macros/page"/>
 			<input type="hidden" id="portal_url" tal:attributes="value context/portal_url|nothing">    
+			<input type="hidden" id="context_url" tal:attributes="value string:${context/absolute_url|nothing}/myvindula">
 			<div id="content" tal:define="view python:context.restrictedTraverse('@@myvindula');
 							                             memberinfo context/portal_membership/getMemberInfo;
 														 member context/@@plone_portal_state/member;

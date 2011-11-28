@@ -24,12 +24,16 @@ def set_AllowedType_Members(context):
         folder_members.setImmediatelyAddableTypes(Types)
         folder_members.setLocallyAllowedTypes(Types)
         
+        if 'index_html' in folder_members.keys():
+            index = folder_members['index_html']
+            index.write("member_search = '/myvindulalistall'\nreturn container.REQUEST.RESPONSE.redirect(member_search)")
+            
+        
     #import pdb;pdb.set_trace()
 #    portal_workflow = getToolByName(portal, 'portal_workflow')
 #    portal_workflow.setChainForPortalTypes(pt_names = ('vindula.myvindula.vindulaphotouser',),
 #                                           chain=['one_state_workflow',])
 
-        
         
 def set_field_default(context):
     try:

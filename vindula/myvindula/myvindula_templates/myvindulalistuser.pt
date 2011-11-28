@@ -1,20 +1,45 @@
 <html>
 <body metal:use-macro="here/main_template/macros/master">
+<metal:js fill-slot="javascript_head_slot">
+	<script type="text/javascript" 
+    tal:attributes="src string:${view/static}/comments.js"></script>
+	<script type="text/javascript" 
+    tal:attributes="src string:${view/static}/ajax_comments-curtir.js"></script>
+</metal:js>	
+	
 <metal:block fill-slot="top_slot">
         <tal:dummy tal:define="dummy python:request.set('disable_border',1)" />
 </metal:block>
     
     <div metal:fill-slot="content" tal:define="member python:context.portal_membership.getAuthenticatedMember();
-											   form_data view/load_list | python:{};">
+											   logado python:str(member)!='Anonymous User';
+											   form_data view/load_list | python:{};
+											   user form_data/username|nothing">
     	<tal:cont tal:condition="form_data">
 	    	<tal:cond tal:condition="python: str(member)==form_data.username">
+	    		<input id="user-igual" type="hidden" value="True">
 				<metal:use use-macro="context/@@myvindulapanel/macros/page"/>                
-		    </tal:cond>	
+		    </tal:cond>
+			<tal:cont tal:condition="python: str(member)!=form_data.username">
+				<input id="user-igual"  type="hidden" value="False">
+				<div id="edit-bar">
+		            <h5 class="hiddenStructure">Visões</h5>
+		
+		            <ul id="content-views" class="contentViews">
+		            	<li class="selected" id="howareu">
+		                    <a id="howareu" style="cursor:pointer;" >Pensamentos</a>
+		                </li>
+						<li class="plain" id="perfil">
+		                    <a id="perfil"  style="cursor:pointer;" >Perfil</a>
+		                </li>
+		            </ul><div class="contentActions">&nbsp;</div>
+	        	</div>
+			</tal:cont>	
     	</tal:cont>
-		
-		
+		<input type="hidden" id="portal_url" tal:attributes="value context/portal_url|nothing">
+		<input type="hidden" id="context_url" tal:attributes="value string:${context/REQUEST/getURL|nothing}?user=${context/REQUEST/form/user|nothing}">
 		<div id="content">
-			<div id="interna" class="userpage">
+			<div id="interna" class="userpage ">
 				 <h2 class="h2title">Informa&ccedil;&otilde;es do Perfil</h2>
 	
 				<div class="titulo">
@@ -22,8 +47,7 @@
 				</div>
 				
 				<div class="department">
-					<tal:def define="user form_data/username|nothing;
-									 departamentos python: view.get_department(user)">
+					<tal:def define="departamentos python: view.get_department(user)">
 		        		<tal:rep repeat="departamento departamentos">
 		        			<span tal:content="departamento/Title|nothing">Departamento</span> |
 		        		</tal:rep>
@@ -56,11 +80,66 @@
 								<td class="value" tal:content="form_data/date_birth|nothing"></td>
 							</tr>
 						</table>
+						
 						<a id="send-mail" tal:attributes="href string:mailto:${form_data/email|nothing}">Enviar e-mail</a>
 					</div>
 				</div>
 				<!-- end: Personal Information -->
+			
+			</div>
+
+			<!-- Meus Pensamentos -->
+			<div id="howareu" class="userpage">
+				<h2 class="h2title">Em que estou pensando agora!</h2>
+				<tal:def define="items python: view.get_howareu(user)">
+					<tal:rep tal:repeat="item items">
+						<div class="comment item_lista">
+							<div class="commentImage">
+			                    <img src="defaultUser.png"
+				             		 alt="" border="0"
+				             		 height="30"
+				             		 tal:attributes="src python:view.getPhoto(user);
+							 						 alt form_data/name|nothing;
+													 title form_data/name|nothing;" />
+			                </div>
+							<div class="documentByLine name-user">
+								<h4>
+									<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${user}">
+										<span tal:replace="form_data/name|nothing" /> | 
+				                    	<span tal:replace="python:item.date_creation.strftime('%d/%m/%Y')" />
+									</a>
+								</h4>
+			                </div>
+							<div id="like" tal:condition="logado">
+								<div tal:attributes="id item/id|nothing">
+									<input type="hidden" name="isPlone:boolean" id="isPlone" value="False" />
+									<input type="hidden" name="type" id="type" value="ModelsMyvindulaHowareu" />
+								</div>
+								<div metal:use-macro="context/myvindula-like-macro/macros/like" />
 	
+							</div>
+							
+			                <div class="commentBody">
+			                    <p tal:replace="item/text|nothing" />
+					  		</div>
+							<!-- campos input necessario para a criação de comentariso -->
+							<div id="comments" tal:condition="logado" >
+								<div tal:attributes="id item/id|nothing">
+									
+									<input type="hidden" name="isPlone:boolean" id="isPlone" value="False" />
+									<input type="hidden" name="type" id="type" value="ModelsMyvindulaHowareu" />
+								</div>
+								<input type="button" value="Comentar" class="comments bt_comments" tal:attributes="id item/id|nothing" />
+								<div id="new-comments"></div>
+							</div>
+						</div>
+						<div metal:use-macro="context/myvindula-comments-macro/macros/comments" />
+					</tal:rep>	
+		        </tal:def>
+			</div>
+			
+			<div id="perfil" class="userpage"> <!-- display-none"--> 
+
 				<!-- start: Others Information -->
 				<!-- Contact -->
 				<div class="area"><span>Contato</span></div>
@@ -83,8 +162,6 @@
 						<td class="value" tal:content="form_data/postal_address|nothing"></td>
 					</tr>
 				</table>
-
-				
 				
 				<!-- Corporative -->
 				<div class="area"><span>Corporativo</span></div>
@@ -151,8 +228,7 @@
 					<tr>
 						<td class="field">Habilidades</td>
 						<td class="value"><!-- tal:content="form_data/skills_expertise|nothing"-->
-							<tal:def define="user form_data/username|nothing;
-									 cursos python: view.get_Courses(user)">
+							<tal:def define="cursos python: view.get_Courses(user)">
 								<tal:cont condition="cursos">
 					        		<tal:rep repeat="curso cursos">
 					        			<span tal:content="python:view.getCouses_byID(curso.vin_myvindula_courses_id).title">Departamento</span> <br />
@@ -164,8 +240,7 @@
 					<tr>
 						<td class="field">Idiomas</td>
 						<td class="value"><!--tal:content="form_data/languages|nothing"-->
-							<tal:def define="user form_data/username|nothing;
-									 languages python: view.get_Languages(user)">
+							<tal:def define="languages python: view.get_Languages(user)">
 								<tal:cont condition="languages">
 					        		<tal:rep repeat="language languages">
 					        			<span tal:content="python:view.getLanguages_byID(language.vin_myvindula_languages_id).title">Departamento</span> <br />
@@ -200,7 +275,6 @@
 					</tr>
 				</table>
 				<!-- end: Others Information -->
-
 			</div>
 	    </div>
     </div>    
