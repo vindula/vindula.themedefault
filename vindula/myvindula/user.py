@@ -714,26 +714,27 @@ class BaseFunc(BaseStore):
                         
                         
                         elif campo == 'languages':
-                            tmp += "<select name='languages' multiple style='width:200px;height:150px;' >"
-                            tmp += "      <option value="">-- Selecione --</option>"
+                            tmp += "<div class='boxSelecao' name='languages'>"
                             for language in languages:
                                 if language.id in self.getValueList(campo,self.request,funcdetailLanguages):
                                     lable_language = language.title +' - '+ language.level
-                                    tmp += "<option value='%s' selected>%s</option>"%(language.id,lable_language)
+                                    tmp += "<input value='%s' type='checkbox' checked name='languages'/><label>%s</label><br/>"%(language.id,lable_language)
                                 else:
                                     lable_language = language.title +' - '+ language.level
-                                    tmp += "<option value='%s'>%s</option>"%(language.id,lable_language)
-                             
+                                    tmp += "<input value='%s' type='checkbox' name='languages'/><label>%s</label><br/>"%(language.id,lable_language)
+                            tmp += "</div>" 
+                            
                         elif campo == 'skills_expertise':
-                            tmp += "<select name='skills_expertise' multiple style='width:200px;height:150px;' >"
-                            tmp += "      <option value="">-- Selecione --</option>"
+                            tmp += "<div class='boxSelecao' name='skills_expertise'>"
                             for curso in cursos:
                                 if curso.id in self.getValueList(campo,self.request,funcdetailCourse):
                                     lable_curso = curso.title +' - '+ curso.length
-                                    tmp += "<option value='%s' selected>%s</option>"%(curso.id,lable_curso)
+                                    tmp += "<input value='%s' type='checkbox' checked name='skills_expertise'/><label>%s</label><br/>"%(curso.id,lable_curso)
                                 else:
                                     lable_curso = curso.title +' - '+ curso.length
-                                    tmp += "<option value='%s'>%s</option>"%(curso.id,lable_curso)
+                                    tmp += "<input value='%s' type='checkbox' name='skills_expertise'/><label>%s</label><br/>"%(curso.id,lable_curso)
+                            
+                            tmp += "</div>" 
                             
                         else:
                             tmp += "<input id='%s' type='text' value='%s' name='%s' size='25'/>"%(campo,self.getValue(campo,self.request,data),campo)

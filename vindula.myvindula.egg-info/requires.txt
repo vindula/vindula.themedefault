@@ -2,4 +2,3 @@ setuptools
 plone.app.dexterity
 storm
 plone.namedfile[blobs]
-collective.wtf

@@ -26,6 +26,7 @@
            i18n:domain="plone">
 	
 	<script type="text/javascript" src="" tal:attributes="src string:${view_coments/static}/ajax_comments-curtir.js"></script>
+	<script type="text/javascript" src="" tal:attributes="src string:${view_coments/static}/comments.js"></script>
 	<input type="hidden" id="portal_url" tal:attributes="value context/portal_url|nothing">	
 	<input type="hidden" id="context_url" tal:attributes="value context/absolute_url|nothing">
 	
@@ -52,8 +53,11 @@
 												 title user_comment/name|nothing;" />
 		                </div>
 						<div class="documentByLine name-user">
-							<h4><span tal:replace="user_comment/name|nothing" /> | 
-			                    <span tal:replace="python:item.date_creation.strftime('%d/%m/%Y')" />
+							<h4>
+								<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${user_comment/username|nothing}">
+									<span tal:replace="user_comment/name|nothing" /> | 
+			                    	<span tal:replace="python:item.date_creation.strftime('%d/%m/%Y')" />
+								</a>
 							</h4>
 		                </div>
 						<div id="like" tal:condition="logado">
@@ -83,12 +87,6 @@
 			</div>
 			<div id="comment-geral" style="display:none;" tal:condition="logado">
 				<form action="" name="save-coment" tal:attributes="action string:${context/absolute_url}/myvindula-comments">
-					<script type="text/javascript">
-						$j('#cancel').click(function(){
-							$j('#new-comments').css('display','none');
-						});
-						
-					</script>
 					
 					<input type="hidden" name="id_obj" tal:attributes="value view_coments/get_UID|nothing">
 					<input type="hidden" name="type" tal:attributes="value context/portal_type|nothing">

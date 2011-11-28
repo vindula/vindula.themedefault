@@ -1,11 +1,6 @@
 <form action="" name="save-coment" tal:attributes="action string:${context/absolute_url}/myvindula-comments">
-	<script type="text/javascript">
-		$j('#cancel').click(function(){
-			$j(this).parent().parent().parent().parent().find('#new-comments').css('display','none');
-		});
-		$j('input[name="url_context"]').attr('value',location);
-		
-	</script>
+	<script type="text/javascript"  tal:attributes="src string:${view/static}/comments.js"></script>
+	
 	<input type="hidden" name="url_context" value="">
 	<input type="hidden" name="username" value="" tal:attributes="value context/REQUEST/username|nothing">
 	<input type="hidden" name="id_obj" tal:attributes="value context/REQUEST/id_obj|nothing">
@@ -16,7 +11,7 @@
 	
 	<div class="formControls text-aling">
 	  <input type="hidden" name="form.submitted-comment:boolean" value="True" />
-	  <input type="button" name="cancel" value="Cancelar" id="cancel" class="context bt_comments"/>
+	  <input type="button" name="cancel" value="Cancelar" id="cancel-coment" class="context bt_comments"/>
 	  <input type="submit" name="submit" value="Publicar" id="save-coment" class="context bt_comments"/>
 	</div>
 	

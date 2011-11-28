@@ -10,7 +10,9 @@ $j(document).ready(function(){
 		$j('#comment-geral').css('display','none')
 		
 	});
-	
+	$j('#cancel-coment').live('click',function(){
+		$j(this).parent().parent().parent().parent().find('#new-comments').css('display','none');
+	});
 	
 	$j('input.comments').click(function(){
 		var url = $j('#portal_url').val() + "/myvindula-comments";

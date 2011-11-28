@@ -18,9 +18,7 @@
 		</metal:block-->
 		<script type="text/javascript" src="ajax_importuser.js" 
 				tal:attributes="src string:${view/static}/ajax_importuser.js"></script>
-		<style type="text/css">
-				.display-none{display:none;}
-		</style>
+
 		<div id="content">				
 			 <h1>Edit the configuration register of user of plone</h1>
 			 <div id="interna">

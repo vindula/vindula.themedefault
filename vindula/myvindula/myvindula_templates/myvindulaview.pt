@@ -96,8 +96,11 @@
 															 title prefs_user/name|nothing;" />
 					                </div>
 									<div class="documentByLine name-user">
-										<h4><span tal:replace="name" /> | 
-						                    <span tal:replace="python:item.date_creation.strftime('%d/%m/%Y')" />
+										<h4>
+											<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${prefs_user/username|nothing}">
+												<span tal:replace="name" /> | 
+						                    	<span tal:replace="python:item.date_creation.strftime('%d/%m/%Y')" />
+											</a>
 										</h4>
 					                </div>
 									<div id="like">
