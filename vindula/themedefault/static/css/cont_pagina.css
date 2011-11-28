@@ -417,8 +417,25 @@
 	margin:20px 0 0 0;
 }
 
+.geral_lista_comentarios .comment {
+	border-top: 1px dashed #F58220 !important;
+	padding-top: 10px !important;
+}
+
+.geral_lista_comentarios .comments-cont .comments-cont .comment {
+	border-top: none !important;
+}
+
+.geral_lista_comentarios div#like span,
+.geral_lista_comentarios span#number-comments {
+	color: #000000 !important;
+}
+
+.geral_lista_comentarios .comments-cont .comments-cont {
+	 padding: 1px 25px 0 0 !important;
+}
+
 .item_lista{
-    border-bottom: 1px dashed #959595;
     margin: 0 0 15px;
     padding: 0 0 15px;
 }
