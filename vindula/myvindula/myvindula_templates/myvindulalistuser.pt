@@ -15,6 +15,9 @@
 											   logado python:str(member)!='Anonymous User';
 											   form_data view/load_list | python:{};
 											   user form_data/username|nothing">
+											   
+		<link rel="stylesheet" type="text/css" href="/++resource++vindula.myvindula/myvindula_comments.css" />
+		
     	<tal:cont tal:condition="form_data">
 	    	<tal:cond tal:condition="python: str(member)==form_data.username">
 	    		<input id="user-igual" type="hidden" value="True">
@@ -91,7 +94,7 @@
 			</div>
 
 			<!-- Meus Pensamentos -->
-			<div id="howareu" class="userpage">
+			<div id="howareu" class="userpage geral_lista_comentarios">
 				<h2 class="h2title">Em que estou pensando agora!</h2>
 				<tal:def define="items python: view.get_howareu(user)">
 					<tal:rep tal:repeat="item items">
@@ -121,7 +124,7 @@
 	
 							</div>
 							
-			                <div class="commentBody">
+			                <div class="comment-body">
 			                    <p tal:replace="item/text|nothing" />
 					  		</div>
 							<!-- campos input necessario para a criação de comentariso -->
