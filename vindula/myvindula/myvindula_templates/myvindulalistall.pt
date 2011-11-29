@@ -19,7 +19,7 @@
 
             <a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${item/username}">
 
-              <img tal:define="photo item/photograph|nothing; img python:view_listuser.getPhoto(photo) or '/defaultUser.png'" 
+              <img tal:define="photo item/username|nothing; img python:view_listuser.getPhoto(photo)" 
                  tal:condition="img"
                  tal:attributes="src img">
               <br />
