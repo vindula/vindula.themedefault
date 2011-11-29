@@ -58,7 +58,7 @@
 				<!-- start: Personal Information -->
 				<div id="personal">
 					<div id="photo">    
-			            <img tal:define="photo form_data/photograph|nothing; img python:view.getPhoto(photo) or '/defaultUser.png'" 
+			            <img tal:define="photo form_data/username|nothing; img python:view.getPhoto(photo)" 
 			                 tal:condition="img"
 			                tal:attributes="src img">
 					</div>
