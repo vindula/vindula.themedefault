@@ -308,11 +308,45 @@ class ModelsMyvindulaHowareu(Storm, BaseStore):
                 visible_area = unicode(kwargs.get('visible_area',''), 'utf-8')
             data = self.store.find(ModelsMyvindulaHowareu, ModelsMyvindulaHowareu.visible_area==visible_area)
         
-        
-        if data:
+        if data.count() > 0:
             return data
         else:
-            return None                             
+            return None    
+        
+class ModelsMyvindulaRecados(Storm, BaseStore):
+    __storm_table__ = 'vin_myvindula_recados'
+    
+    _name_class = "ModelsMyvindulaRecados" 
+    
+    id = Int(primary=True)
+    username = Unicode()
+    date_creation = DateTime()
+    destination = Unicode()
+    text = Unicode()
+        
+    def set_myvindula_recados(self,**kwargs):
+        D={}
+        D['username'] = unicode(kwargs.get('username',''), 'utf-8')
+        D['destination'] = unicode(kwargs.get('destination',''), 'utf-8')
+        D['text'] = unicode(kwargs.get('text',''), 'utf-8')
+        
+        # adicionando...
+        recados = ModelsMyvindulaRecados(**D)
+        self.store.add(recados)
+        self.store.flush()
+    
+    def get_myvindula_recados(self,**kwargs):
+        if kwargs.get('destination',None):
+            user = kwargs.get('destination','')
+            if type(user) != unicode:
+                user = unicode(kwargs.get('destination',''), 'utf-8')
+            data = self.store.find(ModelsMyvindulaRecados, ModelsMyvindulaRecados.destination==user)
+        
+        if data.count() > 0:
+            return data
+        else:
+            return None            
+                                  
 
 class ModelsMyvindulaComments(Storm, BaseStore):
     __storm_table__ = 'vin_myvindula_comments'
@@ -349,7 +383,7 @@ class ModelsMyvindulaComments(Storm, BaseStore):
             type_obj = unicode(type_obj)
         data = self.store.find(ModelsMyvindulaComments, ModelsMyvindulaComments.id_obj==id_obj,ModelsMyvindulaComments.type==type_obj)
 
-        if data.count > 0:
+        if data.count() > 0:
             return data
         else:
             return None   

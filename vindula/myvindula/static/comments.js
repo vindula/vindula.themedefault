@@ -9,17 +9,18 @@ $j(document).ready(function(){
 	var user = $j('#user-igual').val();
 	if (user == 'True'){
 		$j('div#howareu').addClass('display-none');
+		$j('div#recados').addClass('display-none');
 		$j('div#perfil').removeClass('display-none');
 	} else{
 		$j('div#perfil').addClass('display-none');
 		$j('div#howareu').removeClass('display-none');
+		$j('div#recadosu').removeClass('display-none');
 	};
 	
 	
-	$j('div#perfil').add
-	
 	$j('a#howareu').click(function(){
 		$j('div#howareu').removeClass('display-none');
+		$j('div#recados').removeClass('display-none');
 		$j('div#perfil').addClass('display-none');
 		
 		
@@ -30,6 +31,7 @@ $j(document).ready(function(){
 	
 	$j('a#perfil').click(function(){
 		$j('div#howareu').addClass('display-none');
+		$j('div#recados').addClass('display-none');
 		$j('div#perfil').removeClass('display-none');
 		
 		$j('li#perfil').addClass('selected');

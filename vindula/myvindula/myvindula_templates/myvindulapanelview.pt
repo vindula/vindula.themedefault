@@ -60,7 +60,20 @@
                         Editar Perfil
                     </a>
                 </li>
-				
+				<tal:cond define="enable context/@@myvindulapanel/check_recados;"
+						  condition="enable">
+					<li id="contentview-user_data-personal-preferences"
+	                    tal:define="link context/@@myvindulapanel/getPersonalPrefsLink;
+	                                selected python:view_name=='myvindulalistrecados';"
+	                    tal:condition="link|nothing"
+	                    tal:attributes="class python:selected and 'selected' or 'plain'">
+	                    <a href=""
+	                       tal:attributes="href string:${context/portal_url}/@@myvindulalistrecados"
+	                       i18n:translate="">
+	                        Recados para Você
+	                    </a>
+	                </li>	
+				</tal:cond>
 				<!--li id="contentview-user_data-personal-data"
                     tal:define="member python:context.portal_membership.getAuthenticatedMember();
 					link context/@@myvindulapanel/getPersonalPrefsLink;

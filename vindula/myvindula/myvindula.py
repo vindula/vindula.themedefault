@@ -26,7 +26,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, ModelsDepartment, ModelsFuncDetails,\
                                    ImportUser, ModelsMyvindulaHowareu, ModelsMyvindulaComments, ModelsMyvindulaLike,\
                                    ManageCourses, ManageLanguages, ModelsMyvindulaFuncdetailCouses,ModelsMyvindulaCourses,\
-                                   ModelsMyvindulaFuncdetailLanguages, ModelsMyvindulaLanguages
+                                   ModelsMyvindulaFuncdetailLanguages, ModelsMyvindulaLanguages, ModelsMyvindulaRecados
                                    
 
 
@@ -112,6 +112,18 @@ class MyVindulaPanelView(grok.View):
         if self._checkPermission('Set own properties', context):
             template = '@@myvindulapanel?section=myvindulaprefs'
         return template
+    
+    def check_recados(self):
+        if 'control-panel-objects' in getSite().keys():
+            control = getSite()['control-panel-objects']
+            if 'vindula_vindularecadosconfig' in control.keys():
+                config = control['vindula_vindularecadosconfig']
+                return config.ativa_recados
+            else:
+                return False
+          
+        else:
+            return False
 
 
 class MyVindulaConfgsView(grok.View, BaseFunc):
@@ -192,6 +204,19 @@ class MyVindulaListUser(grok.View):
     grok.name('myvindulalistuser')
     
     
+    def check_recados(self):
+        if 'control-panel-objects' in getSite().keys():
+            control = getSite()['control-panel-objects']
+            if 'vindula_vindularecadosconfig' in control.keys():
+                config = control['vindula_vindularecadosconfig']
+                return config.ativa_recados
+            else:
+                return False
+          
+        else:
+            return False
+    
+    
     def get_howareu(self, user):
         member =  self.context.restrictedTraverse('@@plone_portal_state').member().getId();
         user = self.request.form.get('user',str(member))
@@ -199,11 +224,25 @@ class MyVindulaListUser(grok.View):
         D['username'] = user
         return ModelsMyvindulaHowareu().get_myvindula_howareu(**D)
     
+    
+    def get_recados(self, user):
+        D={}
+        D['destination'] = user
+        return ModelsMyvindulaRecados().get_myvindula_recados(**D)
+    
     def load_list(self):
         #vars = BaseFunc().getParametersFromURL(self)
         member =  self.context.restrictedTraverse('@@plone_portal_state').member().getId();
         user = self.request.form.get('user',str(member))
         return ModelsFuncDetails().get_FuncDetails(unicode(user, 'utf-8'))
+
+    def update(self):
+        form = self.request.form
+        submitted = form.get('form.submitted', False)
+           
+        if submitted:
+            return  ModelsMyvindulaRecados().set_myvindula_recados(**form)      
+
         
     def get_prefs_user(self, user):
         try:
@@ -225,13 +264,7 @@ class MyVindulaListUser(grok.View):
                 return self.context.absolute_url()+'/defaultUser.png'
         else:
             return self.context.absolute_url()+'/defaultUser.png'
-        
-        
-#        if photo is not None and not ' ' in photo and not photo == '':
-#                #return self.context.absolute_url()+'/'+photo
-#                return BaseFunc().get_imageVindulaUser(photo)
-#        else:
-#                return self.context.absolute_url()+'/'+'defaultUser.png'
+
 
     def get_department(self, user):
         try:
@@ -271,6 +304,39 @@ class MyVindulaListUser(grok.View):
             user_id = user
 
         return ModelsDepartment().get_departmentByUsername(user)     
+
+class MyVindulaListRecados(grok.View):
+    grok.context(ISiteRoot)
+    grok.require('zope2.View')
+    grok.name('myvindulalistrecados')
+
+    def get_recados(self, user):
+        D={}
+        D['destination'] = user
+        return ModelsMyvindulaRecados().get_myvindula_recados(**D)
+
+       
+    def get_prefs_user(self, user):
+        try:
+            user_id = unicode(user, 'utf-8')    
+        except:
+            user_id = user 
+
+        return ModelsFuncDetails().get_FuncDetails(user_id)
+
+    def getPhoto(self,photo):
+        prefs_user = self.get_prefs_user(photo)
+        if prefs_user:
+            if prefs_user.photograph is not None and \
+                not ' ' in prefs_user.photograph  and \
+                not prefs_user.photograph == '':
+                return BaseFunc().get_imageVindulaUser(prefs_user.photograph)
+                #return self.context.absolute_url()+'/'+prefs_user.photograph # + '/image_thumb'
+            else:
+                return self.context.absolute_url()+'/defaultUser.png'
+        else:
+            return self.context.absolute_url()+'/defaultUser.png'
+
 
 
 class MyVindulalistAll(grok.View):

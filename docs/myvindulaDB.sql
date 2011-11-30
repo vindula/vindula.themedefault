@@ -1,273 +1,309 @@
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+-- MySQL dump 10.13  Distrib 5.1.41, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: myvindulaDB
+-- ------------------------------------------------------
+-- Server version	5.1.41-3ubuntu12.10
 
-CREATE SCHEMA IF NOT EXISTS `myvindulaDB` DEFAULT CHARACTER SET latin1 ;
-USE `myvindulaDB` ;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- -----------------------------------------------------
--- Table `myvindulaDB`.`vin_myvindula_department`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `myvindulaDB`.`vin_myvindula_department` ;
+--
+-- Current Database: `myvindulaDB`
+--
 
-CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_department` (
-  `uid_plone` VARCHAR(45) NOT NULL ,
-  `vin_myvindula_funcdetails_id` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`uid_plone`, `vin_myvindula_funcdetails_id`) )
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = latin1;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `myvindulaDB` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
+USE `myvindulaDB`;
 
--- -----------------------------------------------------
--- Table `myvindulaDB`.`vin_myvindula_funcdetails`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `myvindulaDB`.`vin_myvindula_funcdetails` ;
+--
+-- Table structure for table `vin_food_restaurant`
+--
 
-CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_funcdetails` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NULL DEFAULT NULL ,
-  `phone_number` VARCHAR(45) NULL DEFAULT NULL ,
-  `cell_phone` VARCHAR(45) NULL DEFAULT NULL ,
-  `email` VARCHAR(45) NULL DEFAULT NULL ,
-  `employee_id` VARCHAR(45) NULL DEFAULT NULL ,
-  `username` VARCHAR(45) NULL DEFAULT NULL ,
-  `date_birth` DATE NULL DEFAULT NULL ,
-  `registration` VARCHAR(45) NULL DEFAULT NULL ,
-  `position` VARCHAR(45) NULL DEFAULT NULL ,
-  `enterprise` VARCHAR(45) NULL DEFAULT NULL ,
-  `cost_center` VARCHAR(45) NULL DEFAULT NULL ,
-  `admission_date` DATE NULL DEFAULT NULL ,
-  `job_role` VARCHAR(45) NULL DEFAULT NULL ,
-  `organisational_unit` VARCHAR(45) NULL DEFAULT NULL ,
-  `reports_to` VARCHAR(45) NULL DEFAULT NULL ,
-  `location` VARCHAR(45) NULL DEFAULT NULL ,
-  `postal_address` VARCHAR(45) NULL DEFAULT NULL ,
-  `special_roles` VARCHAR(45) NULL DEFAULT NULL ,
-  `photograph` TEXT NULL DEFAULT NULL ,
-  `nickname` VARCHAR(45) NULL DEFAULT NULL ,
-  `pronunciation_name` VARCHAR(45) NULL DEFAULT NULL ,
-  `committess` VARCHAR(45) NULL DEFAULT NULL ,
-  `projetcs` VARCHAR(45) NULL DEFAULT NULL ,
-  `personal_information` VARCHAR(45) NULL DEFAULT NULL ,
-  `license_plate_numbers` VARCHAR(45) NULL DEFAULT NULL ,
-  `profit_centre` VARCHAR(45) NULL DEFAULT NULL ,
-  `availability` VARCHAR(45) NULL DEFAULT NULL ,
-  `papers_published` VARCHAR(45) NULL DEFAULT NULL ,
-  `teaching_research` VARCHAR(45) NULL DEFAULT NULL ,
-  `delegations` VARCHAR(45) NULL DEFAULT NULL ,
-  `resume` VARCHAR(45) NULL DEFAULT NULL ,
-  `blogs` VARCHAR(45) NULL DEFAULT NULL ,
-  `customised_message` TEXT NULL DEFAULT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
+DROP TABLE IF EXISTS `vin_food_restaurant`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vin_food_restaurant` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
+  `phone_number` varchar(45) DEFAULT NULL,
+  `delivery` tinyint(1) DEFAULT NULL,
+  `opening_hours` varchar(45) DEFAULT NULL,
+  `vin_food_specialty_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_vin_food_restaurant_vin_food_specialty1` (`vin_food_specialty_id`),
+  CONSTRAINT `fk_vin_food_restaurant_vin_food_specialty1` FOREIGN KEY (`vin_food_specialty_id`) REFERENCES `vin_food_specialty` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `vin_food_specialty`
+--
 
--- -----------------------------------------------------
--- Table `myvindulaDB`.`vin_myvindula_confgfuncdetails`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `myvindulaDB`.`vin_myvindula_confgfuncdetails` ;
+DROP TABLE IF EXISTS `vin_food_specialty`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vin_food_specialty` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_confgfuncdetails` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` TINYINT(1)  NULL DEFAULT FALSE ,
-  `phone_number` TINYINT(1)  NULL DEFAULT FALSE ,
-  `cell_phone` TINYINT(1)  NULL DEFAULT FALSE ,
-  `email` TINYINT(1)  NULL DEFAULT FALSE ,
-  `employee_id` TINYINT(1)  NULL DEFAULT FALSE ,
-  `date_birth` TINYINT(1)  NULL DEFAULT FALSE ,
-  `registration` TINYINT(1)  NULL DEFAULT FALSE ,
-  `enterprise` TINYINT(1)  NULL DEFAULT FALSE ,
-  `position` TINYINT(1)  NULL DEFAULT FALSE ,
-  `admission_date` TINYINT(1)  NULL DEFAULT FALSE ,
-  `cost_center` TINYINT(1)  NULL DEFAULT FALSE ,
-  `job_role` TINYINT(1)  NULL DEFAULT FALSE ,
-  `organisational_unit` TINYINT(1)  NULL DEFAULT FALSE ,
-  `reports_to` TINYINT(1)  NULL DEFAULT FALSE ,
-  `location` TINYINT(1)  NULL DEFAULT FALSE ,
-  `postal_address` TINYINT(1)  NULL DEFAULT FALSE ,
-  `special_roles` TINYINT(1)  NULL DEFAULT FALSE ,
-  `photograph` TINYINT(1)  NULL DEFAULT FALSE ,
-  `nickname` TINYINT(1)  NULL DEFAULT FALSE ,
-  `pronunciation_name` TINYINT(1)  NULL DEFAULT FALSE ,
-  `committess` TINYINT(1)  NULL DEFAULT FALSE ,
-  `projetcs` TINYINT(1)  NULL DEFAULT FALSE ,
-  `personal_information` TINYINT(1)  NULL DEFAULT FALSE ,
-  `skills_expertise` TINYINT(1)  NULL DEFAULT FALSE ,
-  `license_plate_numbers` TINYINT(1)  NULL DEFAULT FALSE ,
-  `profit_centre` TINYINT(1)  NULL DEFAULT FALSE ,
-  `languages` TINYINT(1)  NULL DEFAULT FALSE ,
-  `availability` TINYINT(1)  NULL DEFAULT FALSE ,
-  `papers_published` TINYINT(1)  NULL DEFAULT FALSE ,
-  `teaching_research` TINYINT(1)  NULL DEFAULT FALSE ,
-  `delegations` TINYINT(1)  NULL DEFAULT FALSE ,
-  `resume` TINYINT(1)  NULL DEFAULT FALSE ,
-  `blogs` TINYINT(1)  NULL DEFAULT FALSE ,
-  `customised_message` TINYINT(1)  NULL DEFAULT FALSE ,
-  `vin_myvindula_department` TINYINT(1)  NULL DEFAULT FALSE ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
+--
+-- Table structure for table `vin_myvindula_comments`
+--
 
+DROP TABLE IF EXISTS `vin_myvindula_comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vin_myvindula_comments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) NOT NULL,
+  `date_creation` datetime NOT NULL,
+  `type` varchar(45) DEFAULT NULL,
+  `id_obj` varchar(45) DEFAULT NULL,
+  `isPlone` tinyint(1) NOT NULL DEFAULT '0',
+  `text` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- -----------------------------------------------------
--- Table `myvindulaDB`.`vin_myvindula_howareu`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `myvindulaDB`.`vin_myvindula_howareu` ;
+--
+-- Table structure for table `vin_myvindula_confgfuncdetails`
+--
 
-CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_howareu` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `username` VARCHAR(45) NOT NULL ,
-  `date_creation` DATETIME NOT NULL ,
-  `visible_area` VARCHAR(45) NULL DEFAULT NULL ,
-  `text` TEXT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-AUTO_INCREMENT = 0
-DEFAULT CHARACTER SET = latin1;
+DROP TABLE IF EXISTS `vin_myvindula_confgfuncdetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vin_myvindula_confgfuncdetails` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` tinyint(1) DEFAULT '0',
+  `phone_number` tinyint(1) DEFAULT '0',
+  `cell_phone` tinyint(1) DEFAULT '0',
+  `email` tinyint(1) DEFAULT '0',
+  `employee_id` tinyint(1) DEFAULT '0',
+  `date_birth` tinyint(1) DEFAULT '0',
+  `registration` tinyint(1) DEFAULT '0',
+  `enterprise` tinyint(1) DEFAULT '0',
+  `position` tinyint(1) DEFAULT '0',
+  `admission_date` tinyint(1) DEFAULT '0',
+  `cost_center` tinyint(1) DEFAULT '0',
+  `job_role` tinyint(1) DEFAULT '0',
+  `organisational_unit` tinyint(1) DEFAULT '0',
+  `reports_to` tinyint(1) DEFAULT '0',
+  `location` tinyint(1) DEFAULT '0',
+  `postal_address` tinyint(1) DEFAULT '0',
+  `special_roles` tinyint(1) DEFAULT '0',
+  `photograph` tinyint(1) DEFAULT '0',
+  `nickname` tinyint(1) DEFAULT '0',
+  `pronunciation_name` tinyint(1) DEFAULT '0',
+  `committess` tinyint(1) DEFAULT '0',
+  `projetcs` tinyint(1) DEFAULT '0',
+  `personal_information` tinyint(1) DEFAULT '0',
+  `skills_expertise` tinyint(1) DEFAULT '0',
+  `license_plate_numbers` tinyint(1) DEFAULT '0',
+  `profit_centre` tinyint(1) DEFAULT '0',
+  `languages` tinyint(1) DEFAULT '0',
+  `availability` tinyint(1) DEFAULT '0',
+  `papers_published` tinyint(1) DEFAULT '0',
+  `teaching_research` tinyint(1) DEFAULT '0',
+  `delegations` tinyint(1) DEFAULT '0',
+  `resume` tinyint(1) DEFAULT '0',
+  `blogs` tinyint(1) DEFAULT '0',
+  `customised_message` tinyint(1) DEFAULT '0',
+  `vin_myvindula_department` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `vin_myvindula_courses`
+--
 
--- -----------------------------------------------------
--- Table `myvindulaDB`.`vin_myvindula_comments`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `myvindulaDB`.`vin_myvindula_comments` ;
+DROP TABLE IF EXISTS `vin_myvindula_courses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vin_myvindula_courses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(45) NOT NULL,
+  `length` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_comments` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `username` VARCHAR(45) NOT NULL ,
-  `date_creation` DATETIME NOT NULL ,
-  `type` VARCHAR(45) NULL DEFAULT NULL ,
-  `id_obj` VARCHAR(45) NULL DEFAULT NULL ,
-  `isPlone` TINYINT(1)  NOT NULL DEFAULT FALSE ,
-  `text` TEXT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-AUTO_INCREMENT = 0
-DEFAULT CHARACTER SET = latin1;
+--
+-- Table structure for table `vin_myvindula_department`
+--
 
+DROP TABLE IF EXISTS `vin_myvindula_department`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vin_myvindula_department` (
+  `uid_plone` varchar(45) NOT NULL,
+  `vin_myvindula_funcdetails_id` varchar(45) NOT NULL,
+  PRIMARY KEY (`uid_plone`,`vin_myvindula_funcdetails_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- -----------------------------------------------------
--- Table `myvindulaDB`.`vin_myvindula_like`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `myvindulaDB`.`vin_myvindula_like` ;
+--
+-- Table structure for table `vin_myvindula_funcdetail_couses`
+--
 
-CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_like` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `username` VARCHAR(45) NOT NULL ,
-  `date_creation` DATETIME NOT NULL ,
-  `type` VARCHAR(45) NULL DEFAULT NULL ,
-  `id_obj` VARCHAR(45) NULL DEFAULT NULL ,
-  `isPlone` TINYINT(1)  NOT NULL DEFAULT False ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-AUTO_INCREMENT = 0
-DEFAULT CHARACTER SET = latin1;
+DROP TABLE IF EXISTS `vin_myvindula_funcdetail_couses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vin_myvindula_funcdetail_couses` (
+  `vin_myvindula_courses_id` int(11) NOT NULL,
+  `vin_myvindula_funcdetail_username` varchar(45) NOT NULL,
+  PRIMARY KEY (`vin_myvindula_courses_id`,`vin_myvindula_funcdetail_username`),
+  KEY `fk_vin_myvindula_funcdetail_couses_vin_myvindula_courses1` (`vin_myvindula_courses_id`),
+  CONSTRAINT `fk_vin_myvindula_funcdetail_couses_vin_myvindula_courses1` FOREIGN KEY (`vin_myvindula_courses_id`) REFERENCES `vin_myvindula_courses` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `vin_myvindula_funcdetail_languages`
+--
 
--- -----------------------------------------------------
--- Table `myvindulaDB`.`vin_myvindula_courses`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `myvindulaDB`.`vin_myvindula_courses` ;
+DROP TABLE IF EXISTS `vin_myvindula_funcdetail_languages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vin_myvindula_funcdetail_languages` (
+  `vin_myvindula_languages_id` int(11) NOT NULL,
+  `vin_myvindula_funcdetail_username` varchar(45) NOT NULL,
+  PRIMARY KEY (`vin_myvindula_languages_id`,`vin_myvindula_funcdetail_username`),
+  KEY `fk_vin_myvindula_funcdetail_languages_vin_myvindula_languages1` (`vin_myvindula_languages_id`),
+  CONSTRAINT `fk_vin_myvindula_funcdetail_languages_vin_myvindula_languages1` FOREIGN KEY (`vin_myvindula_languages_id`) REFERENCES `vin_myvindula_languages` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_courses` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `title` VARCHAR(45) NOT NULL ,
-  `length` VARCHAR(45) NULL DEFAULT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = latin1;
+--
+-- Table structure for table `vin_myvindula_funcdetails`
+--
 
+DROP TABLE IF EXISTS `vin_myvindula_funcdetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vin_myvindula_funcdetails` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `phone_number` varchar(45) DEFAULT NULL,
+  `cell_phone` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `employee_id` varchar(45) DEFAULT NULL,
+  `username` varchar(45) DEFAULT NULL,
+  `date_birth` date DEFAULT NULL,
+  `registration` varchar(45) DEFAULT NULL,
+  `position` varchar(45) DEFAULT NULL,
+  `enterprise` varchar(45) DEFAULT NULL,
+  `cost_center` varchar(45) DEFAULT NULL,
+  `admission_date` date DEFAULT NULL,
+  `organisational_unit` varchar(45) DEFAULT NULL,
+  `reports_to` varchar(45) DEFAULT NULL,
+  `location` varchar(45) DEFAULT NULL,
+  `postal_address` varchar(45) DEFAULT NULL,
+  `special_roles` varchar(45) DEFAULT NULL,
+  `photograph` text,
+  `nickname` varchar(45) DEFAULT NULL,
+  `pronunciation_name` varchar(45) DEFAULT NULL,
+  `committess` varchar(45) DEFAULT NULL,
+  `projetcs` varchar(45) DEFAULT NULL,
+  `personal_information` varchar(45) DEFAULT NULL,
+  `profit_centre` varchar(45) DEFAULT NULL,
+  `availability` varchar(45) DEFAULT NULL,
+  `papers_published` varchar(45) DEFAULT NULL,
+  `teaching_research` varchar(45) DEFAULT NULL,
+  `delegations` varchar(45) DEFAULT NULL,
+  `resume` varchar(45) DEFAULT NULL,
+  `blogs` varchar(45) DEFAULT NULL,
+  `customised_message` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- -----------------------------------------------------
--- Table `myvindulaDB`.`vin_myvindula_languages`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `myvindulaDB`.`vin_myvindula_languages` ;
+--
+-- Table structure for table `vin_myvindula_howareu`
+--
 
-CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_languages` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `title` VARCHAR(45) NOT NULL ,
-  `level` VARCHAR(45) NULL DEFAULT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = latin1;
+DROP TABLE IF EXISTS `vin_myvindula_howareu`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vin_myvindula_howareu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) NOT NULL,
+  `date_creation` datetime NOT NULL,
+  `visible_area` varchar(45) DEFAULT NULL,
+  `text` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `vin_myvindula_languages`
+--
 
--- -----------------------------------------------------
--- Table `myvindulaDB`.`vin_myvindula_funcdetail_couses`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `myvindulaDB`.`vin_myvindula_funcdetail_couses` ;
+DROP TABLE IF EXISTS `vin_myvindula_languages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vin_myvindula_languages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(45) NOT NULL,
+  `level` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_funcdetail_couses` (
-  `vin_myvindula_courses_id` INT NOT NULL ,
-  `vin_myvindula_funcdetail_username` VARCHAR(45) NOT NULL ,
-  INDEX `fk_vin_myvindula_funcdetail_couses_vin_myvindula_courses1` (`vin_myvindula_courses_id` ASC) ,
-  PRIMARY KEY (`vin_myvindula_courses_id`, `vin_myvindula_funcdetail_username`) ,
-  CONSTRAINT `fk_vin_myvindula_funcdetail_couses_vin_myvindula_courses1`
-    FOREIGN KEY (`vin_myvindula_courses_id` )
-    REFERENCES `myvindulaDB`.`vin_myvindula_courses` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
+--
+-- Table structure for table `vin_myvindula_like`
+--
 
+DROP TABLE IF EXISTS `vin_myvindula_like`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vin_myvindula_like` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) NOT NULL,
+  `date_creation` datetime NOT NULL,
+  `type` varchar(45) DEFAULT NULL,
+  `id_obj` varchar(45) DEFAULT NULL,
+  `isPlone` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- -----------------------------------------------------
--- Table `myvindulaDB`.`vin_myvindula_funcdetail_languages`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `myvindulaDB`.`vin_myvindula_funcdetail_languages` ;
+--
+-- Table structure for table `vin_myvindula_recados`
+--
 
-CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_funcdetail_languages` (
-  `vin_myvindula_languages_id` INT NOT NULL ,
-  `vin_myvindula_funcdetail_username` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`vin_myvindula_languages_id`, `vin_myvindula_funcdetail_username`) ,
-  INDEX `fk_vin_myvindula_funcdetail_languages_vin_myvindula_languages1` (`vin_myvindula_languages_id` ASC) ,
-  CONSTRAINT `fk_vin_myvindula_funcdetail_languages_vin_myvindula_languages1`
-    FOREIGN KEY (`vin_myvindula_languages_id` )
-    REFERENCES `myvindulaDB`.`vin_myvindula_languages` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
+DROP TABLE IF EXISTS `vin_myvindula_recados`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vin_myvindula_recados` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) NOT NULL,
+  `date_creation` datetime NOT NULL,
+  `destination` varchar(45) NOT NULL,
+  `text` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
--- -----------------------------------------------------
--- Table `myvindulaDB`.`vin_food_specialty`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `myvindulaDB`.`vin_food_specialty` ;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_food_specialty` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
--- Table `myvindulaDB`.`vin_food_restaurant`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `myvindulaDB`.`vin_food_restaurant` ;
-
-CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_food_restaurant` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NULL ,
-  `address` VARCHAR(100) NULL ,
-  `phone_number` VARCHAR(45) NULL ,
-  `delivery` TINYINT(1)  NULL ,
-  `opening_hours` VARCHAR(45) NULL ,
-  `vin_food_specialty_id` INT NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX `fk_vin_food_restaurant_vin_food_specialty1` (`vin_food_specialty_id` ASC) ,
-  CONSTRAINT `fk_vin_food_restaurant_vin_food_specialty1`
-    FOREIGN KEY (`vin_food_specialty_id` )
-    REFERENCES `myvindulaDB`.`vin_food_specialty` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+-- Dump completed on 2011-11-30 10:53:41

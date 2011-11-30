@@ -1,7 +1,7 @@
 <metal:macro define-macro="comments">
 	<tal:def define="view_comments python:context.restrictedTraverse('@@myvindula-comments')">
 		<div class="comments-cont" tal:define="comments python:view_comments.get_comments(item.id, item._name_class)"
-								   tal:condition="python: comments.count() > 0">
+								   tal:condition="comments">
 								  
 			<tal:rep repeat="item comments">
 				<div class="comment item_lista" tal:define="user_comment python: view_comments.get_prefs_user(item.username);">
