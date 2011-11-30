@@ -1,34 +1,23 @@
 <html>
 	<body metal:use-macro="here/main_template/macros/master">
-
-	<!--metal:block fill-slot="top_slot">
-          <tal:dummy tal:define="dummy python:request.set('disable_border',1)" />
-	</metal:block-->
-
-      <div metal:fill-slot="content" tal:define="member python:context.portal_membership.getAuthenticatedMember();	                             form_data view/load_list | python:{};
+      <div metal:fill-slot="content" tal:define="member python:context.portal_membership.getAuthenticatedMember();
+	  											 form_data view/load_list | python:{};
                            					     view_listuser python: context.restrictedTraverse('@@myvindulalistuser')">
                         
-        <!--tal:cond tal:condition="python: str(member)!='Anonymous User'">
-         	<metal:use use-macro="context/@@myvindulapanel/macros/page"/>                
-        </tal:cond-->            
-
-        <div id="content" >
-          <div id="interna" class="userlist">
-              <h2 class="h2title">Usu&aacute;rios do portal</h2>
-          <div class="user" tal:repeat="item form_data">
-
-            <a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${item/username}">
-
-              <img tal:define="photo item/username|nothing; img python:view_listuser.getPhoto(photo)" 
-                 tal:condition="img"
-                 tal:attributes="src img">
-              <br />
-              <span tal:content="item/name|nothing"></span>
-            </a>
-          </div>
-        </div>
-        </div>
+		<div id="content" >
+        	<div id="interna" class="userlist">
+            	<h2 class="h2title">Usu&aacute;rios do portal</h2>
+          		<div class="user" tal:repeat="item form_data">
+		            <a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${item/username}">
+		              <img tal:define="photo item/username|nothing; img python:view_listuser.getPhoto(photo)" 
+		                 tal:condition="img"
+		                 tal:attributes="src img">
+		              <br />
+		              <span tal:content="item/name|nothing"></span>
+		            </a>
+          		</div>
+        	</div>
+		</div>
       </div>    
   </body>
-
 </html>

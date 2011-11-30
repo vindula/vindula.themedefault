@@ -8,44 +8,61 @@ $j(document).ready(function(){
 	
 	var user = $j('#user-igual').val();
 	if (user == 'True'){
-		$j('div#howareu').addClass('display-none');
-		$j('div#recados').addClass('display-none');
-		$j('div#perfil').removeClass('display-none');
+		$j('div#howareu').hide();
+		$j('div#recados').hide();
+		$j('div#perfil').show();
 	} else{
-		$j('div#perfil').addClass('display-none');
-		$j('div#howareu').removeClass('display-none');
-		$j('div#recadosu').removeClass('display-none');
+		$j('div#perfil').hide();
+		$j('div#howareu').show();
+		$j('div#recados').hide();
 	};
 	
 	
 	$j('a#howareu').click(function(){
-		$j('div#howareu').removeClass('display-none');
-		$j('div#recados').removeClass('display-none');
-		$j('div#perfil').addClass('display-none');
-		
+		$j('div#howareu').show();
+		$j('div#recados').hide();
+		$j('div#perfil').hide();
 		
 		$j('li#howareu').addClass('selected');
+		$j('li#scraps').removeClass('selected');
 		$j('li#perfil').removeClass('selected');
-		
 	});
+	
+	
+	$j('a#scraps').click(function(){
+		$j('div#howareu').hide();
+		$j('div#recados').show();
+		$j('div#perfil').hide();
+		
+		$j('li#howareu').removeClass('selected');
+		$j('li#scraps').addClass('selected');
+		$j('li#perfil').removeClass('selected');
+	});
+	
 	
 	$j('a#perfil').click(function(){
-		$j('div#howareu').addClass('display-none');
-		$j('div#recados').addClass('display-none');
-		$j('div#perfil').removeClass('display-none');
+		$j('div#howareu').hide();
+		$j('div#recados').hide();
+		$j('div#perfil').show();
 		
-		$j('li#perfil').addClass('selected');
 		$j('li#howareu').removeClass('selected');
+		$j('li#scraps').removeClass('selected');
+		$j('li#perfil').addClass('selected');
 	});
-	
+
 	
 	$j('div.geral_lista_comentarios span#number-comments').click(function() {
 		var comments = $j(this).parent().parent().find('.comments-cont');
+		var text = $j('div.geral_lista_comentarios span#show-hide');
 		
-		if (comments.css('display') == 'none') 
+		if (comments.css('display') == 'none') {
 			comments.show();
-		else 
+			text.text(' Ocultar');
+		}
+		else {
 			comments.hide();
+			text.text(' Ver');
+		}
 	})
 				
 });	

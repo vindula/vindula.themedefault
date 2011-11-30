@@ -16,7 +16,7 @@
 					<div class="documentByLine name-user">
 						<h4><a href="" tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${user_comment/username|nothing}">
 								<span tal:replace="user_comment/name|nothing" /> |	 
-		                    	<span tal:replace="python:item.date_creation.strftime('%d/%m/%Y')" />
+		                    	<span tal:replace="python:item.date_creation.strftime('%d/%m/%Y  %H:%M')" />
 							</a>
 						</h4>
 		            </div>

@@ -5,38 +5,35 @@
 </metal:block>
     
     <div metal:fill-slot="content" tal:define="member python:context.portal_membership.getAuthenticatedMember();
-									  		   form_data view/load_list | python:{};">
-									  	
-    	<tal:cond tal:condition="python: str(member)!='Anonymous User'">
-				<metal:use use-macro="context/@@myvindulapanel/macros/page"/>                
-	    </tal:cond>            
+									  		   form_data view/load_list | python:{}">
+									  	          
 	    <div id="content" >
-	        <h1 tal:content="string:Lista dos aniversariantes do ${view/nome_filtro|nothing}">
-	        	  Personal Information</h1>
-			<br />
-			<div id="interna" >
-				<table>
+	    	<h2 class="h2title" tal:content="string:Lista dos Aniversariantes do ${view/nome_filtro|nothing}">
+	    		Usu&aacute;rios do portal
+			</h2>
+
+			<div id="interna" class="userpage">
+				<table id="birthdays">
 					<tr>
-						<td>Nome do Funcion&aacute;rio</td>
-						<td>Departamento</td>
-						<td>Data de Anivers&aacute;rio</td>
+						<td class="value">Nome do Colaborador</td>
+						<td class="value">Departamento</td>
+						<td class="value">Data de Anivers&aacute;rio</td>
 					</tr>
 					<tal:rep repeat="item form_data">
 						<tr>
-							<td>
+							<td class="field">
 								<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${item/username}"
-								   tal:content="item/name|nothing"></a>			
+								   tal:content="item/name|nothing">Name</a>			
 							</td>
-							<td>
-								<tal:def define="user item/username;
-												 departamentos python: view.get_department(user)">
+							<td class="field">
+								<tal:def define="user item/username; departamentos python: view.get_department(user)">
 					        		<tal:rep repeat="departamento departamentos">
-					        			<span tal:content="departamento/Title">Departamento</span> |
+					        			<span tal:content="departamento/Title">Department</span> |
 					        		</tal:rep>
 					        	</tal:def>
 							</td>
-							<td>
-								<span tal:content="item/date_birth|nothing"></span>
+							<td class="field">
+								<span tal:content="item/date_birth|nothing">Date</span>
 							</td>
 						</tr>
 					</tal:rep>	

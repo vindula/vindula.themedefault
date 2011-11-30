@@ -300,7 +300,7 @@ class ModelsMyvindulaHowareu(Storm, BaseStore):
             user = kwargs.get('username','')
             if type(user) != unicode:
                 user = unicode(kwargs.get('username',''), 'utf-8')
-            data = self.store.find(ModelsMyvindulaHowareu, ModelsMyvindulaHowareu.username==user)
+            data = self.store.find(ModelsMyvindulaHowareu, ModelsMyvindulaHowareu.username==user).order_by(Desc(ModelsMyvindulaHowareu.date_creation))
         
         elif kwargs.get('visible_area',None):
             visible_area = kwargs.get('visible_area','')
@@ -340,7 +340,7 @@ class ModelsMyvindulaRecados(Storm, BaseStore):
             user = kwargs.get('destination','')
             if type(user) != unicode:
                 user = unicode(kwargs.get('destination',''), 'utf-8')
-            data = self.store.find(ModelsMyvindulaRecados, ModelsMyvindulaRecados.destination==user)
+            data = self.store.find(ModelsMyvindulaRecados, ModelsMyvindulaRecados.destination==user).order_by(Desc(ModelsMyvindulaRecados.date_creation))
         
         if data.count() > 0:
             return data

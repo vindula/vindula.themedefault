@@ -83,7 +83,7 @@
 							<h4>
 								<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${user_comment/username|nothing}">
 									<span tal:replace="user_comment/name|nothing" /> | 
-			                    	<span tal:replace="python:item.date_creation.strftime('%d/%m/%Y')" />
+			                    	<span tal:replace="python:item.date_creation.strftime('%d/%m/%Y  %H:%M')" />
 								</a>
 							</h4>
 		                </div>
@@ -107,8 +107,10 @@
 							       tal:condition="logado" />
 							<tal:define define="number python:view_coments.get_comments(item.id, item._name_class).count()" 
 							            tal:on-error="nothing">
-								<span id="number-comments" tal:content="string: Respostas (${number})" 
-								                           tal:condition="python: number > 0"></span>
+							     <tal:condition condition="python: number > 0">
+								    <span id="show-hide"> Ver</span>
+									<span id="number-comments" tal:content="string: respostas (${number})"></span>
+								</tal:condition>
 							</tal:define>
 							<div id="new-comments"></div>
 						</div>

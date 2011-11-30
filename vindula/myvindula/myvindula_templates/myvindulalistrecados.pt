@@ -24,7 +24,7 @@
 		<input type="hidden" id="username" name="username" value="" tal:attributes="value context/@@plone_portal_state/member|nothing">
 		<div id="content">
 			<div id="recados" class="userpage geral_lista_comentarios">
-				<h2 class="h2title">Recado que deixaram para você !</h2>
+				<h2 class="h2title">Recados que deixaram para você !</h2>
 	    			<tal:def define="items python:view.get_recados(user);">
 						<div class="userpage geral_lista_comentarios" tal:condition="items">
 							<tal:rep tal:repeat="item items">
@@ -39,7 +39,7 @@
 									<div class="documentByLine name-user">
 										<h4><a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${user}">
 												<span tal:replace="form_data/name|nothing" /> | 
-						                    	<span tal:replace="python:item.date_creation.strftime('%d/%m/%Y')" />
+						                    	<span tal:replace="python:item.date_creation.strftime('%d/%m/%Y  %H:%M')" />
 											</a></h4>
 					                </div>
 									<div id="like" tal:condition="logado">
@@ -62,7 +62,9 @@
 										<div id="new-comments"></div>
 									</div>
 								</div>
-								<div metal:use-macro="context/myvindula-comments-macro/macros/comments" />
+								<div class="comments-cont">
+									<div metal:use-macro="context/myvindula-comments-macro/macros/comments" />
+								</div>
 							</tal:rep>	
 						</div>
 					</tal:def>
