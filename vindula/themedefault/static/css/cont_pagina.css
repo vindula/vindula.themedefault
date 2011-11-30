@@ -411,7 +411,7 @@
 }
 
 .lista_comentarios{
-    background: none repeat scroll 0 0 #F8F8F8;
+    /*background: none repeat scroll 0 0 #F8F8F8;*/
     border: 1px solid #D1D3D4;
     padding: 15px 20px 0 20px;
 	margin:20px 0 0 0;
@@ -427,12 +427,18 @@
 }
 
 .geral_lista_comentarios div#like span,
-.geral_lista_comentarios span#number-comments {
+.geral_lista_comentarios span#number-comments,
+.geral_lista_comentarios span#show-hide {
 	color: #000000 !important;
 }
 
 .geral_lista_comentarios .comments-cont .comments-cont {
 	 padding: 1px 25px 0 0 !important;
+}
+
+.geral_lista_comentarios .item_lista {
+	margin: 0;
+	padding: 0 0 5px;
 }
 
 .item_lista{
@@ -480,13 +486,13 @@
 
 .bk_sombraTopo{
     background: url("../images/bkgs/sombra_cont_topo.png") repeat-x scroll center top #FFFFFF;
-	float:left;
+	/*float:left;*/
 }
 
 .bk_sombraEsquerda{
     background: url("../images/bkgs/sombra_cont_esquerda.png") repeat-y scroll left center transparent;
     margin: 0 0 0 -3px;
-	float:left;
+	/*float:left;*/
 }
 
 .bk_sombraDireita{
@@ -495,7 +501,7 @@
     padding: 3px 0 0;
 	*position:relative;
 	*margin:0;
-	float:left;
+	/*float:left;*/
 }
 
 .contBox_colunaTotal{

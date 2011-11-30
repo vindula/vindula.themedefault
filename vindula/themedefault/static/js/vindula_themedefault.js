@@ -73,5 +73,10 @@ $j(document).ready(function(){
 		};
 		
 	});
+	
+	/* CORRECTING PROBLEMS WITH FLOAT LEFT */
+	
+	$j('div.userlist').height($j('div#geral_colunas').height());
+	$j('div.food-control-panel').height($j('div#geral_colunas').height());
 	 
 });

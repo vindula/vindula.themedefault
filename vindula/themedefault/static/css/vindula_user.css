@@ -12,6 +12,11 @@
 	overflow:auto;	
 }
 
+h2.h2title {
+	color: #000000;
+	margin-bottom: 10px;
+}
+
 
 .userpage h2.h2title {
 	color: #000000;
@@ -40,7 +45,7 @@
 .userpage #personal {
 	height: 153px;
     width: 662px;
- 	margin-bottom: 20px;
+ 	margin-bottom: 32px;
 }
 
 .userpage #personal #photo {
@@ -114,12 +119,36 @@
 
 .userpage table td.field {
 	background-image: url("../images/bkgs/back_td.jpg");
-	background-repeat: repeat;
+	background-repeat: repeat-x;
+	background-position: center bottom;
 }
 
 .userpage table td.value {
 	background-image: url("../images/bkgs/back_td2.jpg");
-	background-repeat: repeat;
+	background-repeat: repeat-x;
+	background-position: center bottom;
+}
+
+
+/* 
+ * * * MY VINDULA BIRTHDAYS * * *
+ */
+
+.userpage table#birthdays {
+	max-width:100%;
+	width: 100%;
+}
+
+.userpage table#birthdays td.value {
+	font-weight: bolder;
+	text-align: center;
+	padding: 5px;
+	font-size: 14px;
+}
+
+.userpage table#birthdays td.field a {
+	font-weight: bolder;
+	font-size: 12px;
 }
 
 
@@ -127,10 +156,6 @@
  * * * MY VINDULA LIST ALL VIEW * * *
  */
 
-.userlist {
-	float: left;
-	margin-bottom: 30px;
-}
 .userlist div.user {
 	float:left;
 	text-align: center;
@@ -142,8 +167,4 @@
 	border: 1px solid #CCCCCC;
 	height: 89px;
 	width: 65px;
-}
-.userlist h2.h2title {
-	color: #000000;
-	margin-bottom: 10px;
 }

@@ -265,3 +265,6 @@ div.portlet-user-info {
 a.theme-edit {position:absolute; display:none;}
 a.theme-edit img {width:20px;}
 div#informacao a.theme-edit{margin-top:-30px;}
+
+/* My Vindula View */
+#myvindulaview .comments-cont .comment { padding-left: 25px; }
