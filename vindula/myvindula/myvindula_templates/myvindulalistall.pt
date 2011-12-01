@@ -1,23 +1,29 @@
 <html>
 	<body metal:use-macro="here/main_template/macros/master">
-      <div metal:fill-slot="content" tal:define="member python:context.portal_membership.getAuthenticatedMember();
-	  											 form_data view/load_list | python:{};
-                           					     view_listuser python: context.restrictedTraverse('@@myvindulalistuser')">
-                        
-		<div id="content" >
-        	<div id="interna" class="userlist">
-            	<h2 class="h2title">Usu&aacute;rios do portal</h2>
-          		<div class="user" tal:repeat="item form_data">
-		            <a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${item/username}">
-		              <img tal:define="photo item/username|nothing; img python:view_listuser.getPhoto(photo)" 
-		                 tal:condition="img"
-		                 tal:attributes="src img">
-		              <br />
-		              <span tal:content="item/name|nothing"></span>
-		            </a>
-          		</div>
-        	</div>
-		</div>
-      </div>    
+	  	<div metal:fill-slot="content">
+	  		
+			<h2 class="h2title">Usu&aacute;rios do portal</h2>
+      		<meta:macro metal:define-macro="page-view">                  
+				
+				<div id="content" tal:define="member python:context.portal_membership.getAuthenticatedMember();
+											  view_listall python: context.restrictedTraverse('@@myvindulalistall');
+											  view_listuser python: context.restrictedTraverse('@@myvindulalistuser');
+		  									  form_data view_listall/load_list | python:{};">
+	                           					     
+		        	<div id="interna" class="userlist">
+		          		<div class="user" tal:repeat="item form_data">
+				            <a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${item/username}">
+				              <img tal:define="photo item/username|nothing; img python:view_listuser.getPhoto(photo)" 
+				                 tal:condition="img"
+				                 tal:attributes="src img">
+				              <br />
+				              <span tal:content="item/name|nothing"></span>
+				            </a>
+		          		</div>
+		        	</div>
+				</div>
+				
+	  		</meta:macro>
+	  	</div>    
   </body>
 </html>

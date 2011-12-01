@@ -86,7 +86,7 @@ class MyVindulaView(grok.View):
             return  ModelsMyvindulaHowareu().set_myvindula_howareu(**form)        
 
 class MyVindulaPanelView(grok.View):
-    grok.context(INavigationRoot)
+    grok.context(Interface)
     grok.require('zope2.View')
     grok.name('myvindulapanel')
     
@@ -340,7 +340,7 @@ class MyVindulaListRecados(grok.View):
 
 
 class MyVindulalistAll(grok.View):
-    grok.context(ISiteRoot)
+    grok.context(Interface)
     grok.require('zope2.View')
     grok.name('myvindulalistall')
     

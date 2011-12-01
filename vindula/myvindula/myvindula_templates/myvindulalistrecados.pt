@@ -1,8 +1,6 @@
 <html>
 <body metal:use-macro="here/main_template/macros/master">
 <metal:js fill-slot="javascript_head_slot">
-	<!--script type="text/javascript" 
-    tal:attributes="src string:${view/static}/comments.js"></script-->
 	<script type="text/javascript" 
     tal:attributes="src string:${view/static}/ajax_comments-curtir.js"></script>
 </metal:js>	
@@ -23,7 +21,7 @@
 		<input type="hidden" id="context_url" tal:attributes="value string:${context/REQUEST/getURL|nothing}?user=${context/REQUEST/form/user|nothing}">
 		<input type="hidden" id="username" name="username" value="" tal:attributes="value context/@@plone_portal_state/member|nothing">
 		<div id="content">
-			<div id="recados" class="userpage geral_lista_comentarios">
+			<div id="scraps" class="userpage geral_lista_comentarios">
 				<h2 class="h2title">Recados que deixaram para você !</h2>
 	    			<tal:def define="items python:view.get_recados(user);">
 						<div class="userpage geral_lista_comentarios" tal:condition="items">

@@ -383,7 +383,7 @@ class ModelsMyvindulaComments(Storm, BaseStore):
             type_obj = unicode(type_obj)
         data = self.store.find(ModelsMyvindulaComments, ModelsMyvindulaComments.id_obj==id_obj,ModelsMyvindulaComments.type==type_obj)
 
-        if data.count() > 0:
+        if data.count > 0:
             return data
         else:
             return None   
@@ -893,7 +893,7 @@ class BaseFunc(BaseStore):
         local = caminho.split('/')
         try:
             ctx= getSite()[local[0]][local[1]][local[2]]
-            obj = ctx.restrictedTraverse('@@images').scale('photograph', width=120, height=120)
+            obj = ctx.restrictedTraverse('@@images').scale('photograph', height=150, width=120)
         
             return obj.url
         except:

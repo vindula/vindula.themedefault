@@ -2,7 +2,7 @@
 <body metal:use-macro="here/main_template/macros/master">
 <metal:js fill-slot="javascript_head_slot">
 	<script type="text/javascript" 
-    tal:attributes="src string:${view/static}/comments.js"></script>
+    tal:attributes="src string:${view/static}/comments-perfil.js"></script>
 	<script type="text/javascript" 
     tal:attributes="src string:${view/static}/ajax_comments-curtir.js"></script>
 </metal:js>	
@@ -36,7 +36,7 @@
 		                    <a id="scraps"  style="cursor:pointer;" >Recados</a>
 		                </li>
 						<li class="plain" id="perfil">
-		                    <a id="perfil"  style="cursor:pointer;" >Perfil</a>
+		                    <a id="perfil"  style="cursor:pointer;" >Perfil Publico</a>
 		                </li>
 		            </ul><div class="contentActions">&nbsp;</div>
 	        	</div>
@@ -295,7 +295,7 @@
 				<!-- Scraps Input -->
 				<div id="comment-geral" tal:condition="logado">
 					<h2 class="h2title" tal:content="string:Deixe um recado para ${form_data/name|nothing}:"></h2>
-					<form action="" method="post" enctype="multipart/form-data" name="save-recados" tal:attributes="action string:${context/absolute_url}/myvindulalistuser?user=${user}">	
+					<form action="" method="post" enctype="multipart/form-data" name="save-recados" tal:attributes="action string:${context/absolute_url}/myvindulalistuser?user=${user}&scraps=true">	
 						
 						<input type="hidden" name="destination" value="" tal:attributes="value user">	
 						<input type="hidden" name="username" value="" tal:attributes="value context/@@plone_portal_state/member|nothing">
