@@ -3,12 +3,10 @@
 		<metal:js fill-slot="javascript_head_slot">
     		<script type="text/javascript" src="" tal:attributes="src string:${view/static}/ajax_comments-curtir.js"></script>
 		</metal:js>
+
 		<metal:block fill-slot="top_slot">
 			<tal:dummy tal:define="dummy python:request.set('disable_border',1)" />
 		</metal:block>
-		<metal:css fill-slot="style_slot">
-			<link rel="stylesheet" type="text/css" href="/++resource++vindula.myvindula/myvindula_comments.css" />
-		</metal:css>
 
 		 <div metal:fill-slot="content">         
 	        <metal:use use-macro="context/@@myvindulapanel/macros/page"/>
@@ -22,10 +20,10 @@
 														 homeFolder python: context.portal_membership.getHomeFolder();
 														 prefs_user python: view.get_prefs_user(member.getId());
 														 departamentos python: view.get_department();
-														 logado python:str(member)!='Anonymous User';">
+														 logado python:str(member)!='Anonymous User';">	
 			
 				<div class="titulo_info cont_superior">
-					<h2 class="documentFirstHeading">Welcome to Vindula: <span tal:replace="name" /></h2>	
+					<h2 class="documentFirstHeading">Ol&aacute; <span tal:replace="name" />!</h2>	
 				</div>			
 			    
 			    <br />
