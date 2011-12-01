@@ -3,6 +3,7 @@ from five import grok
 from zope.interface import Interface
 from plone.app.layout.viewlets.interfaces import IPortalHeader, IAboveContent, IPortalFooter
 from Products.CMFCore.utils import getToolByName
+import re
 
 grok.context(Interface) 
 
@@ -54,9 +55,23 @@ class MenuViewlet(grok.Viewlet):
     grok.require('zope2.View')
     grok.viewletmanager(IAboveContent) 
 
-    def getMenu(self):
+    def getContentTypes(self):
         portal = self.context.portal_url.getPortalObject()
-        menus = portal.objectValues('ATFolder')
+        if 'control-panel-objects' in portal.keys():
+            control = portal['control-panel-objects']
+            if 'vindula_themeconfig' in control.keys():
+                thema = control['vindula_themeconfig']    
+                return thema.itens_menu
+            return []
+        else:
+            return []
+    
+
+    def getMenu(self):
+        #import pdb;pdb.set_trace()
+        portal = self.context.portal_url.getPortalObject()
+        #types = self.getContentTypes()
+        menus = portal.objectValues(('ATFolder','ATLink','vindula.content.content.vindulacontentmacro'))
         if menus:
             L = []
             for obj in menus:
@@ -66,11 +81,12 @@ class MenuViewlet(grok.Viewlet):
         
     def getSubMenu(self):
         portal = self.context.portal_url.getPortalObject()
+        types = self.getContentTypes()
         context = self.context
         if context != portal:
             while context.aq_parent != portal:
                 context = context.aq_parent
-            submenus = context.objectValues('ATFolder')
+            submenus = context.objectValues(('ATFolder','ATLink','vindula.content.content.vindulacontentmacro'))
             if submenus:
                 L = []
                 for obj in submenus:
