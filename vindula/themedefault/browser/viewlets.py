@@ -81,7 +81,7 @@ class MenuViewlet(grok.Viewlet):
         
     def getSubMenu(self):
         portal = self.context.portal_url.getPortalObject()
-        types = self.getContentTypes()
+        #types = self.getContentTypes()
         context = self.context
         if context != portal:
             while context.aq_parent != portal:
