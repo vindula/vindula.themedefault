@@ -267,4 +267,23 @@ a.theme-edit img {width:20px;}
 div#informacao a.theme-edit{margin-top:-30px;}
 
 /* My Vindula View */
-#myvindulaview .comments-cont .comment { padding-left: 25px; }
+#myvindulaview .comments-cont .comment,
+#howareu .comments-cont .comment,
+#recados .comments-cont .comment { 
+	padding-left: 25px; 
+}
+
+/* My Vindula User Views... */
+.userpage div.department { background-color: #FAA61A !important; }
+.userpage #personal { width: 662px; }
+.userpage #personal #photo { width: 165px; }
+.userpage #personal #data { width: 497px; }
+.userpage table { max-width: 486px; }
+.userpage table td.field { background-image: url("../images/bkgs/back_td.jpg"); }
+.userpage table td.value { background-image: url("../images/bkgs/back_td2.jpg"); }
+.userpage #data div.area { width: 487px; }
+.userpage div.area {
+    border-bottom: 2px solid #FAA61A !important;
+    width: 652px;
+}
+/* ...My Vindula User Views */

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<object name="portal_css">
+
+ <stylesheet title="vindula_theme.css"
+    id="++resource++vindula.themedefault/css/vindula_theme.css"
+    media="screen" rel="stylesheet" rendering="import"
+    cacheable="True" compression="safe" cookable="True"
+    enabled="1" expression=""/>	  
+	
+ <stylesheet title="geral.css"
+    id="++resource++vindula.themedefault/css/geral.css"
+    media="screen" rel="stylesheet" rendering="import"
+    cacheable="True" compression="safe" cookable="True"
+    enabled="1" expression=""/>	  
+	
+ <stylesheet title="rodape.css"
+    id="++resource++vindula.themedefault/css/rodape.css"
+    media="screen" rel="stylesheet" rendering="import"
+    cacheable="True" compression="safe" cookable="True"
+    enabled="1" expression=""/>
+	
+ <stylesheet title="cont_pagina.css"
+    id="++resource++vindula.themedefault/css/cont_pagina.css"
+    media="screen" rel="stylesheet" rendering="import"
+    cacheable="True" compression="safe" cookable="True"
+    enabled="1" expression=""/>
+	
+ <stylesheet title="topo_nav.css"
+    id="++resource++vindula.themedefault/css/topo_nav.css"
+    media="screen" rel="stylesheet" rendering="import"
+    cacheable="True" compression="safe" cookable="True"
+    enabled="1" expression=""/>
+	
+ <stylesheet title="titulos.css"
+    id="++resource++vindula.themedefault/css/titulos.css"
+    media="screen" rel="stylesheet" rendering="import"
+    cacheable="True" compression="safe" cookable="True"
+    enabled="1" expression=""/>
+	  
+</object>
