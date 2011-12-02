@@ -158,20 +158,28 @@ class MyVindulaPrefsView(grok.View, BaseFunc):
                                                    chain=['one_state_workflow',])
         form = self.request.form
         membership = self.context.portal_membership
+        user_login = membership.getAuthenticatedMember()
         error_url = self.context.absolute_url() + '/@@myvindulamanagealluser'
         
         if 'user' in form.keys():
             user_cod = base64.b16decode(form.get('user',''))
             user = membership.getMemberById(user_cod)
-            manage = True
+            
         else:    
             user = membership.getAuthenticatedMember()
-            manage = False
+            
 
         if user:
-            return SchemaFunc().registration_processes(self, user, manage)
+            if 'Manager' in user_login.getRoles():
+                return SchemaFunc().registration_processes(self, user, True)
+            else:
+                if str(user.id) == str(user_login.id):
+                    return SchemaFunc().registration_processes(self, user, False)
+                else:
+                    return self.request.response.redirect(error_url)
         else:
             return self.request.response.redirect(error_url)
+       
        
     
     def update(self):
