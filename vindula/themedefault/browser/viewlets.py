@@ -61,10 +61,15 @@ class MenuViewlet(grok.Viewlet):
             control = portal['control-panel-objects']
             if 'vindula_themeconfig' in control.keys():
                 thema = control['vindula_themeconfig']    
-                return thema.itens_menu
-            return []
+                itens = thema.itens_menu
+                if itens != []:
+                    return itens
+                else:
+                    return ['Folder', 'Link']
+
+            return ['Folder', 'Link']
         else:
-            return []
+            return ['Folder', 'Link']
     
 
     def getMenu(self):
