@@ -61,12 +61,12 @@
 					        		
 									<div class="formControls">
 										<div class="row">
-											<div class="cell width-4 position-0  ">
+											<div id="buttom">
 								        		  <input type="hidden" name="form.submitted:boolean" value="True" />
 								        		  <input type="submit" name="submit" value="Publicar" class="context bt_comments"
 								        		         i18n:attributes="value;" />
 											 </div>
-									  		 <div class="cell width-12 position-5">
+									  		 <div>
 									  			<input type="radio" name="visible_area" value="True" checked>Todos os Usuários<br />
 									  			<input type="radio" name="visible_area" value="False" >Somente do departamento:
 												<!-- Select Departamento --> 

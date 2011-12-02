@@ -6,7 +6,10 @@ div#userimage img {
     width: 120px;
    	height: 150px;
 }	
-
+.formControls div#buttom {
+	float: left;
+    margin-right: 20px;
+}
 
 /* 
  * * * MY VINDULA PREFS VIEW * * *
