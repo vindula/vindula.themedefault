@@ -267,11 +267,8 @@ a.theme-edit img {width:20px;}
 div#informacao a.theme-edit{margin-top:-30px;}
 
 /* My Vindula View */
-#myvindulaview .comments-cont .comment,
-#howareu .comments-cont .comment,
-#scraps .comments-cont .comment { 
-	padding-left: 25px; 
-}
+.geral_lista_comentarios .comment { margin-left: 0 !important; }
+.geral_lista_comentarios .comments-cont .comment { padding-left: 25px; }
 
 /* My Vindula User Views... */
 .userpage div.department { background-color: #FAA61A !important; }
