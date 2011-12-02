@@ -1,5 +1,6 @@
 <html>
 <body metal:use-macro="here/main_template/macros/master">
+
 <metal:js fill-slot="javascript_head_slot">
 	<script type="text/javascript" 
     tal:attributes="src string:${view/static}/comments-perfil.js"></script>
@@ -10,7 +11,8 @@
 <metal:block fill-slot="top_slot">
         <tal:dummy tal:define="dummy python:request.set('disable_border',1)" />
 </metal:block>
-    
+
+	    
     <div metal:fill-slot="content" tal:define="member python:context.portal_membership.getAuthenticatedMember();
 											   logado python:str(member)!='Anonymous User';
 											   form_data view/load_list | python:{};
@@ -27,14 +29,14 @@
 		            <h5 class="hiddenStructure">Visões</h5>
 		
 		            <ul id="content-views" class="contentViews">
-		            	<li class="selected" id="howareu">
-		                    <a id="howareu" style="cursor:pointer;" >Pensamentos</a>
+		            	<li class="selected" id="howareu-menu">
+		                    <a id="howareu-menu" style="cursor:pointer;" >Pensamentos</a>
 		                </li>
-						<li class="plain" id="scraps">
-		                    <a id="scraps"  style="cursor:pointer;" >Recados</a>
+						<li class="plain" id="scraps-menu">
+		                    <a id="scraps-menu"  style="cursor:pointer;" >Recados</a>
 		                </li>
-						<li class="plain" id="perfil">
-		                    <a id="perfil"  style="cursor:pointer;" >Perfil P&uacute;blico</a>
+						<li class="plain" id="perfil-menu">
+		                    <a id="perfil-menu"  style="cursor:pointer;" >Perfil P&uacute;blico</a>
 		                </li>
 		            </ul><div class="contentActions">&nbsp;</div>
 	        	</div>

@@ -8,7 +8,7 @@ $j(document).ready(function(){
 	
 	$j('div.geral_lista_comentarios span#number-comments').click(function() {
 		var comments = $j(this).parent().parent().find('.comments-cont');
-		var text = $j('div.geral_lista_comentarios span#show-hide');
+		var text = $j(this).parent().find('span#show-hide');
 		
 		if (comments.css('display') == 'none') {
 			comments.show();
