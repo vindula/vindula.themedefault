@@ -703,6 +703,7 @@ class BaseFunc(BaseStore):
             data = form_data.get('data',None)
             campos = form_data.get('campos',None)
             config_myvindula = form_data.get('config_myvindula',None)
+            manage = form_data.get('manage',False)
             
             languages = ModelsMyvindulaLanguages().get_allLanguages()
             cursos = ModelsMyvindulaCourses().get_allCourses()
@@ -723,7 +724,7 @@ class BaseFunc(BaseStore):
                     tmp = ""
                     tmp += "<!-- Campo %s -->"%(campo)
                     tmp += "<div class='%s'>"%(self.field_class(errors, campo))
-                    if self.checaEstado(config_myvindula,campo):
+                    if self.checaEstado(config_myvindula,campo) or manage:
                         tmp += "   <label for='%s'>%s</label>"%(campo,campos[campo]['label'])
                         if campos[campo]['required'] == True:
                             tmp += "   <span class='fieldRequired' title='Obrigatório'>(Obrigatório)</span>"
@@ -940,13 +941,15 @@ class SchemaFunc(BaseFunc):
               'username'                : {'required': False, 'type' : to_utf8, 'label':'Nome de Usuário'        },}  #Campo Obrigatorio
               #'vin_myvindula_department_id': {'required': False, 'type' : int,     'label':'Departamento'           },} #Campo Obrigatorio
                     
-    def registration_processes(self,context):
+    def registration_processes(self,context,user,manage=False):
         success_url = context.context.absolute_url() + '/@@myvindula'
+        success_url_manage = context.context.absolute_url() + '/@@myvindulamanagealluser'
         access_denied = context.context.absolute_url() + '/login'
         form = context.request # var tipo 'dict' que guarda todas as informacoes do formulario (keys,items,values)
         form_keys = form.keys() # var tipo 'list' que guarda todas as chaves do formulario (keys)
         campos = self.campos
-        user = context.context.portal_membership.getAuthenticatedMember()
+        #user = context.context.portal_membership.getAuthenticatedMember()
+        
         try:
             user_id = unicode(user.id, 'utf-8')    
         except:
@@ -959,17 +962,23 @@ class SchemaFunc(BaseFunc):
             'campos':campos,
             'departametos': ModelsDepartment().get_department(),
             'username' : user_id,
-            'config_myvindula':ModelsConfgMyvindula().get_configuration()}
+            'config_myvindula':ModelsConfgMyvindula().get_configuration(),
+            'manage':manage,}
         
         # se clicou no botao "Voltar"
         if 'form.voltar' in form_keys:
-            context.request.response.redirect(success_url)
+            if manage:
+                context.request.response.redirect(success_url_manage)
+            else:
+                context.request.response.redirect(success_url)
           
         # se clicou no botao "Salvar"
         elif 'form.submited' in form_keys:
             # Inicia o processamento do formulario
             # chama a funcao que valida os dados extraidos do formulario (valida_form) 
             errors, data = valida_form(campos, context.request.form)  
+            
+            
 
             if not errors:
                 # Upload of Photograph
@@ -1053,7 +1062,10 @@ class SchemaFunc(BaseFunc):
                             
                 #Redirect back to the front page with a status message
                 IStatusMessage(context.request).addStatusMessage(_(u"Thank you for your order. We will contact you shortly"), "info")
-                context.request.response.redirect(success_url)
+                if manage:
+                    context.request.response.redirect(success_url_manage)
+                else:
+                    context.request.response.redirect(success_url)
                                    
             else:
                 form_data['errors'] = errors

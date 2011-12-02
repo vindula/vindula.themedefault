@@ -288,7 +288,7 @@
 			
 			
 			<!-- start: Scraps -->
-			<div id="recados" class="userpage geral_lista_comentarios" tal:condition="view/check_recados">
+			<div id="scraps" class="userpage geral_lista_comentarios" tal:condition="view/check_recados">
 				
 				<!-- Scraps Input -->
 				<div id="comment-geral" tal:condition="logado">

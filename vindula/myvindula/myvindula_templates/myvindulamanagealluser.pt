@@ -1,0 +1,24 @@
+<html>
+	<body metal:use-macro="here/main_template/macros/master">
+	  	<div metal:fill-slot="content">
+	  		
+			<h2 class="h2title">Editar o prefil dos usu&aacute;rios do portal</h2>
+				<div id="content" tal:define="member python:context.portal_membership.getAuthenticatedMember();
+											  view_listuser python: context.restrictedTraverse('@@myvindulalistuser');
+		  									  form_data view/load_list | python:{};">
+	                           					     
+		        	<div id="interna" class="userlist">
+		          		<div class="user" tal:repeat="item form_data">
+				            <a tal:attributes="href python: here.portal_url() + '/myvindulaprefs?user=' + view.encodeUser(item.username)">
+				              <img tal:define="photo item/username|nothing; img python:view_listuser.getPhoto(photo)" 
+				                 tal:condition="img"
+				                 tal:attributes="src img">
+				              <br />
+				              <span tal:content="item/name|nothing"></span>
+				            </a>
+		          		</div>
+		        	</div>
+				</div>
+	  	</div>    
+  </body>
+</html>

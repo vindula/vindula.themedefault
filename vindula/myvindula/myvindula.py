@@ -21,6 +21,7 @@ from plone.z3cform.crud import crud
 from datetime import date
 from DateTime.DateTime import DateTime 
 import calendar
+import base64
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, ModelsDepartment, ModelsFuncDetails,\
@@ -155,8 +156,22 @@ class MyVindulaPrefsView(grok.View, BaseFunc):
         if not 'one_state_workflow' in portal_workflow.getChainForPortalType('vindula.myvindula.vindulaphotouser'):
             portal_workflow.setChainForPortalTypes(pt_names = ('vindula.myvindula.vindulaphotouser',),
                                                    chain=['one_state_workflow',])
+        form = self.request.form
+        membership = self.context.portal_membership
+        error_url = self.context.absolute_url() + '/@@myvindulamanagealluser'
+        
+        if 'user' in form.keys():
+            user_cod = base64.b16decode(form.get('user',''))
+            user = membership.getMemberById(user_cod)
+            manage = True
+        else:    
+            user = membership.getAuthenticatedMember()
+            manage = False
 
-        return SchemaFunc().registration_processes(self)
+        if user:
+            return SchemaFunc().registration_processes(self, user, manage)
+        else:
+            return self.request.response.redirect(error_url)
        
     
     def update(self):
@@ -352,6 +367,27 @@ class MyVindulalistAll(grok.View):
         ramal = form.get('ramal','').strip()
         result = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'))
         return result
+
+
+class MyVindulaManageAllUser(grok.View):
+    grok.context(INavigationRoot)
+    grok.require('cmf.ManagePortal')
+    grok.name('myvindulamanagealluser')
+    
+    def load_list(self):
+#        form = self.request.form
+#        #vars = BaseFunc().getParametersFromURL(self)
+#        title = form.get('title','').strip()
+#        departamento= form.get('departamento','0')
+#        ramal = form.get('ramal','').strip()
+        result = ModelsFuncDetails().get_allFuncDetails()
+        return result
+
+    def encodeUser(self,user):
+        return base64.b16encode(user)
+
+
+
 
 class MyVindulaListBirthdays(grok.View):
     grok.context(ISiteRoot)
