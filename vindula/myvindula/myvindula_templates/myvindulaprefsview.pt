@@ -23,10 +23,10 @@
 			    
 		    <div id="content" >
 				<tal:cont condition="manage">
-					<h1>Edite as insformações pessoais do usu&aacute;rio <span tal:content="form_data/name|nothing"></span></h1>	
+					<h1>Edite as informações pessoais do usu&aacute;rio <span tal:content="form_data/name|nothing"></span></h1>	
 				</tal:cont>
 		        <tal:cont condition="not:manage">
-					<h1>Edite suas insformações pessoais</h1>	
+					<h1>Edite suas informações pessoais</h1>	
 				</tal:cont>
 				
 				<dl class="portalMessage error" tal:condition="context/REQUEST/error|nothing">
