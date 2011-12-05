@@ -20,7 +20,7 @@
 				tal:attributes="src string:${view/static}/ajax_importuser.js"></script>
 
 		<div id="content">				
-			 <h1>Edit the configuration register of user of plone</h1>
+			 <h1>Importar / Atualiza os usu&aacute;rios do MyVindula para o Plone</h1>
 			 <div id="interna">
 					<tal:def define="load view/load_form">
 						<input type="hidden" id="portal_url" tal:attributes="value context/portal_url|nothing">
@@ -41,7 +41,7 @@
 						</fieldset>
 						
 						<fieldset >
-					   		<legend>Usuarios ja processados</legend>
+					   		<legend>Usu&aacute;rios j&aacute; processados</legend>
 							<div id="users_import"></div>
 							<!-- Spinner -->
 							<div id="spinner" class="display-none" style="text-align:center;">

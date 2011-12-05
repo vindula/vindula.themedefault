@@ -342,8 +342,10 @@ class ModelsMyvindulaRecados(Storm, BaseStore):
                 user = unicode(kwargs.get('destination',''), 'utf-8')
             data = self.store.find(ModelsMyvindulaRecados, ModelsMyvindulaRecados.destination==user).order_by(Desc(ModelsMyvindulaRecados.date_creation))
         
-        if data.count() > 0:
-            return data
+            if data.count() > 0:
+                return data
+            else:
+                return None
         else:
             return None            
                                   

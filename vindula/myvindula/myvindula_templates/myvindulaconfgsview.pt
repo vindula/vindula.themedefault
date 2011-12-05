@@ -19,13 +19,13 @@
 									  username form_data/username|python:{};
 									  config_myvindula form_data/config_myvindula|python:{};">
 	        
-	        <h1>Edit the configuration register of Myvindula</h1>
+	        <h1>Habilitar / Desabilitar Campos do My Vindula</h1>
 			
 			<div id="interna" >    		
 		        <form name="myvindulaconfgs" id="myvindulaconfgs" enctype="multipart/form-data" class="enableAutoFocus" action="myvindulaconfgs" method="POST">
 
 		            <fieldset>
-		            	<legend>Configuration of Fields</legend>
+		            	<legend>Campos Habilitados</legend>
 						<!-- ID da user--> 
 						<input id="id" type="hidden" value="" name="id" tal:attributes="value request/id| id |nothing">
 	
