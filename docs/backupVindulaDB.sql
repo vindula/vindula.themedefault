@@ -37,6 +37,8 @@ CREATE TABLE `vin_food_restaurant` (
   `phone_number` varchar(45) DEFAULT NULL,
   `delivery` tinyint(1) DEFAULT NULL,
   `opening_hours` varchar(45) DEFAULT NULL,
+  `has_agreement` tinyint(1) DEFAULT NULL,
+  `agreement` varchar(45) DEFAULT NULL,
   `vin_food_specialty_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_vin_food_restaurant_vin_food_specialty1` (`vin_food_specialty_id`),
@@ -50,7 +52,7 @@ CREATE TABLE `vin_food_restaurant` (
 
 LOCK TABLES `vin_food_restaurant` WRITE;
 /*!40000 ALTER TABLE `vin_food_restaurant` DISABLE KEYS */;
-INSERT INTO `vin_food_restaurant` VALUES (1,'Passaparola','R. Jacques Félix, 239 - Vila Nova Conceição - Zona Sul -  São Paulo - SP','3044-4949',0,'10:00 - 15:00',6),(2,'Baby Beef-Jardim','Rua Bandeiras, 166 - Jardim Santo André -  Santo Andre - SP','(0xx)11 4436-7869',0,'10:00 - 15:00',1),(3,'Pilão Mineiro Restaurante','Avenida Dom Pedro II, 1172 - Santo André - São Paulo','(11) 4436-2779',0,'10:00 - 15:00',6),(4,'Tia Marisa Restaurante - Comida Caseira','Rua Londres, 681 - Santo André - São Paulo','(11) 4976-2783',0,'10:00 - 15:00',3),(5,'Di Veritá Pizzaria','Rua Alpes, 913 - Santo André - São Paulo','(11) 4472-6988',0,'18:00 - 23:00',3),(6,'Palácio Tai Chi - Restaurante Japonês','Avenida Artur De Queirós, 112 - Santo André - São Paulo','(11) 4436-2288',0,'10:00 - 15:00',2);
+INSERT INTO `vin_food_restaurant` VALUES (1,'Passaparola','R. Jacques Félix, 239 - Vila Nova Conceição - Zona Sul -  São Paulo - SP','3044-4949',0,'10:00 - 15:00',0,'',6),(2,'Baby Beef-Jardim','Rua Bandeiras, 166 - Jardim Santo André -  Santo Andre - SP','(0xx)11 4436-7869',0,'10:00 - 15:00',0,'',1),(3,'Pilão Mineiro Restaurante','Avenida Dom Pedro II, 1172 - Santo André - São Paulo','(11) 4436-2779',0,'10:00 - 15:00',0,'',6),(4,'Tia Marisa Restaurante - Comida Caseira','Rua Londres, 681 - Santo André - São Paulo','(11) 4976-2783',0,'10:00 - 15:00',0,'',3),(5,'Di Veritá Pizzaria','Rua Alpes, 913 - Santo André - São Paulo','(11) 4472-6988',0,'18:00 - 23:00',0,'',3),(6,'Palácio Tai Chi - Restaurante Japonês','Avenida Artur De Queirós, 112 - Santo André - São Paulo','(11) 4436-2288',0,'10:00 - 15:00',0,'',2);
 /*!40000 ALTER TABLE `vin_food_restaurant` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -37,6 +37,8 @@ CREATE TABLE `vin_food_restaurant` (
   `phone_number` varchar(45) DEFAULT NULL,
   `delivery` tinyint(1) DEFAULT NULL,
   `opening_hours` varchar(45) DEFAULT NULL,
+  `has_agreement` tinyint(1) DEFAULT NULL,
+  `agreement` varchar(45) DEFAULT NULL,
   `vin_food_specialty_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_vin_food_restaurant_vin_food_specialty1` (`vin_food_specialty_id`),
