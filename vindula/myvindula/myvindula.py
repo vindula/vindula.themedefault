@@ -404,12 +404,12 @@ class MyVindulaListBirthdays(grok.View):
     
     def nome_filtro(self):
         filtro = self.request.form.get('filtro',1)
-        if filtro == 1:
-            return "Dia"
-        elif filtro == 7:
-            return "Semana"
-        elif filtro == 30:
-            return "Mes"
+        if filtro == '1':
+            return "do Dia"
+        elif filtro == '7':
+            return "da Semana"
+        elif filtro == '30':
+            return "do Mês"
         else:
             return ''
     
@@ -504,12 +504,16 @@ class MyVindulaComments(grok.View):
                 return True
             elif conf_context:
                 return True
-            elif not conf_context:
-                return False
             else:
                 return conf_global
         else:
-            return conf_global
+            if replies:
+                return True
+            if conf_context:
+                return True
+            else:
+                return conf_global
+            
     
     
     def get_prefs_user(self, user):

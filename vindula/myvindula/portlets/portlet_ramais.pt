@@ -58,7 +58,10 @@
 											<tal:def define="user obj/username;
 															 departamentos python: view.get_department(user)">
 								        		<tal:rep repeat="departamento departamentos">
-								        			<span tal:content="departamento/Title">Departamento</span> |
+								        			<span tal:content="departamento/Title">Departamento</span>
+													<span tal:define="cont repeat/departamento/length;
+																      last repeat/departamento/end"
+											  			  tal:condition="python: cont > 1 and not last"> | </span>
 								        		</tal:rep>
 												<br />	
 								        	</tal:def>

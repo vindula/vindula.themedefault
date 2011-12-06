@@ -139,7 +139,7 @@ class ModelsFuncDetails(Storm, BaseStore):
             for obj in data.get_all():
                 D={}
                 i = 0
-                columns = self.store.execute('SHOW COLUMNS FROM vin_myvindula_funcdetails FROM myvindulaDB;')
+                columns = self.store.execute('SHOW COLUMNS FROM vin_myvindula_funcdetails;')
                 for column in columns.get_all():
                     if str(column[0]) == 'date_birth':
                         D[str(column[0])] = obj[i].strftime('%d/%m/%Y')

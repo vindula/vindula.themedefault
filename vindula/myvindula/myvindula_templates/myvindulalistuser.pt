@@ -56,7 +56,10 @@
 				<div class="department">
 					<tal:def define="departamentos python: view.get_department(user)">
 		        		<tal:rep repeat="departamento departamentos">
-		        			<span tal:content="departamento/Title|nothing">Departamento</span> |
+		        			<span tal:content="departamento/Title|nothing">Departamento</span>
+							<span tal:define="cont repeat/departamento/length;
+												   last repeat/departamento/end"
+								  tal:condition="python: cont > 1 and not last"> | </span>
 		        		</tal:rep>
 		        	</tal:def>
 					<!--span tal:content="form_data/departamento/name|nothing"></span-->

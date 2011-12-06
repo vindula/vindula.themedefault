@@ -8,9 +8,7 @@
 									  		   form_data view/load_list | python:{}">
 									  	          
 	    <div id="content" >
-	    	<h2 class="h2title" tal:content="string:Lista dos Aniversariantes do ${view/nome_filtro|nothing}">
-	    		Usu&aacute;rios do portal
-			</h2>
+	    	<h2 class="h2title" tal:content="string:Lista dos Aniversariantes ${view/nome_filtro|nothing}" />
 
 			<div id="interna" class="userpage">
 				<table id="birthdays">
@@ -28,7 +26,10 @@
 							<td class="field">
 								<tal:def define="user item/username; departamentos python: view.get_department(user)">
 					        		<tal:rep repeat="departamento departamentos">
-					        			<span tal:content="departamento/Title">Department</span> |
+					        			<span tal:content="departamento/Title">Department</span>
+										<span tal:define="cont repeat/departamento/length;
+														  last repeat/departamento/end"
+											  tal:condition="python: cont > 1 and not last"> | </span>
 					        		</tal:rep>
 					        	</tal:def>
 							</td>
