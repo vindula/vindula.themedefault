@@ -102,6 +102,7 @@ class MenuViewlet(grok.Viewlet):
             ctool = getSite().portal_catalog
             submenus = ctool(portal_type=types, path=caminho,sort_on='getObjPositionInParent')        
             
+            #defaultView()
             #submenus = context.objectValues(('ATFolder','ATLink','vindula.content.content.vindulacontentmacro'))
             if submenus:
                 L = []
@@ -126,4 +127,9 @@ class MenuViewlet(grok.Viewlet):
         
     def isSelected(self, obj):
         if obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL'): 
+            return 'selected'
+    
+    def isSelectedSubmenu(self, obj):
+        if obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL') or\
+            self.context.id == obj.id : 
             return 'selected'
