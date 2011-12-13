@@ -165,22 +165,22 @@ class HomePageView(grok.View):
                 D['author'] = obj.getOwner().getUserName()
                 D['date'] = obj.effective_date.strftime('%d/%m/%Y / %H:%m')
                 D['link'] = obj.absolute_url()
+                D['summary'] = ''
+                D['image'] = ''
                 
                 if obj.portal_type == 'News Item':
-                    D['summary'] = obj.Description()[:350]
-                    
+                    if obj.Description() != '' or obj.Description() is not None:
+                        D['summary'] = obj.Description()[:350]
+    
                     if obj.getImage():
                         D['image'] = obj.getImage().absolute_url() + '_mini' 
-                    else:
-                        D['image'] = '' 
                     
                 else:
-                    D['summary'] = obj.summary[:350]
+                    if obj.summary != '' or obj.summary is not None:
+                        D['summary'] = obj.summary[:350]
                     
                     if obj.image:
                         D['image'] = obj.image.to_object.absolute_url() + '/image_mini'
-                    else:
-                        D['image'] = ''
                     
                 if len(D['summary']) == 350:
                     D['summary'] += '...'
