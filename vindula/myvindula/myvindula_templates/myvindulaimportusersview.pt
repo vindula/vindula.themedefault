@@ -1,0 +1,65 @@
+<html>
+    <body metal:use-macro="here/main_template/macros/master">
+        <div metal:fill-slot="content">
+            <div id="content">
+                <div id="interna" tal:define="campos_vin view/load_labels_vindula;
+                                              load_labels_csv view/load_labels_csv;
+											  campos_csv load_labels_csv/campos | nothing;
+											  url_arquivo load_labels_csv/url_arquivo | nothing;
+											  importa view/importar_valores">
+					<div class="import-user">
+                        <h2 class="h2title">Importar dados dos usu&aacute;rios</h2>
+	                    <p>O arquivo para importação deve estar no formato CSV e seguir a seguinte formatação:</p>
+	                    <p>1&ordf; linha: Titulo da coluna, separado por ponto e virgula (;)</p>
+	                    <p>Demais linhas: Os dados do funcionario, separado por ponto e virgula (;)</p>
+	                    <p>Ex: </p>
+	                    <p>Nome;Cargo;Apelido;Empresa</p>
+	                    <p>Pedro Silva;Analista;Pedro;Empresa Ltda.</p>
+	                    <p>Maria Laura dos Santos;Secretaria;;Empresa Ltda.</p>
+	                    <p>Obs: Se a linha tiver um ponto e virgula segido do outro (;;), a colula correspondente será cadastrada em branco.</p>
+	                    <form method="post" enctype="multipart/form-data">
+	                        <span><input type="file" name="csv_file" size="30" accept="csv"></span>
+							<span><input type="submit" name="load_file" value="Carregar arquivo"></span>
+	                    </form>
+	                    <br>
+	                    <br>
+						
+	                    <form tal:condition="campos_csv" method="post" enctype="multipart/form-data">
+	                    	<h2 class="h2title">Selecionar campos</h2>
+	                    	<p>Selecione os campos do arquivo CSV que corresponde aos campos do Vindula</p>
+		                    <table class="tableImport" border=0>
+		                        <tbody>
+		                            <tr>
+		                                <th>
+		                                    Campos do Vindula
+		                                </th>
+		                                <th></th>
+		                                <th>
+		                                    Campos do CSV
+		                                </th>
+		                            </tr>
+		                            <tr tal:repeat="campo_vin campos_vin">
+		                                <td tal:content="campo_vin/label"></td>
+		                                <td class="middleColumn">=</td>
+		                                <td>
+		                                    <select tal:attributes="name campo_vin/name" name="">
+		                                        <option value="">-- Selecione --</option>
+		                                        <tal:repeat repeat="campo_csv campos_csv">
+		                                            <option tal:attributes="value repeat/campo_csv/number"
+													        tal:content="campo_csv"></option>
+		                                        </tal:repeat>
+		                                    </select>
+		                                </td>
+		                            </tr>
+		                        </tbody>
+		                    </table>
+							
+	                        <input type="hidden" name="url_arquivo" tal:attributes="value url_arquivo">
+	                        <span><input type="submit" name="import" value="Importar"></span>
+	                    </form>
+	                </div>
+				</div>
+            </div>
+        </div>
+    </body>
+</html>

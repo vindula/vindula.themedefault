@@ -6,6 +6,9 @@ from Products.CMFCore.interfaces import ISiteRoot
 from zope.interface import Interface
 from plone.uuid.interfaces import IUUID
 
+from zope.component import getUtility
+from plone.i18n.normalizer.interfaces import IIDNormalizer
+
 from plone.dexterity.utils import createContentInContainer
 from plone.namedfile.field import NamedImage
 from Products.CMFCore.utils import getToolByName
@@ -22,6 +25,8 @@ from datetime import date
 from DateTime.DateTime import DateTime 
 import calendar
 import base64
+
+from vindula.myvindula.validation import valida_form
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, ModelsDepartment, ModelsFuncDetails,\
@@ -596,6 +601,75 @@ class MyVindulaManageLanguagesView(grok.View, BaseFunc):
     grok.name('myvindula-manage-languages')    
 
     def load_form(self):
-        return ManageLanguages().registration_processes(self)      
-
+        return ManageLanguages().registration_processes(self)
+    
+class MyVindulaImportUsersView(grok.View):
+    grok.context(INavigationRoot)
+    grok.require('cmf.ManagePortal')
+    grok.name('myvindula-import-users')
+    
+    
+    def load_labels_vindula(self):
+        fields = SchemaFunc().campos
+        campos_vin = []
+        if fields:
+            for field in fields:
+                D = {}
+                D['name'] = field
+                D['label'] = fields.get(field).get('label')
+                campos_vin.append(D)
+        self.campos_vin = campos_vin
+        return campos_vin
         
+    def load_labels_csv(self):
+        form = self.request.form
+        if 'load_file' in form.keys():
+            if 'csv_file' in form.keys():
+                portal = self.context
+                pasta = getattr(portal, 'migration-users')
+                arquivo = self.request.get('csv_file')
+                nome = arquivo.filename
+                
+                normalizer = getUtility(IIDNormalizer)
+                nome_arquivo = normalizer.normalize(unicode(nome, 'utf-8'))
+                
+                count = 0
+                while nome_arquivo in pasta.objectIds():
+                    count +=1
+                    if count != 1:
+                        nome_arquivo = nome_arquivo[:-2]
+                    nome_arquivo = nome_arquivo + '-' + str(count)         
+                
+                pasta.invokeFactory('File', 
+                                    id=nome_arquivo,
+                                    title=nome_arquivo,
+                                    description='',
+                                    file=self.request.get('csv_file')
+                                    )
+                return {'campos': pasta.get(nome_arquivo).data.split('\n')[0].replace('"', '').split(';'), 
+                        'url_arquivo': pasta.get(nome_arquivo).absolute_url()}
+            
+    def importar_valores(self):
+        form = self.request.form
+        if 'import' in form.keys():
+            pasta = form.get('url_arquivo').split('/')[4]
+            arquivo = form.get('url_arquivo').split('/')[5]
+            pasta = self.context.get(pasta)
+            arquivo = pasta.get(arquivo)
+            ignore_fields = ['import',
+                             'url_arquivo',]
+            
+            for linha in arquivo.data.split('\n')[1:-1]:
+                dados = {}
+                dados_linha = linha.split(';')                
+                for campo in form.keys():
+                    if form[campo] != '' and campo not in ignore_fields:
+                        indice = int(form[campo])-1
+                        dados[campo] = unicode(dados_linha[indice])
+                    else:
+                        dados[campo] = u''
+                erros, data = valida_form(SchemaFunc().campos, dados)
+                import pdb;pdb.set_trace()
+                user = ModelsFuncDetails(**data)
+                ModelsFuncDetails().store.add(user)
+                ModelsFuncDetails().store.flush()

@@ -13,6 +13,14 @@ def user_folder(context):
     if not folder_user:
         SecurityControlPanelAdapter(ctx).set_enable_user_folders(True)
         
+    # Creating Migration Users Folder
+    if not 'migration-users' in ctx.objectIds():
+        ctx.invokeFactory('Folder', 
+                              id='migration-users', 
+                              title='Migração de usuários',
+                              description='Pasta que guarda os arquivos CSV da importação de usuários.',
+                              excludeFromNav = True)
+        
 
 def set_AllowedType_Members(context):
     portal = context.getSite()

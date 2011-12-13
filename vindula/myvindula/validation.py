@@ -58,13 +58,14 @@ def valida_form(configuracao, form):
             convertidos[campo] = int(valor)
             
         elif configuracao[campo]['type'] == 'email':
-            if(re.match('(.+)@(.+)\.(.+)',valor,re.IGNORECASE)):
-                if type(valor) == unicode:
-                    convertidos[campo] = valor.strip()
+            if valor != '':
+                if(re.match('(.+)@(.+)\.(.+)',valor,re.IGNORECASE)):
+                    if type(valor) == unicode:
+                        convertidos[campo] = valor.strip()
+                    else:
+                        convertidos[campo] = to_utf8((valor.strip()))
                 else:
-                    convertidos[campo] = to_utf8((valor.strip()))
-            else:
-                errors[campo] = u'E mail inválido, digite um email valido'
+                    errors[campo] = u'E mail inválido, digite um email valido'
             
                     
         # logica para conversao de dados para unicode de acordo com a configuracao      

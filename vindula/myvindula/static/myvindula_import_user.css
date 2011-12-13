@@ -1,0 +1,16 @@
+/* 
+ * * * MY VINDULA IMPORT USER VIEW * * *
+ */
+
+h2.h2title {
+	color: #000000;
+	margin-bottom: 10px;
+}
+
+.import-user td.middleColumn {
+	width: 22%;
+}
+
+.import-user table.tableImport {
+    width: 70%;
+}
