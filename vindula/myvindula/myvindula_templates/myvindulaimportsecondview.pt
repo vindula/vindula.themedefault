@@ -6,9 +6,9 @@
         </metal:js>
 		
         <div metal:fill-slot="content">
-            <div id="internal" tal:define="campos_vin view/load_labels_vindula | nothing;
+            <div id="internal" tal:define="campos_vin view/load_fields_vindula | nothing;
 			                               arquivo view/load_archive;
-										   campos_csv view/load_labels_csv | nothing;
+										   campos_csv view/load_fields_csv | nothing;
 										   importa view/importar_valores">
 					
 				<div class="import-user">

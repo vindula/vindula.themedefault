@@ -635,8 +635,7 @@ class MyVindulaImportFirstView(grok.View):
                                     file=self.request.get('csv_file')
                                     )
                 campos_csv = pasta.get(nome_arquivo).data.split('\n')[0].replace('"', '').split(';')
-                arquivo = pasta.get(nome_arquivo).absolute_url()
-                
+                arquivo = pasta.get(nome_arquivo).virtual_url_path()
                 redirect = self.context.absolute_url() + '/myvindula-import-second?url_arquivo=%s' % (arquivo)
                 return self.request.response.redirect(redirect)          
                 
@@ -648,10 +647,15 @@ class MyVindulaImportSecondView(grok.View):
     def load_archive(self):
         form = self.request.form
         if 'url_arquivo' in form.keys():
-            folder = form.get('url_arquivo').split('/')[4]
-            file = form.get('url_arquivo').split('/')[5]
+            path_file = form.get('url_arquivo').split('/')
+            if len(path_file) == 3:
+                folder = path_file[1]
+                file = path_file[2]
+            else:
+                folder = path_file[0]
+                file = path_file[1]
             folder = self.context.get(folder)
-            file = pasta.get(file)
+            file = folder.get(file)
             
             return file.title
             
@@ -666,16 +670,22 @@ class MyVindulaImportSecondView(grok.View):
                 D['name'] = field
                 D['label'] = fields.get(field).get('label')
                 fields_vin.append(D)
-        return campos_vin
+        return fields_vin
         
             
     def load_fields_csv(self):
         form = self.request.form
         if 'url_arquivo' in form.keys():
-            folder = form.get('url_arquivo').split('/')[4]
-            file = form.get('url_arquivo').split('/')[5]
+            
+            path_file = form.get('url_arquivo').split('/')
+            if len(path_file) == 3:
+                folder = path_file[1]
+                file = path_file[2]
+            else:
+                folder = path_file[0]
+                file = path_file[1]
             folder = self.context.get(folder)
-            file = pasta.get(file)
+            file = folder.get(file)
             
             return file.data.split('\n')[0].replace('"', '').split(';')
         
@@ -683,10 +693,15 @@ class MyVindulaImportSecondView(grok.View):
     def importar_valores(self):
         form = self.request.form
         if 'import' in form.keys():
-            pasta = form.get('url_arquivo').split('/')[4]
-            arquivo = form.get('url_arquivo').split('/')[5]
-            pasta = self.context.get(pasta)
-            arquivo = pasta.get(arquivo)
+            path_file = form.get('url_arquivo').split('/')
+            if len(path_file) == 3:
+                folder = path_file[1]
+                file = path_file[2]
+            else:
+                folder = path_file[0]
+                file = path_file[1]
+            folder = self.context.get(folder)
+            arquivo = folder.get(file)
             ignore_fields = ['import',
                              'url_arquivo',]
             
