@@ -603,26 +603,14 @@ class MyVindulaManageLanguagesView(grok.View, BaseFunc):
     def load_form(self):
         return ManageLanguages().registration_processes(self)
     
-class MyVindulaImportUsersView(grok.View):
+class MyVindulaImportFirstView(grok.View):
     grok.context(INavigationRoot)
     grok.require('cmf.ManagePortal')
-    grok.name('myvindula-import-users')
+    grok.name('myvindula-import-first')
     
     
-    def load_labels_vindula(self):
-        fields = SchemaFunc().campos
-        campos_vin = []
-        if fields:
-            for field in fields:
-                D = {}
-                D['name'] = field
-                D['label'] = fields.get(field).get('label')
-                campos_vin.append(D)
-        self.campos_vin = campos_vin
-        return campos_vin
-        
-    def load_labels_csv(self):
-        form = self.request.form
+    def load_file(self):
+        form = self.request.form               
         if 'load_file' in form.keys():
             if 'csv_file' in form.keys():
                 portal = self.context
@@ -646,8 +634,51 @@ class MyVindulaImportUsersView(grok.View):
                                     description='',
                                     file=self.request.get('csv_file')
                                     )
-                return {'campos': pasta.get(nome_arquivo).data.split('\n')[0].replace('"', '').split(';'), 
-                        'url_arquivo': pasta.get(nome_arquivo).absolute_url()}
+                campos_csv = pasta.get(nome_arquivo).data.split('\n')[0].replace('"', '').split(';')
+                arquivo = pasta.get(nome_arquivo).absolute_url()
+                
+                redirect = self.context.absolute_url() + '/myvindula-import-second?url_arquivo=%s' % (arquivo)
+                return self.request.response.redirect(redirect)          
+                
+class MyVindulaImportSecondView(grok.View):
+    grok.context(INavigationRoot)
+    grok.require('cmf.ManagePortal')
+    grok.name('myvindula-import-second')
+    
+    def load_archive(self):
+        form = self.request.form
+        if 'url_arquivo' in form.keys():
+            folder = form.get('url_arquivo').split('/')[4]
+            file = form.get('url_arquivo').split('/')[5]
+            folder = self.context.get(folder)
+            file = pasta.get(file)
+            
+            return file.title
+            
+    
+    def load_fields_vindula(self):
+        form = self.request.form
+        fields = SchemaFunc().campos
+        fields_vin = []
+        if fields:
+            for field in fields:
+                D = {}
+                D['name'] = field
+                D['label'] = fields.get(field).get('label')
+                fields_vin.append(D)
+        return campos_vin
+        
+            
+    def load_fields_csv(self):
+        form = self.request.form
+        if 'url_arquivo' in form.keys():
+            folder = form.get('url_arquivo').split('/')[4]
+            file = form.get('url_arquivo').split('/')[5]
+            folder = self.context.get(folder)
+            file = pasta.get(file)
+            
+            return file.data.split('\n')[0].replace('"', '').split(';')
+        
             
     def importar_valores(self):
         form = self.request.form
@@ -669,7 +700,50 @@ class MyVindulaImportUsersView(grok.View):
                     else:
                         dados[campo] = u''
                 erros, data = valida_form(SchemaFunc().campos, dados)
-                import pdb;pdb.set_trace()
                 user = ModelsFuncDetails(**data)
                 ModelsFuncDetails().store.add(user)
                 ModelsFuncDetails().store.flush()
+            
+            sucess = True
+            redirect = self.context.absolute_url() + '/myvindula-import-third?success=%s' % (sucess)
+            return self.request.response.redirect(redirect)   
+            
+                
+class MyVindulaImportThirdView(grok.View):
+    grok.context(INavigationRoot)
+    grok.require('cmf.ManagePortal')
+    grok.name('myvindula-import-third')
+                
+class MyVindulaExportUsersView(grok.View):
+    grok.context(INavigationRoot)
+    grok.require('cmf.ManagePortal')
+    grok.name('myvindula-export-users')
+    
+    def export_users(self):
+        form = self.request.form
+        if 'export' in form.keys():
+            self.request.response.setHeader("Content-Type", "text/csv", 0)
+            
+            fields = SchemaFunc().campos
+            campos_vin = []
+            text = ''
+            if fields:
+                for field in fields:
+                    D = {}
+                    D['name'] = field
+                    D['label'] = fields.get(field).get('label')
+                    campos_vin.append(D)
+                    text += fields.get(field).get('label') + ';'
+                text = text[:-1] + '\n'
+            
+            users = ModelsFuncDetails().get_allFuncDetails()
+            
+            for user in users:
+                for campo in campos_vin:
+                    if campo['name'] not in ('skills_expertise', 'languages'):
+                        valor = user.__getattribute__(campo['name'])
+                        if valor == None:
+                            valor = ''
+                        text += '%s;' % (valor)
+                text += '\n'    
+            self.request.response.write(str(text))

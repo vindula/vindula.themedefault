@@ -1,0 +1,24 @@
+<html>
+    <body metal:use-macro="here/main_template/macros/master">
+        <div metal:fill-slot="content">
+            <div id="internal" tal:define="success python: context.REQUEST.form.get('success', None)">
+				<div class="import-user">
+					
+					<div class="multi-steps">
+                        <span>1</span>
+                        <span>2</span>
+                        <span class="active">3</span>
+                    </div>
+					
+					<div tal:condition="success">
+						<h1>Usuários importados com sucesso.</h1>
+					</div>
+					
+					<div tal:condition="not: success">
+						<h1>Errona importação.</h1>
+					</div>
+                </div>
+			</div>
+        </div>
+    </body>
+</html>

@@ -8,9 +8,25 @@ h2.h2title {
 }
 
 .import-user td.middleColumn {
-	width: 22%;
+	width: 30%;
+	text-align: center;
 }
 
-.import-user table.tableImport {
-    width: 70%;
+.import-user div.imgLoader {
+	margin-right: 10px;
+	display:none;
+}
+
+.import-user div.multi-steps{
+    text-align: center;
+	color: #D8D8D8;
+	font-size: 50px;
+}
+
+.import-user div.multi-steps span.active{
+    color: #000000;
+}
+
+.import-user table.tableImport tr.cor1{
+    background-color: #D3D3D3;
 }
