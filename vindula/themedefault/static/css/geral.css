@@ -196,4 +196,12 @@ div.controlpanel-links div a {
 	vertical-align: super;
 }
 
+div.boxSelecao {
+    border: 1px solid #000000;
+    height: 150px;
+    overflow: auto;
+    padding: 5px;
+    width: 200px;
+}
+
 /* ...Control Panel View */
