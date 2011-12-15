@@ -719,8 +719,8 @@ class MyVindulaImportSecondView(grok.View):
                 ModelsFuncDetails().store.add(user)
                 ModelsFuncDetails().store.flush()
             
-            sucess = True
-            redirect = self.context.absolute_url() + '/myvindula-import-third?success=%s' % (sucess)
+            success = True
+            redirect = self.context.absolute_url() + '/myvindula-import-third?success=%s' % (success)
             return self.request.response.redirect(redirect)   
             
                 

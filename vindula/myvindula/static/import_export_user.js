@@ -15,5 +15,4 @@ $j(document).ready(function(){
 		if (i % 2 != 0)
 		  element.attr('class', 'cor1')
 	}
-	
 });

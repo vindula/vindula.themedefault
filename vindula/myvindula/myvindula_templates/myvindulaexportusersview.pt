@@ -1,16 +1,16 @@
 <html>
     <body metal:use-macro="here/main_template/macros/master">
+    	
         <div metal:fill-slot="content">
-            <div id="content">
-                <div id="interna">
-					<div class="export-user" tal:define="export view/export_users | nothing">
-                        <h2 class="h2title">Exportar dados dos usu&aacute;rios</h2>
-	                    <form method="post" enctype="multipart/form-data">
-	                        <span><input type="submit" name="export" value="Exportar"></span>
-	                    </form>
-	                </div>
-				</div>
-            </div>
+            <div id="interna">
+				<div class="import-user" tal:define="export view/export_users">
+                    <h2 class="h2title">Exportar dados dos usu&aacute;rios</h2>
+					<p>Exporta os dados dos usuários da base do My Vindula para um arquivo CSV.</p>
+                    <form method="post" enctype="multipart/form-data">
+                        <input id="import-button" type="submit" name="export" value="Exportar">
+                    </form>
+                </div>
+			</div>
         </div>
     </body>
 </html>
