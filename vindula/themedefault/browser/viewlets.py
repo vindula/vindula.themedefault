@@ -38,7 +38,7 @@ class UsefulLinksViewlet(grok.Viewlet):
             self.pc = getToolByName(self.context, 'portal_catalog')
             links = self.pc(path={'query':'/'.join(pasta.getPhysicalPath())},
                             portal_type='Link',
-                            review_state='published',
+                            review_state=('published','internal','external'),
                             sort_on="getObjPositionInParent")
             
             if links:
@@ -62,6 +62,7 @@ class MenuViewlet(grok.Viewlet):
             if 'vindula_themeconfig' in control.keys():
                 thema = control['vindula_themeconfig']    
                 itens = thema.itens_menu
+                
                 if itens != []:
                     return itens
                 else:
@@ -90,9 +91,20 @@ class MenuViewlet(grok.Viewlet):
             return L
         
     def getSubMenu(self):
+        #import pdb;pdb.set_trace()
+        
         portal = self.context.portal_url.getPortalObject()
         types = self.getContentTypes()
-        context = self.context
+        
+        if self.context.portal_type == 'vindula.themedefault.content.homepage':
+            if self.context.ref_itemMenu:
+                context = self.context.ref_itemMenu.to_object
+            else:
+                context = self.context
+        else:
+            context = self.context
+        
+        
         if context != portal:
             while context.aq_parent != portal:
                 context = context.aq_parent
@@ -126,8 +138,14 @@ class MenuViewlet(grok.Viewlet):
 
         
     def isSelected(self, obj):
-        if obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL'): 
-            return 'selected'
+        if self.context.portal_type == 'vindula.themedefault.content.homepage':
+            if self.context.ref_itemMenu:
+                if obj.absolute_url() ==  self.context.ref_itemMenu.to_object.absolute_url():
+                    return 'selected'
+                
+        else:
+            if obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL'):
+                return 'selected'
     
     def isSelectedSubmenu(self, obj):
         if obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL') or\

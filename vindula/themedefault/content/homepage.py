@@ -7,13 +7,14 @@ from plone.app.textfield import RichText
 from vindula.themedefault import MessageFactory as _
 from z3c.relationfield.schema import RelationList, RelationChoice
 from Products.CMFCore.utils import getToolByName
+from zope.app.component.hooks import getSite
 
+from vindula.themedefault.browser.viewlets import MenuViewlet 
 # Interface and schema
 
 class IHomePage(form.Schema):
     """ Home Page """
-        
-    
+   
     title = schema.TextLine(
         title=_(u"Título"),
         description=_(u"Insira um nome para Home Page."),
@@ -46,6 +47,12 @@ class IHomePage(form.Schema):
                         abaixo de todas as notícias."),
         required=False,
         )
+    
+    ref_itemMenu = RelationChoice(title=_(u"Seleção do objeto de seleção do menu"),
+                                  description=_(u"Selecione o objeto que sera mostrada no menu."),                      
+                                  source=ObjPathSourceBinder(portal_type = ('Folder', 'Link'),  
+                                                             review_state = ('published','internal','external')),
+                                  required=False)
     
     # Fieldset News
     form.fieldset('news',
