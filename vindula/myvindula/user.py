@@ -126,7 +126,7 @@ class ModelsFuncDetails(Storm, BaseStore):
     
     def get_FuncBirthdays(self, date_start, date_end):
         
-        data = self.store.execute('Select * From vin_myvindula_funcdetails Where DAY(date_birth) <= DAY(Date("%s")) AND MONTH(date_birth) <= MONTH(Date("%s")) AND DAY(date_birth) >= DAY(Date("%s")) AND MONTH(date_birth) >= MONTH(Date("%s")) ;'%(date_end,date_end,date_start,date_start)) 
+        data = self.store.execute('Select * From vin_myvindula_funcdetails Where DAY(date_birth) <= DAY(Date("%s")) AND MONTH(date_birth) <= MONTH(Date("%s")) AND DAY(date_birth) >= DAY(Date("%s")) AND MONTH(date_birth) >= MONTH(Date("%s")) ORDER BY DAY(date_birth) ASC, MONTH(date_birth) ASC ;'%(date_end,date_end,date_start,date_start)) 
         
 #        debug(True, stream=sys.stdout)    
 #        data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.date_birth.like(date_end),
@@ -668,6 +668,21 @@ class BaseFunc(BaseStore):
                 return ""
         else:
             return ""    
+    
+    # retorna dado convertido para o campo de valor monetario   
+    def converte_valor(self, valor):
+        if valor is not None:
+            if type(valor) == Decimal:
+                valor = str(valor)
+                valor = valor.replace('R$ ','')
+                valor = valor.replace('.', ',')
+                #valor = 'R$ ' + valor
+                return valor
+            else: 
+                return None  
+        else:
+            return None        
+        
         
     # retorna dado convertido para o campos de data 
     def converte_data(self, data, data_atual=False):

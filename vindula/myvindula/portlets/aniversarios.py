@@ -109,8 +109,8 @@ class Renderer(base.Renderer):
         elif type_filter == 7:
             now = DateTime()
             dow = now.dow()
-            date_start = (now - dow).strftime('%Y-%m-%d')
-            date_end = (now - dow + 6).strftime('%Y-%m-%d')
+            date_start = (now + 1 - dow).strftime('%Y-%m-%d')
+            date_end = (now + 1 - dow + 6).strftime('%Y-%m-%d')
             
             results = ModelsFuncDetails().get_FuncBirthdays(date_start,date_end)
         
