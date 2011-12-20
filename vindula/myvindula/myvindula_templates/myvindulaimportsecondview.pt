@@ -23,17 +23,36 @@
                     <form method="post" enctype="multipart/form-data">
                     	<h2 class="h2title">Selecionar campos</h2>
                     	<p>Selecione os campos do arquivo CSV que corresponde aos campos do Vindula</p>
+						<table>
+							<tr>
+								<td><input type="checkbox" name="cria-username" value="True">
+									Criar username em caso de arquivo csv com coluna username vazia</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" name="atualiza-dados" value="True">
+									Realiza merge de dados já existente no vindula</td>
+							</tr>	
+						</table>
+						<br /><br />
 	                    <table class="tableImport" border=0>
 	                        <tbody>
-	                            <tr>
-	                                <th>
-	                                    Campos do Vindula
-	                                </th>
+	                            <tr><th>Campos do Vindula</th>
 	                                <th></th>
-	                                <th>
-	                                    Campos do CSV
-	                                </th>
+	                                <th>Campos do CSV</th>
 	                            </tr>
+								<tr>
+									<td>User Name</td>
+									<td class="middleColumn">=</td>
+									<td>
+	                                    <select name="username">
+	                                        <option value="">-- Selecione --</option>
+	                                        <tal:repeat repeat="campo_csv campos_csv">
+	                                            <option tal:attributes="value repeat/campo_csv/number"
+												        tal:content="campo_csv"></option>
+	                                        </tal:repeat>
+	                                    </select>
+	                                </td>
+								</tr>
 	                            <tr tal:repeat="campo_vin campos_vin">
 	                                <td tal:content="campo_vin/label"></td>
 	                                <td class="middleColumn">=</td>

@@ -1,7 +1,8 @@
 <html>
     <body metal:use-macro="here/main_template/macros/master">
         <div metal:fill-slot="content">
-            <div id="internal" tal:define="success python: context.REQUEST.form.get('success', None)">
+            <div id="internal" tal:define="success python:eval(context.REQUEST.form.get('success', None));
+										   error python:context.REQUEST.form.get('error', None)">
 				<div class="import-user">
 					
 					<div class="multi-steps">
@@ -15,7 +16,14 @@
 					</div>
 					
 					<div tal:condition="not: success">
-						<h1>Errona importação.</h1>
+						<h1>Erro na importação.</h1>
+						<p tal:condition="python:error=='1'">
+							O erro no atributo 'username' verifique se seu arquivo possui este campo ou
+							marque a opção para gerar usuários automaticamente</p>
+						<p tal:condition="not error">
+							Verifique se os campos foram selecionados corretamente e tente novamente
+						</p>
+						
 					</div>
                 </div>
 			</div>

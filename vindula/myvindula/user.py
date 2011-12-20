@@ -88,7 +88,13 @@ class ModelsFuncDetails(Storm, BaseStore):
     customised_message = Unicode()
     #vin_myvindula_department_id = Int()
     
-    departamento = Reference(username, "ModelsDepartment.vin_myvindula_funcdetails_id")    
+    departamento = Reference(username, "ModelsDepartment.vin_myvindula_funcdetails_id")
+    
+    def set_FuncDetails(self, **kwargs):
+        # adicionando...
+        funcDetails = ModelsFuncDetails(**kwargs)
+        self.store.add(funcDetails)
+        self.store.flush()        
     
     def get_allFuncDetails(self):
         data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username!=u'admin')

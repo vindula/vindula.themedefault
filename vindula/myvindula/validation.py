@@ -21,6 +21,7 @@ def valida_form(configuracao, form):
         valor = form.get(campo)   #configuracao[campo]['campo_form'], '')
         # logica para verificacao de obrigatoriedade de campo
         
+        
         if configuracao.get(campo).get('required', None) is not None:
             if configuracao[campo]['required'] == True: # configuracao: campo e obrigatorio
                 if valor == '' or valor.isspace(): # se o campo estiver vazio
@@ -41,6 +42,20 @@ def valida_form(configuracao, form):
                     else:
                         convertidos[campo] = date(ano, mes, dia)
                 except:
+                    data_hora = valor.split(' ') # pega a string no formato '0000-00-00 00:00' e transforma em tupla dividindo os elementos
+                    data = data_hora[0].split('-') 
+                    
+                    # separa o ano, mes e dia da tupla
+                    ano = int(data[0])                              
+                    mes = int(data[1]) 
+                    dia = int(data[2])
+                    
+                    if ano < 1900:
+                        errors[campo] = u'Data inválida.'
+                    else:
+                        convertidos[campo] = date(ano, mes, dia)
+                    
+                else:
                     errors[campo] = u'Data inválida.'
         
         #logica para converter campos tipo Boolen

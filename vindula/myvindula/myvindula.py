@@ -644,6 +644,9 @@ class MyVindulaImportSecondView(grok.View):
     grok.require('cmf.ManagePortal')
     grok.name('myvindula-import-second')
     
+    def to_utf8(self, value):
+        return unicode(value, 'utf-8')    
+    
     def load_archive(self):
         form = self.request.form
         if 'url_arquivo' in form.keys():
@@ -662,21 +665,29 @@ class MyVindulaImportSecondView(grok.View):
     
     def load_fields_vindula(self):
         form = self.request.form
-        fields = SchemaFunc().campos
         fields_vin = []
+        i=0
+        fields = SchemaFunc().campos
+        while i < len(fields.keys())-1:
+              fields_vin.append(i)
+              i+=1
+        
         if fields:
             for field in fields:
+                index = fields[field].get('ordem',0)
                 D = {}
                 D['name'] = field
                 D['label'] = fields.get(field).get('label')
-                fields_vin.append(D)
+                fields_vin.pop(index)
+                fields_vin.insert(index, D)    
+                
+                #fields_vin.append(D)
         return fields_vin
         
             
     def load_fields_csv(self):
         form = self.request.form
         if 'url_arquivo' in form.keys():
-            
             path_file = form.get('url_arquivo').split('/')
             if len(path_file) == 3:
                 folder = path_file[1]
@@ -703,24 +714,76 @@ class MyVindulaImportSecondView(grok.View):
             folder = self.context.get(folder)
             arquivo = folder.get(file)
             ignore_fields = ['import',
-                             'url_arquivo',]
+                             'url_arquivo',
+                             'cria-username',
+                             'atualiza-dados',
+                             'username',]
+            
+            success = False
+            criar_user = form.get('cria-username', False)
+            merge_user = form.get('atualiza-dados', False)
             
             for linha in arquivo.data.split('\n')[1:-1]:
                 dados = {}
-                dados_linha = linha.split(';')                
+                dados_linha = linha.split(';')
+                check_user = False
                 for campo in form.keys():
                     if form[campo] != '' and campo not in ignore_fields:
                         indice = int(form[campo])-1
-                        dados[campo] = unicode(dados_linha[indice])
+                        dados[campo] = self.to_utf8(dados_linha[indice].replace('"',''))
                     else:
-                        dados[campo] = u''
-                erros, data = valida_form(SchemaFunc().campos, dados)
-                user = ModelsFuncDetails(**data)
-                ModelsFuncDetails().store.add(user)
-                ModelsFuncDetails().store.flush()
-            
-            success = True
-            redirect = self.context.absolute_url() + '/myvindula-import-third?success=%s' % (success)
+                        if campo == 'username':
+                            if criar_user:                                    
+                                name = dados_linha[int(form['name'])-1].replace('"','').lower().split(' ')
+                                matricula = dados_linha[int(form['registration'])-1].replace('"','')
+                                x = len(name)
+                                username = name[0] + name[x-1] + str(matricula)
+                                    
+                                if not ModelsFuncDetails().get_FuncDetails(self.to_utf8(username)):    
+                                    dados[campo] = self.to_utf8(username)
+                                    check_user = True
+                                    
+                            elif merge_user:
+                                if form[campo] != '':
+                                    indice = int(form[campo])-1
+                                    user = self.to_utf8(dados_linha[indice].replace('"',''))
+                                    if ModelsFuncDetails().get_FuncDetails(user):    
+                                            dados[campo] = user
+                                            check_user = True
+                            
+                            else:                            
+                                if form[campo] != '':
+                                    indice = int(form[campo])-1
+                                    user = self.to_utf8(dados_linha[indice].replace('"',''))
+                                    if not ModelsFuncDetails().get_FuncDetails(user):    
+                                        dados[campo] = user
+                                        check_user = True
+
+                        else:
+                            dados[campo] = u''
+                 
+                erros, data_user = valida_form(SchemaFunc().campos, dados)
+                
+                if check_user:
+                    if criar_user:
+                        ModelsFuncDetails().set_FuncDetails(**data_user)
+                        success = True
+                    elif merge_user:
+                        result = ModelsFuncDetails().get_FuncDetails(user)
+                        if result:
+                            success = True
+                            campos = SchemaFunc().campos
+                            for campo in campos.keys():
+                                value = data_user.get(campo, None)
+                                if value:
+                                    setattr(result, campo, value)
+                    else:
+                        ModelsFuncDetails().set_FuncDetails(**data_user)
+                        success = True
+                else:
+                    error = 1
+                             
+            redirect = self.context.absolute_url() + '/myvindula-import-third?success=%s&error=%s' % (success,error)
             return self.request.response.redirect(redirect)   
             
                 
@@ -738,27 +801,34 @@ class MyVindulaExportUsersView(grok.View):
         form = self.request.form
         if 'export' in form.keys():
             self.request.response.setHeader("Content-Type", "text/csv", 0)
+            filename = 'myvindula-export-users.csv'
+            self.request.response.setHeader('Content-Disposition','attachment; filename=%s'%(filename))
             
-            fields = SchemaFunc().campos
+            fields_orig = ModelsFuncDetails()._storm_columns.values()
+
             campos_vin = []
             text = ''
-            if fields:
-                for field in fields:
-                    D = {}
-                    D['name'] = field
-                    D['label'] = fields.get(field).get('label')
-                    campos_vin.append(D)
-                    text += fields.get(field).get('label') + ';'
+            
+            if fields_orig:
+                for field in fields_orig:
+                    campos_vin.append(field.name)
+                    text += field.name + ';'
                 text = text[:-1] + '\n'
-            
+
             users = ModelsFuncDetails().get_allFuncDetails()
-            
+
             for user in users:
                 for campo in campos_vin:
-                    if campo['name'] not in ('skills_expertise', 'languages'):
-                        valor = user.__getattribute__(campo['name'])
+                    if campo not in ('skills_expertise', 'languages'):
+                        valor = user.__getattribute__(campo)
                         if valor == None:
                             valor = ''
+                        
+                        if campo == 'customised_message':
+                            valor = str(valor).replace('\n', '').replace('\r', '').replace(';', '')
+                        
                         text += '%s;' % (valor)
-                text += '\n'    
+                text += '\n'
+                 
             self.request.response.write(str(text))
+            

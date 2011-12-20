@@ -89,7 +89,9 @@
 							</tr>
 							<tr>
 								<td class="field">Data de anivers&aacute;rio</td>
-								<td class="value" tal:content="python: form_data.date_birth.strftime('%d/%m/%Y')"></td>
+								<td class="value" tal:condition="form_data/date_birth|nothing"
+												  tal:content="python: form_data.date_birth.strftime('%d/%m/%Y')"></td>
+								<td class="value" tal:condition="not: form_data/date_birth|nothing"></td>												  
 							</tr>
 						</table>
 						
@@ -118,7 +120,9 @@
 								<h4>
 									<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${user}">
 										<span tal:replace="form_data/name|nothing" /> | 
-				                    	<span tal:replace="python:item.date_creation.strftime('%d/%m/%Y  %H:%M')" />
+				                    	<span tal:condition="item/date_creation|nothing" 
+											  tal:replace="python:item.date_creation.strftime('%d/%m/%Y  %H:%M')" />
+										
 									</a>
 								</h4>
 			                </div>
@@ -195,7 +199,11 @@
 					</tr>
 					<tr>
 						<td class="field">Data de Admiss&atilde;o</td>
-						<td class="value" tal:content="form_data/admission_date|nothing"></td>
+						<td class="value" tal:condition="form_data/admission_date|nothing"  
+										  tal:content="python:form_data.admission_date.strftime('%d/%m/%Y')"></td>
+						<td class="value" tal:condition="not: form_data/admission_date|nothing"></td>  
+
+										  
 					</tr>
 					<tr>
 						<td class="field">Centro de custo</td>

@@ -101,7 +101,8 @@
 											<h4>
 												<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${prefs_user/username|nothing}">
 													<span tal:replace="name" /> | 
-							                    	<span tal:replace="python:item.date_creation.strftime('%d/%m/%Y  %H:%M')" />
+							                    	<span tal:condition="item/date_creation|nothing"  
+														  tal:replace="python:item.date_creation.strftime('%d/%m/%Y  %H:%M')" />
 												</a>
 											</h4>
 						                </div>

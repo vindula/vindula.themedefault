@@ -36,7 +36,7 @@
 								<div class="documentByLine name-user">
 									<h4><a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${user}">
 											<span tal:replace="form_data/name|nothing" /> | 
-					                    	<span tal:replace="python:item.date_creation.strftime('%d/%m/%Y  %H:%M')" />
+					                    	<span tal:condition="item/date_creation|nothing" tal:replace="python:item.date_creation.strftime('%d/%m/%Y  %H:%M')" />
 										</a></h4>
 				                </div>
 								<div id="like" tal:condition="logado">
