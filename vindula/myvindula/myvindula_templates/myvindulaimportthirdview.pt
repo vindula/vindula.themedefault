@@ -20,7 +20,13 @@
 						<p tal:condition="python:error=='1'">
 							O erro no atributo 'username' verifique se seu arquivo possui este campo ou
 							marque a opção para gerar usuários automaticamente</p>
-						<p tal:condition="not error">
+						<p tal:condition="python:error=='2'">
+							Não foi possivel importar alguns dados, faça download da lista dos dados com problema e tente novamente
+							<br />
+							<a tal:attributes="href request/form/url|nothing" title="Download" target="_blank">Download da lista</a>
+							</p>	
+						
+						<p tal:condition="not: error">
 							Verifique se os campos foram selecionados corretamente e tente novamente
 						</p>
 						

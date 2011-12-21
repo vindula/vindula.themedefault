@@ -29,34 +29,42 @@ def valida_form(configuracao, form):
                             
         if configuracao[campo]['type'] == date:
             if valor != '':   
-                try:       
-                    data = tuple(valor) # pega a string no formato '00/00/0000' e transforma em tupla dividindo os elementos
-                    
-                    # separa o ano, mes e dia da tupla
-                    ano = int(data[6]+data[7]+data[8]+data[9])                              
-                    mes = int(data[3]+data[4]) 
-                    dia = int(data[0]+data[1])
-                    
-                    if ano < 1900:
-                        errors[campo] = u'Data inválida.'
+                try:
+                    if valor.find('/') != -1:
+                        data = tuple(valor) # pega a string no formato '00/00/0000' e transforma em tupla dividindo os elementos
+                        
+                        # separa o ano, mes e dia da tupla
+                        ano = int(data[6]+data[7]+data[8]+data[9])                              
+                        mes = int(data[3]+data[4]) 
+                        dia = int(data[0]+data[1])
+                        
+                        if ano < 1900:
+                            errors[campo] = u'Data inválida.'
+                        else:
+                            try:
+                                convertidos[campo] = date(ano, mes, dia)
+                            except:
+                                errors[campo] = u'Data inválida.'
                     else:
-                        convertidos[campo] = date(ano, mes, dia)
+                        data_hora = valor.split(' ') # pega a string no formato '0000-00-00 00:00' e transforma em tupla dividindo os elementos
+                        data = data_hora[0].split('-') 
+                        
+                        # separa o ano, mes e dia da tupla
+                        ano = int(data[0])                              
+                        mes = int(data[1]) 
+                        dia = int(data[2])
+                        
+                        if ano < 1900:
+                            errors[campo] = u'Data inválida.'
+                        else:
+                            try:
+                                
+                                convertidos[campo] = date(ano, mes, dia)
+                            except:
+                                errors[campo] = u'Data inválida.'
+                
                 except:
-                    data_hora = valor.split(' ') # pega a string no formato '0000-00-00 00:00' e transforma em tupla dividindo os elementos
-                    data = data_hora[0].split('-') 
-                    
-                    # separa o ano, mes e dia da tupla
-                    ano = int(data[0])                              
-                    mes = int(data[1]) 
-                    dia = int(data[2])
-                    
-                    if ano < 1900:
-                        errors[campo] = u'Data inválida.'
-                    else:
-                        convertidos[campo] = date(ano, mes, dia)
-                    
-                else:
-                    errors[campo] = u'Data inválida.'
+                     errors[campo] = u'Data inválida.'
         
         #logica para converter campos tipo Boolen
         elif configuracao[campo]['type'] == bool:

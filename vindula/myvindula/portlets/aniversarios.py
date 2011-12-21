@@ -149,8 +149,12 @@ class Renderer(base.Renderer):
         
     def getPhoto(self,photo):
         if photo is not None and not ' ' in photo:
-            return BaseFunc().get_imageVindulaUser(photo)
-            #return self.context.absolute_url()+'/'+photo #+ '/image_thumb'
+            url_foto = BaseFunc().get_imageVindulaUser(photo)
+            if url_foto:
+                return url_foto
+                #return self.context.absolute_url()+'/'+photo #+ '/image_thumb'
+            else:
+                return self.context.absolute_url()+'/defaultUser.png'
         else:
             return self.context.absolute_url()+'/defaultUser.png'    
 

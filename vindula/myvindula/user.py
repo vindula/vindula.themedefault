@@ -97,7 +97,7 @@ class ModelsFuncDetails(Storm, BaseStore):
         self.store.flush()        
     
     def get_allFuncDetails(self):
-        data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username!=u'admin')
+        data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username!=u'admin').order_by(ModelsFuncDetails.name)
         if data.count() == 0:
             return None
         else:
@@ -112,17 +112,17 @@ class ModelsFuncDetails(Storm, BaseStore):
         
     def get_FuncBusca(self,name,department_id,phone):
         if department_id == u'0' and name == '' and phone == '':
-            data = self.store.find(ModelsFuncDetails)
+            data = self.store.find(ModelsFuncDetails).order_by(ModelsFuncDetails.name)
          
         elif department_id != u'0':
             origin = [ModelsFuncDetails, Join(ModelsDepartment, ModelsDepartment.vin_myvindula_funcdetails_id==ModelsFuncDetails.username)]
             data = self.store.using(*origin).find(ModelsFuncDetails,  ModelsFuncDetails.name.like("%" + name + "%"),
                                                                    ModelsFuncDetails.phone_number.like("%" + phone + "%"),
-                                                                   ModelsDepartment.uid_plone==department_id)
+                                                                   ModelsDepartment.uid_plone==department_id).order_by(ModelsFuncDetails.name)
 
         else:
             data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"),
-                                                      ModelsFuncDetails.phone_number.like("%" + phone + "%"))
+                                                      ModelsFuncDetails.phone_number.like("%" + phone + "%")).order_by(ModelsFuncDetails.name)
         
         if data.count() == 0:
             return None
@@ -798,7 +798,7 @@ class BaseFunc(BaseStore):
                             tmp += "<input id='%s' type='text' value='%s' name='%s' size='25'/>"%(campo,self.getValue(campo,self.request,data),campo)
                     else:
                         if campo == 'date_birth' or campo == 'admission_date':
-                            tmp += "<input id='%s' type='hidden' value='%s' name='%s' size='25'/>"%(campo,self.converte_data(self.getValue(campo,self.request,data),True),campo)
+                            tmp += "<input id='%s' type='hidden' value='%s' name='%s' size='25'/>"%(campo,self.converte_data(self.getValue(campo,self.request,data),False),campo)
                         
                         elif campo == 'skills_expertise':
                             for i in self.getValueList(campo,self.request,funcdetailCourse):

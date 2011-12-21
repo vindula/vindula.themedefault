@@ -22,7 +22,8 @@ from Products.statusmessages.interfaces import IStatusMessage
 
 from plone.z3cform.crud import crud
 from datetime import date
-from DateTime.DateTime import DateTime 
+from DateTime.DateTime import DateTime
+from datetime import datetime 
 import calendar
 import base64
 
@@ -33,8 +34,6 @@ from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, M
                                    ImportUser, ModelsMyvindulaHowareu, ModelsMyvindulaComments, ModelsMyvindulaLike,\
                                    ManageCourses, ManageLanguages, ModelsMyvindulaFuncdetailCouses,ModelsMyvindulaCourses,\
                                    ModelsMyvindulaFuncdetailLanguages, ModelsMyvindulaLanguages, ModelsMyvindulaRecados
-                                   
-
 
 class MyVindulaView(grok.View):
     grok.context(INavigationRoot)
@@ -176,7 +175,11 @@ class MyVindulaPrefsView(grok.View, BaseFunc):
 
         if user:
             if 'Manager' in user_login.getRoles():
-                return SchemaFunc().registration_processes(self, user, True)
+                if str(user.id) == str(user_login.id):
+                    return SchemaFunc().registration_processes(self, user, False)
+                else:
+                    return SchemaFunc().registration_processes(self, user, True)
+                    #return self.request.response.redirect(error_url)
             else:
                 if str(user.id) == str(user_login.id):
                     return SchemaFunc().registration_processes(self, user, False)
@@ -365,8 +368,6 @@ class MyVindulaListRecados(grok.View):
         else:
             return self.context.absolute_url()+'/defaultUser.png'
 
-
-
 class MyVindulalistAll(grok.View):
     grok.context(Interface)
     grok.require('zope2.View')
@@ -380,6 +381,26 @@ class MyVindulalistAll(grok.View):
         ramal = form.get('ramal','').strip()
         result = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'))
         return result
+
+class MyVindulaListMyContent(grok.View):
+    grok.context(Interface)
+    grok.require('zope2.View')
+    grok.name('myvindula-meus-conteudos')
+    
+    def load_list(self):        
+        membership = self.context.portal_membership
+        user_login = membership.getAuthenticatedMember()
+        
+        if user_login.getId():
+            #import pdb;pdb.set_trace()
+            ctool = getSite().portal_catalog
+            items = ctool(path = {'query': '/', 'depth': 99},
+                          Creator=user_login.getId())        
+        
+            return items
+            
+        else:
+            self.request.response.redirect(self.context.absolute_url() + '/login')
 
 
 class MyVindulaManageAllUser(grok.View):
@@ -398,8 +419,6 @@ class MyVindulaManageAllUser(grok.View):
 
     def encodeUser(self,user):
         return base64.b16encode(user)
-
-
 
 
 class MyVindulaListBirthdays(grok.View):
@@ -509,6 +528,8 @@ class MyVindulaComments(grok.View):
                 return True
             elif conf_context:
                 return True
+            elif not conf_context:
+                return False
             else:
                 return conf_global
         else:
@@ -614,30 +635,41 @@ class MyVindulaImportFirstView(grok.View):
         if 'load_file' in form.keys():
             if 'csv_file' in form.keys():
                 portal = self.context
-                pasta = getattr(portal, 'migration-users')
-                arquivo = self.request.get('csv_file')
-                nome = arquivo.filename
-                
-                normalizer = getUtility(IIDNormalizer)
-                nome_arquivo = normalizer.normalize(unicode(nome, 'utf-8'))
-                
-                count = 0
-                while nome_arquivo in pasta.objectIds():
-                    count +=1
-                    if count != 1:
-                        nome_arquivo = nome_arquivo[:-2]
-                    nome_arquivo = nome_arquivo + '-' + str(count)         
-                
-                pasta.invokeFactory('File', 
-                                    id=nome_arquivo,
-                                    title=nome_arquivo,
-                                    description='',
-                                    file=self.request.get('csv_file')
-                                    )
-                campos_csv = pasta.get(nome_arquivo).data.split('\n')[0].replace('"', '').split(';')
-                arquivo = pasta.get(nome_arquivo).virtual_url_path()
-                redirect = self.context.absolute_url() + '/myvindula-import-second?url_arquivo=%s' % (arquivo)
-                return self.request.response.redirect(redirect)          
+                pasta_control = getattr(portal, 'control-panel-objects')
+                if pasta_control:
+                    pasta_migracao = getattr(pasta_control, 'migration-users')
+                    if pasta_migracao:
+                        pasta = getattr(pasta_migracao, 'upload-csv')
+                        if pasta:
+                            arquivo = self.request.get('csv_file')
+                            nome = arquivo.filename
+                            
+                            normalizer = getUtility(IIDNormalizer)
+                            nome_arquivo = normalizer.normalize(unicode(nome, 'utf-8'))
+                            
+                            count = 0
+                            while nome_arquivo in pasta.objectIds():
+                                count +=1
+                                if count != 1:
+                                    nome_arquivo = nome_arquivo[:-2]
+                                nome_arquivo = nome_arquivo + '-' + str(count)         
+                            
+                            pasta.invokeFactory('File', 
+                                                id=nome_arquivo,
+                                                title=nome_arquivo,
+                                                description='',
+                                                file=self.request.get('csv_file')
+                                                )
+                            campos_csv = pasta.get(nome_arquivo).data.split('\n')[0].replace('"', '').split(';')
+                            arquivo = pasta.get(nome_arquivo).virtual_url_path()
+                            redirect = self.context.absolute_url() + '/myvindula-import-second?url_arquivo=%s' % (arquivo)
+                            return self.request.response.redirect(redirect)          
+                        else:
+                            IStatusMessage(self.request).addStatusMessage(_(u"Erro ao carregar arquivo, contate o administrados do portal."), "error")
+                    else:
+                        IStatusMessage(self.request).addStatusMessage(_(u"Erro ao carregar arquivo, contate o administrados do portal."), "error")
+                else:
+                    IStatusMessage(self.request).addStatusMessage(_(u"Erro ao carregar arquivo, contate o administrados do portal."), "error")
                 
 class MyVindulaImportSecondView(grok.View):
     grok.context(INavigationRoot)
@@ -689,14 +721,17 @@ class MyVindulaImportSecondView(grok.View):
         form = self.request.form
         if 'url_arquivo' in form.keys():
             path_file = form.get('url_arquivo').split('/')
-            if len(path_file) == 3:
-                folder = path_file[1]
-                file = path_file[2]
-            else:
-                folder = path_file[0]
-                file = path_file[1]
-            folder = self.context.get(folder)
-            file = folder.get(file)
+            folder = getSite()[path_file[0]][path_file[1]][path_file[2]]
+            file = folder.get(path_file[3])
+            
+#            if len(path_file) == 3:
+#                folder = path_file[1]
+#                file = path_file[2]
+#            else:
+#                folder = path_file[0]
+#                file = path_file[1]
+#            folder = self.context.get(folder)
+#            file = folder.get(file)
             
             return file.data.split('\n')[0].replace('"', '').split(';')
         
@@ -705,14 +740,14 @@ class MyVindulaImportSecondView(grok.View):
         form = self.request.form
         if 'import' in form.keys():
             path_file = form.get('url_arquivo').split('/')
-            if len(path_file) == 3:
-                folder = path_file[1]
-                file = path_file[2]
-            else:
-                folder = path_file[0]
-                file = path_file[1]
-            folder = self.context.get(folder)
-            arquivo = folder.get(file)
+            folder = getSite()[path_file[0]][path_file[1]][path_file[2]]
+            arquivo = folder.get(path_file[3])
+            
+            linhas_error =[]
+            lista_erros = []
+            
+#            folder = self.context.get(folder)
+#            arquivo = folder.get(file)
             ignore_fields = ['import',
                              'url_arquivo',
                              'cria-username',
@@ -763,27 +798,59 @@ class MyVindulaImportSecondView(grok.View):
                             dados[campo] = u''
                  
                 erros, data_user = valida_form(SchemaFunc().campos, dados)
-                
-                if check_user:
-                    if criar_user:
-                        ModelsFuncDetails().set_FuncDetails(**data_user)
-                        success = True
-                    elif merge_user:
-                        result = ModelsFuncDetails().get_FuncDetails(user)
-                        if result:
+                if not erros:
+                    if check_user:
+                        if criar_user:
+                            ModelsFuncDetails().set_FuncDetails(**data_user)
                             success = True
-                            campos = SchemaFunc().campos
-                            for campo in campos.keys():
-                                value = data_user.get(campo, None)
-                                if value:
-                                    setattr(result, campo, value)
+                        elif merge_user:
+                            result = ModelsFuncDetails().get_FuncDetails(user)
+                            if result:
+                                success = True
+                                campos = SchemaFunc().campos
+                                for campo in campos.keys():
+                                    value = data_user.get(campo, None)
+                                    if value:
+                                        setattr(result, campo, value)
+                        else:
+                            ModelsFuncDetails().set_FuncDetails(**data_user)
+                            success = True
                     else:
-                        ModelsFuncDetails().set_FuncDetails(**data_user)
-                        success = True
+                        error = 1
                 else:
-                    error = 1
+                    linhas_error.append(linha)
+                    lista_erros.append(erros)
+                    error = 2
+                    success = False
+                    
+            if linhas_error:
+                success = False
+                campos = arquivo.data.split('\n')[0].replace('\r','')
+                text = ''
+                col = ''
+                for campo in campos.split(';'):
+                    col += campo+';'
+                
+                col += 'coluna erro;\n'
+                text = col
+                i = 0
+                
+                for linha in linhas_error:
+                    text += linha.replace('\r','') + ';'+str(lista_erros[i].keys())+'\n'   
+                    i +=1
+                    
+                text += '\n'
+                
+                nome_arquivo = 'error-import-'+ datetime.now().strftime('%Y-%M-%d_%H-%M-%S') +'.csv'
+                pasta_error = getSite()['control-panel-objects']['migration-users']['errors-import']
+                pasta_error.invokeFactory('File', 
+                                            id=nome_arquivo,
+                                            title=nome_arquivo,
+                                            description='',
+                                            file=text)
+                url=pasta_error[nome_arquivo].absolute_url()
                              
-            redirect = self.context.absolute_url() + '/myvindula-import-third?success=%s&error=%s' % (success,error)
+            redirect = self.context.absolute_url() + '/myvindula-import-third?success=%s&error=%s&url=%s' % (success,error,url)
             return self.request.response.redirect(redirect)   
             
                 

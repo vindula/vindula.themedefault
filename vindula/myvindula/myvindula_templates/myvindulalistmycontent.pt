@@ -1,0 +1,33 @@
+<html>
+	<body metal:use-macro="here/main_template/macros/master">
+	  	<div metal:fill-slot="content">
+	  		
+			<metal:use use-macro="context/@@myvindulapanel/macros/page"/>   
+			
+			<h2 class="h2title">Meus Conteúdos</h2>
+			
+				<div id="interna" tal:define="member python:context.portal_membership.getAuthenticatedMember();
+		  									  form_data view/load_list | python:{};">
+	                           					     
+					<table width="100%">
+						<tr>
+							<th width="40%">Titulo</th>
+							<th width="30%">Descrição</th>
+							<th width="30%" >Tipo</th>
+						</tr>
+						<tal:rep repeat="obj form_data">
+							<tr>
+								<tal:def define="item obj/getObject|nothing">
+									<td><a target="_blank" tal:attributes="href item/absolute_url" tal:content="item/Title"></a></td>
+									<td><span tal:content="item/description"></span></td>
+									<td><span tal:content="item/portal_type"></span> </td>
+					            </tal:def>
+							</tr>
+						</tal:rep>
+					</table>
+		          </div>
+		        
+
+	  	</div>    
+  </body>
+</html>

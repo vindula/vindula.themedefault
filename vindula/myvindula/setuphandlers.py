@@ -14,12 +14,31 @@ def user_folder(context):
         SecurityControlPanelAdapter(ctx).set_enable_user_folders(True)
         
     # Creating Migration Users Folder
-    if not 'migration-users' in ctx.objectIds():
-        ctx.invokeFactory('Folder', 
-                              id='migration-users', 
-                              title='Migração de usuários',
-                              description='Pasta que guarda os arquivos CSV da importação de usuários.',
-                              excludeFromNav = True)
+    if 'control-panel-objects' in ctx.objectIds():
+        folder_control_panel = ctx['control-panel-objects']
+        if not 'migration-users' in folder_control_panel.objectIds():
+            folder_control_panel.invokeFactory('Folder', 
+                                               id='migration-users', 
+                                               title='Migração de usuários',
+                                               description='Pasta que guarda os arquivos CSV da importação de usuários.',
+                                               excludeFromNav = True)
+            migration = folder_control_panel['migration-users']
+            
+            if not 'upload' in folder_control_panel.objectIds():
+                migration.invokeFactory('Folder', 
+                                        id='upload-csv', 
+                                        title='Upload',
+                                        description='Pasta que guarda os arquivos CSV da importação de usuários.',
+                                        excludeFromNav = True)
+
+            if not 'errors' in folder_control_panel.objectIds():
+                migration.invokeFactory('Folder', 
+                                        id='errors-import', 
+                                        title='Erros na Importação',
+                                        description='Pasta que guarda os arquivos CSV sobre os erros na importação de usuários.',
+                                        excludeFromNav = True)
+                
+                
         
 
 def set_AllowedType_Members(context):

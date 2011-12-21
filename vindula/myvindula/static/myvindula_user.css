@@ -155,3 +155,17 @@ h2.h2title {
 	height: 90px;
 	width: 60px;
 }
+
+/* 
+ * * * MY VINDULA LIST Contents * * *
+ */
+
+#interna table tr{
+	border: 1px solid #000000;
+	padding:3px;	
+}
+#interna table tr th,
+ #interna table tr td{
+	border: 1px solid #000000;
+	padding:3px;	
+}
