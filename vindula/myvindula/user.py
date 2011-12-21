@@ -1038,7 +1038,7 @@ class SchemaFunc(BaseFunc):
                         D['UID'] = unicode(departament,'utf-8')
                         D['funcdetails_id'] = user_id
                         ModelsDepartment().set_department(**D)
-                                             
+                            
                 if 'skills_expertise' in form_keys:
                     ModelsMyvindulaFuncdetailCouses().del_funcdetailCouser(user_id)
                     for curso in form['skills_expertise']:
@@ -1050,7 +1050,7 @@ class SchemaFunc(BaseFunc):
                 
                 if 'languages' in form_keys:
                     ModelsMyvindulaFuncdetailLanguages().del_funcdetailLanguages(user_id)
-                    for languages in form['skills_expertise']:
+                    for languages in form['languages']:
                         D={}
                         D['username'] = user_id
                         D['id_courses'] = int(languages)
