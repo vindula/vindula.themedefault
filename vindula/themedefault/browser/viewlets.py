@@ -63,7 +63,7 @@ class MenuViewlet(grok.Viewlet):
                 thema = control['vindula_themeconfig']    
                 itens = thema.itens_menu
                 
-                if itens != []:
+                if itens:
                     return itens
                 else:
                     return ['Folder', 'Link']
