@@ -30,6 +30,10 @@
 	      description="Extension profile for Vindula MyVindula"
 	      provides="Products.GenericSetup.interfaces.EXTENSION"
 	      />
+	
+	<subscriber
+    		for="Products.PluggableAuthService.interfaces.events.IUserLoggedInEvent"
+    		handler=".handlers.userupdate"/>
 
   	<!-- Storm Configuration  -->
 
