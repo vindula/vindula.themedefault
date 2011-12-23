@@ -137,6 +137,11 @@
     margin: 0 30px 0 30px;
     width: 940px;
 }
+#alert-display{
+    margin: 0 30px 0 30px;
+    width: 940px;
+}
+
 
 #nav ul{ 
 	list-style: none outside none;
