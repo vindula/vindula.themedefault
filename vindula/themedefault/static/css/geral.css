@@ -10,7 +10,7 @@
 }
 
 body{
-    background: url("../images/bkgs/bk_body.jpg") no-repeat scroll 50% 0 #F7F5EA;
+    background: url("++resource++vindula.themedefault/images/bkgs/bk_body.jpg") no-repeat scroll 50% 0 #F7F5EA;
     margin: 0;
     width: 100%;
 }
@@ -30,7 +30,7 @@ body{
 }
 
 #bk_cont{
-	background: url("../images/bkgs/bk_conteudo.png") repeat scroll 0 0 transparent;
+	background: url("++resource++vindula.themedefault/images/bkgs/bk_conteudo.png") repeat scroll 0 0 transparent;
 }
 
 
@@ -136,7 +136,7 @@ dl.portlet a:hover,
 	line-height:32px; 	
  }
  .bt_comments{
-    background: url("../images/buttons/bt_comentar.png") no-repeat scroll 0 0 transparent;
+    background: url("++resource++vindula.themedefault/images/buttons/bt_comentar.png") no-repeat scroll 0 0 transparent;
     border: medium none;
     color: #FFFFFF;
     cursor: pointer;
@@ -148,7 +148,7 @@ dl.portlet a:hover,
 }
 #comentar #form-buttons-comment, 
 #comentar #form-buttons-cancel{
-	background: url("../images/buttons/bt_comentar.png") no-repeat scroll 0 0 transparent;
+	background: url("++resource++vindula.themedefault/images/buttons/bt_comentar.png") no-repeat scroll 0 0 transparent;
     border: medium none;
     color: #FFFFFF;
     cursor: pointer;

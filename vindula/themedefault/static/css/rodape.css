@@ -3,7 +3,7 @@
  */
 
 #rodape{
-	background: url("../images/bkgs/bk_rodape.png") no-repeat scroll 0 0 transparent;
+	background: url("++resource++vindula.themedefault/images/bkgs/bk_rodape.png") no-repeat scroll 0 0 transparent;
     height: 121px;
 }
 

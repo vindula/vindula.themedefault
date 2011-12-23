@@ -116,7 +116,7 @@ div#data dd.actionMenuContent li a {
 }
 
 .portletWrapper .portletHeader {
-    background: url("../images/bkgs/topoBoxTipo2.png") no-repeat scroll 0 0 transparent !important;
+    background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2.png") no-repeat scroll 0 0 transparent !important;
     padding: 20px 0 !important;;
     text-align: center;
     width: 228px;
@@ -133,7 +133,7 @@ div#data dd.actionMenuContent li a {
 }
 
 .portletWrapper .portletItem {
-    background: url("../images/bkgs/conBoxTipo2.png") repeat-y scroll 0 0 transparent;
+    background: url("++resource++vindula.themedefault/images/bkgs/conBoxTipo2.png") repeat-y scroll 0 0 transparent;
     padding: 15px !important;
     width: 202px;
 }
@@ -159,7 +159,7 @@ dl.portletError {
 	background: none; 
 }
 dl.portletError dd { 
-	background: url("../images/bkgs/conBoxTipo2.png") repeat-y scroll 0 0 transparent; 
+	background: url("++resource++vindula.themedefault/images/bkgs/conBoxTipo2.png") repeat-y scroll 0 0 transparent; 
 	width: 202px;
 }
 dl.portletError dd.portletFooter { 
@@ -276,8 +276,8 @@ div#informacao a.theme-edit{margin-top:-30px;}
 .userpage #personal #photo { width: 165px; }
 .userpage #personal #data { width: 497px; }
 .userpage table { max-width: 486px; }
-.userpage table td.field { background-image: url("../images/bkgs/back_td.jpg"); }
-.userpage table td.value { background-image: url("../images/bkgs/back_td2.jpg"); }
+.userpage table td.field { background-image: url("++resource++vindula.themedefault/images/bkgs/back_td.jpg"); }
+.userpage table td.value { background-image: url("++resource++vindula.themedefault/images/bkgs/back_td2.jpg"); }
 .userpage #data div.area { width: 487px; }
 .userpage div.area {
     border-bottom: 2px solid #FAA61A !important;

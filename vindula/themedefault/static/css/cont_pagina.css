@@ -59,7 +59,7 @@
 /* ... */
 
 .contBoxTipo1{
-    background: url("../images/bkgs/conBoxTipo1.png") repeat-y scroll 0 0 transparent;
+    background: url("++resource++vindula.themedefault/images/bkgs/conBoxTipo1.png") repeat-y scroll 0 0 transparent;
     padding: 15px 20px;
     width: 427px;
 }
@@ -199,7 +199,7 @@
 }
 
 .topoBoxTipo2 {
-    background: url("../images/bkgs/topoBoxTipo2.png") no-repeat scroll 0 0 transparent !important;
+    background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2.png") no-repeat scroll 0 0 transparent !important;
     padding: 20px 0 !important;;
     text-align: center;
     width: 228px;
@@ -211,7 +211,7 @@
 }
 
 .contBoxTipo2 {
-    background: url("../images/bkgs/conBoxTipo2.png") repeat-y scroll 0 0 transparent;
+    background: url("++resource++vindula.themedefault/images/bkgs/conBoxTipo2.png") repeat-y scroll 0 0 transparent;
     padding: 1px 13px 10px;
     width: 202px;
 }
@@ -313,7 +313,7 @@
 }
 .contBoxTipo{
 	float: left;
-    background: url("../images/bkgs/conBoxTipo.png") repeat-y scroll 0 0 transparent;
+    background: url("++resource++vindula.themedefault/images/bkgs/conBoxTipo.png") repeat-y scroll 0 0 transparent;
     padding: 15px 20px;
     width: 668px;
 }
@@ -394,7 +394,7 @@
 }
 
 .bt_comentar input{
-    background: url("../images/buttons/bt_comentar.png") no-repeat scroll 0 0 transparent;
+    background: url("++resource++vindula.themedefault/images/buttons/bt_comentar.png") no-repeat scroll 0 0 transparent;
     color: #FFFFFF;
     cursor: pointer;
     font-weight: bold;
@@ -485,18 +485,18 @@
 }
 
 .bk_sombraTopo{
-    background: url("../images/bkgs/sombra_cont_topo.png") repeat-x scroll center top #FFFFFF;
+    background: url("++resource++vindula.themedefault/images/bkgs/sombra_cont_topo.png") repeat-x scroll center top #FFFFFF;
 	/*float:left;*/
 }
 
 .bk_sombraEsquerda{
-    background: url("../images/bkgs/sombra_cont_esquerda.png") repeat-y scroll left center transparent;
+    background: url("++resource++vindula.themedefault/images/bkgs/sombra_cont_esquerda.png") repeat-y scroll left center transparent;
     margin: 0 0 0 -3px;
 	/*float:left;*/
 }
 
 .bk_sombraDireita{
-    background: url("../images/bkgs/sombra_cont_direita.png") repeat-y scroll right center transparent;
+    background: url("++resource++vindula.themedefault/images/bkgs/sombra_cont_direita.png") repeat-y scroll right center transparent;
     margin: 0 -3px 0 0;
     padding: 3px 0 0;
 	*position:relative;

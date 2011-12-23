@@ -3,7 +3,7 @@
  */
 
 #topo{
-    background: url("../images/bkgs/bk_topo.png") no-repeat scroll 0 0 transparent;
+    background: url("++resource++vindula.themedefault/images/bkgs/bk_topo.png") no-repeat scroll 0 0 transparent;
     height: 96px;
     width: 1000px;
 }
@@ -50,7 +50,7 @@
 }
 
 .geral_busca #searchGadget {
-    background: url("../images/icons/lupa.gif") no-repeat scroll 1% 50% #ECEDED;
+    background: url("++resource++vindula.themedefault/images/icons/lupa.gif") no-repeat scroll 1% 50% #ECEDED;
     border: 1px solid #FFFFFF;
     color: #000000;
     float: left;
