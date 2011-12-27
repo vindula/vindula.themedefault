@@ -2,14 +2,20 @@
     <body metal:use-macro="here/main_template/macros/master">
         <div metal:fill-slot="content">
             <div id="first" tal:define="load view/load_file">
-				<div class="import-user">
-					
-					<div class="multi-steps">
-                        <span class="active">1</span>
-                        <span>2</span>
-                        <span>3</span>
+                <div class="import-user">
+                    
+                    <div class="multi-steps">
+                        <div class="pageNumber">
+                            <span class="active">1</span>
+                        </div>
+                        <div class="pageNumber">
+                            <span>2</span>
+                        </div>
+                        <div class="pageNumber">
+                            <span>3</span>
+                        </div>
                     </div>
-					
+                    
                     <h2 class="h2title">Importar dados dos usu&aacute;rios</h2>
                     <p>O arquivo para importação deve estar no formato CSV e seguir a seguinte formatação:</p>
                     <p>1&ordf; linha: Titulo da coluna, separado por ponto e virgula (;)</p>
@@ -21,10 +27,10 @@
                     <p>Obs: Se a linha tiver um ponto e virgula segido do outro (;;), a colula correspondente será cadastrada em branco.</p>
                     <form method="post" enctype="multipart/form-data">
                         <span><input type="file" name="csv_file" size="30" accept="csv"></span>
-						<span><input type="submit" name="load_file" value="Enviar"></span>
+                        <span><input type="submit" name="load_file" value="Enviar"></span>
                     </form>
                 </div>
-			</div>
+            </div>
         </div>
     </body>
 </html>

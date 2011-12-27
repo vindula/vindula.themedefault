@@ -3,30 +3,24 @@
  */
 
 h2.h2title {
-	color: #000000;
-	margin-bottom: 10px;
+    color: #000000;
+    margin-bottom: 10px;
 }
 
 .import-user {
-	text-align: center;
+    text-align: center;
 }
 .import-user table{
     margin: 0 auto;
 }
 .import-user td.middleColumn {
-	width: 30%;
-	text-align: center;
+    width: 30%;
+    text-align: center;
 }
 
 .import-user div.imgLoader {
-	margin-right: 10px;
-	display:none;
-}
-
-.import-user div.multi-steps{
-    text-align: center;
-	color: #D8D8D8;
-	font-size: 50px;
+    margin-right: 10px;
+    display:none;
 }
 
 .import-user div.multi-steps span.active{
@@ -37,3 +31,15 @@ h2.h2title {
     background-color: #D3D3D3;
 }
 
+.import-user div.multi-steps{
+    color: #D8D8D8;
+    font-size: 50px;
+    margin: 0 auto;
+    display: table;
+}
+
+.import-user div.multi-steps div.pageNumber{
+    float: left;
+    width: 63px;
+    
+}

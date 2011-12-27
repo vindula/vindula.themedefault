@@ -14,9 +14,15 @@
 				<div class="import-user">
 					
 					<div class="multi-steps">
-                        <span>1</span>
-                        <span class="active">2</span>
-                        <span>3</span>
+                        <div class="pageNumber">
+                            <span>1</span>
+                        </div>
+                        <div class="pageNumber">
+                            <span class="active">2</span>
+                        </div>
+                        <div class="pageNumber">
+                            <span>3</span>
+                        </div>
                     </div>
 					
 					<h2 tal:content="string: Arquivo ${arquivo} carregado."></h2>
