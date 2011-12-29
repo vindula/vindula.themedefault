@@ -12,6 +12,7 @@ vindula.myvindula.egg-info/paster_plugins.txt
 vindula.myvindula.egg-info/requires.txt
 vindula.myvindula.egg-info/top_level.txt
 vindula/myvindula/__init__.py
+vindula/myvindula/handlers.py
 vindula/myvindula/myvindula.py
 vindula/myvindula/setuphandlers.py
 vindula/myvindula/user.py

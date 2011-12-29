@@ -81,7 +81,7 @@ class Renderer(base.Renderer):
         except:
             user_id = user
         
-        return ModelsDepartment().get_departmentByUsername(user)      
+        return ModelsDepartment().get_departmentByUsername(user_id)      
 
             
 #    @view.memoize

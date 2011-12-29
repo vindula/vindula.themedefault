@@ -17,7 +17,7 @@
 				                 tal:condition="img"
 				                 tal:attributes="src img">
 				              <br />
-				              <span tal:content="item/name|nothing"></span>
+				              <span tal:content="item/name| item/username | nothing"></span>
 				            </a>
 		          		</div>
 		        	</div>
