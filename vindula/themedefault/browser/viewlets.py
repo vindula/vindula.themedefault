@@ -140,9 +140,12 @@ class MenuViewlet(grok.Viewlet):
     def isSelected(self, obj):
         if self.context.portal_type == 'vindula.themedefault.content.homepage':
             if self.context.ref_itemMenu:
-                if obj.absolute_url() ==  self.context.ref_itemMenu.to_object.absolute_url():
+                if obj.absolute_url() ==  self.context.ref_itemMenu.to_object.absolute_url() or\
+                   obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL'):
                     return 'selected'
-                
+            
+            elif obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL'):
+                return 'selected'
         else:
             if obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL'):
                 return 'selected'
