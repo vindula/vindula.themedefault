@@ -5,11 +5,33 @@
 			<metal:use use-macro="context/@@myvindulapanel/macros/page"/>   
 			
 			<h2 class="h2title">Meus Conteúdos</h2>
-			
-				<div id="interna" tal:define="member python:context.portal_membership.getAuthenticatedMember();
-		  									  form_data view/load_list | python:{};">
-	                           					     
-					<table width="100%">
+			<div id="content">
+				<div id="content-core" tal:define="normalizeString nocall: context/plone_utils/normalizeString;
+												   member python:context.portal_membership.getAuthenticatedMember();
+		  									  	   form_data view/load_list | python:{}">
+	                
+		            <tal:rep repeat="obj form_data">
+	 					<dl tal:define="item obj/getObject|nothing;
+										item_type item/portal_type;
+										item_type_class python:'contenttype-' + normalizeString(item_type);
+										item_wf_state item/review_state|python: context.portal_workflow.getInfoFor(item, 'review_state', '');
+                                   		item_wf_state_class python:'state-' + normalizeString(item_wf_state);">
+			                <dt>
+			                    <span class="summary" tal:define="item_icon python:plone_view.getIcon(obj);">
+									<img tal:replace="structure item_icon/html_tag" />
+			                        <a href="#" class="contenttype-folder state-published url"
+			                           tal:attributes="href item/absolute_url|nothing;
+									   				   class string:$item_type_class $item_wf_state_class url"
+			                           tal:content="item/title|item/id|nothing">Item Title</a>
+			                    </span>
+			                </dt>
+							<dd tal:condition="item/description|nothing">
+	                    		<span class="description" tal:content="item/description|nothing">description</span>
+	                		</dd>
+						</dl>				
+					</tal:rep>
+		                																					           					     
+					<!--table width="100%">
 						<tr>
 							<th width="40%">Titulo</th>
 							<th width="30%">Descrição</th>
@@ -17,16 +39,16 @@
 						</tr>
 						<tal:rep repeat="obj form_data">
 							<tr>
-								<tal:def define="item obj/getObject|nothing">
+								<tal:def>
 									<td><a target="_blank" tal:attributes="href item/absolute_url" tal:content="item/Title"></a></td>
 									<td><span tal:content="item/description"></span></td>
 									<td><span tal:content="item/portal_type"></span> </td>
 					            </tal:def>
 							</tr>
 						</tal:rep>
-					</table>
-		          </div>
-		        
+					</table-->
+		        </div>
+		    </div>    
 
 	  	</div>    
   </body>

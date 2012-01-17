@@ -1,0 +1,25 @@
+<html>
+    <body metal:use-macro="here/main_template/macros/master">
+    	
+        <div metal:fill-slot="content">
+            <div id="interna">
+				<div class="import-user" tal:define="data view/load_list|nothing">
+                    
+					<h1 tal:content="string:${view/get_saldacao|nothing} colaborador da ${data/short_name|nothing}" />
+					
+					<h3>Verificamos que este &eacute o seu primeiro acesso e para que a Intranet funcione corretamente,
+						precisamos que voc&ecirc; atualize seus dados pessoais.</h3>
+					<h3>Em menos de 5 minutos tudo estar&aacute; pronto. Vamos l&aacute;?</h3>
+                    
+					<form action="myvindula-first-registre" method="post" enctype="multipart/form-data">
+						
+						<input type="submit" id='continuar' name="continuar" value="Clique aque para continua">
+						<input type="submit" id='voltar' name="voltar" value="N&atilde;o, Obrigado">
+						
+					</form>
+	
+                </div>
+			</div>
+        </div>
+    </body>
+</html>

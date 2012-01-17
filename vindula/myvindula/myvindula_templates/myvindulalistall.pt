@@ -17,7 +17,7 @@
 				                 tal:condition="img"
 				                 tal:attributes="src img">
 				              <br />
-				              <span tal:content="item/name| item/username | nothing"></span>
+				              <span tal:content="python:view_listall.checaValor(item.name,item.username)"></span>
 				            </a>
 		          		</div>
 		        	</div>

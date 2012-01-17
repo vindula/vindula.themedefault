@@ -1,0 +1,26 @@
+#holerite{
+	border:solid #000 1px;
+	float:left;
+}
+#holerite .title{
+	text-align:center;
+	font-size:10px;
+}
+
+#holerite .border{
+	border-top:solid #000 1px;
+	border-bottom:solid #000 1px;
+	float:left;
+}
+#holerite .border-horz{
+	
+	border-left:solid #000 1px;
+	float:left;
+}
+
+#holerite .center{
+	text-align:center;
+}
+#holerite .width-6-5{
+	width: 36.25%;
+}

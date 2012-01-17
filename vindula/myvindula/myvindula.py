@@ -33,7 +33,10 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, ModelsDepartment, ModelsFuncDetails,\
                                    ImportUser, ModelsMyvindulaHowareu, ModelsMyvindulaComments, ModelsMyvindulaLike,\
                                    ManageCourses, ManageLanguages, ModelsMyvindulaFuncdetailCouses,ModelsMyvindulaCourses,\
-                                   ModelsMyvindulaFuncdetailLanguages, ModelsMyvindulaLanguages, ModelsMyvindulaRecados
+                                   ModelsMyvindulaFuncdetailLanguages, ModelsMyvindulaLanguages, ModelsMyvindulaRecados ,\
+                                   ModelsFuncHolerite, ModelsFuncHoleriteDescricao
+                                   
+from vindula.controlpanel.browser.models import ModelsCompanyInformation
 
 class MyVindulaView(grok.View):
     grok.context(INavigationRoot)
@@ -124,6 +127,18 @@ class MyVindulaPanelView(grok.View):
             if 'vindula_vindularecadosconfig' in control.keys():
                 config = control['vindula_vindularecadosconfig']
                 return config.ativa_recados
+            else:
+                return False
+          
+        else:
+            return False
+    
+    def check_holerite(self):
+        if 'control-panel-objects' in getSite().keys():
+            control = getSite()['control-panel-objects']
+            if 'vindula_vindulaholeriteconfig' in control.keys():
+                config = control['vindula_vindulaholeriteconfig']
+                return config.ativa_holerite
             else:
                 return False
           
@@ -368,7 +383,7 @@ class MyVindulaListRecados(grok.View):
         else:
             return self.context.absolute_url()+'/defaultUser.png'
 
-class MyVindulalistAll(grok.View):
+class MyVindulalistAll(grok.View, BaseFunc):
     grok.context(Interface)
     grok.require('zope2.View')
     grok.name('myvindulalistall')
@@ -392,7 +407,6 @@ class MyVindulaListMyContent(grok.View):
         user_login = membership.getAuthenticatedMember()
         
         if user_login.getId():
-            #import pdb;pdb.set_trace()
             ctool = getSite().portal_catalog
             items = ctool(path = {'query': '/', 'depth': 99},
                           Creator=user_login.getId())        
@@ -419,6 +433,41 @@ class MyVindulaManageAllUser(grok.View):
 
     def encodeUser(self,user):
         return base64.b16encode(user)
+    
+class MyVindulaFirstRegistreView(grok.View):
+    grok.context(ISiteRoot)
+    grok.require('zope2.View')
+    grok.name('myvindula-first-registre')
+    
+    def to_utf8(self,value):
+        return unicode(value, 'utf-8') 
+    
+    def load_list(self):
+        form = self.request # var tipo 'dict' que guarda todas as informacoes do formulario (keys,items,values)
+        form_keys = form.keys() # var tipo 'list' que guarda todas as chaves do formulario (keys)
+        
+        continuar_url = self.context.absolute_url() + '/myvindulaprefs'
+        voltar_url = self.context.absolute_url() + '/'
+        
+        if 'continuar' in form_keys:
+            self.request.response.redirect(continuar_url) 
+        
+        elif 'voltar' in form_keys:
+            self.request.response.redirect(voltar_url)
+        
+        else:
+            result = ModelsCompanyInformation().get_CompanyInformation()
+            return result
+    
+    def get_saldacao(self):
+        hora = datetime.now().strftime('%H')
+        if hora > '17':
+            return 'Boa noite, '
+        elif hora > '12':
+            return 'Boa tarde, '
+        else:
+            return 'Bom dia, '
+    
 
 
 class MyVindulaListBirthdays(grok.View):
@@ -469,6 +518,9 @@ class MyVindulaListBirthdays(grok.View):
             date_end = now.strftime('%Y-%m-'+str(dia))
             
             results = ModelsFuncDetails().get_FuncBirthdays(date_start,date_end)
+            
+        elif type_filter == 'prox':
+            results = ModelsFuncDetails().get_FuncUpcomingBirthdays()
         
         if results:
             return results #results[:int(quant)]
@@ -479,7 +531,10 @@ class MyVindulaListBirthdays(grok.View):
     def load_list(self):
         form = self.request.form
         filtro = form.get('filtro',1)
-        results = self.get_birthdaysToday(int(filtro))
+        if filtro == 'prox':
+            results = self.get_birthdaysToday(filtro)
+        else:
+            results = self.get_birthdaysToday(int(filtro))
         
         if results:
             return results
@@ -898,4 +953,192 @@ class MyVindulaExportUsersView(grok.View):
                 text += '\n'
                  
             self.request.response.write(str(text))
+
+class MyVindulaImportHoleriteView(grok.View, BaseFunc):
+    grok.context(INavigationRoot)
+    grok.require('cmf.ManagePortal')
+    grok.name('myvindula-import-holerite')
+    
+    def get_lastImport(self):
+        result = ModelsFuncHolerite().get_FuncHolerites_Import()
+        if result: 
+            return result
+        else:
+            return []
+        
+    def CountDados(self, data):
+        result = ModelsFuncHolerite().get_FuncHolerites_byData(data)
+        if result: 
+            return result.count()
+        else:
+            return 0
+              
+    
+    def load_file(self):
+        form = self.request.form
+        if 'load_file' in form.keys():
             
+            if 'txt_file' in form.keys():
+                file = form.get('txt_file','')
+                if file:
+                    texto = file.read()
+                    registros = texto.split('\x1b2\n')
+                    for reg in registros:
+                        D = {}
+                        L = []
+                        linhas = reg.split('\n')
+                        max = len(linhas)-1
+                        cont = 0
+                        while cont <= max:
+                            linha = linhas[cont]
+                            if len(linha) == 80:
+                                if cont == 0:
+                                    D['cod_empresa'] = linha[0:3] 
+                                    D['empresa'] = linha[5:51]
+                                    #D['cidade_empresa'] = linha[] 
+                                
+                                elif cont == 1:
+                                    D['endereco_empresa'] = linha[5:60]                    
+                                    D['estado_empresa'] = linha[60:62]
+                                
+                                elif cont == 2:    
+                                    D['cnpj_empresa'] = linha[5:23]
+                                    tmp = linha[56:63]
+                                    tmp = tmp.strip()
+                                    tmp = tmp.split('/')
+                                    D['competencia'] = tmp[1]+'/'+tmp[0] 
+                                
+                                elif cont == 4:
+                                    D['matricula'] = linha[0:5]
+                                    D['nome'] = linha[6:51]
+                    
+                                elif cont >= 8 and cont <= 23:
+                                    E = {}
+                                    E['codigo'] = linha[0:3]
+                                    E['descricao'] = linha[4:33]
+                                    E['ref'] = linha[34:43]
+                                    E['vencimentos'] = linha[44:57]
+                                    E['descontos'] = linha[58:70]
+                                    
+                                    L.append(E)
+                                elif cont == 24:
+                                    D['total_vencimento'] = linha[42:55]
+                                    D['total_desconto'] = linha[56:70]
+                                
+                                elif cont == 26:
+                                    D['valor_liquido'] = linha[56:70]
+                                    
+                                elif cont == 28:
+                                    D['salario_base'] = linha[0:13]
+                                    D['base_Inss'] = linha[14:25]
+                                    D['base_fgts'] = linha[26:38]
+                                    D['fgts_mes'] = linha[40:50]
+                                    D['base_irrf'] = linha[52:70]
+                                
+                            cont += 1
+                        if D:
+                            convertido = self.converte_dadosByDB(D)
+                            id = ModelsFuncHolerite().set_FuncHolerite(**convertido)
+                            for item in L:
+                                try:
+                                    item['vin_myvindula_holerite_id'] = id
+                                    desc_convertido = self.converte_dadosByDB(item)
+                                    ModelsFuncHoleriteDescricao().set_FuncHoleriteDescricao(**item)
+                                except:
+                                    item['vin_myvindula_holerite_id'] = id
+                                    desc_convertido = self.converte_dadosByDB(item)
+                                    ModelsFuncHoleriteDescricao().set_FuncHoleriteDescricao(**item)
+        
+        else:
+            return None
+        
+class MyVindulaFindHoleriteView(grok.View, BaseFunc):
+    grok.context(Interface)
+    grok.require('zope2.View')
+    grok.name('myvindula-find-holerite')
+    
+    def get_descricao_holerite(self, id_holerite):
+        result = ModelsFuncHoleriteDescricao().get_FuncHoleriteDescricoes_byid(id_holerite)
+        if result: 
+            return result
+        else:
+            return [] 
+    
+    def load_list(self):
+        form = self.request.form
+        if 'matricula' in form.keys() and 'competencia' in form.keys():
+            matricula = form.get('matricula','')
+            competencia = form.get('competencia','')
+            try:
+                matricula = unicode(matricula,'utf-8')
+            except:
+                pass
+            try:
+                competencia = unicode(competencia,'utf-8')
+            except:
+                pass
+                
+            return ModelsFuncHolerite().get_FuncHolerites_byMatriculaAndCompetencia(matricula, competencia)
+
+
+class MyVindulaDelHoleriteView(grok.View, BaseFunc):
+    grok.context(INavigationRoot)
+    grok.require('cmf.ManagePortal')
+    grok.name('myvindula-del-holerite')
+    
+    def update(self):
+        form = self.request.form
+        success_url = self.context.absolute_url() + '/myvindula-import-holerite'
+        if 'date' in form.keys():
+            data_lote = form['date']
+            data_lote = datetime.strptime(data_lote,'%Y-%m-%d %H:%M:%S')
+            ModelsFuncHolerite().del_HoleritesLote(data_lote)
+            
+        self.request.response.redirect(success_url)
+    
+    def render(self):
+        pass
+        
+        
+class MyVindulaHoleriteView(grok.View, BaseFunc):
+    grok.context(ISiteRoot)
+    grok.require('zope2.View')
+    grok.name('myvindula-holerite')
+    
+    def get_prefs_user(self, user):
+        user_id = unicode(user, 'utf-8')    
+        return ModelsFuncDetails().get_FuncDetails(user_id)
+    
+    def get_descricao_holerite(self, id_holerite):
+        result = ModelsFuncHoleriteDescricao().get_FuncHoleriteDescricoes_byid(id_holerite)
+        if result: 
+            return result
+        else:
+            return [] 
+    
+    def load_list(self):
+    
+        membership = self.context.portal_membership
+        user_login = membership.getAuthenticatedMember()
+        user = str(user_login.id)
+        
+        prefs_user = self.get_prefs_user(user)
+        if prefs_user:
+            matricula = prefs_user.registration
+            holerites = ModelsFuncHolerite().get_FuncHolerites_byMatricula(matricula)
+            D = {}
+            if holerites:
+                if holerites.count() > 1:
+                    D['select'] = holerites 
+                    D['data'] = holerites.last() 
+                    return D
+                else:
+                    D['select'] = []
+                    D['data'] = holerites.one() 
+                    return D
+            
+            else:
+                return []
+        
+        else:
+                return []
