@@ -131,15 +131,30 @@ class ModelsFuncDetails(Storm, BaseStore):
             
     
     def get_FuncBirthdays(self, date_start, date_end):
+        data = self.store.execute('Select * From vin_myvindula_funcdetails Where DAY(date_birth) <= DAY(Date("%s")) AND MONTH(date_birth) <= MONTH(Date("%s")) AND DAY(date_birth) >= DAY(Date("%s")) AND MONTH(date_birth) >= MONTH(Date("%s")) ORDER BY MONTH(date_birth) ASC, DAY(date_birth) ASC;'%(date_end,date_end,date_start,date_start)) 
         
-        data = self.store.execute('Select * From vin_myvindula_funcdetails Where DAY(date_birth) <= DAY(Date("%s")) AND MONTH(date_birth) <= MONTH(Date("%s")) AND DAY(date_birth) >= DAY(Date("%s")) AND MONTH(date_birth) >= MONTH(Date("%s")) ORDER BY DAY(date_birth) ASC, MONTH(date_birth) ASC ;'%(date_end,date_end,date_start,date_start)) 
+        if data.rowcount != 0:
+            result=[]
+            for obj in data.get_all():
+                D={}
+                i = 0
+                columns = self.store.execute('SHOW COLUMNS FROM vin_myvindula_funcdetails;')
+                for column in columns.get_all():
+                    if str(column[0]) == 'date_birth':
+                        D[str(column[0])] = obj[i].strftime('%d/%m')
+                    else:
+                        D[str(column[0])] = obj[i]
+                    i+=1
+            
+                result.append(D)       
+            
+            return result
+        else:
+            return None
+          
+    def get_FuncUpcomingBirthdays(self):
+        data = self.store.execute("SELECT * FROM vin_myvindula_funcdetails WHERE concat_ws('-',year(now()),month(date_birth),day(date_birth)) >= NOW() ORDER BY MONTH(date_birth) ASC , DAY(date_birth) ASC;")
         
-#        debug(True, stream=sys.stdout)    
-#        data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.date_birth.like(date_end),
-#                                                  #ModelsFuncDetails.date_birth <= date_end.month,
-#                                                  #ModelsFuncDetails.date_birth >= date_start.day,
-#                                                  ModelsFuncDetails.date_birth.like(date_start)).order_by(ModelsFuncDetails.date_birth)
-
         if data.rowcount != 0:
             result=[]
             for obj in data.get_all():
@@ -158,7 +173,7 @@ class ModelsFuncDetails(Storm, BaseStore):
             return result
         else:
             return None
-          
+
          
 class ModelsDepartment(Storm, BaseStore):
     __storm_table__ = 'vin_myvindula_department'
@@ -219,6 +234,111 @@ class ModelsDepartment(Storm, BaseStore):
         
     def del_department(self, user):
         results = self.store.find(ModelsDepartment, ModelsDepartment.vin_myvindula_funcdetails_id==user)
+        if results:
+            for result in results:
+                self.store.remove(result)
+                self.store.flush()
+
+
+class ModelsFuncHolerite(Storm, BaseStore):
+    __storm_table__ = 'vin_myvindula_holerite'
+    
+    id = Int(primary=True)
+    nome = Unicode()
+    matricula = Unicode() 
+    cargo= Unicode()
+    cod_cargo = Unicode()
+    date_creation = DateTime()
+    competencia = Unicode()
+    empresa = Unicode()
+    cod_empresa = Unicode()
+    endereco_empresa = Unicode()
+    cidade_empresa = Unicode()
+    estado_empresa = Unicode()
+    cnpj_empresa = Unicode()
+    total_vencimento = Unicode()
+    total_desconto = Unicode()
+    valor_liquido = Unicode()
+    salario_base = Unicode()
+    base_Inss = Unicode()
+    base_fgts = Unicode()
+    fgts_mes = Unicode()
+    base_irrf = Unicode()
+    
+    descricao = Reference(id, "ModelsFuncHoleriteDescricao.vin_myvindula_holerite_id")
+    
+    def set_FuncHolerite(self, **kwargs):
+        # adicionando...
+        funcHolerite = ModelsFuncHolerite(**kwargs)
+        self.store.add(funcHolerite)
+        self.store.flush()
+        
+        return funcHolerite.id       
+    
+    def get_FuncHolerites_byMatricula(self, matricula):
+        data = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.matricula==matricula).order_by(ModelsFuncHolerite.competencia)
+        if data.count() > 0:
+            return data
+        else:
+            return None    
+    
+    def get_FuncHolerites_byMatriculaAndCompetencia(self, matricula, competencia):
+        data = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.matricula==matricula, ModelsFuncHolerite.competencia==competencia).one()
+        if data:
+            return data
+        else:
+            return None    
+
+    def get_FuncHolerites_byData(self, data):
+        data = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.date_creation==data)
+        if data.count() > 1:
+            return data
+        else:
+            return None        
+    
+    def get_FuncHolerites_Import(self):
+        data = self.store.find(ModelsFuncHolerite)
+        if data.count() > 0:
+            return data.group_by(ModelsFuncHolerite.date_creation)
+        else:
+            return None    
+
+    def del_HoleritesLote(self, date):
+        results = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.date_creation==date)
+        if results:
+            for result in results:
+                ModelsFuncHoleriteDescricao().del_HoleritesDescricao(result.id)
+                self.store.remove(result)
+                self.store.flush()        
+    
+    
+    
+class ModelsFuncHoleriteDescricao(Storm, BaseStore):
+    __storm_table__ = 'vin_myvindula_descricao_holerite'
+    
+    id = Int(primary=True)    
+    codigo = Unicode()
+    descricao = Unicode()
+    ref = Unicode()
+    vencimentos = Unicode()
+    descontos = Unicode()
+    vin_myvindula_holerite_id = Int()
+    
+    def set_FuncHoleriteDescricao(self, **kwargs):
+        # adicionando...
+        funcHoleriteDescricao = ModelsFuncHoleriteDescricao(**kwargs)
+        self.store.add(funcHoleriteDescricao)
+        self.store.flush()          
+    
+    def get_FuncHoleriteDescricoes_byid(self, id):
+        data = self.store.find(ModelsFuncHoleriteDescricao, ModelsFuncHoleriteDescricao.vin_myvindula_holerite_id==id)
+        if data.count() > 0:
+            return data
+        else:
+            return None        
+    
+    def del_HoleritesDescricao(self, holerite_id):
+        results = self.store.find(ModelsFuncHoleriteDescricao, ModelsFuncHoleriteDescricao.vin_myvindula_holerite_id==holerite_id)
         if results:
             for result in results:
                 self.store.remove(result)
@@ -589,6 +709,17 @@ class BaseFunc(BaseStore):
         else:
               return 'field'
           
+    #pega o valor entre dois campos
+    def checaValor(self, x, y):
+        if not x and not y:
+            return ''
+        elif x:
+             return x
+        elif y:
+             return y
+        else:
+             return '' 
+          
     def checaEstado(self,config, campo):
         if config:
             try:
@@ -688,7 +819,14 @@ class BaseFunc(BaseStore):
                 return None  
         else:
             return None        
-        
+    
+    #retorno a data de competencia no ordem coreta
+    def converte_competencia(self, valor):
+        if valor is not None:
+            tmp = valor.split('/')
+            return tmp[1]+'/'+tmp[0]
+        else:
+            return None
         
     # retorna dado convertido para o campos de data 
     def converte_data(self, data, data_atual=False):
@@ -719,7 +857,22 @@ class BaseFunc(BaseStore):
                 return datastr  
             else:
                 return data
-
+            
+    def converte_dadosByDB(self, D):
+        
+        keys = D.keys()
+        for item in keys:
+            valor = D[item]
+            if type(valor) == str: 
+                valor = valor.strip()
+                try:
+                    D[item] = unicode(valor, 'utf-8')
+                except:
+                    D[item] = unicode(valor, 'ISO-8859-1')
+            else:
+                D[item] = valor
+        return D
+                 
     def geraCampos(self,form_data):
         if type(form_data) == dict:
             errors = form_data.get('errors',None)
@@ -1038,6 +1191,10 @@ class SchemaFunc(BaseFunc):
                         D['UID'] = unicode(departament,'utf-8')
                         D['funcdetails_id'] = user_id
                         ModelsDepartment().set_department(**D)
+                        
+                        user_id
+                        
+                        
                             
                 if 'skills_expertise' in form_keys:
                     ModelsMyvindulaFuncdetailCouses().del_funcdetailCouser(user_id)
@@ -1084,7 +1241,7 @@ class SchemaFunc(BaseFunc):
                     user.setMemberProperties(user_plone)
                             
                 #Redirect back to the front page with a status message
-                IStatusMessage(context.request).addStatusMessage(_(u"Thank you for your order. We will contact you shortly"), "info")
+                IStatusMessage(context.request).addStatusMessage(_(u"Seu perfil foi editado com sucesso!!"), "info")
                 if manage:
                     context.request.response.redirect(success_url_manage)
                 else:
@@ -1114,7 +1271,7 @@ class SchemaFunc(BaseFunc):
               
         # se o usuario não estiver logado
         else:
-            IStatusMessage(context.request).addStatusMessage(_(u'Error to saving the register.'),"erro")
+            IStatusMessage(context.request).addStatusMessage(_(u'Erro ao salvar o registro.'),"erro")
             context.request.response.redirect(access_denied)
         
 class SchemaConfgMyvindula(BaseFunc):

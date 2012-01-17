@@ -16,6 +16,7 @@ from Products.CMFCore.utils import getToolByName
 
 from vindula.myvindula.user import BaseFunc, ModelsDepartment, ModelsFuncDetails
 from datetime import date
+from storm.expr import Desc
 #import datetime
 from DateTime.DateTime import DateTime
 import calendar 
@@ -24,7 +25,7 @@ class TypesSearch():
     """ Cria SimpleVocabulary """
 
     def __call__(self):
-        itens=[(1,'Aniversariantes do dia'), (7,'Aniversariantes da semana'),  (30,'Aniversariantes do mês')]
+        itens=[(1,'Aniversariantes do dia'), (7,'Aniversariantes da semana'),  (30,'Aniversariantes do mês'), ('prox', 'Próximos Aniversariantes')]
         L=[]
         for i in itens:
             L.append(SimpleTerm(i[0], i[0], unicode(i[1])))
@@ -100,6 +101,7 @@ class Renderer(base.Renderer):
         return ModelsDepartment().get_departmentByUsername(user)        
 
     def get_birthdaysToday(self, type_filter):
+        results = None
         if type_filter == 1:
             date_start = date.today().strftime('%Y-%m-%d')
             date_end = date.today().strftime('%Y-%m-%d')
@@ -122,6 +124,9 @@ class Renderer(base.Renderer):
             date_end = now.strftime('%Y-%m-'+str(dia))
             
             results = ModelsFuncDetails().get_FuncBirthdays(date_start,date_end)
+        
+        elif type_filter == 'prox':
+            results = ModelsFuncDetails().get_FuncUpcomingBirthdays()
         
         if results:
             return results #results[:int(quant)]
