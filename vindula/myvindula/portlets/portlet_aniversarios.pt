@@ -7,7 +7,6 @@
 		<div id="busca-portlet" class="portlet-birthday" tal:define="quant view/get_quantidade_portlet;
 				results view/birthdaysToday;">
 			<tal:results tal:repeat="obj python:results[:int(quant)]">
-
 				<div id="boxPortlet" tal:define="i repeat/obj/end"
 						tal:attributes="class python:view.getEnd(i);">
 					<div class="row">
@@ -40,29 +39,28 @@
 																  tal:condition="python: cont > 1 and not last"> | </span>
 										</tal:rep>
 									</tal:def>
-	
 								</p>
 						</div>
 					</div>
 				</div>
-		</tal:results>
-		<div class="titulo_info_boxTipo2 aling-right">
-			<h4 tal:define="x python:len(results)>int(quant)" tal:condition="x">
-				<a tal:attributes="href string:${here/portal_url}/myvindulalistbirthdays?filtro=${view/get_type_search|nothing}">Mais...</a>
-			</h4>
+			</tal:results>
+			<div class="titulo_info_boxTipo2 aling-right">
+				<h4 tal:define="x python:len(results)>int(quant)" tal:condition="x">
+					<a tal:attributes="href string:${here/portal_url}/myvindulalistbirthdays?filtro=${view/get_type_search|nothing}">Mais...</a>
+				</h4>
+			</div>
+			
+			<div class="visualClear"></div>
+			<tal:notresults tal:condition="not: view/birthdaysToday">
+				<h4>N&atilde;o h&aacute; aniversariantes nos pr&oacute;ximos dias.</h4>
+			</tal:notresults>
+			<div class="titulo_info_boxTipo2 aling-right">
+				<br />
+				<h4>
+					<a tal:attributes="href string:${here/portal_url}/myvindulalistbirthdays?filtro=7">Aniversariantes da Semana</a>
+				</h4>
+			</div>
 		</div>
-		<div class="titulo_info_boxTipo2 aling-right">
-			<h4>
-				<a tal:attributes="href string:${here/portal_url}/myvindulalistbirthdays?filtro=7">Aniversariantes da Semana</a>
-			</h4>
-		</div>
-		<div class="visualClear"></div>
-		<tal:notresults tal:condition="not: view/birthdaysToday">
-			<h4>N&atilde;o h&aacute; aniversariantes nos pr&oacute;ximos dias.</h4>
-		</tal:notresults>
-</div>
-
     </dd>
-    
     <dd class="portletFooter"></dd>
 </dl>
