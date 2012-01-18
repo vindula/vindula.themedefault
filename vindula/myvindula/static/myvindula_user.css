@@ -99,6 +99,12 @@ h2.h2title {
     text-align: right;
 }
 
+.userpage #grupo {
+	float:left;
+   	width:100%;
+	margin-bottom:10px;
+}
+
 /* Table */
 .userpage table {
 	margin-bottom: 30px !important;

@@ -34,7 +34,7 @@ from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, M
                                    ImportUser, ModelsMyvindulaHowareu, ModelsMyvindulaComments, ModelsMyvindulaLike,\
                                    ManageCourses, ManageLanguages, ModelsMyvindulaFuncdetailCouses,ModelsMyvindulaCourses,\
                                    ModelsMyvindulaFuncdetailLanguages, ModelsMyvindulaLanguages, ModelsMyvindulaRecados ,\
-                                   ModelsFuncHolerite, ModelsFuncHoleriteDescricao
+                                   ModelsFuncHolerite, ModelsFuncHoleriteDescricao, ModelsConfgMyvindula
                                    
 from vindula.controlpanel.browser.models import ModelsCompanyInformation
 
@@ -248,6 +248,94 @@ class MyVindulaListUser(grok.View):
     grok.context(Interface)
     grok.require('zope2.View')
     grok.name('myvindulalistuser')
+    
+    
+    def get_campos(self):
+        configuracao= ModelsConfgMyvindula().get_configuration()
+        return configuracao
+   
+    def valida_pessoal(self):
+        configuracao1= self.get_campos()
+        if configuracao1.employee_id:
+            return True
+        elif configuracao1.nickname:
+            return True
+        elif configuracao1.pronunciation_name:
+            return True
+        elif configuracao1.date_birth:
+            return True
+        else:
+            return False
+        
+    def valida_contato(self):
+        configuracao1= self.get_campos()
+        if configuracao1.email:
+            return True
+        elif configuracao1.phone_number:
+            return True
+        elif configuracao1.location:
+            return True
+        elif configuracao1.postal_address:
+            return True
+        else:
+            return False
+         
+    def valida_corporativo(self):
+        configuracao1= self.get_campos()
+        if configuracao1.enterprise:
+            return True
+        elif configuracao1.registration:
+            return True
+        elif configuracao1.position:
+            return True
+        elif configuracao1.admission_date:
+            return True
+        elif configuracao1.registration:
+            return True
+        elif configuracao1.cost_center:
+            return True
+        elif configuracao1.profit_centre:
+            return True
+        elif configuracao1.special_roles:
+            return True
+        elif configuracao1.organisational_unit:
+            return True
+        elif configuracao1.delegations:
+            return True
+        elif configuracao1.reports_to:
+            return True
+        else:
+            return False
+        
+    def valida_others(self):
+        configuracao1= self.get_campos()
+        if configuracao1.committess:
+            return True
+        elif configuracao1.registration:
+            return True
+        elif configuracao1.projetcs:
+            return True
+        elif configuracao1.personal_information:
+            return True
+        elif configuracao1.skills_expertise:
+            return True
+        elif configuracao1.languages:
+            return True
+        elif configuracao1.availability:
+            return True
+        elif configuracao1.papers_published:
+            return True
+        elif configuracao1.teaching_research:
+            return True
+        elif configuracao1.resume:
+            return True
+        elif configuracao1.blogs:
+            return True
+        elif configuracao1.customised_message:
+            return True
+        else:
+            return False
+        
     
     
     def check_recados(self):
