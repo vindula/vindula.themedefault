@@ -33,7 +33,8 @@
 				<span>Competência</span>
 			</div>
 			<div class="cell width-2 position-14">
-				<span tal:content="python:view.converte_competencia(item.competencia)" />
+				<span tal:define="comp item/competencia|nothing"
+				tal:content="python:view.converte_competencia(comp)" />
 			</div>
 		</div>
 	</div>
@@ -52,7 +53,8 @@
 			</div>
 		</div>
 	</div>
-	<tal:def define="descricoes python:view.get_descricao_holerite(item.id)">
+	<tal:def define="tmp item/id|nothing;
+					 descricoes python:view.get_descricao_holerite(tmp)">
 		<div class="row title even">
 			<div class="cell width-1 position-0">
 				<span>Cód.</span>
