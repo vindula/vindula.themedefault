@@ -180,14 +180,20 @@ class HomePageView(grok.View):
                         D['summary'] = obj.Description()[:350]
     
                     if obj.getImage():
-                        D['image'] = obj.getImage().absolute_url() + '_mini' 
+                        try:
+                            D['image'] = obj.getImage().absolute_url() + '_mini'
+                        except:
+                            D['image'] = ''
                     
                 else:
                     if obj.summary != '' or obj.summary is not None:
                         D['summary'] = obj.summary[:350]
                     
                     if obj.image:
-                        D['image'] = obj.image.to_object.absolute_url() + '/image_mini'
+                        try:
+                            D['image'] = obj.image.to_object.absolute_url() + '/image_mini'
+                        except:
+                            D['image'] = ''
                     
                 if len(D['summary']) == 350:
                     D['summary'] += '...'
