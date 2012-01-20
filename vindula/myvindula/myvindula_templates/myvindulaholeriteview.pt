@@ -31,7 +31,8 @@
 						<option value="">Competência</option>
 						<tal:rep repeat="opt select">
 							<option tal:attributes="value opt/competencia|nothing" 
-									tal:content="python:view.converte_competencia(opt.competencia)" />
+									tal:define="tmp opt/competencia|nothing"
+									tal:content="python:view.converte_competencia(tmp)" />
 						</tal:rep>
 		
 					</select>
@@ -78,7 +79,8 @@
 									<span>Competência</span>
 								</div>
 								<div class="cell width-2 position-14">
-									<span tal:content="python:view.converte_competencia(item.competencia)" />
+									<span tal:define="tmp item/competencia|nothing" 
+									      tal:content="python:view.converte_competencia(tmp)" />
 								</div>
 							</div>
 						</div>
@@ -97,7 +99,8 @@
 								</div>
 							</div>
 						</div>
-						<tal:def define="descricoes python:view.get_descricao_holerite(item.id)">
+						<tal:def define="i item/id|nothing;
+								 descricoes python:view.get_descricao_holerite(i)">
 							<div class="row title even">
 								<div class="cell width-1 position-0">
 									<span>Cód.</span>
