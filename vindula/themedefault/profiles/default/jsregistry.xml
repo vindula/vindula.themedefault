@@ -9,4 +9,10 @@
     		 cacheable="True" compression="safe" cookable="False" enabled="True" 
 			 expression="" inline="False" />
 
+
+ 	<!--javascript cacheable="True" compression="none" cookable="True"
+             enabled="True" expression="" id="player/flowplayer-3.2.6.min.js"
+             inline="False"/-->
+
+
 </object>

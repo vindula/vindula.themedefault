@@ -183,8 +183,9 @@ class HomePageView(grok.View):
                         D['image'] = obj.getImage().absolute_url() + '_mini' 
                     
                 else:
-                    if obj.summary != '' or obj.summary is not None:
+                    if obj.summary != '' and obj.summary is not None:
                         D['summary'] = obj.summary[:350]
+                    
                     
                     if obj.image:
                         D['image'] = obj.image.to_object.absolute_url() + '/image_mini'

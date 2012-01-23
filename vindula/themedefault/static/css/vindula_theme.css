@@ -145,7 +145,7 @@ div#data dd.actionMenuContent li a {
 	margin-top: 3px;
 }
 .portletWrapper .portletFooter {
-	background-image: url("../images/bkgs/rodapePortlet.png");
+	background-image: url("++resource++vindula.themedefault/images/bkgs/rodapePortlet.png");
 	background-position: left bottom;
     background-repeat: no-repeat;
 	/*margin-top: -33px;
