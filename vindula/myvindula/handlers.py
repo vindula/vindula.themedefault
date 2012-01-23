@@ -22,8 +22,16 @@ def userupdate(event):
     if not ModelsFuncDetails().get_FuncDetails(user_id):
         D = {}
         D['username'] = user_id
-        D['name'] = to_utf8(user_login.getProperty('fullname'))
-        D['email'] = to_utf8(user_login.getProperty('email'))
+        try:
+            D['name'] = to_utf8(user_login.getProperty('fullname'))
+        except:
+            D['name'] = user_login.getProperty('fullname')
+        
+        try:
+            D['email'] = to_utf8(user_login.getProperty('email'))
+        except:
+            D['email'] = user_login.getProperty('email')
+        
         ModelsFuncDetails().set_FuncDetails(**D)
     else:
         user_data = ModelsFuncDetails().get_FuncDetails(user_id)

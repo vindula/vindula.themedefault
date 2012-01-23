@@ -1,9 +1,13 @@
 <html>
 	<body metal:use-macro="here/main_template/macros/master">
+		<metal:js fill-slot="javascript_head_slot">
+			<script type="text/javascript" src="/flowplayer-3.2.6.min.js"></script>
+		</metal:js>
+		
 	  	<div metal:fill-slot="content">
 	  		
 			<h2 class="h2title">Usu&aacute;rios do portal</h2>
-      		<meta:macro metal:define-macro="page-view">                  
+      		<!--meta:macro metal:define-macro="page-view">                  
 				
 				<div id="content" tal:define="member python:context.portal_membership.getAuthenticatedMember();
 											  view_listall python: context.restrictedTraverse('@@myvindulalistall');
@@ -23,7 +27,45 @@
 		        	</div>
 				</div>
 				
-	  		</meta:macro>
+	  		</meta:macro-->
+			
+			<div id="content">
+				
+				<!-- setup player normally -->
+				<a class="player" id="fms" style="display:block;width:300px;height:250px;cursor:pointer;">
+					<img src="http://static.flowplayer.org/img/player/btn/showme.png"  />
+				</a>
+				<script type="text/javascript">
+					
+					$f("fms", "/flowplayer-3.2.7.swf", {
+					
+						clip: {
+							url: 'PIAUIFIS2_07_OSCILADORMASSAMOLAIDEAL',
+							// configure clip to use influxis as our provider, it uses our rtmp plugin
+							provider: 'influxis'
+						},
+					
+						// streaming plugins are configured under the plugins node
+						plugins: {
+					
+							// here is our rtpm plugin configuration
+							influxis: {
+								url: '/flowplayer.rtmp-3.2.3.swf',
+					
+								// netConnectionUrl defines where the streams are found
+								netConnectionUrl: 'rtmp://saraiva.netpoint.com.br/saraiva_od/conecte'
+							}
+						}
+					});
+					
+				</script>
+
+				
+				
+				</div>
+	
+
+			
 	  	</div>    
   </body>
 </html>
