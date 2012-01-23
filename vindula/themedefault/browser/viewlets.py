@@ -130,7 +130,11 @@ class MenuViewlet(grok.Viewlet):
             if obj.getExcludeFromNav() == True:
                 return False
         except:
-            return False
+            try:
+                if obj.exclude_from_nav == True:
+                    return False
+            except:
+                return False
         
         if 'Anonymous' in roles and state == 'private':
             return False
