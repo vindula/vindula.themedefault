@@ -900,6 +900,8 @@ class MyVindulaImportSecondView(grok.View):
             success = False
             criar_user = form.get('cria-username', False)
             merge_user = form.get('atualiza-dados', False)
+            error = 0
+            url = ''
             
             for linha in arquivo.data.split('\n')[1:-1]:
                 dados = {}
