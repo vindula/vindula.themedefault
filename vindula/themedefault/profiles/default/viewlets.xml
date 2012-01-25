@@ -2,7 +2,8 @@
 <object>
 	
 	<order manager="plone.portalheader" skinname="*">
- 		<viewlet name="vindula.themedefault.usefullinks" insert-before="plone.skip_links"/>
+ 		<viewlet name="vindula.themedefault.favicon" insert-before="plone.skip_links"/>
+		<viewlet name="vindula.themedefault.usefullinks" insert-before="plone.skip_links"/>
 		<viewlet name="vindula.themedefault.logotop" insert-before="plone.global_sections"/>
 	</order>
 	

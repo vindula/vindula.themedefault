@@ -205,3 +205,25 @@ div.boxSelecao {
 }
 
 /* ...Control Panel View */
+
+div#data #portal-personaltools-custom {
+    background: none repeat scroll 0 0 transparent;
+    font-size: 100%;
+    padding-right: 0;
+    width: 100%;
+}
+#portal-personaltools-custom {
+    background: none repeat scroll 0 0 #E3E3E3;
+    border-bottom-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+    float: right;
+    font-size: 80%;
+    padding: 0.25em 0.5em;
+    position: relative;
+    right: 0;
+    top: 0;
+    z-index: 3;
+} 
+ 
+ 
+ */

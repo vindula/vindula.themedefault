@@ -6,9 +6,11 @@
     <!-- Pull in Plone CSS -->
     <prepend theme="/html/head" 
 	         content="/html/head/link | /html/head/style | /html/head/script | /html/head/title | /html/head/base | /html/head/meta" />
-
-	<drop css:content="link[rel='shortcut icon']" />		
-    <!-- Prevent theme usage in zmi -->
+	
+	<copy css:content="#icone-favico" theme="/html/head" />
+	<drop css:content="link[type='image/x-icon']" />
+    
+	<!-- Prevent theme usage in zmi -->
     <rules css:if-content="#visual-portal-wrapper">
 
 		<!-- Content with Home Page object -->
@@ -26,6 +28,8 @@
 	
 	<!-- Portal Top -->
 	<copy css:content-children="#usefullinks_viewlet" css:theme="#barra_superior" />
+	
+	
 	<copy css:content-children="#macro_logotop" css:theme="#topo .logo" />
 	<replace css:content="#portal-personaltools" css:theme="#data h4" />
 	<replace css:content="#portal-searchbox" css:theme="#portal-searchbox" />

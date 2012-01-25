@@ -13,6 +13,36 @@ class LogoTopViewlet(grok.Viewlet):
     grok.name('vindula.themedefault.logotop') 
     grok.require('zope2.View')
     grok.viewletmanager(IPortalHeader) 
+
+
+class FaviconTopViewlet(grok.Viewlet): 
+    grok.name('vindula.themedefault.favicon') 
+    grok.require('zope2.View')
+    grok.viewletmanager(IPortalHeader)     
+    
+    def getConfigurador(self):
+        if 'control-panel-objects' in  getSite().keys():
+            control = getSite()['control-panel-objects']
+            if 'vindula_themeconfig' in control.keys():
+                confg = control['vindula_themeconfig']
+                try:
+                    return confg.favicon
+                except:
+                    return None
+            else:
+                return None
+        else:
+            return None
+
+    def imagem(self):
+        conf = self.getConfigurador()
+        img = ''
+        if conf:
+            img = conf.to_object.absolute_url()
+        else:
+            img =  getSite().absolute_url() + '/++resource++vindula.themedefault/images/icons/favicon.ico'
+        
+        return img
     
 
 # Viewlet for portal footer

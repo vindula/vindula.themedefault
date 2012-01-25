@@ -10,9 +10,12 @@
 			 expression="" inline="False" />
 
 
- 	<!--javascript cacheable="True" compression="none" cookable="True"
-             enabled="True" expression="" id="player/flowplayer-3.2.6.min.js"
-             inline="False"/-->
-
+ 	<javascript cacheable="True" compression="none" cookable="True"
+             enabled="True" expression="" id="++resource++vindula.themedefault.js/flowplayer-3.2.6.min.js"
+             inline="False"/>
+	
+	<javascript cacheable="True" compression="none" cookable="True"
+             enabled="True" expression="" id="++resource++vindula.themedefault.js/carregaPlayer.js"
+             inline="False"/>
 
 </object>
