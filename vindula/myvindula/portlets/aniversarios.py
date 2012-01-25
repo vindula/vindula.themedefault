@@ -32,7 +32,6 @@ class TypesSearch():
                 
         return SimpleVocabulary(L)
 
-
 class IPortletAniversarios(IPortletDataProvider):
       
     """A portlet
@@ -52,6 +51,11 @@ class IPortletAniversarios(IPortletDataProvider):
     type_search = schema.Choice(title=unicode("Tipo do filtro", 'utf-8'),
                                 description=unicode("Selecione o Fitro que sera usado no portlet", 'utf-8'),
                                 vocabulary=TypesSearch().__call__())
+    
+    details_user = schema.Text(title=unicode("Detalhes do aniversariante", 'utf-8'),
+                                  description=unicode("Adicione detalhes sobre o aniversariante como Espresa, Matricula e outros. /n \
+                                                       Adicione um campo por linha, no formato [Label] | [Campo].", 'utf-8'),
+                                  required=False)
 
 class Assignment(base.Assignment):
     """Portlet assignment.
@@ -61,10 +65,11 @@ class Assignment(base.Assignment):
 
     implements(IPortletAniversarios)
     # TODO: Add keyword parameters for configurable parameters here
-    def __init__(self, title_portlet=u'', quantidade_portlet=u'',type_search=u''):
+    def __init__(self, title_portlet=u'', quantidade_portlet=u'',type_search=u'',details_user=u''):
        self.title_portlet = title_portlet
        self.quantidade_portlet = quantidade_portlet
        self.type_search = type_search
+       self.details_user = details_user
 
     @property
     def title(self):
@@ -87,7 +92,22 @@ class Renderer(base.Renderer):
     
     def get_type_search(self):
         return self.data.type_search
-   
+    
+    def get_details_user(self, user):
+        if self.data.details_user: 
+            try:
+                lines = self.data.details_user.splitlines()
+                L = []
+                for line in lines:
+                    D = {}
+                    line = line.replace('[', '').replace(']', '').split(' | ')
+                    D['label'] = line[0]
+                    D['content'] = user.get(line[1])
+                    L.append(D)
+                return L
+            except:
+                pass
+        return None
     
     def get_quantidade_portlet(self):
         return self.data.quantidade_portlet
@@ -161,9 +181,8 @@ class Renderer(base.Renderer):
             else:
                 return self.context.absolute_url()+'/defaultUser.png'
         else:
-            return self.context.absolute_url()+'/defaultUser.png'    
+            return self.context.absolute_url()+'/defaultUser.png' 
 
-    
         
 class AddForm(base.AddForm):
     """Portlet add form.

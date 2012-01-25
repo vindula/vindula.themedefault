@@ -1232,3 +1232,10 @@ class MyVindulaHoleriteView(grok.View, BaseFunc):
         
         else:
                 return []
+
+class MyVindulaSupportingDocumentsView(grok.View, BaseFunc):
+    grok.context(ISiteRoot)
+    grok.require('zope2.View')
+    grok.name('myvindula-documents')
+    
+    

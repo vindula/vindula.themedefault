@@ -778,9 +778,9 @@ class BaseFunc(BaseStore):
     
     def getPhoto(self,campo,request,data):
         if campo in request.keys():
-            if request.get(campo, None):
-                return self.context.absolute_url()+'/'+request.get(campo, '')  + '/image_thumb'
-            else:
+#            if request.get(campo, None):
+#                return self.context.absolute_url()+'/'+request.get(campo, '').filename + '/image_thumb'
+#            else:
                 return self.context.absolute_url()+'/'+'defaultUser.png'
         elif campo in data.keys():
             if data.get(campo, None) and not ' ' in data.get(campo,None) and not data.get(campo,None) == '':
