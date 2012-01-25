@@ -180,14 +180,18 @@ div#viewlet-below-content div.row {
 	float:none;
 }
 
+div.portlet-birthday div#boxPortlet div.row h4 {
+    padding: 0 11px 0 0;
+}
+
 
 /* Photo User portlets */
 div#boxPortlet div.row {
 	float: none;
-	height: 85px;
+	
 }
 div.portlet-birthday div#boxPortlet div.row {
-	height: 50px;
+	display: table;
 }
 div.portlet-user-image {
 	float:left;
