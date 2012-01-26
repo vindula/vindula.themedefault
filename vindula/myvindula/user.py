@@ -1153,14 +1153,13 @@ class SchemaFunc(BaseFunc):
             # Inicia o processamento do formulario
             # chama a funcao que valida os dados extraidos do formulario (valida_form) 
             errors, data = valida_form(campos, context.request.form)  
-            
-            
 
             if not errors:
                 # Upload of Photograph
                 if 'photograph' in form_keys:
                     if type(form['photograph']) == str:
-                        data['photograph'] = to_utf8(form['photograph'])
+                        data['photograph'] = unicode(form['photograph'], 'utf-8')
+                        
                     else:
                         if form['photograph'].filename != '':
                             path = context.context.portal_membership.getHomeFolder()
@@ -1191,10 +1190,6 @@ class SchemaFunc(BaseFunc):
                         D['UID'] = unicode(departament,'utf-8')
                         D['funcdetails_id'] = user_id
                         ModelsDepartment().set_department(**D)
-                        
-                        user_id
-                        
-                        
                             
                 if 'skills_expertise' in form_keys:
                     ModelsMyvindulaFuncdetailCouses().del_funcdetailCouser(user_id)
