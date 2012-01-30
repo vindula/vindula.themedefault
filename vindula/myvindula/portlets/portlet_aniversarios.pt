@@ -11,26 +11,28 @@
 												 details python: view.get_details_user(obj) or None;"
 						tal:attributes="class python:view.getEnd(i);">
 					<div class="row">
-						<div class="portlet-user-image cell width-3 position-0">
-							<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username|nothing}">
-								<img src="defaultUser.png"
-									  alt="" border="0"
-									    width="35"
-										height="49"
-										tal:define="photo obj/photograph|nothing"
-										tal:attributes="src python:view.getPhoto(photo);
-										alt obj/name|nothing;
-										title obj/name|nothing;" />
-							</a>
-						</div>
-						<div class="portlet-user-info cell width-13 position-4">
+						<tal:cond condition="view/show_picture">
+							<div class="portlet-user-image">
+								<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username|nothing}">
+									<img src="defaultUser.png"
+										  alt="" border="0"
+										    width="35"
+											height="49"
+											tal:define="photo obj/photograph|nothing"
+											tal:attributes="src python:view.getPhoto(photo);
+											alt obj/name|nothing;
+											title obj/name|nothing;" />
+								</a>
+							</div>
+						</tal:cond>
+						<div class="portlet-user-info">
 							<h4>
 								<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username|nothing}"
 									tal:content="obj/name|obj/username|nothing">func</a>
 							</h4>
 								<!--a href="" tal:attributes="href python: obj.getObject().absolute_url()" tal:content="obj/Title">Employee</a><br /-->
 								<p>
-									<tal:def define="user obj/username;
+									<!--tal:def define="user obj/username;
 											        departamentos python: view.get_department(user)">
 										<tal:rep repeat="departamento departamentos">
 												<span tal:content="departamento/Title">Departamento</span>
@@ -39,7 +41,7 @@
 																  tal:condition="python: cont > 1 and not last"> | </span>
 										</tal:rep>
 									</tal:def>
-									<span tal:content="obj/date_birth|nothing"></span><br />
+									<span tal:content="obj/date_birth|nothing"></span><br /-->
 									<tal:rep repeat="detail details" condition="details">
 										<span tal:condition="python: detail['label'] and detail['content']" tal:content="string: ${detail/label}: "> </span>
 										<span tal:condition="detail/content" tal:content="detail/content"> </span>
