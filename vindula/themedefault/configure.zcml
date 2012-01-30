@@ -21,6 +21,7 @@
   <includeDependencies package="." />
   <plone:static directory="static" type="theme" />
   
+  <five:registerPackage package="." initialize=".initialize" />
   
   <!-- Grok the package to initialise schema interfaces and content classes -->
   <grok:grok package="." />
