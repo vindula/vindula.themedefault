@@ -119,6 +119,9 @@ class ModelsFuncDetails(Storm, BaseStore):
             data = self.store.using(*origin).find(ModelsFuncDetails,  ModelsFuncDetails.name.like("%" + name + "%"),
                                                                    ModelsFuncDetails.phone_number.like("%" + phone + "%"),
                                                                    ModelsDepartment.uid_plone==department_id).order_by(ModelsFuncDetails.name)
+        elif department_id == u'0' and name != '':
+            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%")).order_by(ModelsFuncDetails.name)
+            
 
         else:
             data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"),
@@ -1125,11 +1128,15 @@ class SchemaFunc(BaseFunc):
         form_keys = form.keys() # var tipo 'list' que guarda todas as chaves do formulario (keys)
         campos = self.campos
         #user = context.context.portal_membership.getAuthenticatedMember()
-        
-        try:
-            user_id = unicode(user.id, 'utf-8')    
-        except:
-            user_id = user.id 
+
+        if not manage:
+            try:
+                user_id = unicode(user.id, 'utf-8')    
+            except:
+                user_id = user.id
+         
+        else:
+            user_id = user.username
         
         # divisao dos dicionarios "errors" e "convertidos"
         form_data = {
@@ -1232,8 +1239,8 @@ class SchemaFunc(BaseFunc):
                                   'home_page':data.get('blogs',''),
                                   'location':data.get('location',''),
                                   'description':data.get('customised_message','')}
-                        
-                    user.setMemberProperties(user_plone)
+                    if not manage:
+                        user.setMemberProperties(user_plone)
                             
                 #Redirect back to the front page with a status message
                 IStatusMessage(context.request).addStatusMessage(_(u"Seu perfil foi editado com sucesso!!"), "info")

@@ -182,7 +182,11 @@ class MyVindulaPrefsView(grok.View, BaseFunc):
         
         if 'user' in form.keys():
             user_cod = base64.b16decode(form.get('user',''))
-            user = membership.getMemberById(user_cod)
+            try:user_decodficado = unicode(user_cod, 'utf-8')
+            except:user_decodficado = user_cod
+            #user = membership.getMemberById(user_decodficado)
+
+            user = ModelsFuncDetails().get_FuncDetails(user_decodficado)
             
         else:    
             user = membership.getAuthenticatedMember()
@@ -476,14 +480,41 @@ class MyVindulalistAll(grok.View, BaseFunc):
     grok.require('zope2.View')
     grok.name('myvindulalistall')
     
+    def config(self):
+        if 'control-panel-objects' in  getSite().keys():
+            control = getSite()['control-panel-objects']
+            if 'vindula_vindulauserconfig' in control.keys():
+                confg = control['vindula_vindulauserconfig']
+                try:
+                    return confg.ativa_muit_user
+                except:
+                    return False
+            else:
+                return False
+        else:
+            return False
+        
     def load_list(self):
         form = self.request.form
-        #vars = BaseFunc().getParametersFromURL(self)
-        title = form.get('title','').strip()
-        departamento= form.get('departamento','0')
-        ramal = form.get('ramal','').strip()
-        result = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'))
-        return result
+
+#        #vars = BaseFunc().getParametersFromURL(self)
+        if 'title' in form.keys():
+            title = form.get('title','').strip()
+            departamento= form.get('departamento','0')
+            ramal = form.get('ramal','').strip()
+            result = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'))
+        
+        elif not self.config():
+            result = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'))
+            
+        elif 'all' in form.keys():
+            result = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'))
+        
+        else:
+            result = None
+        
+        return result    
+   
 
 class MyVindulaListMyContent(grok.View):
     grok.context(Interface)
@@ -510,13 +541,42 @@ class MyVindulaManageAllUser(grok.View):
     grok.require('cmf.ManagePortal')
     grok.name('myvindulamanagealluser')
     
+    def config(self):
+        if 'control-panel-objects' in  getSite().keys():
+            control = getSite()['control-panel-objects']
+            if 'vindula_vindulauserconfig' in control.keys():
+                confg = control['vindula_vindulauserconfig']
+                try:
+                    return confg.ativa_muit_user
+                except:
+                    return False
+            else:
+                return False
+        else:
+            return False
+    
+    
     def load_list(self):
-#        form = self.request.form
+        form = self.request.form
+
 #        #vars = BaseFunc().getParametersFromURL(self)
-#        title = form.get('title','').strip()
-#        departamento= form.get('departamento','0')
-#        ramal = form.get('ramal','').strip()
-        result = ModelsFuncDetails().get_allFuncDetails()
+        if 'title' in form.keys() and not 'all' in form.keys():
+            title = form.get('title','').strip()
+            departamento= form.get('departamento','0')
+            ramal = form.get('ramal','').strip()
+            result = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),
+                                                       unicode(departamento,'utf-8'),
+                                                       unicode(ramal, 'utf-8'))
+        
+        elif not self.config():
+            result = ModelsFuncDetails().get_FuncBusca('','0','')
+            
+        elif 'all' in form.keys():
+            result = ModelsFuncDetails().get_FuncBusca('','0','')
+        
+        else:
+            result = None
+        
         return result
 
     def encodeUser(self,user):

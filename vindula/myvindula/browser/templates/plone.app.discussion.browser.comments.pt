@@ -17,7 +17,7 @@
 					   item_id view_coments/get_UID|nothing;
 					   item_name_class context/portal_type;
 					   member context/@@plone_portal_state/member;
-					   activ_vindula context/activ_comment|nothing;
+					   activ_vindula context/activ_comment|context/isDiscussable|nothing;
 					   enable python:view_coments.discussionAllowed(isDiscussionAllowed, has_replies, activ_vindula);
 					   
             		   comments python:view_coments.get_comments(item_id, item_name_class);"

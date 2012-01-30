@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from zope.app.component.hooks import getSite
 from Products.CMFCore.interfaces import ISiteRoot
+#from zExceptions import Redirect
 
 from vindula.myvindula.user import ModelsFuncDetails
 
@@ -22,10 +23,16 @@ def userupdate(event):
     if not ModelsFuncDetails().get_FuncDetails(user_id):
         D = {}
         D['username'] = user_id
+        
+        if user_login.getProperty('fullname'):
+            user = user_login.getProperty('fullname')
+        else:
+            user = user_id
+        
         try:
-            D['name'] = to_utf8(user_login.getProperty('fullname'))
+            D['name'] = to_utf8(user)
         except:
-            D['name'] = user_login.getProperty('fullname')
+            D['name'] = user
         
         try:
             D['email'] = to_utf8(user_login.getProperty('email'))
@@ -38,6 +45,8 @@ def userupdate(event):
         
         if user_data.name is None or ' ' in user_data.name:
             #getSite.context.request.response.redirect(success_url)
+            #import pdb;pdb.set_trace()
+            #raise Redirect(registro_url)
             pass
         
         elif user_data.date_birth is None:

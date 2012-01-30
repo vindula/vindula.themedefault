@@ -92,7 +92,7 @@
 								<tr tal:condition="configuracao/date_birth|nothing">
 									<td class="field">Data de anivers&aacute;rio</td>
 									<td class="value" tal:condition="form_data/date_birth|nothing"
-													  tal:content="python: form_data.date_birth.strftime('%d/%m/%Y')"></td>
+													  tal:content="python: form_data.date_birth.strftime('%d/%m')"></td>
 									<td class="value" tal:condition="not: form_data/date_birth|nothing"></td>												  
 								</tr>
 							</table>
