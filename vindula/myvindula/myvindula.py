@@ -132,6 +132,28 @@ class MyVindulaPanelView(grok.View):
           
         else:
             return False
+        
+    def check_pensamentos(self):
+        if 'control-panel-objects' in getSite().keys():
+            control = getSite()['control-panel-objects']
+            if 'vindula_vindulapensamentosconfig' in control.keys():
+                config = control['vindula_vindulapensamentosconfig']
+                return config.ativa_pensamentos
+            else:
+                return False
+        else:
+            return False
+        
+    def check_editfunc(self):
+        if 'control-panel-objects' in getSite().keys():
+            control = getSite()['control-panel-objects']
+            if 'vindula_vindulaeditfuncconfig' in control.keys():
+                config = control['vindula_vindulaeditfuncconfig']
+                return config.ativa_editfunc
+            else:
+                return False
+        else:
+            return False
     
     def check_holerite(self):
         if 'control-panel-objects' in getSite().keys():

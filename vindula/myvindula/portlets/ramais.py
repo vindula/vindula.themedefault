@@ -31,6 +31,9 @@ class IPortletRamais(IPortletDataProvider):
                                   description=unicode("quantidade limite de item mostrado no portlet.", 'utf-8'),
                                   required=True)
     
+#    use_table_funcdetails = schema.Bool(title=unicode("Selecione se você deseja usar ", 'utf-8'),
+#                                       description=unicode("Selecione para mostrar a foto dos aniversarientes no portlet.", 'utf-8'))
+    
 
 class Assignment(base.Assignment):
     """Portlet assignment.

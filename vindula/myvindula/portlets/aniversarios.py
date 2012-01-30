@@ -45,15 +45,18 @@ class IPortletAniversarios(IPortletDataProvider):
                                   required=True)
     
     quantidade_portlet = schema.Int(title=unicode("Quantidade de Items", 'utf-8'),
-                                  description=unicode("quantidade limite de item mostrado no portlet.", 'utf-8'),
+                                  description=unicode("Quantidade limite de itens mostrado no portlet.", 'utf-8'),
                                   required=True)
    
     type_search = schema.Choice(title=unicode("Tipo do filtro", 'utf-8'),
-                                description=unicode("Selecione o Fitro que sera usado no portlet", 'utf-8'),
+                                description=unicode("Selecione o fitro que sera usado no portlet", 'utf-8'),
                                 vocabulary=TypesSearch().__call__())
     
+    show_picture = schema.Bool(title=unicode("Exibir foto", 'utf-8'),
+                                       description=unicode("Selecione para mostrar a foto dos aniversarientes no portlet.", 'utf-8'))
+    
     details_user = schema.Text(title=unicode("Detalhes do aniversariante", 'utf-8'),
-                                  description=unicode("Adicione detalhes sobre o aniversariante como Espresa, Matricula e outros. /n \
+                                  description=unicode("Adicione detalhes sobre o aniversariante como Empresa, Matricula e outros. \
                                                        Adicione um campo por linha, no formato [Label] | [Campo].", 'utf-8'),
                                   required=False)
 
@@ -65,11 +68,12 @@ class Assignment(base.Assignment):
 
     implements(IPortletAniversarios)
     # TODO: Add keyword parameters for configurable parameters here
-    def __init__(self, title_portlet=u'', quantidade_portlet=u'',type_search=u'',details_user=u''):
+    def __init__(self, title_portlet=u'', quantidade_portlet=u'',type_search=u'',details_user=u'',show_picture=u''):
        self.title_portlet = title_portlet
        self.quantidade_portlet = quantidade_portlet
        self.type_search = type_search
        self.details_user = details_user
+       self.show_picture = show_picture
 
     @property
     def title(self):
@@ -92,6 +96,9 @@ class Renderer(base.Renderer):
     
     def get_type_search(self):
         return self.data.type_search
+    
+    def show_picture(self):
+        return self.data.show_picture
     
     def get_details_user(self, user):
         if self.data.details_user: 

@@ -24,18 +24,7 @@
                 id="content-views"
                 tal:define="view_name view/__name__"
                 i18n:domain="plone">
-
-                <li id="contentview-user_data-personal-information"
-                    tal:define="link context/@@myvindulapanel/getPersonalInfoLink;
-                                selected python:view_name=='myvindula'"
-                    tal:condition="link|nothing"
-                    tal:attributes="class python:selected and 'selected' or 'plain'">
-                    <a href=""
-                       tal:attributes="href string:${context/portal_url}/@@myvindula">
-                        Pensamentos
-                    </a>
-                </li>
-				
+                	
 				<li id="contentview-user_data-personal-data"
                     tal:define="member python:context.portal_membership.getAuthenticatedMember();
 					link context/@@myvindulapanel/getPersonalPrefsLink;
@@ -49,17 +38,34 @@
                     </a>
                 </li>
 				
-                <li id="contentview-user_data-personal-preferences"
-                    tal:define="link context/@@myvindulapanel/getPersonalPrefsLink;
-                                selected python:view_name=='myvindulaprefs';"
-                    tal:condition="link|nothing"
-                    tal:attributes="class python:selected and 'selected' or 'plain'">
-                    <a href=""
-                       tal:attributes="href string:${context/portal_url}/@@myvindulaprefs"
-                       i18n:translate="">
-                        Editar Perfil
-                    </a>
-                </li>
+				<tal:cond define="enable context/@@myvindulapanel/check_editfunc;"
+						  condition="enable">
+	                <li id="contentview-user_data-personal-preferences"
+	                    tal:define="link context/@@myvindulapanel/getPersonalPrefsLink;
+	                                selected python:view_name=='myvindulaprefs';"
+	                    tal:condition="link|nothing"
+	                    tal:attributes="class python:selected and 'selected' or 'plain'">
+	                    <a href=""
+	                       tal:attributes="href string:${context/portal_url}/@@myvindulaprefs"
+	                       i18n:translate="">
+	                        Editar Perfil
+	                    </a>
+	                </li>
+				</tal:cond>
+				
+				<tal:cond define="enable context/@@myvindulapanel/check_pensamentos;"
+						  condition="enable">
+	                <li id="contentview-user_data-personal-information"
+	                    tal:define="link context/@@myvindulapanel/getPersonalInfoLink;
+	                                selected python:view_name=='myvindula'"
+	                    tal:condition="link|nothing"
+	                    tal:attributes="class python:selected and 'selected' or 'plain'">
+	                    <a href=""
+	                       tal:attributes="href string:${context/portal_url}/@@myvindula">
+	                        Pensamentos
+	                    </a>
+	                </li>
+				</tal:cond>
 				
 				<li id="contentview-user_data-personal-content"
                     tal:define="link context/@@myvindulapanel/getPersonalPrefsLink;
