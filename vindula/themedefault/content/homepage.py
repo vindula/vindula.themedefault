@@ -10,7 +10,8 @@ from vindula.themedefault.browser.viewlets import MenuViewlet
 from zope.interface import Interface
 
 from vindula.themedefault.content.interfaces import IHomePage
-from Products.ATContentTypes.content.folder import ATFolder
+from Products.ATContentTypes.content.document import ATDocumentSchema
+from Products.ATContentTypes.content.document import ATDocumentBase
 
 from zope.interface import implements
 from Products.Archetypes.atapi import *
@@ -19,7 +20,7 @@ from Products.ATContentTypes.content.schemata import finalizeATCTSchema
 from vindula.themedefault.config import *
 
 
-HomePage_schema =  ATFolder.schema.copy() + Schema((
+HomePage_schema =  ATDocumentSchema.copy() + Schema((
 
     TextField(
             name='content_top',
@@ -247,17 +248,21 @@ HomePage_schema =  ATFolder.schema.copy() + Schema((
 ))
 
 finalizeATCTSchema(HomePage_schema, folderish=False)
-HomePage_schema.changeSchemataForField('title_highlightednews', 'news')
-HomePage_schema.changeSchemataForField('ref_newsitem', 'news')
-HomePage_schema.changeSchemataForField('time_transitionsnews', 'news')
-HomePage_schema.changeSchemataForField('title_othernews', 'news')
-HomePage_schema.changeSchemataForField('local_othernews', 'news')
-HomePage_schema.changeSchemataForField('number_othernews', 'news')
-HomePage_schema.changeSchemataForField('title_medianews', 'news')
-HomePage_schema.changeSchemataForField('local_medianews', 'news')
-HomePage_schema.changeSchemataForField('number_medianews', 'news')
+HomePage_schema.changeSchemataForField('title_highlightednews', 'Notícias')
+HomePage_schema.changeSchemataForField('ref_newsitem', 'Notícias')
+HomePage_schema.changeSchemataForField('time_transitionsnews', 'Notícias')
+HomePage_schema.changeSchemataForField('title_othernews', 'Notícias')
+HomePage_schema.changeSchemataForField('local_othernews', 'Notícias')
+HomePage_schema.changeSchemataForField('number_othernews', 'Notícias')
+HomePage_schema.changeSchemataForField('title_medianews', 'Notícias')
+HomePage_schema.changeSchemataForField('local_medianews', 'Notícias')
+HomePage_schema.changeSchemataForField('number_medianews', 'Notícias')
 
-class HomePage(ATFolder):
+invisivel = {'view':'invisible','edit':'invisible',}
+HomePage_schema['description'].widget.visible = invisivel
+HomePage_schema['text'].widget.visible = invisivel
+
+class HomePage(ATDocumentBase):
     """ HomePage """
     
     implements(IHomePage)    
