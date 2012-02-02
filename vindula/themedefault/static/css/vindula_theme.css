@@ -195,11 +195,17 @@ div.portlet-birthday div#boxPortlet div.row {
 }
 div.portlet-user-image {
 	float:left;
-    width: 50px;
+    width: 20%;
 	height: 100%;
 }
 div.portlet-user-info {
 	float:left;
+	width: 80%;
+}
+
+div.portlet-user-info-larg{
+	float:left;
+	width: 100%;
 }
 /* 
  * * * THEME CSS UPDATES * * *

@@ -185,6 +185,8 @@ class MenuViewlet(grok.Viewlet):
                 return 'selected'
     
     def isSelectedSubmenu(self, obj):
-        if obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL') or\
-            self.context.id == obj.id : 
+        obj_url = obj.absolute_url().split('/')
+        url = self.context.REQUEST.get('ACTUAL_URL').split('/')
+        if (obj.id in url and obj_url.index(obj.id) == url.index(obj.id))or\
+            self.context.id == obj.id:
             return 'selected'
