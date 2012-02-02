@@ -753,15 +753,15 @@ class MyVindulaComments(grok.View):
                 return True
             elif conf_context:
                 return True
-            elif not conf_context:
-                return False
+#            elif not conf_context:
+#                return False
             else:
-                return conf_global
+                return False
         else:
             if replies:
                 return True
-            if conf_context:
-                return True
+#            if conf_context:
+#                return True
             else:
                 return conf_global
             

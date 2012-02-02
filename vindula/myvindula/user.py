@@ -131,6 +131,22 @@ class ModelsFuncDetails(Storm, BaseStore):
             return None
         else:
             return data    
+
+    def get_FuncBusca_Portlet(self,name,phone):
+        if name == '' and phone == '':
+            data = self.store.find(ModelsFuncDetails).order_by(ModelsFuncDetails.name)
+
+        elif name != '':
+            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%")).order_by(ModelsFuncDetails.name)
+
+        else:
+            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"),
+                                                      ModelsFuncDetails.phone_number.like("%" + phone + "%")).order_by(ModelsFuncDetails.name)
+        
+        if data.count() == 0:
+            return None
+        else:
+            return data    
             
     
     def get_FuncBirthdays(self, date_start, date_end):
@@ -202,7 +218,7 @@ class ModelsDepartment(Storm, BaseStore):
         urltool = getSite().portal_url
         caminho = urltool.getPortalPath() #+'/jornal-da-caixa/banners-do-jornal';
         ctool = getSite().portal_catalog
-        data = ctool(portal_type='vindula.content.content.orgstructure', 
+        data = ctool(portal_type='OrganizationalStructure', 
                       review_state='published',
                       path=caminho)   
         

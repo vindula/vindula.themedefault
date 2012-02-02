@@ -25,7 +25,7 @@
 								</a>
 							</div>
 						</tal:cond>
-						<div class="portlet-user-info">
+						<div class="portlet-user-info" tal:attributes="class python: not view.show_picture and 'portlet-user-info-larg' or 'portlet-user-info'">
 							<h4>
 								<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username|nothing}"
 									tal:content="obj/name|obj/username|nothing">func</a>
@@ -45,7 +45,7 @@
 									<tal:rep repeat="detail details" condition="details">
 										<span tal:condition="python: detail['label'] and detail['content']" tal:content="string: ${detail/label}: "> </span>
 										<span tal:condition="detail/content" tal:content="detail/content"> </span>
-										<br tal:condition="python: detail['label'] and detail['content']">
+										<br tal:condition="python: detail['label'] or detail['content']">
 									</tal:rep>
 								</p>
 						</div>

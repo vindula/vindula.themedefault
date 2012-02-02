@@ -31,9 +31,20 @@ class IPortletRamais(IPortletDataProvider):
                                   description=unicode("quantidade limite de item mostrado no portlet.", 'utf-8'),
                                   required=True)
     
-#    use_table_funcdetails = schema.Bool(title=unicode("Selecione se você deseja usar ", 'utf-8'),
-#                                       description=unicode("Selecione para mostrar a foto dos aniversarientes no portlet.", 'utf-8'))
+    filtro_departamento = schema.TextLine(title=unicode("Dados do campo departamento", 'utf-8'),
+                                  description=unicode("Adicione qual dado do banco de dados sera usado para filtro dos usuários,(valor Padrão: 'departamentos')", 'utf-8'),
+                                  default=unicode('departamentos','utf-8'),
+                                  required=True) 
+
+
+    show_picture = schema.Bool(title=unicode("Exibir foto", 'utf-8'),
+                                       description=unicode("Selecione para mostrar a foto dos aniversarientes no portlet.", 'utf-8'))
     
+    details_user = schema.Text(title=unicode("Detalhes do ramais", 'utf-8'),
+                                  description=unicode("Adicione detalhes sobre os usuários como Empresa, Matricula e outros. \
+                                                       Adicione um campo por linha, no formato [Label] | [Campo].", 'utf-8'),
+                                  required=False)
+
 
 class Assignment(base.Assignment):
     """Portlet assignment.
@@ -45,10 +56,12 @@ class Assignment(base.Assignment):
     implements(IPortletRamais)
 
     # TODO: Add keyword parameters for configurable parameters here
-    def __init__(self, title_portlet=u'', quantidade_portlet=u''):
+    def __init__(self, title_portlet=u'', quantidade_portlet=u'', filtro_departamento=u'', show_picture=u'', details_user=u''):
        self.title_portlet = title_portlet
        self.quantidade_portlet = quantidade_portlet
-
+       self.filtro_departamento = filtro_departamento
+       self.show_picture = show_picture
+       self.details_user = details_user
 
     @property
     def title(self):
@@ -71,6 +84,36 @@ class Renderer(base.Renderer):
     def get_title(self):
         return self.data.title_portlet
     
+    def show_picture(self):
+        return self.data.show_picture
+    
+    def filtro_departamento(self):
+        return self.data.filtro_departamento
+    
+    def get_details_user(self, user):
+        if self.data.details_user: 
+            try:
+                lines = self.data.details_user.splitlines()
+                L = []
+                
+                for line in lines:
+                    D = {}
+                    line = line.replace('[', '').replace(']', '').split(' | ')
+                    D['label'] = line[0]
+                    D['content'] = user.__getattribute__(line[1])
+                    L.append(D)
+                return L
+            except:
+                pass
+        return None
+    
+    def list_filtro(self):
+        campo = self.data.filtro_departamento
+        result = ModelsFuncDetails().get_allFuncDetails()
+        if result:
+            classe = 'ModelsFuncDetails.'+str(campo) 
+            return result.group_by(eval(classe))
+        
     
     def list_departamentos(self):
         return  ModelsDepartment().get_department()
@@ -90,20 +133,40 @@ class Renderer(base.Renderer):
 #    @view.memoize
     def busca_usuarios(self):
         form = self.request.form
-        title = form.get('title','').strip()
-        departamento= form.get('departamento','')
-        ramal = form.get('ramal','').strip()
-        
-        if type(title) != unicode:
-            title = unicode(title, 'utf-8')
-        
-        if type(departamento) != unicode:
-            departamento = unicode(departamento, 'utf-8')
+        if 'SearchSubmit' in form.keys():
+            title = form.get('title','').strip()
+            departamento= form.get('departamento','')
+            ramal = form.get('ramal','').strip()
             
-        if type(ramal) != unicode:
-            ramal = unicode(ramal, 'utf-8')
+            if type(title) != unicode:
+                title = unicode(title, 'utf-8')
             
-        result = ModelsFuncDetails().get_FuncBusca(title,departamento,ramal)
+            if type(departamento) != unicode:
+                departamento = unicode(departamento, 'utf-8')
+                
+            if type(ramal) != unicode:
+                ramal = unicode(ramal, 'utf-8')
+                
+            result = ModelsFuncDetails().get_FuncBusca_Portlet(title,ramal)
+            if result:
+                #import pdb;pdb.set_trace()
+                if departamento != '0' and self.data.filtro_departamento != 'departamentos':
+                    busca = "result.find("+self.data.filtro_departamento + "=u'" + departamento+"')"
+                    data = eval(busca)
+                    if data.count() != 0:
+                        result = data
+                    else:
+                        result = None
+                elif self.data.filtro_departamento == 'departamentos':
+                    data = ModelsFuncDetails().get_FuncBusca(title,departamento,ramal)
+                    if data:
+                        result = data
+                    else:
+                        result = None
+                    
+        else:
+            result = None
+        
         return result
     
     
