@@ -17,7 +17,8 @@
 											   logado python:str(member)!='Anonymous User';
 											   configuracao view/get_campos; 
 											   form_data view/load_list | python:{};
-											   user form_data/username|nothing">
+											   user form_data/username|nothing;
+											   panelView python:context.restrictedTraverse('@@myvindulapanel')">
 											   
     	<tal:cont tal:condition="form_data">
 			<tal:cond tal:condition="python: str(member)==form_data.username">
@@ -31,14 +32,14 @@
 		            <h5 class="hiddenStructure">Visões</h5>
 		
 		            <ul id="content-views" class="contentViews">
-		            	<li class="selected" id="howareu-menu">
+		            	<li class="plain" id="perfil-menu">
+		                    <a id="perfil-menu"  style="cursor:pointer;" >Perfil P&uacute;blico</a>
+		                </li>
+		            	<li class="selected" id="howareu-menu" tal:condition="panelView/check_pensamentos">
 		                    <a id="howareu-menu" style="cursor:pointer;" >Pensamentos</a>
 		                </li>
-						<li class="plain" id="scraps-menu">
+						<li class="plain" id="scraps-menu" tal:condition="panelView/check_recados">
 		                    <a id="scraps-menu"  style="cursor:pointer;" >Recados</a>
-		                </li>
-						<li class="plain" id="perfil-menu">
-		                    <a id="perfil-menu"  style="cursor:pointer;" >Perfil P&uacute;blico</a>
 		                </li>
 		            </ul><div class="contentActions">&nbsp;</div>
 	        	</div>
@@ -104,7 +105,7 @@
 			</div>
 
 			<!-- Meus Pensamentos -->
-			<div id="howareu" class="userpage geral_lista_comentarios">
+			<div id="howareu" class="userpage geral_lista_comentarios" tal:condition="panelView/check_pensamentos">
 				<h2 class="h2title" tal:content="string: No que ${form_data/name|nothing} est&aacute; pensando!"></h2>
 				<tal:def define="items python: view.get_howareu(user)">
 					<tal:rep tal:repeat="item items">
@@ -306,7 +307,7 @@
 			
 			
 			<!-- start: Scraps -->
-			<div id="scraps" class="userpage geral_lista_comentarios" tal:condition="view/check_recados">
+			<div id="scraps" class="userpage geral_lista_comentarios" tal:condition="panelView/check_recados">
 				
 				<!-- Scraps Input -->
 				<div id="comment-geral" tal:condition="logado">
