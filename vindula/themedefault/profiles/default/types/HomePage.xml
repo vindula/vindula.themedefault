@@ -7,14 +7,14 @@
  <property name="title" i18n:translate="">Home Page</property>
  <property name="i18n_domain">vindula.themedefault</property>
  <property name="description" i18n:translate="">Objeto de configuração da Home Page.</property>
- <property name="content_icon">++theme++vindula.themedefault/images/icons/homepage.png</property>
+ <property name="content_icon">++resource++vindula.themedefault/images/icons/homepage.png</property>
  <property name="content_meta_type">HomePage</property>
  <property name="product">vindula.themedefault</property>
  <property name="factory">addHomePage</property>
  <property name="immediate_view">view</property>
  <property name="allow_discussion">False</property>
  <property name="global_allow">True</property>
- <property name="filter_content_types">True</property>
+ <property name="filter_content_types">False</property>
  <property name="allowed_content_types" />   	
  <property name="default_view">view</property>
  <property name="default_view_fallback">False</property> 

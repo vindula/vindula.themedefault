@@ -5,6 +5,7 @@ from vindula.themedefault import MessageFactory as _
 from Products.CMFCore.utils import getToolByName
 from zope.app.component.hooks import getSite
 
+from AccessControl import ClassSecurityInfo
 from vindula.themedefault.browser.viewlets import MenuViewlet 
 
 from zope.interface import Interface
@@ -264,6 +265,7 @@ HomePage_schema['text'].widget.visible = invisivel
 
 class HomePage(ATDocumentBase):
     """ HomePage """
+    security = ClassSecurityInfo()
     
     implements(IHomePage)    
     portal_type = 'HomePage'

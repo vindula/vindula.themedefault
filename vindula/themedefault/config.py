@@ -1,17 +1,21 @@
 # -*- coding: utf-8 -*-
-from Products.CMFCore.permissions import setDefaultRoles
 
-PROJECTNAME = 'vindula.themedefault'
+try: # New CMF
+    from Products.CMFCore.permissions import setDefaultRoles 
+except ImportError: # Old CMF
+    from Products.CMFCore.CMFCorePermissions import setDefaultRoles
 
-# Permissions
+
+PROJECTNAME = "vindula.themedefault"
+
+try:
+    from Products.CMFPlone.migrations import v2_1
+except ImportError:
+    HAS_PLONE21 = False
+else:
+    HAS_PLONE21 = True
+
 DEFAULT_ADD_CONTENT_PERMISSION = "Add portal content"
 setDefaultRoles(DEFAULT_ADD_CONTENT_PERMISSION, ('Manager', 'Owner'))
-ADD_CONTENT_PERMISSIONS = {
-    'HomePage': 'vindula.themedefault: AddHomePage',
-   
-}
-
-setDefaultRoles('vindula.themedefault: AddHomePage', ('Manager','Owner'))
-
 
 product_globals = globals()
