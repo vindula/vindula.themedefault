@@ -32,10 +32,10 @@
 		            <h5 class="hiddenStructure">Visões</h5>
 		
 		            <ul id="content-views" class="contentViews">
-		            	<li class="plain" id="perfil-menu">
+		            	<li class="selected" id="perfil-menu">
 		                    <a id="perfil-menu"  style="cursor:pointer;" >Perfil P&uacute;blico</a>
 		                </li>
-		            	<li class="selected" id="howareu-menu" tal:condition="panelView/check_pensamentos">
+		            	<li class="plain" id="howareu-menu" tal:condition="panelView/check_pensamentos">
 		                    <a id="howareu-menu" style="cursor:pointer;" >Pensamentos</a>
 		                </li>
 						<li class="plain" id="scraps-menu" tal:condition="panelView/check_recados">
