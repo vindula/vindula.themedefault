@@ -62,7 +62,7 @@
 	</rules>
 	
 	<!-- Manage portlets Home Page -->
-	<rules css:if-content="body.portaltype-vindula-themedefault-content-homepage">
+	<rules css:if-content="body.portaltype-homepage">
 		<rules css:if-content="body.template-manage-portlets">
 			<copy css:content-children="#portal-column-one" css:theme=".colunaTipo4" />
 			<drop css:theme=".colunaTipo1" />
