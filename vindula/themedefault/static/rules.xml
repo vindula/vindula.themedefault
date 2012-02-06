@@ -71,7 +71,7 @@
 	</rules>
 	
 	<!-- Vindula News Content Type -->
-	<rules css:if-content="body.portaltype-vindula-content-content-vindulanews">
+	<rules css:if-content="body.portaltype-vindulanews">
 		<drop css:content=".documentFirstHeading" />
 	</rules>
 	
