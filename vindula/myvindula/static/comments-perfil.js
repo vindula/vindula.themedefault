@@ -1,17 +1,10 @@
 $j = jQuery.noConflict();
 
 $j(document).ready(function(){
-	
-	var user = $j('#user-igual').val();
-	if (user == 'True'){
-		$j('#howareu').hide();
-		$j('#scraps').hide();
-		$j('#perfil').show();
-	} else{
-		$j('#perfil').hide();
-		$j('#howareu').show();
-		$j('#scraps').hide();
-	};
+
+	$j('#howareu').hide();
+	$j('#scraps').hide();
+	$j('#perfil').show();
 			
 	var variaveis = location.search.split("?");
 	var scraps = variaveis[1].lastIndexOf("scraps");
@@ -24,8 +17,7 @@ $j(document).ready(function(){
 		$j('#scraps-menu').addClass('selected');
 		$j('#perfil-menu').removeClass('selected');
 		
-	};
-	  
+	};	  
 	
 	$j('#howareu-menu').click(function(){
 		$j('#howareu').show();

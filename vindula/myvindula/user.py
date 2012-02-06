@@ -150,8 +150,8 @@ class ModelsFuncDetails(Storm, BaseStore):
             
     
     def get_FuncBirthdays(self, date_start, date_end):
-        data = self.store.execute('Select * From vin_myvindula_funcdetails Where DAY(date_birth) <= DAY(Date("%s")) AND MONTH(date_birth) <= MONTH(Date("%s")) AND DAY(date_birth) >= DAY(Date("%s")) AND MONTH(date_birth) >= MONTH(Date("%s")) ORDER BY MONTH(date_birth) ASC, DAY(date_birth) ASC;'%(date_end,date_end,date_start,date_start)) 
-        
+        data = self.store.execute('SELECT * FROM vin_myvindula_funcdetails WHERE DATE_FORMAT(date_birth, "%m-%d") BETWEEN DATE_FORMAT("'+date_start+'", "%m-%d") AND DATE_FORMAT("'+date_end+'", "%m-%d") ORDER BY MONTH(date_birth) ASC, DAY(date_birth) ASC;')
+
         if data.rowcount != 0:
             result=[]
             for obj in data.get_all():

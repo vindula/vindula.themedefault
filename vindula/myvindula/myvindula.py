@@ -361,21 +361,6 @@ class MyVindulaListUser(grok.View):
             return True
         else:
             return False
-        
-    
-    
-    def check_recados(self):
-        if 'control-panel-objects' in getSite().keys():
-            control = getSite()['control-panel-objects']
-            if 'vindula_vindularecadosconfig' in control.keys():
-                config = control['vindula_vindularecadosconfig']
-                return config.ativa_recados
-            else:
-                return False
-          
-        else:
-            return False
-    
     
     def get_howareu(self, user):
         member =  self.context.restrictedTraverse('@@plone_portal_state').member().getId();
