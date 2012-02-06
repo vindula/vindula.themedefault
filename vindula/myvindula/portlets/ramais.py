@@ -44,6 +44,10 @@ class IPortletRamais(IPortletDataProvider):
                                   description=unicode("Adicione detalhes sobre os usuários como Empresa, Matricula e outros. \
                                                        Adicione um campo por linha, no formato [Label] | [Campo].", 'utf-8'),
                                   required=False)
+    
+    details_text = schema.Text(title=unicode("Texto do portlet", 'utf-8'),
+                                  description=unicode("Adicione o texto que sera mostrado no final da busca de ramais.", 'utf-8'),
+                                  required=False)
 
 
 class Assignment(base.Assignment):
@@ -56,12 +60,13 @@ class Assignment(base.Assignment):
     implements(IPortletRamais)
 
     # TODO: Add keyword parameters for configurable parameters here
-    def __init__(self, title_portlet=u'', quantidade_portlet=u'', filtro_departamento=u'', show_picture=u'', details_user=u''):
+    def __init__(self, title_portlet=u'', quantidade_portlet=u'', filtro_departamento=u'', show_picture=u'', details_user=u'',details_text=u''):
        self.title_portlet = title_portlet
        self.quantidade_portlet = quantidade_portlet
        self.filtro_departamento = filtro_departamento
        self.show_picture = show_picture
        self.details_user = details_user
+       self.details_text = details_text
 
     @property
     def title(self):
@@ -89,6 +94,9 @@ class Renderer(base.Renderer):
     
     def filtro_departamento(self):
         return self.data.filtro_departamento
+    
+    def get_details_text(self):
+        return self.data.details_text
     
     def get_details_user(self, user):
         if self.data.details_user: 

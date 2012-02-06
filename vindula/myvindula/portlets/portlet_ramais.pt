@@ -103,16 +103,23 @@
 						 	<div class="visualClear"></div>
 			      		</tal:results>
 					</div>
-		    	<div class="titulo_info_boxTipo2 aling-right">
-			        <h4 tal:condition="python:results.count()>int(quant)">
-			        	<a tal:attributes="href  string:${here/portal_url}/myvindulalistall?title=${request/title|nothing}&ramal=${request/ramal|nothing}&departamento=${request/departamento|nothing}">Mais...</a>
-			            <!--a tal:attributes="href  string:${here/portal_url}/myvindulalistall/title/${request/title|nothing}/ramal/${request/ramal|nothing}/departamento/${request/departamento|nothing}">Mais...</a-->
-			        </h4>
-			    </div>
-			    <!--dd class="portletItem odd">
-			       <p><strong i18n:translate=""><a href="http://portal.saraiva.com.br/corporativo/geral/servicos/consultas/busca-de-ramais/lista-de-ramais-filiais-editora">Lista de Filiais Editora</a></strong></p>
-			       <p><strong i18n:translate=""><a href="http://portal.saraiva.com.br/corporativo/geral/servicos/consultas/busca-de-ramais/lista-de-ramais-lojas-livraria">Lista de Lojas Livraria</a></strong></p>
-			    </dd-->
+			    	<div class="titulo_info_boxTipo2 aling-right">
+				        <h4 tal:condition="python:results.count()>int(quant)">
+				        	<a tal:attributes="href  string:${here/portal_url}/myvindulalistall?title=${request/title|nothing}&ramal=${request/ramal|nothing}&departamento=${request/departamento|nothing}">Mais...</a>
+				            <!--a tal:attributes="href  string:${here/portal_url}/myvindulalistall/title/${request/title|nothing}/ramal/${request/ramal|nothing}/departamento/${request/departamento|nothing}">Mais...</a-->
+				        </h4>
+				    </div>
+					<tal:cond condition="view/get_details_text|nothing">
+						<div class="titulo_info_boxTipo2 aling-right">
+							<p tal:replace="structure view/get_details_text|nothing" />
+						</div>
+						
+					</tal:cond>
+					
+				    <!--dd class="portletItem odd">
+				       <p><strong i18n:translate=""><a href="http://portal.saraiva.com.br/corporativo/geral/servicos/consultas/busca-de-ramais/lista-de-ramais-filiais-editora">Lista de Filiais Editora</a></strong></p>
+				       <p><strong i18n:translate=""><a href="http://portal.saraiva.com.br/corporativo/geral/servicos/consultas/busca-de-ramais/lista-de-ramais-lojas-livraria">Lista de Lojas Livraria</a></strong></p>
+				    </dd-->
 
 				</tal:cond>
 			</tal:results>
@@ -120,8 +127,6 @@
 				<h4>N&atilde;o h&aacute; Resultados.</h4>						
 			</tal:notresults>
 		</div>
- 
     </dd>
-    
     <dd class="portletFooter"></dd>
 </dl>
