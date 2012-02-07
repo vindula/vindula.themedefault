@@ -163,15 +163,14 @@ div#data dd.actionMenuContent li a {
     margin-left:-2px;
 	margin-left /*\**/:-1px\9;
 	*margin-left:-2px;
-	
+
 }
-/*
-.portletWrapper .portletNavigationTree {
-	background-image: url("++resource++vindula.themedefault/images/bkgs/rodapePortlet.png");
-    background-position: left bottom;
-    background-repeat: no-repeat;
-	
-}*/
+.portletWrapper .portletNavigationTree .portletFooter{
+    margin-left:-2px;
+	margin-left /*\**/:-1px\9;
+	*margin-left:-2px;
+
+}
 
 dl.portletError { 
 	background: none; 

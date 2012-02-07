@@ -37,6 +37,15 @@ $j(document).ready(function(){
 	 	if ($j(this).text() == 'no value') $j(this).text('--');
 	} )
 	
+	/* Modificar portlet Navegação */
+	var html = '<dd class="portletFooter"></dd>';
+	$j('div.portletWrapper .portletNavigationTree').each(function(){
+		$j(this).append(html);	
+	});
+	
+	
+	
+	
 	$j('div.autocompleteInputWidget span.option label span').text( function(index, text) {
 	 	if ($j(this).text() == '(nothing)') $j(this).text('Nenhum');
 	} )
