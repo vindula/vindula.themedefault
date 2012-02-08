@@ -357,15 +357,23 @@ class HomePageView(grok.View):
         
     def getMediaNews(self):
         news = self.searchNews(self.context.getLocal_medianews())
+        if self.context.getLocal_othernews():
+            path_otherNew = self.context.getLocal_othernews().absolute_url()
+        else:
+            path_otherNew = getSite().absolute_url()
+        
         if news:
             L = []
             for new in news[:self.context.getNumber_medianews()]:  
                 obj = new.getObject()
-                D = {}
-                D['title'] = obj.Title()
-                D['link'] = obj.absolute_url()
-                L.append(D)
+                
+                if obj.absolute_url().find(path_otherNew) <= -1: 
+                    D = {}
+                    D['title'] = obj.Title()
+                    D['link'] = obj.absolute_url()
+                    L.append(D)
             return L
+
         
     def searchNews(self, local=None):
         if local is None:
