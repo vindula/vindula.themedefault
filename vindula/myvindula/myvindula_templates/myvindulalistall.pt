@@ -24,7 +24,7 @@
 								</div>
 								<div style="float:left;"> 
 									<input type="submit" name="SearchSubmit" value="Buscar" class="context" i18n:attributes="value"/>
-									<input type="submit" name="all" value="Listar Tudos os usuários" class="context" i18n:attributes="value"/>
+									<!--input type="submit" name="all" value="Listar Tudos os usuários" class="context" i18n:attributes="value"/-->
 								</div>
 				     	 	</form>
 		        		</div>

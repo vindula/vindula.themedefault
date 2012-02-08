@@ -112,20 +112,23 @@ class ModelsFuncDetails(Storm, BaseStore):
         
     def get_FuncBusca(self,name,department_id,phone):
         if department_id == u'0' and name == '' and phone == '':
-            data = self.store.find(ModelsFuncDetails).order_by(ModelsFuncDetails.name)
+            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.phone_number != None).order_by(ModelsFuncDetails.name)
          
         elif department_id != u'0':
             origin = [ModelsFuncDetails, Join(ModelsDepartment, ModelsDepartment.vin_myvindula_funcdetails_id==ModelsFuncDetails.username)]
-            data = self.store.using(*origin).find(ModelsFuncDetails,  ModelsFuncDetails.name.like("%" + name + "%"),
-                                                                   ModelsFuncDetails.phone_number.like("%" + phone + "%"),
-                                                                   ModelsDepartment.uid_plone==department_id).order_by(ModelsFuncDetails.name)
+            data = self.store.using(*origin).find(ModelsFuncDetails,  ModelsFuncDetails.name.like( '%' + '%'.join(name.split(' ')) + '%' ),
+                                                                      ModelsFuncDetails.phone_number.like("%" + phone + "%"),
+                                                                      ModelsFuncDetails.phone_number != None,
+                                                                      ModelsDepartment.uid_plone==department_id).order_by(ModelsFuncDetails.name)
+        
         elif department_id == u'0' and name != '':
-            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%")).order_by(ModelsFuncDetails.name)
-            
+            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like( '%' + '%'.join(name.split(' ')) + '%' ),
+                                                      ModelsFuncDetails.phone_number != None).order_by(ModelsFuncDetails.name)
 
         else:
-            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"),
-                                                      ModelsFuncDetails.phone_number.like("%" + phone + "%")).order_by(ModelsFuncDetails.name)
+            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like( '%' + '%'.join(name.split(' ')) + '%' ),
+                                                      ModelsFuncDetails.phone_number.like("%" + phone + "%"),
+                                                      ModelsFuncDetails.phone_number != None).order_by(ModelsFuncDetails.name)
         
         if data.count() == 0:
             return None
@@ -133,15 +136,18 @@ class ModelsFuncDetails(Storm, BaseStore):
             return data    
 
     def get_FuncBusca_Portlet(self,name,phone):
+        
         if name == '' and phone == '':
-            data = self.store.find(ModelsFuncDetails).order_by(ModelsFuncDetails.name)
+            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.phone_number != None).order_by(ModelsFuncDetails.name)
 
         elif name != '':
-            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%")).order_by(ModelsFuncDetails.name)
+            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like( '%' + '%'.join(name.split(' ')) + '%' ),
+                                                      ModelsFuncDetails.phone_number != None).order_by(ModelsFuncDetails.name)
 
         else:
-            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like("%" + name + "%"),
-                                                      ModelsFuncDetails.phone_number.like("%" + phone + "%")).order_by(ModelsFuncDetails.name)
+            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like( '%' + '%'.join(name.split(' ')) + '%' ),
+                                                      ModelsFuncDetails.phone_number.like("%" + phone + "%"),
+                                                      ModelsFuncDetails.phone_number != None).order_by(ModelsFuncDetails.name)
         
         if data.count() == 0:
             return None

@@ -97,7 +97,7 @@
 									<td class="value" tal:condition="not: form_data/date_birth|nothing"></td>												  
 								</tr>
 							</table>
-						<a id="send-mail" tal:condition="configuracao/email|nothing" 
+						<a id="send-mail" tal:condition="form_data/email|configuracao/email|nothing" 
 										  tal:attributes="href string:mailto:${form_data/email|nothing}">Enviar e-mail</a>
 					</div>
 				</div>
