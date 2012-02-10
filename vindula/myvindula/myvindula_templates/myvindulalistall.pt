@@ -20,7 +20,7 @@
 											                       b_start request/b_start | b_start">
 		        		<div id="busca">
 		        			<h3>Buscar de Funcionários</h3>
-		        			<form action="/vindula/myvindulalistall" method="post" id="portlet-ramais">
+		        			<form action="/myvindulalistall" method="post" id="portlet-ramais">
 		        				<div style="float: left; padding-right: 5px;">
 							    	<label>Nome:</label>
 									<input type="text" name="title" size="26" tal:attributes="value python: request.get('title', '')"/>
