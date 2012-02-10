@@ -153,7 +153,7 @@ h2.h2title {
 }
 
 .userlist div.navigation-users {
-	padding: 25px 15px 0;
+	padding: 10px 15px 0;
 }
 
 .userlist div.user {
@@ -162,6 +162,7 @@ h2.h2title {
 	width: 140px;
 	height: 110px;
 	margin: 12px;
+	display: table;
 } 
 
 .userlist div.user img {
