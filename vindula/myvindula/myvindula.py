@@ -503,24 +503,41 @@ class MyVindulalistAll(grok.View, BaseFunc):
         
     def load_list(self):
         form = self.request.form
-
-#        #vars = BaseFunc().getParametersFromURL(self)
+        result = None
+        if 'title' in form.keys() or 'SearchSubmit' in form.keys():
+            title = form.get('title','').strip()
+            departamento= form.get('departamento','0')
+            ramal = form.get('ramal','').strip()
+            if title or departamento !='0' or ramal:
+                result_set = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'))
+                if result_set:
+                    result = self.rs_to_list(result_set)
+        elif not self.config():
+            result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'))
+            if result_set:
+                    result = self.rs_to_list(result_set)
+        elif 'all' in form.keys():
+            result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'))
+            if result_set:
+                    result = self.rs_to_list(result_set)
+                    
+        return result
+    
+    def rs_to_list(self, rs):
+        return [i for i in rs]
+    
+    def check_no_result(self):
+        form = self.request.form
         if 'title' in form.keys():
             title = form.get('title','').strip()
             departamento= form.get('departamento','0')
             ramal = form.get('ramal','').strip()
-            result = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'))
-        
-        elif not self.config():
-            result = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'))
-            
-        elif 'all' in form.keys():
-            result = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'))
-        
+            if title or departamento !='0' or ramal:
+                return 'Não há resultados.'
+        if 'SearchSubmit' in form.keys():
+            return 'Digite um filtro para a busca.'
         else:
-            result = None
-        
-        return result    
+            return ''
    
 
 class MyVindulaListMyContent(grok.View):

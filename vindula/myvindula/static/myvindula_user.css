@@ -148,6 +148,13 @@ h2.h2title {
 /* 
  * * * MY VINDULA LIST ALL VIEW * * *
  */
+.userlist div.all-users {
+	display: table;
+}
+
+.userlist div.navigation-users {
+	padding: 25px 15px 0;
+}
 
 .userlist div.user {
 	float:left;
@@ -156,6 +163,7 @@ h2.h2title {
 	height: 110px;
 	margin: 12px;
 } 
+
 .userlist div.user img {
 	border: 1px solid #CCCCCC;
 	height: 90px;

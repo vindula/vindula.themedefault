@@ -119,7 +119,7 @@
 				</tal:cond>
 			</tal:results>
 			<tal:notresults tal:condition="python: not view.busca_usuarios() and 'SearchSubmit' in context.REQUEST.form">
-				<h4>N&atilde;o h&aacute; Resultados.</h4>						
+				<h4 tal:content="view/check_filter">N&atilde;o h&aacute; resultados.</h4>				
 			</tal:notresults>
 			<tal:cond condition="view/get_details_text|nothing">
 				<br>

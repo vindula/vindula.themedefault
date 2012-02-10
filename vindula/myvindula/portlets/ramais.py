@@ -141,40 +141,38 @@ class Renderer(base.Renderer):
 #    @view.memoize
     def busca_usuarios(self):
         form = self.request.form
+        result = None
         if 'SearchSubmit' in form.keys():
             title = form.get('title','').strip()
             departamento= form.get('departamento','')
             ramal = form.get('ramal','').strip()
+            if title or departamento !='0' or ramal:
             
-            if type(title) != unicode:
-                title = unicode(title, 'utf-8')
-            
-            if type(departamento) != unicode:
-                departamento = unicode(departamento, 'utf-8')
+                if type(title) != unicode:
+                    title = unicode(title, 'utf-8')
                 
-            if type(ramal) != unicode:
-                ramal = unicode(ramal, 'utf-8')
-                
-            result = ModelsFuncDetails().get_FuncBusca_Portlet(title,ramal)
-            if result:
-                #import pdb;pdb.set_trace()
-                if departamento != '0' and self.data.filtro_departamento != 'departamentos':
-                    busca = "result.find("+self.data.filtro_departamento + "=u'" + departamento+"')"
-                    data = eval(busca)
-                    if data.count() != 0:
-                        result = data
-                    else:
-                        result = None
-                elif self.data.filtro_departamento == 'departamentos':
-                    data = ModelsFuncDetails().get_FuncBusca(title,departamento,ramal)
-                    if data:
-                        result = data
-                    else:
-                        result = None
+                if type(departamento) != unicode:
+                    departamento = unicode(departamento, 'utf-8')
                     
-        else:
-            result = None
-        
+                if type(ramal) != unicode:
+                    ramal = unicode(ramal, 'utf-8')
+                    
+                result = ModelsFuncDetails().get_FuncBusca_Portlet(title,ramal)
+                if result:
+                    #import pdb;pdb.set_trace()
+                    if departamento != '0' and self.data.filtro_departamento != 'departamentos':
+                        busca = "result.find("+self.data.filtro_departamento + "=u'" + departamento+"')"
+                        data = eval(busca)
+                        if data.count() != 0:
+                            result = data
+                        else:
+                            result = None
+                    elif self.data.filtro_departamento == 'departamentos':
+                        data = ModelsFuncDetails().get_FuncBusca(title,departamento,ramal)
+                        if data:
+                            result = data
+                        else:
+                            result = None
         return result
     
     
@@ -193,7 +191,18 @@ class Renderer(base.Renderer):
             else:
                 return self.context.absolute_url()+'/defaultUser.png'
         else:
-            return self.context.absolute_url()+'/defaultUser.png'            
+            return self.context.absolute_url()+'/defaultUser.png'
+        
+    def check_filter(self):
+        form = self.request.form
+        if 'SearchSubmit' in form.keys():
+            title = form.get('title','').strip()
+            departamento= form.get('departamento','')
+            ramal = form.get('ramal','').strip()
+            if title or departamento !='0' or ramal:
+                return 'Não há resultados.'
+            else:
+                return 'Defina um filtro acima e execute a busca novamente.'
         
 class AddForm(base.AddForm):
     """Portlet add form.
