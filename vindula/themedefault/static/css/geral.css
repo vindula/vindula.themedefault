@@ -33,6 +33,12 @@ body{
 	background: url("++resource++vindula.themedefault/images/bkgs/bk_conteudo.png") repeat scroll 0 0 transparent;
 }
 
+/*START Batch navigation*/
+div.listingBar a:hover {
+    background-color: #FFF;
+    border-color: #FFF !important;
+}
+/*END Batch navigation*/
 
 /* Cor dos links dos portlets e content... */
 a:link { 
