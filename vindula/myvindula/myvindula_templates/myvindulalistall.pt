@@ -1,14 +1,9 @@
 <html>
 	<body metal:use-macro="here/main_template/macros/master">
-		<metal:js fill-slot="javascript_head_slot">
-			<script type="text/javascript" src="/flowplayer-3.2.6.min.js"></script>
-		</metal:js>
-		
+	
 	  	<div metal:fill-slot="content">
-	  		
 			<h2 class="h2title">Usu&aacute;rios do portal</h2>
       		<meta:macro metal:define-macro="page-view">                  
-				
 				<div id="content" tal:define="member python:context.portal_membership.getAuthenticatedMember();
 											  view_listall python: context.restrictedTraverse('@@myvindulalistall');
 											  view_listuser python: context.restrictedTraverse('@@myvindulalistuser');

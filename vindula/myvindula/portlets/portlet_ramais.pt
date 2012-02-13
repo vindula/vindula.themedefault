@@ -6,7 +6,7 @@
     <dd class="portletItem odd">
 
 		<div id="busca-portlet">
-			<form action="" method="post" id="portlet-ramais">
+			<form action="#portlet-ramais" method="post" id="portlet-ramais">
 		    	<h4>Nome:</h4>
 				<input type="text" name="title" size="26" tal:attributes="value python: request.get('title', '')"/>
 				<h4>Ramal:</h4>
@@ -109,8 +109,6 @@
 				            <!--a tal:attributes="href  string:${here/portal_url}/myvindulalistall/title/${request/title|nothing}/ramal/${request/ramal|nothing}/departamento/${request/departamento|nothing}">Mais...</a-->
 				        </h4>
 				    </div>
-					
-					
 				    <!--dd class="portletItem odd">
 				       <p><strong i18n:translate=""><a href="http://portal.saraiva.com.br/corporativo/geral/servicos/consultas/busca-de-ramais/lista-de-ramais-filiais-editora">Lista de Filiais Editora</a></strong></p>
 				       <p><strong i18n:translate=""><a href="http://portal.saraiva.com.br/corporativo/geral/servicos/consultas/busca-de-ramais/lista-de-ramais-lojas-livraria">Lista de Lojas Livraria</a></strong></p>
