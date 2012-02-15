@@ -43,6 +43,11 @@ $j(document).ready(function(){
 		$j(this).append(html);	
 	});
 	
+	/* Modificar links adicionais dos usuarios */
+	var links = $j('div#links-adcionais').html();
+	$j('div#links-adcionais').insertBefore('dl#portal-personaltools #personaltools-logout');
+	//$j('dl#portal-personaltools dd.actionMenuContent ul').append(links);	
+	//$j('dl#portal-personaltools dd.actionMenuContent ul #personaltools-logout').insertBefore(links);	
 	
 	
 	
