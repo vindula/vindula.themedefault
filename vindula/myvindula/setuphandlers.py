@@ -38,6 +38,13 @@ def user_folder(context):
                                         description='Pasta que guarda os arquivos CSV sobre os erros na importação de usuários.',
                                         excludeFromNav = True)
                 
+    portalGroup = context.getSite().portal_groups 
+    if not 'manage-user' in portalGroup.listGroupIds():
+        nome_grupo = 'Gerenciadores dos usuarios'
+        portalGroup.addGroup('manage-user', title=nome_grupo)
+        #Adiciona o grupo a 'AuthenticatedUsers'
+        portalGroup.getGroupById('AuthenticatedUsers').addMember('manage-user')  
+    
                 
         
 
@@ -53,13 +60,10 @@ def set_AllowedType_Members(context):
         
         if 'index_html' in folder_members.keys():
             index = folder_members['index_html']
-            index.write("member_search = '/myvindulalistall'\nreturn container.REQUEST.RESPONSE.redirect(member_search)")
+            #index.write("member_search = '/myvindulalistall'\nreturn container.REQUEST.RESPONSE.redirect(member_search)")
             
         
-    #import pdb;pdb.set_trace()
-#    portal_workflow = getToolByName(portal, 'portal_workflow')
-#    portal_workflow.setChainForPortalTypes(pt_names = ('vindula.myvindula.vindulaphotouser',),
-#                                           chain=['one_state_workflow',])
+
 
         
 def set_field_default(context):

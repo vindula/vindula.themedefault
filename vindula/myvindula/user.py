@@ -176,6 +176,29 @@ class ModelsFuncDetails(Storm, BaseStore):
             return result
         else:
             return None
+
+    def get_FuncBirthdays_orderRAND(self, date_start, date_end):
+        data = self.store.execute('SELECT * FROM vin_myvindula_funcdetails WHERE DATE_FORMAT(date_birth, "%m-%d") BETWEEN DATE_FORMAT("'+date_start+'", "%m-%d") AND DATE_FORMAT("'+date_end+'", "%m-%d") ORDER BY RAND();')
+
+        if data.rowcount != 0:
+            result=[]
+            for obj in data.get_all():
+                D={}
+                i = 0
+                columns = self.store.execute('SHOW COLUMNS FROM vin_myvindula_funcdetails;')
+                for column in columns.get_all():
+                    if str(column[0]) == 'date_birth':
+                        D[str(column[0])] = obj[i].strftime('%d/%m')
+                    else:
+                        D[str(column[0])] = obj[i]
+                    i+=1
+            
+                result.append(D)       
+            
+            return result
+        else:
+            return None
+
           
     def get_FuncUpcomingBirthdays(self):
         data = self.store.execute("SELECT * FROM vin_myvindula_funcdetails WHERE concat_ws('-',year(now()),month(date_birth),day(date_birth)) >= NOW() ORDER BY MONTH(date_birth) ASC , DAY(date_birth) ASC;")

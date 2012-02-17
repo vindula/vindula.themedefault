@@ -215,7 +215,7 @@ class MyVindulaPrefsView(grok.View, BaseFunc):
             
 
         if user:
-            if 'Manager' in user_login.getRoles():
+            if self.checa_login():
                 if str(user.id) == str(user_login.id):
                     return SchemaFunc().registration_processes(self, user, False)
                 else:
@@ -227,9 +227,25 @@ class MyVindulaPrefsView(grok.View, BaseFunc):
                 else:
                     return self.request.response.redirect(error_url)
         else:
-            return self.request.response.redirect(error_url)
+            return self.requestmembership.response.redirect(error_url)
        
-       
+    def checa_login(self):
+        membership = self.context.portal_membership
+        groups = self.context.portal_groups
+        
+        user_login = membership.getAuthenticatedMember()
+        user_groups = groups.getGroupsByUserId(user_login.id)
+        
+        checa = False
+        if 'Manager' in user_login.getRoles():
+            checa = True
+        else:
+            for i in user_groups:
+                if i.id == 'manage-user':
+                    checa = True 
+                    break
+        
+        return checa         
     
     def update(self):
         # disable Plone's editable border
@@ -562,7 +578,7 @@ class MyVindulaListMyContent(grok.View):
 
 class MyVindulaManageAllUser(grok.View):
     grok.context(INavigationRoot)
-    grok.require('cmf.ManagePortal')
+    grok.require('zope2.View')
     grok.name('myvindulamanagealluser')
     
     def config(self):
@@ -578,30 +594,53 @@ class MyVindulaManageAllUser(grok.View):
                 return False
         else:
             return False
-    
+
+    def checa_login(self):
+        membership = self.context.portal_membership
+        groups = self.context.portal_groups
+        
+        user_login = membership.getAuthenticatedMember()
+        user_groups = groups.getGroupsByUserId(user_login.id)
+        
+        checa = False
+        if 'Manager' in user_login.getRoles():
+            checa = True
+        else:
+            for i in user_groups:
+                if i.id == 'manage-user':
+                    checa = True
+                    break 
+        
+        return checa            
     
     def load_list(self):
         form = self.request.form
-
-#        #vars = BaseFunc().getParametersFromURL(self)
-        if 'title' in form.keys() and not 'all' in form.keys():
-            title = form.get('title','').strip()
-            departamento= form.get('departamento','0')
-            ramal = form.get('ramal','').strip()
-            result = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),
-                                                       unicode(departamento,'utf-8'),
-                                                       unicode(ramal, 'utf-8'))
         
-        elif not self.config():
-            result = ModelsFuncDetails().get_FuncBusca('','0','')
+        if self.checa_login():
+            #vars = BaseFunc().getParametersFromURL(self)
+            if 'title' in form.keys() and not 'all' in form.keys():
+                title = form.get('title','').strip()
+                departamento= form.get('departamento','0')
+                ramal = form.get('ramal','').strip()
+                result = self.rs_to_list(ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),
+                                                           unicode(departamento,'utf-8'),
+                                                           unicode(ramal, 'utf-8')))
             
-        elif 'all' in form.keys():
-            result = ModelsFuncDetails().get_FuncBusca('','0','')
-        
+            elif not self.config():
+                result = self.rs_to_list(ModelsFuncDetails().get_FuncBusca('','0',''))
+                
+            elif 'all' in form.keys():
+                result = self.rs_to_list(ModelsFuncDetails().get_FuncBusca('','0',''))
+            
+            else:
+                result = None
+            
+            return result
         else:
-            result = None
-        
-        return result
+            self.request.response.redirect(self.context.absolute_url() + '/login')
+
+    def rs_to_list(self, rs):
+        return [i for i in rs]
 
     def encodeUser(self,user):
         return base64.b16encode(user)

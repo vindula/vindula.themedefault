@@ -133,7 +133,7 @@ class Renderer(base.Renderer):
             date_start = date.today().strftime('%Y-%m-%d')
             date_end = date.today().strftime('%Y-%m-%d')
         
-            results = ModelsFuncDetails().get_FuncBirthdays(date_start,date_end)
+            results = ModelsFuncDetails().get_FuncBirthdays_orderRAND(date_start,date_end)
         
         elif type_filter == 7:
             now = DateTime()
