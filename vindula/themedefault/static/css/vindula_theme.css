@@ -74,7 +74,7 @@ div#data dd.actionMenuContent li a {
 /* ...Personal Tools */
 
 
-/* Content Types Icons... */
+/* Content Types Icons... 
 .contenttype-file { background: url(/contenttypes-sprite.png) no-repeat scroll 0 -428px transparent; }
 .contenttype-document { background: no-repeat transparent 0px 4px url(/contenttypes-sprite.png); }
 .contenttype-event { background: no-repeat transparent 0px -212px url(/contenttypes-sprite.png); }
@@ -84,7 +84,7 @@ div#data dd.actionMenuContent li a {
 .contenttype-plone-site { background: no-repeat transparent 0px -1508px url(/contenttypes-sprite.png); }
 .contenttype-topic {background: no-repeat transparent 0px -1724px url(/contenttypes-sprite.png); }
 
-/* These should only appear in the add menu */
+* These should only appear in the add menu *
 #plone-contentmenu-factories .contenttype-file {
     background: no-repeat transparent 0px -428px url(/contenttypes-sprite.png);
 }
@@ -107,7 +107,7 @@ div#data dd.actionMenuContent li a {
     *display: block;
     padding-left: 20px !important;
 }
-/* ...Content Types Icons */
+ ...Content Types Icons */
 
 
 /* Portlets ... */
