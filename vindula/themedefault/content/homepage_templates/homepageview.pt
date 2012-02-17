@@ -69,7 +69,7 @@
 											<img tal:attributes="src new/image" />
 										</div>
 										<div class="descricao_destaque">
-											<h4 tal:content="new/author">Author</h4>
+											<!--h4 tal:content="new/author">Author</h4-->
 											<h4 tal:content="new/date">Date</h4>
 											<p tal:content="new/summary">Summary</p>
 											<a class="leia-mais" title="Ver a not&iacute;cia completa"
