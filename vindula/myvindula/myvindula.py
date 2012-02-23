@@ -622,15 +622,15 @@ class MyVindulaManageAllUser(grok.View):
                 title = form.get('title','').strip()
                 departamento= form.get('departamento','0')
                 ramal = form.get('ramal','').strip()
-                result = self.rs_to_list(ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),
+                result = self.rs_to_list(ModelsFuncDetails().get_FuncBuscaManage(unicode(title, 'utf-8'),
                                                            unicode(departamento,'utf-8'),
                                                            unicode(ramal, 'utf-8')))
             
             elif not self.config():
-                result = self.rs_to_list(ModelsFuncDetails().get_FuncBusca('','0',''))
+                result = self.rs_to_list(ModelsFuncDetails().get_FuncBuscaManage('','0',''))
                 
             elif 'all' in form.keys():
-                result = self.rs_to_list(ModelsFuncDetails().get_FuncBusca('','0',''))
+                result = self.rs_to_list(ModelsFuncDetails().get_FuncBuscaManage('','0',''))
             
             else:
                 result = None
