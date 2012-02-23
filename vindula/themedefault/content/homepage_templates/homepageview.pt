@@ -69,12 +69,12 @@
 											<img tal:attributes="src new/image" />
 										</div>
 										<div class="descricao_destaque">
-											<tal:def define="pas_member context/@@pas_member|nothing;
+											<!--tal:def define="pas_member context/@@pas_member|nothing;
 															item_creator new/Creator|nothing;
 															author python:pas_member.info(item_creator) or None;">
 												
 												<h4 tal:content="author/name_or_id|nothing">Author</h4>
-											</tal:def>
+											</tal:def-->
 											
 											<h4 tal:content="new/date">Date</h4>
 											<p tal:content="new/summary">Summary</p>
