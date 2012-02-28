@@ -10,6 +10,7 @@
 			<input type="hidden" tal:attributes="value view/get_type_search" name="tipo_busca" id="tipo_busca">
 			<input type="hidden" tal:attributes="value view/show_picture" name="show_picture" id="show_picture">
 			<input type="hidden" tal:attributes="value view/get_search_random" name="search_random" id="search_random">
+			<input type="hidden" tal:attributes="value view/get_tempo_rotacao" name="tempo_rotacao" id="tempo_rotacao">
 			
 			<input type="hidden" tal:attributes="value view/details_user" name="details_user" id="details_user">
 			<input type="hidden" name="b_start" id="b_start" value="0">

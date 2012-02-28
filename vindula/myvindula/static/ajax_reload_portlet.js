@@ -39,16 +39,10 @@ $j(document).ready(function(){
 	function sequencia(quant, b_start, max_result){
 		if (max_result != null){
 			var x = parseInt(b_start) + parseInt(quant)
-			if(parseInt(x) < parseInt(max_result)){
-				return x;
-			}else{
-				return 0
-			}
+			if(parseInt(x) < parseInt(max_result)){return x;
+			}else{return 0}
 			
-		}else{
-			return 0; 
-		}
-		
+		}else{return 0;}
 	};
 	/*
 	$j('body').click(function(){
@@ -57,8 +51,10 @@ $j(document).ready(function(){
 	
 	reloadPortlet();
 	
+	var tempo_rotacao = $j('#tempo_rotacao').val();
+	
 	window.setInterval(function(){
 		reloadPortlet();
-	},300000);//5 minutos
+	},parseInt(tempo_rotacao));
 
 });

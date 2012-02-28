@@ -47,7 +47,7 @@ class IPortletAniversariosReload(IPortletDataProvider):
                                   description=unicode("Título que aparecerá no cabeçalho do portlet.", 'utf-8'),
                                   required=True)
     
-    quantidade_portlet = schema.Int(title=unicode("Quantidade de Items", 'utf-8'),
+    quantidade_portlet = schema.Int(title=unicode("Quantidade de Itens", 'utf-8'),
                                   description=unicode("Quantidade limite de itens mostrado no portlet.", 'utf-8'),
                                   required=True)
    
@@ -57,6 +57,12 @@ class IPortletAniversariosReload(IPortletDataProvider):
     
     show_picture = schema.Bool(title=unicode("Exibir foto", 'utf-8'),
                                        description=unicode("Selecione para mostrar a foto dos aniversarientes no portlet.", 'utf-8'))
+    
+    tempo_rotacao = schema.Int(title=unicode("Tempo de Rodação do Itens", 'utf-8'),
+                               description=unicode("Tempo em milisegundos que o portlet leva para rotacionar os itens, \
+                                                      insira apenas números iteiros..", 'utf-8'),
+                               default=8000,
+                               required=True)
     
     search_random = schema.Bool(title=unicode("Ordem Randomica dos resultados", 'utf-8'),
                                        description=unicode("Selecione para mostrar abilitar a ordenação randomica dos aniversarientes no portlet.", 'utf-8'))
@@ -74,13 +80,16 @@ class Assignment(base.Assignment):
 
     implements(IPortletAniversariosReload)
     # TODO: Add keyword parameters for configurable parameters here
-    def __init__(self, title_portlet=u'', quantidade_portlet=u'',type_search=u'',details_user=u'',show_picture=u'',search_random=u''):
+    def __init__(self, title_portlet=u'', quantidade_portlet=u'',type_search=u'',\
+                 details_user=u'',show_picture=u'',search_random=u'',tempo_rotacao=u''):
+       
        self.title_portlet = title_portlet
        self.quantidade_portlet = quantidade_portlet
        self.type_search = type_search
        self.details_user = details_user
        self.show_picture = show_picture
        self.search_random = search_random
+       self.tempo_rotacao = tempo_rotacao
 
     @property
     def title(self):
@@ -116,6 +125,8 @@ class Renderer(base.Renderer):
     def get_search_random(self):
         return self.data.search_random
     
+    def get_tempo_rotacao(self):
+        return self.data.tempo_rotacao
         
 class AddForm(base.AddForm):
     """Portlet add form.
