@@ -117,12 +117,38 @@ div#data dd.actionMenuContent li a {
 
 .portletWrapper .portletHeader {
     background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2.png") no-repeat scroll 0 0 transparent !important;
-    padding: 20px 0 !important;;
+    padding: 20px 0 !important;
     text-align: center;
     width: 228px;
 	color: #FFFFFF !important;
 	font-size: 18px;
 }
+
+/* Vindula Portlet Estatico  */
+.portletWrapper .portletHeader-dainamic {
+	background:none;
+    padding: 0 !important;
+    text-align: center;
+    width: 228px;
+	color: #FFFFFF !important;
+	font-size: 18px;
+}
+
+.portletWrapper .portletHeader-dainamic .topPortlet {
+    background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2-top.png") no-repeat scroll 0 0 transparent !important;
+	height:15px;
+}
+
+.portletWrapper .portletHeader-dainamic .meioPortlet{
+    background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2-meio.png") repeat-y scroll 0 0 transparent !important;
+	
+}
+
+.portletWrapper .portletHeader-dainamic .bottonPortlet{
+    background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2-botton.png") no-repeat scroll 0 0 transparent !important;
+	height:23px;
+}
+/* ------------ */
 
 .portletWrapper .portletHeader a{
 	color: #FFFFFF !important;
