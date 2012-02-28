@@ -41,11 +41,13 @@
 					</tal:cont>	
 	        	</dl>
 				<div id="interna" >    		
-			        <form name="myvindulaprefs" id="myvindulaprefs" enctype="multipart/form-data" class="enableAutoFocus" action="myvindulaprefs" method="POST">
-			            <fieldset>
+			        <form name="myvindulaprefs" id="myvindulaprefs" enctype="multipart/form-data" 
+						  class="enableAutoFocus" action="myvindulaprefs" method="POST">
+			            
+						<fieldset>
 			            	<legend>Personal Information</legend>
 							<!-- ID da user--> 
-							<input id="username" type="hidden" value="" name="username" tal:attributes="value request/username| username |nothing">
+							
 							<input id="user" type="hidden" value="" name="user" tal:condition="manage" tal:attributes="value request/user|nothing">
 		
 							<!-- Select Departamento --> 
@@ -80,6 +82,21 @@
 								</tal:cont>
 							</tal:cont>
 							
+							
+							<div class="field" tal:attributes="class python: view.field_class(errors, 'username')"
+											   tal:condition="python: manage and 'newuser' in request.keys()">
+								<label for="username">Username</label>
+			                    <span class="fieldRequired" title="Obrigatório">(Obrigatório)</span>	
+			                    <div class="formHelp">Digite o username do usuário.</div>
+								<div tal:content="errors/username|nothing"></div>
+			                    <input id="username" type="text" value="" name="username"  tal:attributes="value request/username | form_values/username | nothing">
+								
+								<input id="newuser" type="hidden" value="" name="newuser" >
+							</div>	
+								
+							<input id="username" type="hidden" value="" name="username" tal:attributes="value request/username| username |nothing"
+													 tal:condition="python: not manage or not 'newuser' in request.keys()">
+															
 							<tal:def define="html python:view.geraCampos(form_data)">
 								<tal:rep repeat="x html">
 									<div tal:content="structure x"/>
@@ -91,8 +108,12 @@
 					   	<fieldset>
 					   		<br/>
 							<div style="float:left; width:100%">
-								<input style="width:100px" class="button-erp" type="submit" value="Voltar" name="form.voltar">
+								<input style="width:100px" class="button-erp" type="submit" value="Voltar" name="form.voltar" >
 								<input style="width:100px;" class="button-erp" type="submit" value="Salvar" name="form.submited">
+								
+								<input style="width:100px;" class="button-erp" type="submit" value="Excluir" name="form.excluir"
+									   onclick="return confirmExcluir();" 
+									   tal:condition="python: manage and not 'newuser' in request.keys()">
 							</div>
 						</fieldset>
 					</form>

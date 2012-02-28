@@ -14,7 +14,13 @@
 		addview="vindula.myvindula.PortletAniversariosVindula"
 		title="Portlet Aniversarios Vindula"
 		description="Portlet Aniversarios Vindula"
-	    />		
+	    />
+		
+	<portlet
+		addview="vindula.myvindula.PortletAniversariosVindulaReload"
+		title="Portlet Aniversarios Vindula - Reloading"
+		description="Portlet Aniversarios Vindula - Reloading"
+	    />				
 		
 
 </portlets>

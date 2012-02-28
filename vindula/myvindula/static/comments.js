@@ -1,5 +1,12 @@
 $j = jQuery.noConflict();
 
+function confirmExcluir(){
+		if (confirm('Tem certeja que deseja excluir este usuário?')){
+			return true;
+		}else;
+			return false;
+	};
+
 $j(document).ready(function(){	
 	$j('#cancel-coment').live('click',function(){
 		$j(this).parent().parent().parent().parent().find('#new-comments').css('display','none');
@@ -19,5 +26,8 @@ $j(document).ready(function(){
 			text.text(' Ver');
 		}
 	})
+	
+	
+	
 				
 });	

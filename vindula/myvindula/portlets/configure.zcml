@@ -34,5 +34,17 @@
 		 editview=".aniversarios.EditForm"
 	 	/>
 
+	<!-- Portlet Aniversarios Vindula Reloading -->
+  	<plone:portlet
+		 name="vindula.myvindula.PortletAniversariosVindulaReload"
+		 interface=".aniversariosReload.IPortletAniversariosReload"
+		 assignment=".aniversariosReload.Assignment"
+		 view_permission="zope2.View"
+		 edit_permission="cmf.ManagePortal"
+		 renderer=".aniversariosReload.Renderer"
+		 addview=".aniversariosReload.AddForm"
+		 editview=".aniversariosReload.EditForm"
+	 	/>
+
 		
 </configure>

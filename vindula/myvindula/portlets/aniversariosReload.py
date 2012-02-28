@@ -21,6 +21,9 @@ from storm.expr import Desc
 from DateTime.DateTime import DateTime
 import calendar 
 
+from five import grok
+from zope.interface import Interface
+
 class TypesSearch():
     """ Cria SimpleVocabulary """
 
@@ -32,7 +35,7 @@ class TypesSearch():
                 
         return SimpleVocabulary(L)
 
-class IPortletAniversarios(IPortletDataProvider):
+class IPortletAniversariosReload(IPortletDataProvider):
       
     """A portlet
     It inherits from IPortletDataProvider because for this portlet, the
@@ -55,6 +58,9 @@ class IPortletAniversarios(IPortletDataProvider):
     show_picture = schema.Bool(title=unicode("Exibir foto", 'utf-8'),
                                        description=unicode("Selecione para mostrar a foto dos aniversarientes no portlet.", 'utf-8'))
     
+    search_random = schema.Bool(title=unicode("Ordem Randomica dos resultados", 'utf-8'),
+                                       description=unicode("Selecione para mostrar abilitar a ordenação randomica dos aniversarientes no portlet.", 'utf-8'))
+    
     details_user = schema.Text(title=unicode("Detalhes do aniversariante", 'utf-8'),
                                   description=unicode("Adicione detalhes sobre o aniversariante como Empresa, Matricula e outros. \
                                                        Adicione um campo por linha, no formato [Label] | [Campo].", 'utf-8'),
@@ -66,21 +72,22 @@ class Assignment(base.Assignment):
     with columns.
     """
 
-    implements(IPortletAniversarios)
+    implements(IPortletAniversariosReload)
     # TODO: Add keyword parameters for configurable parameters here
-    def __init__(self, title_portlet=u'', quantidade_portlet=u'',type_search=u'',details_user=u'',show_picture=u''):
+    def __init__(self, title_portlet=u'', quantidade_portlet=u'',type_search=u'',details_user=u'',show_picture=u'',search_random=u''):
        self.title_portlet = title_portlet
        self.quantidade_portlet = quantidade_portlet
        self.type_search = type_search
        self.details_user = details_user
        self.show_picture = show_picture
+       self.search_random = search_random
 
     @property
     def title(self):
         """This property is used to give the title of the portlet in the
         "manage portlets" screen.
         """
-        return "Portlet Aniversarios"
+        return "Portlet Aniversarios - Reloading"
     
 class Renderer(base.Renderer):
     """Portlet renderer.
@@ -89,7 +96,7 @@ class Renderer(base.Renderer):
     rendered, and the implicit variable 'view' will refer to an instance
     of this class. Other methods can be added and referenced in the template.
     """
-    render = ViewPageTemplateFile('portlet_aniversarios.pt')            
+    render = ViewPageTemplateFile('portlet_aniversarios_reload.pt')            
     
     def get_title(self):
         return self.data.title_portlet
@@ -101,9 +108,59 @@ class Renderer(base.Renderer):
         return self.data.show_picture
     
     def get_details_user(self, user):
-        if self.data.details_user: 
+        return self.data.details_user 
+    
+    def get_quantidade_portlet(self):
+        return self.data.quantidade_portlet
+   
+    def get_search_random(self):
+        return self.data.search_random
+    
+        
+class AddForm(base.AddForm):
+    """Portlet add form.
+
+    This is registered in configure.zcml. The form_fields variable tells
+    zope.formlib which fields to display. The create() method actually
+    constructs the assignment that is being added.
+    """
+    
+    form_fields = form.Fields(IPortletAniversariosReload)
+    
+    def create(self, data):
+       return Assignment(**data)
+   
+class EditForm(base.EditForm):
+    """Portlet edit form.
+
+    This is registered with configure.zcml. The form_fields variable tells
+    zope.formlib which fields to display.
+    """
+    form_fields = form.Fields(IPortletAniversariosReload)
+
+
+#--------------View de reload--------------------------------
+class ReloadPortletView(grok.View):
+    grok.context(Interface)
+    grok.require('zope2.View')
+    grok.name('reload-aniversariantes')
+    
+    # This may be overridden in ZCML
+    index = ViewPageTemplateFile("reload-aniversariantes.pt")    
+    
+    def render(self):
+        return self.index()
+    
+    def show_picture(self):
+        if 'show_picture' in self.request.keys():
+            valor = self.request['show_picture']
+            return eval(valor)
+        
+    
+    def get_details_user(self, user):
+        if 'details_user' in self.request.keys(): 
             try:
-                lines = self.data.details_user.splitlines()
+                lines = self.request['details_user'].splitlines()
                 L = []
                 for line in lines:
                     D = {}
@@ -116,8 +173,6 @@ class Renderer(base.Renderer):
                 pass
         return None
     
-    def get_quantidade_portlet(self):
-        return self.data.quantidade_portlet
         
     def get_department(self, user):
         try:
@@ -129,11 +184,15 @@ class Renderer(base.Renderer):
 
     def get_birthdaysToday(self, type_filter):
         results = None
+        random = False
+        if 'search_random' in self.request.keys():
+            random = eval(self.request['search_random'])
+        
         if type_filter == 1:
             date_start = date.today().strftime('%Y-%m-%d')
             date_end = date.today().strftime('%Y-%m-%d')
-        
-            results = ModelsFuncDetails().get_FuncBirthdays(date_start,date_end,True)
+            
+            results = ModelsFuncDetails().get_FuncBirthdays(date_start,date_end,random)
         
         elif type_filter == 7:
             now = DateTime()
@@ -162,13 +221,15 @@ class Renderer(base.Renderer):
 
 
     def birthdaysToday(self):
-        type_filter = self.data.type_search
-        #quant = self.data.quantidade_portlet
-        
-        results = self.get_birthdaysToday(type_filter)
+        if 'type_search' in self.request.keys():
+            type_filter = int(self.request['type_search'])
+            
+            results = self.get_birthdaysToday(type_filter)
+        else:
+            results = None
         
         if results:
-            return results #results[:int(quant)]
+            return results 
         else:
             return []
         
@@ -188,26 +249,5 @@ class Renderer(base.Renderer):
             else:
                 return self.context.absolute_url()+'/defaultUser.png'
         else:
-            return self.context.absolute_url()+'/defaultUser.png' 
+            return self.context.absolute_url()+'/defaultUser.png'     
 
-        
-class AddForm(base.AddForm):
-    """Portlet add form.
-
-    This is registered in configure.zcml. The form_fields variable tells
-    zope.formlib which fields to display. The create() method actually
-    constructs the assignment that is being added.
-    """
-    
-    form_fields = form.Fields(IPortletAniversarios)
-    
-    def create(self, data):
-       return Assignment(**data)
-   
-class EditForm(base.EditForm):
-    """Portlet edit form.
-
-    This is registered with configure.zcml. The form_fields variable tells
-    zope.formlib which fields to display.
-    """
-    form_fields = form.Fields(IPortletAniversarios)

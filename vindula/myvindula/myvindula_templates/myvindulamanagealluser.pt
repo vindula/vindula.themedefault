@@ -12,7 +12,13 @@
 											                       b_size python:20;
 											                       b_start python:0;
 											                       b_start request/b_start | b_start">
-		        		<div id="busca">
+		        		<div id='novo-func'>
+		        			<h3>Adicionar novo Funcionários</h3>
+							<a tal:attributes="href string:${context/portal_url|nothing}/myvindulaprefs?newuser=''"><strong>Clique aqui</strong></a>
+								<span>para adcionar novo funcionário</span>
+							<br /><br />
+		        		</div>
+						<div id="busca">
 		        			<h3>Buscar de Funcionários</h3>
 							<!--tal:cont condition="view/config|nothing"-->
 								<form action="/myvindulamanagealluser" method="post" id="portlet-ramais">

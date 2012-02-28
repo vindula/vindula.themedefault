@@ -157,7 +157,7 @@ class Renderer(base.Renderer):
                 if type(ramal) != unicode:
                     ramal = unicode(ramal, 'utf-8')
                     
-                result = ModelsFuncDetails().get_FuncBusca_Portlet(title,ramal)
+                result = ModelsFuncDetails().get_FuncBusca(title,'0',ramal,True)
                 if result:
                     #import pdb;pdb.set_trace()
                     if departamento != '0' and self.data.filtro_departamento != 'departamentos':
@@ -168,7 +168,7 @@ class Renderer(base.Renderer):
                         else:
                             result = None
                     elif self.data.filtro_departamento == 'departamentos':
-                        data = ModelsFuncDetails().get_FuncBusca(title,departamento,ramal)
+                        data = ModelsFuncDetails().get_FuncBusca(title,departamento,ramal,True)
                         if data:
                             result = data
                         else:

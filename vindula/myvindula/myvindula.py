@@ -182,6 +182,21 @@ class MyVindulaConfgsView(grok.View, BaseFunc):
         return SchemaConfgMyvindula().configuration_processes(self)
 
 
+#class MyVindulaRecursosHumanosView(grok.View, BaseFunc):
+#    grok.context(ISiteRoot)
+#    grok.require('zope2.View')
+#    grok.name('myvindula-recursos-humanos')
+#    
+#    
+#    def getMacro(self):
+#        if 'id' in self.request.keys():
+#            set_macro = self.request['id']
+#            return 'context/'+ set_macro +'/macros/page'
+#        else:
+#            return 'context/myvindula-holerite/macros/page'
+
+
+
 class MyVindulaPrefsView(grok.View, BaseFunc):
     grok.context(ISiteRoot)
     grok.require('zope2.View')
@@ -202,14 +217,17 @@ class MyVindulaPrefsView(grok.View, BaseFunc):
         user_login = membership.getAuthenticatedMember()
         error_url = self.context.absolute_url() + '/@@myvindulamanagealluser'
         
-        if 'user' in form.keys():
+        if 'user' in form.keys() and not'newuser' in form.keys():
             user_cod = base64.b16decode(form.get('user',''))
             try:user_decodficado = unicode(user_cod, 'utf-8')
             except:user_decodficado = user_cod
             #user = membership.getMemberById(user_decodficado)
 
             user = ModelsFuncDetails().get_FuncDetails(user_decodficado)
-            
+        
+        elif 'newuser' in form.keys():
+            return SchemaFunc().registration_processes(self, 'acl_users', True)    
+        
         else:    
             user = membership.getAuthenticatedMember()
             
@@ -226,8 +244,9 @@ class MyVindulaPrefsView(grok.View, BaseFunc):
                     return SchemaFunc().registration_processes(self, user, False)
                 else:
                     return self.request.response.redirect(error_url)
+        
         else:
-            return self.requestmembership.response.redirect(error_url)
+            return self.request.response.redirect(error_url)
        
     def checa_login(self):
         membership = self.context.portal_membership
@@ -525,22 +544,23 @@ class MyVindulalistAll(grok.View, BaseFunc):
             departamento= form.get('departamento','0')
             ramal = form.get('ramal','').strip()
             if title or departamento !='0' or ramal:
-                result_set = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'))
+                result_set = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'),True)
                 if result_set:
                     result = self.rs_to_list(result_set)
         elif not self.config():
-            result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'))
+            result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'),True)
             if result_set:
                     result = self.rs_to_list(result_set)
         elif 'all' in form.keys():
-            result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'))
+            result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'),True)
             if result_set:
                     result = self.rs_to_list(result_set)
                     
         return result
     
     def rs_to_list(self, rs):
-        return [i for i in rs]
+        if rs:
+            return [i for i in rs]
     
     def check_no_result(self):
         form = self.request.form
@@ -622,15 +642,15 @@ class MyVindulaManageAllUser(grok.View):
                 title = form.get('title','').strip()
                 departamento= form.get('departamento','0')
                 ramal = form.get('ramal','').strip()
-                result = self.rs_to_list(ModelsFuncDetails().get_FuncBuscaManage(unicode(title, 'utf-8'),
+                result = self.rs_to_list(ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),
                                                            unicode(departamento,'utf-8'),
                                                            unicode(ramal, 'utf-8')))
             
             elif not self.config():
-                result = self.rs_to_list(ModelsFuncDetails().get_FuncBuscaManage('','0',''))
+                result = self.rs_to_list(ModelsFuncDetails().get_FuncBusca('','0',''))
                 
             elif 'all' in form.keys():
-                result = self.rs_to_list(ModelsFuncDetails().get_FuncBuscaManage('','0',''))
+                result = self.rs_to_list(ModelsFuncDetails().get_FuncBusca('','0',''))
             
             else:
                 result = None
@@ -640,7 +660,10 @@ class MyVindulaManageAllUser(grok.View):
             self.request.response.redirect(self.context.absolute_url() + '/login')
 
     def rs_to_list(self, rs):
-        return [i for i in rs]
+        if rs:
+            return [i for i in rs]
+        else:
+            return []
 
     def encodeUser(self,user):
         return base64.b16encode(user)
@@ -731,7 +754,7 @@ class MyVindulaListBirthdays(grok.View):
             results = ModelsFuncDetails().get_FuncBirthdays(date_start,date_end)
             
         elif type_filter == 'prox':
-            results = ModelsFuncDetails().get_FuncUpcomingBirthdays()
+            results = ModelsFuncDetails().get_FuncBirthdays('','','proximo')
         
         if results:
             return results #results[:int(quant)]

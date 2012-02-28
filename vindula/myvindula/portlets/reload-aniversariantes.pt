@@ -1,12 +1,17 @@
-<dl class="portlet" tal:define="view view/data">
+		<tal:def define="view python:context.restrictedTraverse('@@reload-aniversariantes');
+						 results view/birthdaysToday;
+						 
+						 Batch python:modules['Products.CMFPlone'].Batch;
+	                       b_size request/quantidade | string:0;
+	                       b_start python:0;
+	                       b_start request/b_start | b_start;
+						   
+						   batch python:Batch(results, int(b_size), int(b_start));">
 
-    <dt class="portletHeader">
-        <span class="tile" tal:content="view/get_title">Portlet Title</span>
-    </dt>
-    <dd class="portletItem" >
-		<div id="busca-portlet" class="portlet-birthday" tal:define="quant view/get_quantidade_portlet;
-																	 results view/birthdaysToday;">
-			<tal:results tal:repeat="obj python:results[:int(quant)]">
+			<input type="hidden" name="max_result" id="max_result" tal:attributes="value python:len(results)">
+			
+			<tal:results tal:repeat="obj batch">
+				
 				<div id="boxPortlet" tal:define="i repeat/obj/end;
 												 details python: view.get_details_user(obj) or None;"
 						tal:attributes="class python:view.getEnd(i);">
@@ -30,18 +35,7 @@
 								<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username|nothing}"
 									tal:content="obj/name|obj/username|nothing">func</a>
 							</h4>
-								<!--a href="" tal:attributes="href python: obj.getObject().absolute_url()" tal:content="obj/Title">Employee</a><br /-->
 								<p>
-									<!--tal:def define="user obj/username;
-											        departamentos python: view.get_department(user)">
-										<tal:rep repeat="departamento departamentos">
-												<span tal:content="departamento/Title">Departamento</span>
-												<span tal:define="cont repeat/departamento/length;
-																  last repeat/departamento/end"
-																  tal:condition="python: cont > 1 and not last"> | </span>
-										</tal:rep>
-									</tal:def>
-									<span tal:content="obj/date_birth|nothing"></span><br /-->
 									<tal:rep repeat="detail details" condition="details">
 										<span tal:condition="python: detail['label'] and detail['content']" tal:content="string: ${detail/label}: "> </span>
 										<span tal:condition="detail/content" tal:content="detail/content"> </span>
@@ -52,23 +46,15 @@
 					</div>
 				</div>
 			</tal:results>
-			<div class="titulo_info_boxTipo2 aling-right">
+			<!--div class="titulo_info_boxTipo2 aling-right">
 				<h4 tal:define="x python:len(results)>int(quant)" tal:condition="x">
 					<a tal:attributes="href string:${here/portal_url}/myvindulalistbirthdays?filtro=${view/get_type_search|nothing}">Mais...</a>
 				</h4>
-			</div>
+			</div-->
 			
 			<div class="visualClear"></div>
 			<tal:notresults tal:condition="not: view/birthdaysToday">
 				<h4>N&atilde;o h&aacute; aniversariantes nos pr&oacute;ximos dias.</h4>
 			</tal:notresults>
-			<div class="titulo_info_boxTipo2 aling-right">
-				<br />
-				<h4>
-					<a tal:attributes="href string:${here/portal_url}/myvindulalistbirthdays?filtro=7">Aniversariantes da Semana</a>
-				</h4>
-			</div>
-		</div>
-    </dd>
-    <dd class="portletFooter"></dd>
-</dl>
+
+		</tal:def> 

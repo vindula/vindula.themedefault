@@ -110,40 +110,14 @@ class ModelsFuncDetails(Storm, BaseStore):
         else:
             return None
         
-    def get_FuncBusca(self,name,department_id,phone):
+    def get_FuncBusca(self,name,department_id,phone,filtro=False):
         if department_id == u'0' and name == '' and phone == '':
-            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.phone_number != None).order_by(ModelsFuncDetails.name)
+            data = self.store.find(ModelsFuncDetails).order_by(ModelsFuncDetails.name)
          
         elif department_id != u'0':
             origin = [ModelsFuncDetails, Join(ModelsDepartment, ModelsDepartment.vin_myvindula_funcdetails_id==ModelsFuncDetails.username)]
             data = self.store.using(*origin).find(ModelsFuncDetails,  ModelsFuncDetails.name.like( '%' + '%'.join(name.split(' ')) + '%' ),
-                                                                      ModelsFuncDetails.phone_number.like("%" + phone + "%"),
-                                                                      ModelsFuncDetails.phone_number != None,
-                                                                      ModelsDepartment.uid_plone==department_id).order_by(ModelsFuncDetails.name)
-        
-        elif department_id == u'0' and name != '':
-            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like( '%' + '%'.join(name.split(' ')) + '%' ),
-                                                      ModelsFuncDetails.phone_number != None).order_by(ModelsFuncDetails.name)
-
-        else:
-            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like( '%' + '%'.join(name.split(' ')) + '%' ),
-                                                      ModelsFuncDetails.phone_number.like("%" + phone + "%"),
-                                                      ModelsFuncDetails.phone_number != None).order_by(ModelsFuncDetails.name)
-        
-        if data.count() == 0:
-            return None
-        else:
-            return data   
-        
-        
-    def get_FuncBuscaManage(self,name,department_id,phone):
-        if department_id == u'0' and name == '' and phone == '':
-            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.phone_number != None).order_by(ModelsFuncDetails.name)
-         
-        elif department_id != u'0':
-            origin = [ModelsFuncDetails, Join(ModelsDepartment, ModelsDepartment.vin_myvindula_funcdetails_id==ModelsFuncDetails.username)]
-            data = self.store.using(*origin).find(ModelsFuncDetails,  ModelsFuncDetails.name.like( '%' + '%'.join(name.split(' ')) + '%' ),
-                                                                      ModelsFuncDetails.phone_number.like("%" + phone + "%"),
+                                                                      ModelsFuncDetails.phone_number.like("%" + phone + "%"),                                                                      
                                                                       ModelsDepartment.uid_plone==department_id).order_by(ModelsFuncDetails.name)
         
         elif department_id == u'0' and name != '':
@@ -152,80 +126,26 @@ class ModelsFuncDetails(Storm, BaseStore):
         else:
             data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like( '%' + '%'.join(name.split(' ')) + '%' ),
                                                       ModelsFuncDetails.phone_number.like("%" + phone + "%")).order_by(ModelsFuncDetails.name)
+                                                      
+        if filtro:
+            data = data.find(ModelsFuncDetails.phone_number != None)
         
         if data.count() == 0:
             return None
         else:
-            return data            
+            return data   
 
-    def get_FuncBusca_Portlet(self,name,phone):
-        
-        if name == '' and phone == '':
-            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.phone_number != None).order_by(ModelsFuncDetails.name)
-
-        elif name != '':
-            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like( '%' + '%'.join(name.split(' ')) + '%' ),
-                                                      ModelsFuncDetails.phone_number != None).order_by(ModelsFuncDetails.name)
-
-        else:
-            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.name.like( '%' + '%'.join(name.split(' ')) + '%' ),
-                                                      ModelsFuncDetails.phone_number.like("%" + phone + "%"),
-                                                      ModelsFuncDetails.phone_number != None).order_by(ModelsFuncDetails.name)
-        
-        if data.count() == 0:
-            return None
-        else:
-            return data    
-            
     
-    def get_FuncBirthdays(self, date_start, date_end):
-        data = self.store.execute('SELECT * FROM vin_myvindula_funcdetails WHERE DATE_FORMAT(date_birth, "%m-%d") BETWEEN DATE_FORMAT("'+date_start+'", "%m-%d") AND DATE_FORMAT("'+date_end+'", "%m-%d") ORDER BY MONTH(date_birth) ASC, DAY(date_birth) ASC;')
+    def get_FuncBirthdays(self, date_start, date_end, filtro=''):
+        if filtro == 'random':
+            data = self.store.execute('SELECT * FROM vin_myvindula_funcdetails WHERE DATE_FORMAT(date_birth, "%m-%d") BETWEEN DATE_FORMAT("'+date_start+'", "%m-%d") AND DATE_FORMAT("'+date_end+'", "%m-%d") ORDER BY RAND();')
 
-        if data.rowcount != 0:
-            result=[]
-            for obj in data.get_all():
-                D={}
-                i = 0
-                columns = self.store.execute('SHOW COLUMNS FROM vin_myvindula_funcdetails;')
-                for column in columns.get_all():
-                    if str(column[0]) == 'date_birth':
-                        D[str(column[0])] = obj[i].strftime('%d/%m')
-                    else:
-                        D[str(column[0])] = obj[i]
-                    i+=1
-            
-                result.append(D)       
-            
-            return result
-        else:
-            return None
-
-    def get_FuncBirthdays_orderRAND(self, date_start, date_end):
-        data = self.store.execute('SELECT * FROM vin_myvindula_funcdetails WHERE DATE_FORMAT(date_birth, "%m-%d") BETWEEN DATE_FORMAT("'+date_start+'", "%m-%d") AND DATE_FORMAT("'+date_end+'", "%m-%d") ORDER BY RAND();')
-
-        if data.rowcount != 0:
-            result=[]
-            for obj in data.get_all():
-                D={}
-                i = 0
-                columns = self.store.execute('SHOW COLUMNS FROM vin_myvindula_funcdetails;')
-                for column in columns.get_all():
-                    if str(column[0]) == 'date_birth':
-                        D[str(column[0])] = obj[i].strftime('%d/%m')
-                    else:
-                        D[str(column[0])] = obj[i]
-                    i+=1
-            
-                result.append(D)       
-            
-            return result
-        else:
-            return None
-
-          
-    def get_FuncUpcomingBirthdays(self):
-        data = self.store.execute("SELECT * FROM vin_myvindula_funcdetails WHERE concat_ws('-',year(now()),month(date_birth),day(date_birth)) >= NOW() ORDER BY MONTH(date_birth) ASC , DAY(date_birth) ASC;")
+        elif filtro == 'proximo':
+            data = self.store.execute("SELECT * FROM vin_myvindula_funcdetails WHERE concat_ws('-',year(now()),month(date_birth),day(date_birth)) >= NOW() ORDER BY MONTH(date_birth) ASC , DAY(date_birth) ASC;")
         
+        else:
+            data = self.store.execute('SELECT * FROM vin_myvindula_funcdetails WHERE DATE_FORMAT(date_birth, "%m-%d") BETWEEN DATE_FORMAT("'+date_start+'", "%m-%d") AND DATE_FORMAT("'+date_end+'", "%m-%d") ORDER BY MONTH(date_birth) ASC, DAY(date_birth) ASC;')
+
         if data.rowcount != 0:
             result=[]
             for obj in data.get_all():
@@ -1185,7 +1105,7 @@ class SchemaFunc(BaseFunc):
               'delegations'             : {'required': False, 'type' : to_utf8, 'label':'Personalizado 3',        'decription':u'Campo para personalizar',                      'ordem':30},
               'customised_message'      : {'required': False, 'type' : to_utf8, 'label':'Personalizado 4',        'decription':u'Campo para personalizar',                      'ordem':31},
               
-              'username'                : {'required': False, 'type' : to_utf8, 'label':'Nome de Usuário'        },}  #Campo Obrigatorio
+              'username'                : {'required': True, 'type' : to_utf8, 'label':'Nome de Usuário'        },}  #Campo Obrigatorio
               #'vin_myvindula_department_id': {'required': False, 'type' : int,     'label':'Departamento'           },} #Campo Obrigatorio
                     
     def registration_processes(self,context,user,manage=False):
@@ -1196,7 +1116,7 @@ class SchemaFunc(BaseFunc):
         form_keys = form.keys() # var tipo 'list' que guarda todas as chaves do formulario (keys)
         campos = self.campos
         #user = context.context.portal_membership.getAuthenticatedMember()
-
+        
         if not manage:
             try:
                 user_id = unicode(user.id, 'utf-8')    
@@ -1204,7 +1124,10 @@ class SchemaFunc(BaseFunc):
                 user_id = user.id
          
         else:
-            user_id = user.username
+            if user != 'acl_users':
+                user_id = user.username
+            else:
+                user_id = unicode('acl_users','utf-8')
         
         # divisao dos dicionarios "errors" e "convertidos"
         form_data = {
@@ -1307,8 +1230,25 @@ class SchemaFunc(BaseFunc):
                                   'home_page':data.get('blogs',''),
                                   'location':data.get('location',''),
                                   'description':data.get('customised_message','')}
+                    
                     if not manage:
                         user.setMemberProperties(user_plone)
+               
+
+                        
+                elif user_id == 'acl_users':
+                    #adicionando...
+                    result = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username == data.get('username','')).one()
+                    if not result:
+                        database = ModelsFuncDetails(**data)
+                        self.store.add(database)
+                        self.store.flush()
+                    else:
+                       errors['username'] = 'Ja existem um usuário com este username, por favor escolha outro usernome'
+                       
+                       form_data['errors'] = errors
+                       form_data['data'] = data
+                       return form_data 
                             
                 #Redirect back to the front page with a status message
                 IStatusMessage(context.request).addStatusMessage(_(u"Seu perfil foi editado com sucesso!!"), "info")
@@ -1316,33 +1256,48 @@ class SchemaFunc(BaseFunc):
                     context.request.response.redirect(success_url_manage)
                 else:
                     context.request.response.redirect(success_url)
+
+
                                    
             else:
                 form_data['errors'] = errors
                 form_data['data'] = data
                 return form_data
           
+        # se clicou em excluir
+        elif 'form.excluir' in form_keys:
+            record = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username == user_id).one()
+            
+            self.store.remove(record)
+            self.store.flush()
+            
+            IStatusMessage(context.request).addStatusMessage(_(u'Removido com sucesso.'),"erro")
+            context.request.response.redirect(success_url_manage)
+          
         # se for um formulario de edicao 
         elif user_id != 'acl_users':
             data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username == user_id).one()
-            departaments = ModelsDepartment().get_departmentByUsername(user_id)
-            
-            D = {}
-            for campo in campos.keys():
-                D[campo] = getattr(data, campo, '')
-              
-            D['vin_myvindula_department'] = departaments
             
             if data:
-               form_data['data'] = D
-               return form_data
+                departaments = ModelsDepartment().get_departmentByUsername(user_id)
+                D = {}
+                
+                for campo in campos.keys():
+                    D[campo] = getattr(data, campo, '')
+              
+                D['vin_myvindula_department'] = departaments
+                
+                form_data['data'] = D
+                return form_data
             else:
                return form_data
               
         # se o usuario não estiver logado
         else:
-            IStatusMessage(context.request).addStatusMessage(_(u'Erro ao salvar o registro.'),"erro")
-            context.request.response.redirect(access_denied)
+            #IStatusMessage(context.request).addStatusMessage(_(u'Erro ao salvar o registro.'),"erro")
+            #context.request.response.redirect(access_denied)
+            
+            return form_data
         
 class SchemaConfgMyvindula(BaseFunc):
     
@@ -1646,7 +1601,6 @@ class ManageLanguages(BaseFunc):
         # se for um formulario de edicao 
         elif 'id' in form_keys:
 
-            id = int(form.get('id'))
             data = self.store.find(ModelsMyvindulaLanguages, ModelsMyvindulaLanguages.id == id).one()
             
             D = {}

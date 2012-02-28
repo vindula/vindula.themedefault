@@ -22,6 +22,12 @@ div#userimage img {
 	overflow:auto;
 } 
 
+.contBoxTipo .custom{
+	border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    margin-top: -13px !important;
+}
+
 
 /* 
  * * * MY VINDULA LIST USER VIEW * * *

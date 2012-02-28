@@ -1,0 +1,34 @@
+<dl class="portlet" tal:define="view view/data">
+
+    <dt class="portletHeader">
+        <span class="tile" tal:content="view/get_title">Portlet Title</span>
+    </dt>
+    <dd class="portletItem" >
+		<div id="busca-portlet" class="portlet-birthday">
+			<input type="hidden" tal:attributes="value context/portal_url" name="url" id="url">
+			<input type="hidden" tal:attributes="value view/get_quantidade_portlet" name="quantidade" id="quantidade">
+			<input type="hidden" tal:attributes="value view/get_type_search" name="tipo_busca" id="tipo_busca">
+			<input type="hidden" tal:attributes="value view/show_picture" name="show_picture" id="show_picture">
+			<input type="hidden" tal:attributes="value view/get_search_random" name="search_random" id="search_random">
+			
+			<input type="hidden" tal:attributes="value view/details_user" name="details_user" id="details_user">
+			<input type="hidden" name="b_start" id="b_start" value="0">
+			<script tal:attributes="src string:${context/portal_url}/++resource++vindula.myvindula/ajax_reload_portlet.js"></script>
+			<div id="reload-data-protlet">
+				<!--Conteudo do Portlet-->				
+			</div>
+			<!-- Spinner -->
+			<div id="spinner" class="display-none" style="text-align:center;">
+				<img alt="spinner" align="center" tal:attributes="src string:${context/portal_url}/++resource++vindula.myvindula/ajaxLoader.gif"/>
+			</div>	
+			
+			<div class="titulo_info_boxTipo2 aling-right">
+				<br />
+				<h4>
+					<a tal:attributes="href string:${here/portal_url}/myvindulalistbirthdays?filtro=7">Aniversariantes da Semana</a>
+				</h4>
+			</div>			
+		</div>    	
+    </dd>
+    <dd class="portletFooter"></dd>
+</dl>
