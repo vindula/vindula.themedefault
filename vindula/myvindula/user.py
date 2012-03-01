@@ -1100,7 +1100,7 @@ class SchemaFunc(BaseFunc):
               'availability'          : {'required': False, 'type' : to_utf8, 'label':'Disponibilidade',        'decription':u'Digite a disponibilidade do funcionário',        'ordem':25},
               'papers_published'      : {'required': False, 'type' : to_utf8, 'label':'Artigos Publicados',     'decription':u'Digite os artigo publicados do funcionário',     'ordem':26},
               'blogs'                 : {'required': False, 'type' : to_utf8, 'label':'Blogs',                  'decription':u'Digite os blogs do funcionário',                 'ordem':27},
-              'teaching_research'       : {'required': False, 'type' : to_utf8, 'label':'Personalizado 1',        'decription':u'Campo para personalizar',                      'ordem':28},
+              'teaching_research'       : {'required': False, 'type' : to_utf8, 'label':'CPF',                  'decription':u'Digite o CPF do funcionário',                    'ordem':28},
               'resume'                  : {'required': False, 'type' : to_utf8, 'label':'Personalizado 2',        'decription':u'Campo para personalizar',                      'ordem':29},
               'delegations'             : {'required': False, 'type' : to_utf8, 'label':'Personalizado 3',        'decription':u'Campo para personalizar',                      'ordem':30},
               'customised_message'      : {'required': False, 'type' : to_utf8, 'label':'Personalizado 4',        'decription':u'Campo para personalizar',                      'ordem':31},
@@ -1330,7 +1330,7 @@ class SchemaConfgMyvindula(BaseFunc):
               'availability'          : {'required': False, 'type' : bool, 'label':'Disponibilidade',        'ordem':26},
               'papers_published'      : {'required': False, 'type' : bool, 'label':'Artigos Publicados',     'ordem':27},
               'blogs'                 : {'required': False, 'type' : bool, 'label':'Blogs',                  'ordem':28},
-              'teaching_research'     : {'required': False, 'type' : bool, 'label':'Personalizado 1',        'ordem':29},
+              'teaching_research'     : {'required': False, 'type' : bool, 'label':'CPF',                    'ordem':29},
               'resume'                : {'required': False, 'type' : bool, 'label':'Personalizado 2',        'ordem':30},
               'delegations'           : {'required': False, 'type' : bool, 'label':'Personalizado 3',        'ordem':31},
               'customised_message'    : {'required': False, 'type' : bool, 'label':'Personalizado 4',        'ordem':32},}

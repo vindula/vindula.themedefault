@@ -284,7 +284,7 @@
 							<td class="value" tal:content="form_data/papers_published|nothing"></td>
 						</tr>	
 						<tr tal:condition="configuracao/teaching_research|nothing">
-							<td class="field">Teaching Research</td>
+							<td class="field">CPF</td>
 							<td class="value" tal:content="form_data/teaching_research|nothing"></td>
 						</tr>					
 						<tr tal:condition="configuracao/resume|nothing">
