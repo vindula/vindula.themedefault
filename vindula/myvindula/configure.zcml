@@ -13,8 +13,7 @@
     <include package="plone.namedfile" />
     <include package=".portlets" />
 	<include package=".browser" />
-	
-    <!--include file="skins.zcml" /-->
+    <include file="skins.zcml" />
 	
   	<!-- Grok the package to initialise schema interfaces and content classes -->
   	<grok:grok package="." />

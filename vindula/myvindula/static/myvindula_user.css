@@ -26,6 +26,8 @@ div#userimage img {
 	border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
     margin-top: -13px !important;
+	border-bottom-left-radius: 0.5em !important;
+	border-bottom-right-radius: 0.5em !important;
 }
 
 
@@ -188,4 +190,18 @@ h2.h2title {
  #interna table tr td{
 	border: 1px solid #000000;
 	padding:3px;	
+}
+/* 
+ * Myvindula List Documentos 
+ * */
+.documentos tr th{
+	border: 1px solid #000;
+	text-align: center;
+}
+/*
+.documentos tr td{
+	text-align: center;
+}*/
+#content .resultado{
+	margin:10px 0 10px 0;
 }

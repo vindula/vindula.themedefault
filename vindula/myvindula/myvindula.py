@@ -121,51 +121,55 @@ class MyVindulaPanelView(grok.View):
             template = '@@myvindulapanel?section=myvindulaprefs'
         return template
     
-    def check_recados(self):
-        if 'control-panel-objects' in getSite().keys():
-            control = getSite()['control-panel-objects']
-            if 'vindula_vindularecadosconfig' in control.keys():
-                config = control['vindula_vindularecadosconfig']
-                return config.ativa_recados
-            else:
-                return False
-          
-        else:
-            return False
-        
-    def check_pensamentos(self):
-        if 'control-panel-objects' in getSite().keys():
-            control = getSite()['control-panel-objects']
-            if 'vindula_vindulapensamentosconfig' in control.keys():
-                config = control['vindula_vindulapensamentosconfig']
-                return config.ativa_pensamentos
-            else:
-                return False
-        else:
-            return False
-        
-    def check_editfunc(self):
-        if 'control-panel-objects' in getSite().keys():
-            control = getSite()['control-panel-objects']
-            if 'vindula_vindulaeditfuncconfig' in control.keys():
-                config = control['vindula_vindulaeditfuncconfig']
-                return config.ativa_editfunc
-            else:
-                return False
-        else:
-            return False
     
-    def check_holerite(self):
-        if 'control-panel-objects' in getSite().keys():
-            control = getSite()['control-panel-objects']
-            if 'vindula_vindulaholeriteconfig' in control.keys():
-                config = control['vindula_vindulaholeriteconfig']
-                return config.ativa_holerite
-            else:
-                return False
-          
-        else:
-            return False
+#    def check_recados(self):
+#        if 'control-panel-objects' in getSite().keys():
+#            control = getSite()['control-panel-objects']
+#            if 'vindula_vindularecadosconfig' in control.keys():
+#                config = control['vindula_vindularecadosconfig']
+#                return config.ativa_recados
+#            else:
+#                return False
+#          
+#        else:
+#            return False
+#        
+#    def check_pensamentos(self):
+#        if 'control-panel-objects' in getSite().keys():
+#            control = getSite()['control-panel-objects']
+#            if 'vindula_vindulapensamentosconfig' in control.keys():
+#                config = control['vindula_vindulapensamentosconfig']
+#                return config.ativa_pensamentos
+#            else:
+#                return False
+#        else:
+#            return False
+#        
+#    def check_editfunc(self):
+#        if 'control-panel-objects' in getSite().keys():
+#            control = getSite()['control-panel-objects']
+#            if 'vindula_vindulaeditfuncconfig' in control.keys():
+#                config = control['vindula_vindulaeditfuncconfig']
+#                return config.ativa_editfunc
+#            else:
+#                return False
+#        else:
+#            return False
+#    
+#    def check_holerite(self):
+#        if 'control-panel-objects' in getSite().keys():
+#            control = getSite()['control-panel-objects']
+#            if 'vindula_vindulaholeriteconfig' in control.keys():
+#                config = control['vindula_vindulaholeriteconfig']
+#                return config.ativa_holerite
+#            else:
+#                return False
+#          
+#        else:
+#            return False
+#        
+#    def check_documents(self):
+#        return True        
 
 
 class MyVindulaConfgsView(grok.View, BaseFunc):
@@ -182,19 +186,18 @@ class MyVindulaConfgsView(grok.View, BaseFunc):
         return SchemaConfgMyvindula().configuration_processes(self)
 
 
-#class MyVindulaRecursosHumanosView(grok.View, BaseFunc):
-#    grok.context(ISiteRoot)
-#    grok.require('zope2.View')
-#    grok.name('myvindula-recursos-humanos')
-#    
-#    
-#    def getMacro(self):
-#        if 'id' in self.request.keys():
-#            set_macro = self.request['id']
-#            return 'context/'+ set_macro +'/macros/page'
-#        else:
-#            return 'context/myvindula-holerite/macros/page'
-
+class MyVindulaRecursosHumanosView(grok.View, BaseFunc):
+    grok.context(ISiteRoot)
+    grok.require('zope2.View')
+    grok.name('myvindula-recursos-humanos')
+    
+    
+    def getMacro(self,link='myvindula-holerite'):
+        if 'id' in self.request.keys():
+            set_macro = self.request['id']
+            return 'context/'+ set_macro +'/macros/page'
+        else:
+            return 'context/'+link+'/macros/page'
 
 
 class MyVindulaPrefsView(grok.View, BaseFunc):
@@ -317,85 +320,45 @@ class MyVindulaListUser(grok.View):
    
     def valida_pessoal(self):
         configuracao1= self.get_campos()
-        if configuracao1.employee_id:
-            return True
-        elif configuracao1.nickname:
-            return True
-        elif configuracao1.pronunciation_name:
-            return True
-        elif configuracao1.date_birth:
-            return True
-        else:
-            return False
+        
+        campos = ['employee_id','nickname','pronunciation_name','date_birth']
+        for i in campos:
+            if configuracao1.__getattribute__(i):
+                return True
+            
+        return False
         
     def valida_contato(self):
         configuracao1= self.get_campos()
-        if configuracao1.email:
-            return True
-        elif configuracao1.phone_number:
-            return True
-        elif configuracao1.location:
-            return True
-        elif configuracao1.postal_address:
-            return True
-        else:
-            return False
+        
+        campos = ['email','phone_number','location','postal_address']
+        for i in campos:
+            if configuracao1.__getattribute__(i):
+                return True
+            
+        return False
          
     def valida_corporativo(self):
         configuracao1= self.get_campos()
-        if configuracao1.enterprise:
-            return True
-        elif configuracao1.registration:
-            return True
-        elif configuracao1.position:
-            return True
-        elif configuracao1.admission_date:
-            return True
-        elif configuracao1.registration:
-            return True
-        elif configuracao1.cost_center:
-            return True
-        elif configuracao1.profit_centre:
-            return True
-        elif configuracao1.special_roles:
-            return True
-        elif configuracao1.organisational_unit:
-            return True
-        elif configuracao1.delegations:
-            return True
-        elif configuracao1.reports_to:
-            return True
-        else:
-            return False
+        campos = ['enterprise','registration','position','admission_date','registration','cost_center',\
+                  'profit_centre','special_roles','organisational_unit','delegations','reports_to']
+
+        for i in campos:
+            if configuracao1.__getattribute__(i):
+                return True
+            
+        return False
         
     def valida_others(self):
         configuracao1= self.get_campos()
-        if configuracao1.committess:
-            return True
-        elif configuracao1.registration:
-            return True
-        elif configuracao1.projetcs:
-            return True
-        elif configuracao1.personal_information:
-            return True
-        elif configuracao1.skills_expertise:
-            return True
-        elif configuracao1.languages:
-            return True
-        elif configuracao1.availability:
-            return True
-        elif configuracao1.papers_published:
-            return True
-        elif configuracao1.teaching_research:
-            return True
-        elif configuracao1.resume:
-            return True
-        elif configuracao1.blogs:
-            return True
-        elif configuracao1.customised_message:
-            return True
-        else:
-            return False
+        campos = ['committess','registration','projetcs','personal_information','skills_expertise','languages',\
+                  'availability','papers_published','teaching_research','resume','blogs','customised_message']
+        
+        for i in campos:
+           if configuracao1.__getattribute__(i):
+               return True
+        
+        return False
     
     def get_howareu(self, user):
         member =  self.context.restrictedTraverse('@@plone_portal_state').member().getId();
@@ -522,23 +485,25 @@ class MyVindulalistAll(grok.View, BaseFunc):
     grok.require('zope2.View')
     grok.name('myvindulalistall')
     
-    def config(self):
-        if 'control-panel-objects' in  getSite().keys():
-            control = getSite()['control-panel-objects']
-            if 'vindula_vindulauserconfig' in control.keys():
-                confg = control['vindula_vindulauserconfig']
-                try:
-                    return confg.ativa_muit_user
-                except:
-                    return False
-            else:
-                return False
-        else:
-            return False
+#    def config(self):
+#        if 'control-panel-objects' in  getSite().keys():
+#            control = getSite()['control-panel-objects']
+#            if 'vindula_vindulauserconfig' in control.keys():
+#                confg = control['vindula_vindulauserconfig']
+#                try:
+#                    return confg.ativa_muit_user
+#                except:
+#                    return False
+#            else:
+#                return False
+#        else:
+#            return False
         
     def load_list(self):
         form = self.request.form
         result = None
+        config_muit_user = self.context.restrictedTraverse('@@myvindula-conf-userpanel').config_muit_user()
+        
         if 'title' in form.keys() or 'SearchSubmit' in form.keys():
             title = form.get('title','').strip()
             departamento= form.get('departamento','0')
@@ -547,7 +512,7 @@ class MyVindulalistAll(grok.View, BaseFunc):
                 result_set = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'),True)
                 if result_set:
                     result = self.rs_to_list(result_set)
-        elif not self.config():
+        elif not config_muit_user:
             result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'),True)
             if result_set:
                     result = self.rs_to_list(result_set)
@@ -601,19 +566,19 @@ class MyVindulaManageAllUser(grok.View):
     grok.require('zope2.View')
     grok.name('myvindulamanagealluser')
     
-    def config(self):
-        if 'control-panel-objects' in  getSite().keys():
-            control = getSite()['control-panel-objects']
-            if 'vindula_vindulauserconfig' in control.keys():
-                confg = control['vindula_vindulauserconfig']
-                try:
-                    return confg.ativa_muit_user
-                except:
-                    return False
-            else:
-                return False
-        else:
-            return False
+#    def config(self):
+#        if 'control-panel-objects' in  getSite().keys():
+#            control = getSite()['control-panel-objects']
+#            if 'vindula_vindulauserconfig' in control.keys():
+#                confg = control['vindula_vindulauserconfig']
+#                try:
+#                    return confg.ativa_muit_user
+#                except:
+#                    return False
+#            else:
+#                return False
+#        else:
+#            return False
 
     def checa_login(self):
         membership = self.context.portal_membership
@@ -635,6 +600,7 @@ class MyVindulaManageAllUser(grok.View):
     
     def load_list(self):
         form = self.request.form
+        config_muit_user = self.context.restrictedTraverse('@@myvindula-conf-userpanel').config_muit_user()
         
         if self.checa_login():
             #vars = BaseFunc().getParametersFromURL(self)
@@ -646,7 +612,7 @@ class MyVindulaManageAllUser(grok.View):
                                                            unicode(departamento,'utf-8'),
                                                            unicode(ramal, 'utf-8')))
             
-            elif not self.config():
+            elif not config_muit_user:
                 result = self.rs_to_list(ModelsFuncDetails().get_FuncBusca('','0',''))
                 
             elif 'all' in form.keys():
@@ -1379,9 +1345,9 @@ class MyVindulaHoleriteView(grok.View, BaseFunc):
         else:
                 return []
 
-class MyVindulaSupportingDocumentsView(grok.View, BaseFunc):
-    grok.context(ISiteRoot)
-    grok.require('zope2.View')
-    grok.name('myvindula-documents')
+#class MyVindulaSupportingDocumentsView(grok.View, BaseFunc):
+#    grok.context(ISiteRoot)
+#    grok.require('zope2.View')
+#    grok.name('myvindula-documents')
     
     

@@ -2,5 +2,7 @@
 <object name="portal_types" meta_type="Plone Types Tool">
 	
   <object name="vindula.myvindula.vindulaphotouser" meta_type="Dexterity FTI" />
+  <object name="vindula.myvindula.vindulalistdocumentuser" meta_type="Dexterity FTI" />
+
     
 </object>

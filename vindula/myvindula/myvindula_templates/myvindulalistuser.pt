@@ -18,7 +18,7 @@
 											   configuracao view/get_campos; 
 											   form_data view/load_list | python:{};
 											   user form_data/username|nothing;
-											   panelView python:context.restrictedTraverse('@@myvindulapanel')">
+											   panelView python:context.restrictedTraverse('@@myvindula-conf-userpanel')">
 											   
     	<tal:cont tal:condition="form_data">
 			<tal:cond tal:condition="python: str(member)==form_data.username">

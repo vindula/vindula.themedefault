@@ -110,6 +110,38 @@ class ModelsFuncDetails(Storm, BaseStore):
         else:
             return None
         
+    def get_FuncDetails_by_dinamicFind(self, field, text):
+        busca = "self.store.find(ModelsFuncDetails, ModelsFuncDetails."+field+".like( '%' + '%'.join(text.split(' ')) + '%' ))"
+        data = eval(busca)
+        if data.count() > 0:
+            return data
+        else:
+            return None        
+        
+    def get_FuncDetails_by_DepartamentName(self, text):
+        urltool = getSite().portal_url
+        caminho = urltool.getPortalPath()
+        ctool = getSite().portal_catalog
+        data = ctool(portal_type='OrganizationalStructure', 
+                      review_state='published',
+                      Title=text, path=caminho)   
+        
+        if len(data) >= 1:
+            uid = []
+            for item in data:
+                obj = item.getObject()
+                uid.append(unicode(obj.UID(),'utf-8'))
+            
+            origin = [ModelsFuncDetails, Join(ModelsDepartment, ModelsDepartment.vin_myvindula_funcdetails_id==ModelsFuncDetails.username)]
+            result  = self.store.using(*origin).find(ModelsFuncDetails, ModelsDepartment.uid_plone.is_in(uid))
+                
+            if result.count() > 0:
+                return result
+            else:
+                return None
+
+
+        
     def get_FuncBusca(self,name,department_id,phone,filtro=False):
         if department_id == u'0' and name == '' and phone == '':
             data = self.store.find(ModelsFuncDetails).order_by(ModelsFuncDetails.name)
@@ -1107,6 +1139,7 @@ class SchemaFunc(BaseFunc):
               
               'username'                : {'required': True, 'type' : to_utf8, 'label':'Nome de Usuário'        },}  #Campo Obrigatorio
               #'vin_myvindula_department_id': {'required': False, 'type' : int,     'label':'Departamento'           },} #Campo Obrigatorio
+
                     
     def registration_processes(self,context,user,manage=False):
         success_url = context.context.absolute_url() + '/@@myvindula'
@@ -1179,15 +1212,20 @@ class SchemaFunc(BaseFunc):
                 if 'vin_myvindula_department' in form_keys:
                     L = []
                     ModelsDepartment().del_department(user_id)
+                    
                     if not type(form['vin_myvindula_department']) == list:
                         L.append(form['vin_myvindula_department'])
                     else:
                         L = form['vin_myvindula_department']
+                    
                     for departament in L:
                         D={}
                         D['UID'] = unicode(departament,'utf-8')
                         D['funcdetails_id'] = user_id
                         ModelsDepartment().set_department(**D)
+                        
+                        #context.context.addUserGroup(user_id,departament)
+                        
                             
                 if 'skills_expertise' in form_keys:
                     ModelsMyvindulaFuncdetailCouses().del_funcdetailCouser(user_id)

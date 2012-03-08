@@ -5,6 +5,7 @@
 	                 handler="vindula.myvindula.setuphandlers.user_folder"
 	                 title="My Vindula: Habilia a criação das pastas dos usuarios">
 	    	<dependency step="componentregistry"/>
+			<dependency step="content"/>
 		</import-step>
 		<import-step id="vindula.myvindula.set_AllowedType_Members" 
 					 version="20111031-01"

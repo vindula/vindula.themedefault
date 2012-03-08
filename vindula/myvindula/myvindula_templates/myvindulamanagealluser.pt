@@ -13,26 +13,29 @@
 											                       b_start python:0;
 											                       b_start request/b_start | b_start">
 		        		<div id='novo-func'>
-		        			<h3>Adicionar novo Funcionários</h3>
-							<a tal:attributes="href string:${context/portal_url|nothing}/myvindulaprefs?newuser=''"><strong>Clique aqui</strong></a>
-								<span>para adcionar novo funcionário</span>
-							<br /><br />
+		        			<fieldset>
+		            			<legend>Adicionar novo Funcionários</legend>
+								<a tal:attributes="href string:${context/portal_url|nothing}/myvindulaprefs?newuser=''"><strong>Clique aqui</strong></a>
+									<span>para adcionar novo funcionário</span>
+							</fieldset>
 		        		</div>
 						<div id="busca">
-		        			<h3>Buscar de Funcionários</h3>
-							<!--tal:cont condition="view/config|nothing"-->
-								<form action="/myvindulamanagealluser" method="post" id="portlet-ramais">
-									<div style="float: left; padding-right: 5px;">
-										<label>Nome:</label>
-										<input type="text" name="title" size="26" tal:attributes="value python: request.get('title', '')"/>	
-									</div>
-							    	
-									<div style="float:left;"> 
-										<input type="submit" name="SearchSubmit" value="Buscar" class="context" i18n:attributes="value"/>
-										<!--input type="submit" name="all" value="Listar Tudos os usuários" class="context" i18n:attributes="value"/-->
-									</div>
-					     	 	</form>	
-							<!--/tal:cont-->
+		        			<fieldset>
+		            			<legend>Buscar de Funcionários</legend>
+								<!--tal:cont condition="context/@@myvindula-conf-userpanel/config_muit_user"-->
+									<form action="/myvindulamanagealluser" method="post" id="portlet-ramais">
+										<div style="float: left; padding-right: 5px;">
+											<label>Nome:</label>
+											<input type="text" name="title" size="26" tal:attributes="value python: request.get('title', '')"/>	
+										</div>
+								    	
+										<div style="float:left;"> 
+											<input type="submit" name="SearchSubmit" value="Buscar" class="context" i18n:attributes="value"/>
+											<!--input type="submit" name="all" value="Listar Tudos os usuários" class="context" i18n:attributes="value"/-->
+										</div>
+						     	 	</form>	
+								<!--/tal:cont-->
+							</fieldset>
 		        		</div>
 						<div class="visualClear"></div>
 						<div tal:condition="form_data" class="all-users">						

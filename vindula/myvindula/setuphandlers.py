@@ -37,6 +37,25 @@ def user_folder(context):
                                         title='Erros na Importação',
                                         description='Pasta que guarda os arquivos CSV sobre os erros na importação de usuários.',
                                         excludeFromNav = True)
+
+        if not 'list-documents-user' in folder_control_panel.objectIds():
+            type = 'vindula.myvindula.vindulalistdocumentuser'
+            id = 'list-documents-user'
+            
+            if ctx.portal_types.get(type):
+                folder_control_panel.setConstrainTypesMode(0)
+                ctx.portal_types.get(type).global_allow = True
+                
+                # constroi o objeto 
+                obj = {'type_name':type,'id':id,
+                       'title':'Listagem dos Documentos Comprobatórios',
+                       'excludeFromNav':True,}
+                
+                folder_control_panel.invokeFactory(**obj)
+                print 'Create %s object.' % id          
+                ctx.portal_types.get(type).global_allow = False
+            
+
                 
     portalGroup = context.getSite().portal_groups 
     if not 'manage-user' in portalGroup.listGroupIds():
@@ -58,13 +77,10 @@ def set_AllowedType_Members(context):
         folder_members.setImmediatelyAddableTypes(Types)
         folder_members.setLocallyAllowedTypes(Types)
         
-        if 'index_html' in folder_members.keys():
-            index = folder_members['index_html']
-            #index.write("member_search = '/myvindulalistall'\nreturn container.REQUEST.RESPONSE.redirect(member_search)")
+#        if 'index_html' in folder_members.keys():
+#            index = folder_members['index_html']
+#            #index.write("member_search = '/myvindulalistall'\nreturn container.REQUEST.RESPONSE.redirect(member_search)")
             
-        
-
-
         
 def set_field_default(context):
     try:

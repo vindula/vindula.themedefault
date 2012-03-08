@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master">
+
+	<head>
+		
+	</head>
+
+	<body>
+	    <div metal:fill-slot="content-core">
+				<div id="interna">
+				   <fieldset>
+		            	<legend>Cadastrar novo Documento</legend>
+						<a alt="Adicionar novo Documento" title="Adicionar novo Documento"
+						   tal:attributes="href string:${context/absolute_url|nothing}/add-documents">Adicionar novo registro</a>
+					</fieldset>
+					
+					<fieldset>
+		            	<legend>Listagems do registros</legend>
+						<table width="100%">
+							<tr>
+								<th width="50%">Documento</th>
+								<th width="10%">Ativo</th>
+								<th width="10%">Editar Documento</th>
+							</tr>
+							<tal:rep repeat="item view/get_Documents|nothing">
+								<tr>
+									<td tal:content="item/name_document|nothing"></td>
+									<tal:def define="ativo item/flag_ativo|nothing">
+										<td tal:condition="ativo">Sim</td>
+										<td tal:condition="not: ativo">Não</td>
+										
+									</tal:def>
+									<td width="10%">
+										<a tal:attributes="href string:${context/absolute_url|nothing}/edit-documents?id=${item/id|nothing}"
+											alt="Editar Documento" title="Editar Documento">
+											Editar</a>
+									</td>
+								</tr>
+							</tal:rep>		
+						</table>
+					</fieldset>
+				</div>
+	    </div>    
+	</body>
+</html>

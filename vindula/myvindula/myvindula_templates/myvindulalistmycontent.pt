@@ -8,9 +8,15 @@
 			<div id="content">
 				<div id="content-core" tal:define="normalizeString nocall: context/plone_utils/normalizeString;
 												   member python:context.portal_membership.getAuthenticatedMember();
-		  									  	   form_data view/load_list | python:{}">
+		  									  	   form_data view/load_list | python:{};
+												   
+												   Batch python:modules['Products.CMFPlone'].Batch;
+							                       b_size python:20;
+							                       b_start python:0;
+							                       b_start request/b_start | b_start">
 	                
-		            <tal:rep repeat="obj form_data">
+		            <tal:rep define="batch python:Batch(form_data, b_size, int(b_start));"
+							 repeat="obj batch">
 	 					<dl tal:define="item obj/getObject|nothing;
 										item_type item/portal_type;
 										item_type_class python:'contenttype-' + normalizeString(item_type);
@@ -30,26 +36,13 @@
 	                		</dd>
 						</dl>				
 					</tal:rep>
-		                																					           					     
-					<!--table width="100%">
-						<tr>
-							<th width="40%">Titulo</th>
-							<th width="30%">Descrição</th>
-							<th width="30%" >Tipo</th>
-						</tr>
-						<tal:rep repeat="obj form_data">
-							<tr>
-								<tal:def>
-									<td><a target="_blank" tal:attributes="href item/absolute_url" tal:content="item/Title"></a></td>
-									<td><span tal:content="item/description"></span></td>
-									<td><span tal:content="item/portal_type"></span> </td>
-					            </tal:def>
-							</tr>
-						</tal:rep>
-					</table-->
+					<tal:cond tal:condition="form_data">
+						<div class="navigation-users" tal:define="batch python:Batch(form_data, b_size, int(b_start));">
+							<div metal:use-macro="here/batch_macros/macros/navigation" />
+						</div>
+					</tal:cond>		                																					           					     
 		        </div>
 		    </div>    
-
 	  	</div>    
   </body>
 </html>

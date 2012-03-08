@@ -9,12 +9,14 @@
 					
 					<h3>Verificamos que este &eacute o seu primeiro acesso e para que a Intranet funcione corretamente,
 						precisamos que voc&ecirc; atualize seus dados pessoais.</h3>
+					<br />
 					<h3>Em menos de 5 minutos tudo estar&aacute; pronto. Vamos l&aacute;?</h3>
-                    
+                    <br />
 					<form action="myvindula-first-registre" method="post" enctype="multipart/form-data">
 						
-						<input type="submit" id='continuar' name="continuar" value="Clique aque para continua">
-						<input type="submit" id='voltar' name="voltar" value="N&atilde;o, Obrigado">
+						<input type="submit" id='continuar' name="continuar" value="Clique aque para continua" style="height:45px;width:200px;">
+						<br /><br />
+						<input type="submit" id='voltar' name="voltar" value="N&atilde;o, Obrigado" style="height:25px;width:100px;">
 						
 					</form>
 	

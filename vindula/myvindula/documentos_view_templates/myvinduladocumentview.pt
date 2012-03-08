@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master">
+
+	<head>
+		
+	</head>
+
+	<body>
+	    <div metal:fill-slot="content-core">
+			<metal:page metal:define-macro="page">
+				
+				<tal:def define="view python:context.restrictedTraverse('@@myvindula-documents');
+						   	  	 docs view/load_list|nothing;">
+					
+					<h2>Documentos Comprobat&oacute;rios</h2>
+					<form name="myvindula-documents" id="myvindula-documents" enctype="multipart/form-data" 
+							  					  class="enableAutoFocus"  method="POST" action="/myvindula-documents"
+												  tal:define="form_data view/load_form|nothing">
+						<table class="documentos">
+							<tr>
+								<th width="25%">Documento</th>
+								<th width="25%">Eviado</th>
+								<th width="50%">Eviar novo documento / substituir documento atual</th>
+							</tr>
+							<tal:rep repeat="item docs">
+								<tal:cond condition="item/flag_ativo|nothing">
+									<tr tal:define="classe repeat/item/odd" 
+										tal:attributes="class python:classe and 'odd' or 'even'">
+										
+										<td tal:content="item/name_document|nothing"></td>
+										<tal:def define="user_doc python:view.doc_enviado(item.id)">
+											<tal:cond condition="user_doc">
+												<td>Sim <a tal:attributes="href string:${context/portal_url|nothing}/download-document?id=${user_doc}">Baixar documento</a></td>
+											</tal:cond>
+											<tal:cond condition="python:not user_doc">
+												<td>Não enviado</td>
+											</tal:cond>	
+										</tal:def>
+										<td>
+											<input type="file" width="100px" name="documento" id="documento">
+											<input type="hidden" width="100px" name="documents_id" id="documents_id" tal:attributes="value item/id|nothing">
+										</td>
+									</tr>
+								</tal:cond>														
+							</tal:rep>
+						</table>
+						<input style="width:100px;" class="button-erp" type="submit" value="Enviar" name="form.submited">
+					</form>
+				</tal:def>
+			</metal:page>
+		</div>
+	</body>
+</html>

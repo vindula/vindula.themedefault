@@ -38,7 +38,7 @@
                     </a>
                 </li>
 				
-				<tal:cond define="enable context/@@myvindulapanel/check_editfunc;"
+				<tal:cond define="enable context/@@myvindula-conf-userpanel/check_editfunc;"
 						  condition="enable">
 	                <li id="contentview-user_data-personal-preferences"
 	                    tal:define="link context/@@myvindulapanel/getPersonalPrefsLink;
@@ -53,7 +53,7 @@
 	                </li>
 				</tal:cond>
 				
-				<tal:cond define="enable context/@@myvindulapanel/check_pensamentos;"
+				<tal:cond define="enable context/@@myvindula-conf-userpanel/check_pensamentos;"
 						  condition="enable">
 	                <li id="contentview-user_data-personal-information"
 	                    tal:define="link context/@@myvindulapanel/getPersonalInfoLink;
@@ -79,7 +79,7 @@
                     </a>
                 </li>
 				
-				<tal:cond define="enable context/@@myvindulapanel/check_recados;"
+				<tal:cond define="enable context/@@myvindula-conf-userpanel/check_recados;"
 						  condition="enable">
 					<li id="contentview-user_data-personal-preferences"
 	                    tal:define="link context/@@myvindulapanel/getPersonalPrefsLink;
@@ -93,17 +93,18 @@
 	                    </a>
 	                </li>	
 				</tal:cond>
-				<tal:cond define="enable context/@@myvindulapanel/check_holerite;"
-						  condition="enable">
-					<li id="contentview-user_data-personal-holerite"
+				<tal:cond define="enable_holeite context/@@myvindula-conf-userpanel/check_holerite;
+								  enable_documents context/@@myvindula-conf-userpanel/check_documents"
+						  condition="python: enable_holeite or enable_documents ">
+					<li id="contentview-user_data-personal-recursos-humanos"
 		                    tal:define="link context/@@myvindulapanel/getPersonalPrefsLink;
-		                                selected python:view_name=='myvindula-holerite';"
+		                                selected python:view_name=='myvindula-recursos-humanos';"
 		                    tal:condition="link|nothing"
 		                    tal:attributes="class python:selected and 'selected' or 'plain'">
 		                    <a href=""
-		                       tal:attributes="href string:${context/portal_url}/@@myvindula-holerite"
+		                       tal:attributes="href string:${context/portal_url}/@@myvindula-recursos-humanos"
 		                       i18n:translate="">
-		                        Meus Holerites
+		                       Recursos Humanos
 		                    </a>
 		            </li>
 				</tal:cond>

@@ -249,16 +249,6 @@ AUTO_INCREMENT = 30
 DEFAULT CHARACTER SET = latin1;
 
 
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
-
 -- -----------------------------------------------------
 -- Table `myvindulaDB`.`vin_myvindula_holerite`
 -- -----------------------------------------------------
@@ -317,9 +307,47 @@ AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
+-- -----------------------------------------------------
+-- Table `myvindulaDB`.`vin_myvindula_config_documents`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `myvindulaDB`.`vin_myvindula_config_documents` ;
+
+CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_config_documents` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `name_document` VARCHAR(45) NOT NULL ,
+  `date_creation` DATETIME NOT NULL ,
+  `flag_ativo` TINYINT(1)  NOT NULL DEFAULT TRUE ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `myvindulaDB`.`vin_myvindula_user_documents`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `myvindulaDB`.`vin_myvindula_user_documents` ;
+
+CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_user_documents` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `documento` BLOB NOT NULL ,
+  `date_creation` DATETIME NOT NULL ,
+  `vin_myvindula_funcdetails_username` VARCHAR(45) NOT NULL ,
+  `vin_myvindula_config_documents_id` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_vin_myvindula_user_documents_vin_myvindula_config_documents1` (`vin_myvindula_config_documents_id` ASC) ,
+  CONSTRAINT `fk_vin_myvindula_user_documents_vin_myvindula_config_documents1`
+    FOREIGN KEY (`vin_myvindula_config_documents_id` )
+    REFERENCES `myvindulaDB`.`vin_myvindula_config_documents` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = latin1;
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
 

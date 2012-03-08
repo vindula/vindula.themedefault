@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+ #-*- coding: utf-8 -*-
 from zope.app.component.hooks import getSite
 from Products.CMFCore.interfaces import ISiteRoot
 #from zExceptions import Redirect
@@ -14,7 +14,8 @@ def userupdate(event):
     membership = getSite().portal_membership
     user_login = membership.getAuthenticatedMember()
     registro_url = getSite().absolute_url() + '/myvindula-first-registre'
-    #import pdb;pdb.set_trace()
+    enable = getSite().restrictedTraverse('@@myvindula-conf-userpanel').check_alert_first_access()
+        
     try:
         user_id = to_utf8(user_login.getId())
     except:
@@ -43,12 +44,11 @@ def userupdate(event):
     else:
         user_data = ModelsFuncDetails().get_FuncDetails(user_id)
         
-        if user_data.name is None or ' ' in user_data.name:
-            #getSite.context.request.response.redirect(success_url)
-            #import pdb;pdb.set_trace()
-            #raise Redirect(registro_url)
-            pass
-        
-        elif user_data.date_birth is None:
-            #getSite.context.request.response.redirect(success_url)
-            pass
+        if ((not user_data.name) or (not user_data.date_birth) or\
+            (not user_data.phone_number) or (not user_data.email)) and enable:
+            
+            request = getSite().REQUEST
+            
+            request.other["came_from"]=registro_url
+            request.response.redirect(registro_url, lock=True)
+            
