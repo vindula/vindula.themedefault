@@ -665,7 +665,7 @@ DROP TABLE IF EXISTS `myvindulaDB`.`vin_myvindula_user_documents` ;
 
 CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_user_documents` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `documento` BLOB NOT NULL ,
+  `documento` LONGBLOB NOT NULL ,
   `date_creation` DATETIME NOT NULL ,
   `vin_myvindula_funcdetails_username` VARCHAR(45) NOT NULL ,
   `vin_myvindula_config_documents_id` INT NOT NULL ,
