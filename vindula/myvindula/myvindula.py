@@ -446,7 +446,14 @@ class MyVindulaListUser(grok.View):
         except:
             user_id = user
 
-        return ModelsDepartment().get_departmentByUsername(user)     
+        return ModelsDepartment().get_departmentByUsername(user)
+    
+class MyVindulaUserPerfil(grok.View):
+    grok.context(Interface)
+    grok.require('zope2.View')
+    grok.name('myvindula-user-perfil')     
+    
+    
 
 class MyVindulaListRecados(grok.View):
     grok.context(ISiteRoot)
@@ -1349,5 +1356,6 @@ class MyVindulaHoleriteView(grok.View, BaseFunc):
 #    grok.context(ISiteRoot)
 #    grok.require('zope2.View')
 #    grok.name('myvindula-documents')
+    
     
     
