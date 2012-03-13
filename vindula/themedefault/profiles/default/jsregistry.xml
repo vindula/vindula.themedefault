@@ -5,9 +5,14 @@
     		 cacheable="True" compression="safe" cookable="False" enabled="True" 
 			 expression="" inline="False" />
 			 
+	<javascript id="++resource++vindula.themedefault.js/vindula_homepage.js"
+    		 cacheable="True" compression="none" cookable="False" enabled="True" 
+			 expression="python: context.portal_type == 'HomePage'"  inline="False" />			 
+			 
+			 
  	<javascript id="++resource++vindula.themedefault.js/cycle.js"
     		 cacheable="True" compression="safe" cookable="False" enabled="True" 
-			 expression="" inline="False" />
+			 expression="python: context.portal_type == 'HomePage'" inline="False" />
 
 
  	<javascript cacheable="True" compression="none" cookable="True"
