@@ -27,7 +27,7 @@ $j(document).ready(function(){
 					show_picture:show_picture,
 					details_user:details_user,
 					search_random:search_random,
-					b_start:b_start,}, function(data){
+					b_start:b_start}, function(data){
 
 				$j('#reload-data-protlet').html(data);
 				$j('#reload-data-protlet').removeClass('display-none');

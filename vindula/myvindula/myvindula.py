@@ -323,8 +323,9 @@ class MyVindulaListUser(grok.View):
         
         campos = ['employee_id','nickname','pronunciation_name','date_birth']
         for i in campos:
-            if configuracao1.__getattribute__(i):
-                return True
+            if configuracao1:
+                if configuracao1.__getattribute__(i):
+                    return True
             
         return False
         
@@ -333,8 +334,9 @@ class MyVindulaListUser(grok.View):
         
         campos = ['email','phone_number','location','postal_address']
         for i in campos:
-            if configuracao1.__getattribute__(i):
-                return True
+            if configuracao1:
+                if configuracao1.__getattribute__(i):
+                    return True
             
         return False
          
@@ -344,8 +346,9 @@ class MyVindulaListUser(grok.View):
                   'profit_centre','special_roles','organisational_unit','delegations','reports_to']
 
         for i in campos:
-            if configuracao1.__getattribute__(i):
-                return True
+            if configuracao1:
+                if configuracao1.__getattribute__(i):
+                    return True
             
         return False
         
@@ -355,8 +358,9 @@ class MyVindulaListUser(grok.View):
                   'availability','papers_published','teaching_research','resume','blogs','customised_message']
         
         for i in campos:
-           if configuracao1.__getattribute__(i):
-               return True
+            if configuracao1:
+                if configuracao1.__getattribute__(i):
+                    return True
         
         return False
     
@@ -547,6 +551,38 @@ class MyVindulalistAll(grok.View, BaseFunc):
         else:
             return ''
    
+class MyVindulaNewsEmployeeView(grok.View, BaseFunc):
+    grok.context(Interface)
+    grok.require('zope2.View')
+    grok.name('myvindula-news-employee')
+    
+       
+    def load_list(self):
+        result = None
+        result_set = ModelsFuncDetails().get_allFuncDetails('admicao')
+        if result_set:
+            result = self.rs_to_list(result_set)
+                    
+        return result
+    
+    def rs_to_list(self, rs):
+        if rs:
+            return [i for i in rs]
+    
+    def check_no_result(self):
+        form = self.request.form
+        if 'title' in form.keys():
+            title = form.get('title','').strip()
+            departamento= form.get('departamento','0')
+            ramal = form.get('ramal','').strip()
+            if title or departamento !='0' or ramal:
+                return 'Não há resultados.'
+        if 'SearchSubmit' in form.keys():
+            return 'Digite um filtro para a busca.'
+        else:
+            return ''
+
+
 
 class MyVindulaListMyContent(grok.View):
     grok.context(Interface)

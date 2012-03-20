@@ -18,6 +18,7 @@ from vindula.myvindula import MessageFactory as _
 
 #Imports regarding the connection of the database 'strom'
 from storm.locals import *
+from storm.expr import Desc
 from zope.component import getUtility
 from storm.zope.interfaces import IZStorm
 from storm.locals import Store
@@ -96,8 +97,13 @@ class ModelsFuncDetails(Storm, BaseStore):
         self.store.add(funcDetails)
         self.store.flush()        
     
-    def get_allFuncDetails(self):
-        data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username!=u'admin').order_by(ModelsFuncDetails.name)
+    def get_allFuncDetails(self, ordem='nome'):
+        if ordem == 'admicao':
+            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username!=u'admin').order_by(Desc(ModelsFuncDetails.admission_date))
+        
+        elif ordem == 'nome':
+            data = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username!=u'admin').order_by(ModelsFuncDetails.name)
+            
         if data.count() == 0:
             return None
         else:
