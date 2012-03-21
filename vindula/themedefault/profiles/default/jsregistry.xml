@@ -2,8 +2,8 @@
 <object name="portal_javascripts">
 	
  	<javascript id="++resource++vindula.themedefault.js/vindula_themedefault.js"
-    		 cacheable="True" compression="safe" cookable="False" enabled="True" 
-			 expression="" inline="False" />
+    		 cacheable="True" compression="safe" cookable="False" enabled="True"
+			 authenticated = "True" expression="" inline="False" />
 			 
 	<javascript id="++resource++vindula.themedefault.js/vindula_homepage.js"
     		 cacheable="True" compression="none" cookable="False" enabled="True" 

@@ -1,7 +1,5 @@
 $j = jQuery.noConflict();
 
-$j(document).ready(function(){
-	
 	/* PERSONAL TOOLS */
 	function setTextPortalPersonaltools(){
 		var time = new Date();
@@ -10,7 +8,10 @@ $j(document).ready(function(){
 		else if (time > 12) var msg = 'Boa tarde, ';
 		else var msg = 'Bom dia, ';
 		$j('a#user-name').text(msg + $j('a#user-name').text());
-	}
+	};
+
+$j(document).ready(function(){
+	
 	setTextPortalPersonaltools();
 
 	/* ADJUSTMENTS */ 
@@ -53,7 +54,7 @@ $j(document).ready(function(){
 	});
 	
 	
-	/* COMMENT BUTTON */ 
+	/* COMMENT BUTTON 
 	var flag = 0;
 	$j('div#comentar').hide();
 	$j('input#comentar').click(function(){
@@ -64,7 +65,7 @@ $j(document).ready(function(){
 			$j('div#comentar').slideUp('slow');
 			flag = 0;
 		};
-	});
+	});*/ 
 	
 	/* CORRECTING PROBLEMS WITH FLOAT LEFT */ 
 	//$j('div.userlist').height($j('div#geral_colunas').height());
