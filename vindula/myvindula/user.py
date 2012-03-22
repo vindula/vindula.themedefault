@@ -1644,12 +1644,12 @@ class ManageLanguages(BaseFunc):
           
         # se for um formulario de edicao 
         elif 'id' in form_keys:
-
+            id = int(form.get('id'))
             data = self.store.find(ModelsMyvindulaLanguages, ModelsMyvindulaLanguages.id == id).one()
             
             D = {}
             for campo in campos.keys():
-                D[campo] = getattr(data, campo, '')
+                D[campo] = getattr(data, campo, '') 
               
             if data:
                form_data['data'] = D

@@ -159,7 +159,7 @@ class Renderer(base.Renderer):
                     
                 result = ModelsFuncDetails().get_FuncBusca(title,'0',ramal,True)
                 if result:
-                    #import pdb;pdb.set_trace()
+
                     if departamento != '0' and self.data.filtro_departamento != 'departamentos':
                         busca = "result.find("+self.data.filtro_departamento + "=u'" + departamento+"')"
                         data = eval(busca)
