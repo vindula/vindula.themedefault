@@ -121,7 +121,6 @@ class MenuViewlet(grok.Viewlet):
             return L
         
     def getSubMenu(self):
-        #import pdb;pdb.set_trace()
         
         portal = self.context.portal_url.getPortalObject()
         types = self.getContentTypes()

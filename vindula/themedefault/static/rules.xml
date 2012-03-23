@@ -83,5 +83,8 @@
 	<!-- Portal Footer -->
 	<copy css:content-children="#macro_logofooter" css:theme="#rodape .logo" />
 	<copy css:content-children="#macro_textfooter" css:theme="#informacao" />
+	
+	<!-- Add in any inline scripts, like Google Analytics --> 
+    <after theme-children="/html/body" content="/html/body/div[@id='visual-portal-wrapper']/div/script" /> 
 
 </rules>
