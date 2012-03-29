@@ -4,9 +4,6 @@ $j(document).ready(function(){
 	
 	function reloadPortlet(){
 
-		$j('#reload-data-protlet').addClass('display-none');
-		$j('#spinner').removeClass('display-none');
-		
 		var url = $j('#url').val() + '/reload-aniversariantes'
 		var quantidade = $j('#quantidade').val();
 		var tipo_busca = $j('#tipo_busca').val();
@@ -28,12 +25,23 @@ $j(document).ready(function(){
 					details_user:details_user,
 					search_random:search_random,
 					b_start:b_start}, function(data){
-
-				$j('#reload-data-protlet').html(data);
-				$j('#reload-data-protlet').removeClass('display-none');
-				$j('#spinner').addClass('display-none');
-				
-			});
+			
+				if (div == 1) {
+					$j('#reload-data-protlet-A').html(data);
+					$j('#reload-data-protlet-B').html('');
+					
+					heightDiv($j('#reload-data-protlet-A'));
+					div = 2;
+					
+				}else{
+					$j('#reload-data-protlet-B').html(data);
+					$j('#reload-data-protlet-A').html('');
+					
+					heightDiv($j('#reload-data-protlet-B'));
+					div = 1;
+				}
+		});
+		$j('#next-page').trigger('click');
 	};
 	
 	function sequencia(quant, b_start, max_result){
@@ -44,17 +52,31 @@ $j(document).ready(function(){
 			
 		}else{return 0;}
 	};
+	
+	function heightDiv(div){
+		var altura = div.height();
+		$j('.aniversante-cycle').css('height',altura+'px');
+	};
+
 	/*
 	$j('body').click(function(){
 		reloadPortlet();	
 	});*/
 	
+	var div = 1 
 	reloadPortlet();
 	
 	var tempo_rotacao = $j('#tempo_rotacao').val();
-	
 	window.setInterval(function(){
 		reloadPortlet();
 	},parseInt(tempo_rotacao));
-
+	
+	$j('.aniversante-cycle').cycle({
+	    fx:     'scrollHorz',
+	    speed:   1000,
+	    timeout: 0,
+		next: 	'#next-page',
+		delay: 800
+		});
+    
 });

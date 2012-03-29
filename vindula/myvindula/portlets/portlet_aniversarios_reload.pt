@@ -14,14 +14,24 @@
 			
 			<input type="hidden" tal:attributes="value view/details_user" name="details_user" id="details_user">
 			<input type="hidden" name="b_start" id="b_start" value="0">
+			<script tal:attributes="src string:${context/portal_url}/++theme++vindula.themedefault/js/cycle.js"></script>
+			
 			<script tal:attributes="src string:${context/portal_url}/++resource++vindula.myvindula/ajax_reload_portlet.js"></script>
-			<div id="reload-data-protlet">
-				<!--Conteudo do Portlet-->				
+			
+			<!-- Cycle Divs -->
+			<div class="aniversante-cycle">
+				<div id="reload-data-protlet-A">
+					<!--Conteudo do Portlet A-->				
+				</div>
+				<div id="reload-data-protlet-B">
+					<!--Conteudo do Portlet B-->				
+				</div>
 			</div>
-			<!-- Spinner -->
+			<div id="next-page" class="display-none"><!-- paginador do portlet --></div>
+			<!-- Spinner 
 			<div id="spinner" class="display-none" style="text-align:center;">
 				<img alt="spinner" align="center" tal:attributes="src string:${context/portal_url}/++resource++vindula.myvindula/ajaxLoader.gif"/>
-			</div>	
+			</div>	-->
 			
 			<div class="titulo_info_boxTipo2 aling-right">
 				<br />

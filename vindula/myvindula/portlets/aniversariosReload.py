@@ -233,7 +233,9 @@ class ReloadPortletView(grok.View):
 
     def birthdaysToday(self):
         if 'type_search' in self.request.keys():
-            type_filter = int(self.request['type_search'])
+            
+            try:type_filter = int(self.request['type_search'])
+            except:type_filter = self.request['type_search']
             
             results = self.get_birthdaysToday(type_filter)
         else:

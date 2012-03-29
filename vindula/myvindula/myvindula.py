@@ -8,6 +8,7 @@ from plone.uuid.interfaces import IUUID
 
 from zope.component import getUtility
 from plone.i18n.normalizer.interfaces import IIDNormalizer
+from Products.TinyMCE.interfaces.utility import ITinyMCE
 
 from plone.dexterity.utils import createContentInContainer
 from plone.namedfile.field import NamedImage
@@ -81,6 +82,14 @@ class MyVindulaView(grok.View):
             return True
         else:
             return False
+        
+    def getConfTyneMCE(self):
+        utility = getUtility(ITinyMCE)
+        conf = utility.getConfiguration(context=self.context,
+                                        field='text',
+                                        request=self.request)
+        return conf
+        
 
     def update(self):
         """ Receive itself from request and do some actions """
