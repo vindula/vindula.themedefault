@@ -3,3 +3,11 @@ Changelog
 
 1.0 (released)
 ------------------
+
+
+
+1.1 - 2012-03-29
+------------------
+
+- Adição do TinyMCE no campo de Pensamentos do Vindula
+- Alteração do evento de paginação do portlet aniversariosReload
