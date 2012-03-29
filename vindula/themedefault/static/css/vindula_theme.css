@@ -291,6 +291,26 @@ div.portlet-user-info-larg{
 .p-relative {
 	position:relative !important;
 }
+
+.circle {
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+ 	-webkit-border-radius: 50%;
+	display: inline-block;
+	width: 21px;
+	height: 21px;
+	background-image: url("++resource++vindula.themedefault/images/buttons/ie_border_seta.png")\9;
+	background-color: #F58220;
+}
+
+.circle img {
+	margin-left: 5px;
+    margin-top: 3px;
+}
+
+.circle .right {
+	margin-left: 8px;
+}
 /* ...Gallery Cycle */
 
 
