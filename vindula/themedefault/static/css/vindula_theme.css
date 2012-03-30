@@ -116,7 +116,7 @@ div#data dd.actionMenuContent li a {
 }
 
 .portletWrapper .portletHeader {
-    background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2.png") no-repeat scroll 0 0 transparent !important;
+    background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2.png") no-repeat scroll 0 0 #FAA61A !important;
     padding: 20px 0 !important;
     text-align: center;
     width: 228px;
@@ -135,17 +135,17 @@ div#data dd.actionMenuContent li a {
 }
 
 .portletWrapper .portletHeader-dainamic .topPortlet {
-    background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2-top.png") no-repeat scroll 0 0 transparent !important;
+    background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2-top.png") no-repeat scroll 0 0 #FAA61A !important;
 	height:15px;
 }
 
 .portletWrapper .portletHeader-dainamic .meioPortlet{
-    background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2-meio.png") repeat-y scroll 0 0 transparent !important;
+    background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2-meio.png") repeat-y scroll 0 0 #FAA61A !important;
 	
 }
 
 .portletWrapper .portletHeader-dainamic .bottonPortlet{
-    background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2-botton.png") no-repeat scroll 0 0 transparent !important;
+    background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2-botton.png") no-repeat scroll 0 0 #FAA61A !important;
 	height:23px;
 }
 /* ------------ */

@@ -12,5 +12,6 @@
 			<a tal:content="item/title" tal:attributes="href item/absolute_url; alt item/title">Submenu</a>
 		</li>
 	</ul>
-
+	
+	<br tal:condition="python: not submenu and not menus"/>
 </div>

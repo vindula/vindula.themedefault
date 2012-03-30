@@ -382,7 +382,7 @@ class HomePageView(grok.View):
             local = local.getPhysicalPath()
         self.pc = getToolByName(self.context, 'portal_catalog')
         news = self.pc(portal_type=('VindulaNews', 'News Item'),
-                       review_state='published',
+                       #review_state='published',
                        path={'query':'/'.join(local)},
                        sort_on='effective',
                        sort_order='descending',)

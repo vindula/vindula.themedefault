@@ -68,7 +68,7 @@ class UsefulLinksViewlet(grok.Viewlet):
             self.pc = getToolByName(self.context, 'portal_catalog')
             links = self.pc(path={'query':'/'.join(pasta.getPhysicalPath())},
                             portal_type='Link',
-                            review_state=('published','internal','external'),
+                            #review_state=('published','internal','external'),
                             sort_on="getObjPositionInParent")
             
             if links:
@@ -76,7 +76,9 @@ class UsefulLinksViewlet(grok.Viewlet):
                 for link in links:
                     L.append(link.getObject())
                 return L
-                 
+        
+        else:
+            return []
 
 # Viewlet for menu and sub menu
 
@@ -91,7 +93,9 @@ class MenuViewlet(grok.Viewlet):
             control = portal['control-panel-objects']
             if 'vindula_themeconfig' in control.keys():
                 thema = control['vindula_themeconfig']    
-                itens = thema.itens_menu
+                
+                try:itens = thema.itens_menu
+                except:itens = None
                 
                 if itens:
                     return itens

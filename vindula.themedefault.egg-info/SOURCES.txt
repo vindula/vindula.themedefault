@@ -13,7 +13,6 @@ vindula.themedefault.egg-info/requires.txt
 vindula.themedefault.egg-info/top_level.txt
 vindula/themedefault/__init__.py
 vindula/themedefault/config.py
-vindula/themedefault/setuphandlers.py
 vindula/themedefault/tests.py
 vindula/themedefault/browser/__init__.py
 vindula/themedefault/browser/viewlets.py

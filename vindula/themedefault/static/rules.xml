@@ -28,7 +28,7 @@
 	
 	<!-- Portal Top -->
 	<copy css:content-children="#usefullinks_viewlet" css:theme="#barra_superior" />
-	
+	<merge attributes="class" css:theme="body" css:content="body" />
 	
 	<copy css:content-children="#macro_logotop" css:theme="#topo .logo" />
 	
