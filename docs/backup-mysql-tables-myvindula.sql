@@ -621,15 +621,17 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `vin_myvindula_howareu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `vin_myvindula_howareu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(45) NOT NULL,
-  `date_creation` datetime NOT NULL,
-  `visible_area` varchar(45) DEFAULT NULL,
-  `text` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_howareu` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `username` VARCHAR(45) NOT NULL ,
+  `date_creation` DATETIME NOT NULL ,
+  `visible_area` VARCHAR(45) NULL DEFAULT NULL ,
+  `text` TEXT NULL DEFAULT NULL ,
+  `upload_image` LONGBLOB NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+AUTO_INCREMENT = 30
+DEFAULT CHARACTER SET = latin1
 
 --
 -- Dumping data for table `vin_myvindula_howareu`

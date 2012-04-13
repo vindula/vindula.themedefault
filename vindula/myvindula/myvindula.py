@@ -27,6 +27,7 @@ from DateTime.DateTime import DateTime
 from datetime import datetime 
 import calendar
 import base64
+import pickle
 
 from vindula.myvindula.validation import valida_form
 
@@ -100,7 +101,55 @@ class MyVindulaView(grok.View):
             visible_area = form.get('visible_area')
             if not eval(visible_area):
                 form['visible_area'] = form.get('departamento','0')
+            
+            upload_foto = form.get('upload_image')
+            if upload_foto:
+                data = upload_foto.read()
+                if len(data) != 0 : 
+                    form['upload_image'] = pickle.dumps(data)
+                else:
+                    form['upload_image'] = None                
+                
             return  ModelsMyvindulaHowareu().set_myvindula_howareu(**form)        
+
+#Views de renderização das imagem do howareu ---------------------------------------------------   
+class VindulahowareuImage(grok.View, BaseFunc):
+    grok.context(Interface)
+    grok.require('zope2.View')
+    grok.name('howareu-image')
+    
+    def render(self):
+        pass
+    
+    def update(self):
+        form = self.request.form
+        if 'id' in form.keys():
+            id = form.get('id','0')
+            if id != 'None':
+                campo_image = ModelsMyvindulaHowareu().get_myvindula_howareu_By_Id(id)
+                valor = campo_image.upload_image
+                x = self.decodePickle(valor)
+                
+                self.request.response.setHeader("Content-Type", "image/jpeg", 0)
+                self.request.response.write(x)                
+
+class VindulaHowAreUListAll(grok.View, BaseFunc):
+    grok.context(Interface)
+    grok.require('zope2.View')
+    grok.name('howareu-list-all')
+    
+    def load_dados(self):
+         result =  ModelsMyvindulaHowareu().get_myvindula_howareu()
+         
+         if result:
+             return self.rs_to_list(result)
+         else:
+             return []
+         
+    
+    
+    
+
 
 class MyVindulaPanelView(grok.View):
     grok.context(Interface)
@@ -129,57 +178,6 @@ class MyVindulaPanelView(grok.View):
         if self._checkPermission('Set own properties', context):
             template = '@@myvindulapanel?section=myvindulaprefs'
         return template
-    
-    
-#    def check_recados(self):
-#        if 'control-panel-objects' in getSite().keys():
-#            control = getSite()['control-panel-objects']
-#            if 'vindula_vindularecadosconfig' in control.keys():
-#                config = control['vindula_vindularecadosconfig']
-#                return config.ativa_recados
-#            else:
-#                return False
-#          
-#        else:
-#            return False
-#        
-#    def check_pensamentos(self):
-#        if 'control-panel-objects' in getSite().keys():
-#            control = getSite()['control-panel-objects']
-#            if 'vindula_vindulapensamentosconfig' in control.keys():
-#                config = control['vindula_vindulapensamentosconfig']
-#                return config.ativa_pensamentos
-#            else:
-#                return False
-#        else:
-#            return False
-#        
-#    def check_editfunc(self):
-#        if 'control-panel-objects' in getSite().keys():
-#            control = getSite()['control-panel-objects']
-#            if 'vindula_vindulaeditfuncconfig' in control.keys():
-#                config = control['vindula_vindulaeditfuncconfig']
-#                return config.ativa_editfunc
-#            else:
-#                return False
-#        else:
-#            return False
-#    
-#    def check_holerite(self):
-#        if 'control-panel-objects' in getSite().keys():
-#            control = getSite()['control-panel-objects']
-#            if 'vindula_vindulaholeriteconfig' in control.keys():
-#                config = control['vindula_vindulaholeriteconfig']
-#                return config.ativa_holerite
-#            else:
-#                return False
-#          
-#        else:
-#            return False
-#        
-#    def check_documents(self):
-#        return True        
-
 
 class MyVindulaConfgsView(grok.View, BaseFunc):
     grok.context(INavigationRoot)
@@ -199,7 +197,6 @@ class MyVindulaRecursosHumanosView(grok.View, BaseFunc):
     grok.context(ISiteRoot)
     grok.require('zope2.View')
     grok.name('myvindula-recursos-humanos')
-    
     
     def getMacro(self,link='myvindula-holerite'):
         if 'id' in self.request.keys():
@@ -505,20 +502,7 @@ class MyVindulalistAll(grok.View, BaseFunc):
     grok.require('zope2.View')
     grok.name('myvindulalistall')
     
-#    def config(self):
-#        if 'control-panel-objects' in  getSite().keys():
-#            control = getSite()['control-panel-objects']
-#            if 'vindula_vindulauserconfig' in control.keys():
-#                confg = control['vindula_vindulauserconfig']
-#                try:
-#                    return confg.ativa_muit_user
-#                except:
-#                    return False
-#            else:
-#                return False
-#        else:
-#            return False
-        
+       
     def load_list(self):
         form = self.request.form
         result = None
@@ -543,9 +527,9 @@ class MyVindulalistAll(grok.View, BaseFunc):
                     
         return result
     
-    def rs_to_list(self, rs):
-        if rs:
-            return [i for i in rs]
+#    def rs_to_list(self, rs):
+#        if rs:
+#            return [i for i in rs]
     
     def check_no_result(self):
         form = self.request.form
@@ -574,9 +558,9 @@ class MyVindulaNewsEmployeeView(grok.View, BaseFunc):
                     
         return result
     
-    def rs_to_list(self, rs):
-        if rs:
-            return [i for i in rs]
+#    def rs_to_list(self, rs):
+#        if rs:
+#            return [i for i in rs]
     
     def check_no_result(self):
         form = self.request.form
@@ -613,25 +597,11 @@ class MyVindulaListMyContent(grok.View):
             self.request.response.redirect(self.context.absolute_url() + '/login')
 
 
-class MyVindulaManageAllUser(grok.View):
+class MyVindulaManageAllUser(grok.View, BaseFunc):
     grok.context(INavigationRoot)
     grok.require('zope2.View')
     grok.name('myvindulamanagealluser')
     
-#    def config(self):
-#        if 'control-panel-objects' in  getSite().keys():
-#            control = getSite()['control-panel-objects']
-#            if 'vindula_vindulauserconfig' in control.keys():
-#                confg = control['vindula_vindulauserconfig']
-#                try:
-#                    return confg.ativa_muit_user
-#                except:
-#                    return False
-#            else:
-#                return False
-#        else:
-#            return False
-
     def checa_login(self):
         membership = self.context.portal_membership
         groups = self.context.portal_groups
@@ -677,11 +647,11 @@ class MyVindulaManageAllUser(grok.View):
         else:
             self.request.response.redirect(self.context.absolute_url() + '/login')
 
-    def rs_to_list(self, rs):
-        if rs:
-            return [i for i in rs]
-        else:
-            return []
+#    def rs_to_list(self, rs):
+#        if rs:
+#            return [i for i in rs]
+#        else:
+#            return []
 
     def encodeUser(self,user):
         return base64.b16encode(user)
@@ -1396,11 +1366,3 @@ class MyVindulaHoleriteView(grok.View, BaseFunc):
         
         else:
                 return []
-
-#class MyVindulaSupportingDocumentsView(grok.View, BaseFunc):
-#    grok.context(ISiteRoot)
-#    grok.require('zope2.View')
-#    grok.name('myvindula-documents')
-    
-    
-    

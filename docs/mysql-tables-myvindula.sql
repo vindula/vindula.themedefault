@@ -208,10 +208,12 @@ CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_howareu` (
   `date_creation` DATETIME NOT NULL ,
   `visible_area` VARCHAR(45) NULL DEFAULT NULL ,
   `text` TEXT NULL DEFAULT NULL ,
+  `upload_image` LONGBLOB NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 30
-DEFAULT CHARACTER SET = latin1;
+DEFAULT CHARACTER SET = latin1
+
 
 
 -- -----------------------------------------------------
