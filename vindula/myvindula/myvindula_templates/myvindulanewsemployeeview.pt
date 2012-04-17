@@ -22,7 +22,8 @@
 					                 tal:condition="img"
 					                 tal:attributes="src img">
 					              <br />
-					              <span tal:content="python:view_listall.checaValor(item.name,item.username)"></span>
+					              <span tal:content="python:view_listall.checaValor(item.name,item.username)"></span><br>
+								  <span>Admiss&atilde;o: <span tal:content="python: view_listall.converte_data(item.admission_date)"></span></span>
 					            </a>
 
 			          		</div>
