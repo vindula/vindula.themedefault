@@ -482,6 +482,12 @@ class ModelsMyvindulaHowareu(Storm, BaseStore):
         else:
             return None
         
+    def del_myvindula_howareu(self, id):
+        record = self.store.find(ModelsMyvindulaHowareu, ModelsMyvindulaHowareu.id==id).one()
+        self.store.remove(record)
+        self.store.flush()        
+        
+        
 class ModelsMyvindulaRecados(Storm, BaseStore):
     __storm_table__ = 'vin_myvindula_recados'
     
@@ -517,7 +523,12 @@ class ModelsMyvindulaRecados(Storm, BaseStore):
                 return None
         else:
             return None            
-                                  
+
+    def del_myvindula_recados(self, id):
+        record = self.store.find(ModelsMyvindulaRecados, ModelsMyvindulaRecados.id==id).one()
+        self.store.remove(record)
+        self.store.flush()        
+                            
 
 class ModelsMyvindulaComments(Storm, BaseStore):
     __storm_table__ = 'vin_myvindula_comments'
@@ -557,7 +568,13 @@ class ModelsMyvindulaComments(Storm, BaseStore):
         if data.count > 0:
             return data
         else:
-            return None   
+            return None
+    
+    def del_myvindula_comments(self, id):
+        record = self.store.find(ModelsMyvindulaComments, ModelsMyvindulaComments.id==id).one()
+        self.store.remove(record)
+        self.store.flush()        
+                   
 
 class ModelsMyvindulaLike(Storm, BaseStore):
     __storm_table__ = 'vin_myvindula_like'

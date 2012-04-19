@@ -138,6 +138,17 @@
 												<input type="hidden" name="type" id="type" value="ModelsMyvindulaHowareu" />
 											</div>
 											<input type="button" value="Comentar" class="comments bt_comments" tal:attributes="id item/id|nothing" />
+											
+											<form action="#" method="post" enctype="multipart/form-data" style="float:right"
+					                			  tal:attributes="action string:${context/absolute_url}/myvindula">
+												<input type="hidden" name="form.excluir:boolean" value="True" />
+												
+												<input type="hidden" name="id_howareu" id="id_howareu" tal:attributes="value item/id|nothing" />
+												<input type="submit" name="excluir" id="excluir" value="Excluir" 
+																	 class="comments bt_comments" tal:attributes="id item/id|nothing" />	
+											</form>
+											
+											
 											<div id="new-comments"></div>
 										</div>
 									</div>

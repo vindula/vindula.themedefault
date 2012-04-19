@@ -32,6 +32,20 @@
 		            <div class="comment-body">
 		                <p tal:replace="item/text|nothing" />
 			  		</div>
+			  		<form action="#" method="post" enctype="multipart/form-data" style="text-align: right;"
+					  		tal:condition="python: 'Manager' in member.getRoles() or str(member.id) == str(user)"
+					        tal:attributes="action string:${context/absolute_url}/myvindula-comments">
+							<input type="hidden" name="form.excluir:boolean" value="True" />
+
+							<input type="hidden" name="url_context" id="url_comments" value="">
+							<script type="text/javascript">
+								$j = jQuery.noConflict();
+								$j('input[id="url_comments"]').attr('value',location);
+							</script>
+							<input type="hidden" name="id_comments" id="id_comments" tal:attributes="value item/id|nothing" />
+							<input type="submit" name="excluir" id="excluir" value="Excluir" 
+												 class="comments bt_comments" tal:attributes="id item/id|nothing" />	
+					</form>
 				</div>
 			</tal:rep>
 		</div>

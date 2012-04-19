@@ -96,6 +96,7 @@ class MyVindulaView(grok.View):
         """ Receive itself from request and do some actions """
         form = self.request.form
         submitted = form.get('form.submitted', False)
+        excluir = form.get('form.excluir', False)
             
         if submitted:
             visible_area = form.get('visible_area')
@@ -108,9 +109,17 @@ class MyVindulaView(grok.View):
                 if len(data) != 0 : 
                     form['upload_image'] = pickle.dumps(data)
                 else:
-                    form['upload_image'] = None                
+                    form['upload_image'] = ''                
+            else:
+                form['upload_image'] = ''
+            ModelsMyvindulaHowareu().set_myvindula_howareu(**form)
                 
-            return  ModelsMyvindulaHowareu().set_myvindula_howareu(**form)        
+        elif excluir:
+            id_howareu = int(form.get('id_howareu','0'))
+            ModelsMyvindulaHowareu().del_myvindula_howareu(id_howareu)
+               
+            IStatusMessage(self.request).addStatusMessage(_(u'Registro removido com sucesso.'),"info")
+                     
 
 #Views de renderização das imagem do howareu ---------------------------------------------------   
 class VindulahowareuImage(grok.View, BaseFunc):
@@ -146,10 +155,17 @@ class VindulaHowAreUListAll(grok.View, BaseFunc):
          else:
              return []
          
-    
-    
-    
-
+    def update(self):
+        """ Receive itself from request and do some actions """
+        form = self.request.form
+        excluir = form.get('form.excluir', False)
+            
+        if excluir:
+            id_howareu = int(form.get('id_howareu','0'))
+            ModelsMyvindulaHowareu().del_myvindula_howareu(id_howareu)
+               
+            IStatusMessage(self.request).addStatusMessage(_(u'Registro removido com sucesso.'),"info")         
+         
 
 class MyVindulaPanelView(grok.View):
     grok.context(Interface)
@@ -369,6 +385,7 @@ class MyVindulaListUser(grok.View):
                     return True
         
         return False
+
     
     def get_howareu(self, user):
         member =  self.context.restrictedTraverse('@@plone_portal_state').member().getId();
@@ -392,11 +409,26 @@ class MyVindulaListUser(grok.View):
     def update(self):
         form = self.request.form
         submitted = form.get('form.submitted', False)
-           
-        if submitted:
-            return  ModelsMyvindulaRecados().set_myvindula_recados(**form)      
-
         
+        excluir_howareu = form.get('form.excluir.howareu', False)
+        excluir_recados = form.get('form.excluir.recados', False)
+        
+        if submitted:
+            return  ModelsMyvindulaRecados().set_myvindula_recados(**form)
+        
+        elif excluir_howareu:
+            id_howareu = int(form.get('id_howareu','0'))
+            ModelsMyvindulaHowareu().del_myvindula_howareu(id_howareu)
+               
+            IStatusMessage(self.request).addStatusMessage(_(u'Registro removido com sucesso.'),"info")
+        
+        elif excluir_recados:       
+            id_recado = int(form.get('id_recado','0'))
+            ModelsMyvindulaRecados().del_myvindula_recados(id_recado)
+               
+            IStatusMessage(self.request).addStatusMessage(_(u'Registro removido com sucesso.'),"info")        
+              
+
     def get_prefs_user(self, user):
         try:
             user_id = unicode(user, 'utf-8')    
@@ -496,6 +528,18 @@ class MyVindulaListRecados(grok.View):
                 return self.context.absolute_url()+'/defaultUser.png'
         else:
             return self.context.absolute_url()+'/defaultUser.png'
+        
+    def update(self):
+        form = self.request.form
+        excluir = form.get('form.excluir', False)
+                
+        if excluir:
+            id_recado = int(form.get('id_recado','0'))
+            ModelsMyvindulaRecados().del_myvindula_recados(id_recado)
+               
+            IStatusMessage(self.request).addStatusMessage(_(u'Registro removido com sucesso.'),"info")        
+        
+        
 
 class MyVindulalistAll(grok.View, BaseFunc):
     grok.context(Interface)
@@ -855,11 +899,21 @@ class MyVindulaComments(grok.View):
         """ Receive itself from request and do some actions """
         form = self.request.form
         submitted = form.get('form.submitted-comment', False)
+        excluir = form.get('form.excluir', False)
         redirect = form.get('url_context',self.context.absolute_url())
-                            
+        
         if submitted:
             ModelsMyvindulaComments().set_myvindula_comments(**form)
             return self.request.response.redirect(redirect)
+        
+        elif excluir:
+            id_comments = int(form.get('id_comments','0'))
+            ModelsMyvindulaComments().del_myvindula_comments(id_comments)
+               
+            IStatusMessage(self.request).addStatusMessage(_(u'Registro removido com sucesso.'),"info")
+            
+            return self.request.response.redirect(redirect)
+        
         
 class MyVindulaCommentsMacro(grok.View):
     grok.context(Interface)

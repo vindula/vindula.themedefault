@@ -148,6 +148,17 @@
 									<input type="hidden" name="type" id="type" value="ModelsMyvindulaHowareu" />
 								</div>
 								<input type="button" value="Comentar" class="comments bt_comments" tal:attributes="id item/id|nothing" />
+								
+								<form action="#" method="post" enctype="multipart/form-data" style="float:right"
+										tal:condition="python: 'Manager' in member.getRoles() or str(member.id) == str(user)"
+					                	tal:attributes="action string:${context/absolute_url}/myvindulalistuser?user=${user}&scraps=true">
+										<input type="hidden" name="form.excluir.howareu:boolean" value="True" />
+												
+										<input type="hidden" name="id_howareu" id="id_howareu" tal:attributes="value item/id|nothing" />
+										<input type="submit" name="excluir" id="excluir" value="Excluir" 
+															 class="comments bt_comments" tal:attributes="id item/id|nothing" />	
+								</form>
+								
 								<div id="new-comments"></div>
 							</div>
 						</div>
@@ -363,6 +374,16 @@
 										<input type="hidden" name="type" id="type" value="ModelsMyvindulaRecados" />
 									</div>
 									<input type="button" value="Comentar" class="comments bt_comments" tal:attributes="id item/id|nothing" />
+									<form action="#" method="post" enctype="multipart/form-data" style="float:right"
+											tal:condition="python: 'Manager' in member.getRoles() or str(member.id) == str(user)"
+					                		tal:attributes="action string:${context/absolute_url}/myvindulalistuser?user=${user}&scraps=true">
+											<input type="hidden" name="form.excluir.recados:boolean" value="True" />
+												
+											<input type="hidden" name="id_recado" id="id_recado" tal:attributes="value item/id|nothing" />
+											<input type="submit" name="excluir" id="excluir" value="Excluir" 
+																	 class="comments bt_comments" tal:attributes="id item/id|nothing" />	
+									</form>
+									
 									<div id="new-comments"></div>
 								</div>
 							</div>
