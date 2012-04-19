@@ -68,9 +68,8 @@
 											<input type="hidden" name="type" id="type" value="ModelsMyvindulaHowareu" />
 										</div>
 										<input type="button" value="Comentar" class="comments bt_comments" tal:attributes="id item/id|nothing" />
-										
 										<form action="#" method="post" enctype="multipart/form-data" style="float:right"
-											tal:condition="python: 'Manager' in member.getRoles() or str(member.id) == str(user)"
+											tal:condition="python: 'Manager' in member.getRoles()"
 					                		tal:attributes="action string:${context/absolute_url}/howareu-list-all">
 											<input type="hidden" name="form.excluir:boolean" value="True" />
 												
