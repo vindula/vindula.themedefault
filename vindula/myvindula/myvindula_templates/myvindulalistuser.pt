@@ -377,7 +377,7 @@
 									<input type="button" value="Comentar" class="comments bt_comments" tal:attributes="id item/id|nothing" />
 									<form action="#" method="post" enctype="multipart/form-data" style="float:right"
 											tal:condition="python: 'Manager' in member.getRoles() or str(member.id) == str(user)"
-					                		tal:attributes="action string:${context/absolute_url}/myvindulalistuser?user=${user}&scraps=true">
+					                		tal:attributes="action string:${context/absolute_url}/myvindulalistuser?user=${context/REQUEST/form/user|nothing}&scraps=true">
 											<input type="hidden" name="form.excluir.recados:boolean" value="True" />
 												
 											<input type="hidden" name="id_recado" id="id_recado" tal:attributes="value item/id|nothing" />
