@@ -26,7 +26,7 @@ class FaviconTopViewlet(grok.Viewlet):
             if 'vindula_themeconfig' in control.keys():
                 confg = control['vindula_themeconfig']
                 try:
-                    return confg.favicon
+                    return confg.getFavicon().absolute_url()
                 except:
                     return None
             else:
@@ -38,7 +38,7 @@ class FaviconTopViewlet(grok.Viewlet):
         conf = self.getConfigurador()
         img = ''
         if conf:
-            img = conf.to_object.absolute_url()
+            img = conf
         else:
             img =  getSite().absolute_url() + '/++resource++vindula.themedefault/images/icons/favicon.ico'
         
