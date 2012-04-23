@@ -262,9 +262,7 @@ class MenuViewlet(grok.Viewlet):
                 if obj.absolute_url() ==  self.context.getRef_itemMenu().absolute_url() or\
                    obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL'):
                     return 'selected'
-            
-            elif obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL'):
-                return 'selected'
+                        
         else:
             try:
                 if obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL'):
