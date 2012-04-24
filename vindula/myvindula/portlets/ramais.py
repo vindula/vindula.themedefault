@@ -115,11 +115,22 @@ class Renderer(base.Renderer):
                 pass
         return None
     
+    def get_uid_struct_org(self,ctx):
+        #import pdb;pdb.set_trace()
+        if ctx.portal_type != 'Plone Site' and ctx.portal_type != 'OrganizationalStructure':
+            return self.get_uid_struct_org(ctx.aq_inner.aq_parent)
+        elif ctx.portal_type == 'OrganizationalStructure': 
+            return ctx.UID()
+        else:
+            return None
+        
+        
+    
     def list_filtro(self):
         campo = self.data.filtro_departamento
         result = ModelsFuncDetails().get_allFuncDetails()
         if result:
-            classe = 'ModelsFuncDetails.'+str(campo) 
+            classe = 'ModelsFuncDetails.'+str(campo)
             return result.group_by(eval(classe))
         
     
