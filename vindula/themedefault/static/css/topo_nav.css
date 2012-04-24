@@ -218,7 +218,7 @@
 #portal-globalnav-drop .nivel2 li,
 #portal-globalnav-drop .nivel2 li.selected {
     border-width: 0 0 1px 0 !important;
-	border-color: #FFFFFF;
+	border-color: #FFFFFF !important;
 	float: none;
 }
 
