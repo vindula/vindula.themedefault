@@ -152,7 +152,7 @@ class MenuViewlet(grok.Viewlet):
                     L.append(obj.getObject())
             return L
         
-    def getSubMenu(self, drop=False):
+    def getSubMenu(self):
         query={}
         portal_properties = getToolByName(self.context, 'portal_properties')
         navtree_properties = getattr(portal_properties, 'navtree_properties')
@@ -188,17 +188,21 @@ class MenuViewlet(grok.Viewlet):
                     if self.checkObj(obj.getObject()):
                         L.append(obj.getObject())
                 return L
-            
-    def getSubMenuDrop(self, tab):
+
+    def getSubMenuDrop(self, tab, nivel = 1):
         query={}
         result=[]
         portal_properties = getToolByName(self.context, 'portal_properties')
         portal_catalog = getToolByName(self.context, 'portal_catalog')
         navtree_properties = getattr(portal_properties, 'navtree_properties')
         site_properties = getattr(portal_properties, 'site_properties')
-
-        rootPath = getNavigationRoot(self.context)
-        dpath='/'.join([rootPath,tab.id])
+        
+        try: 
+            rootPath = getNavigationRoot(self.context)
+            dpath='/'.join([rootPath,tab.id])
+        except:
+            dpath = '/'
+            dpath += '/'.join(tab['url'].split('/')[3:])
         query['path'] = {'query' : dpath, 'depth' : 1}
 
         query['portal_type'] = self.getContentTypes()
@@ -262,14 +266,12 @@ class MenuViewlet(grok.Viewlet):
                 if obj.absolute_url() ==  self.context.getRef_itemMenu().absolute_url() or\
                    obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL'):
                     return 'selected'
-                        
-        else:
-            try:
-                if obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL'):
-                    return 'selected'
-            except:
-                if obj['url'] in self.context.REQUEST.get('ACTUAL_URL'):
-                    return'selected'
+        try:
+            if obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL'):
+                return 'selected'
+        except:
+            if obj['url'] == self.context.REQUEST.get('ACTUAL_URL'):
+                return'selected'
     
     def isSelectedSubmenu(self, obj):
         obj_url = obj.absolute_url().split('/')
