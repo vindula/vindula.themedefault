@@ -237,7 +237,7 @@
 }
 
 #portal-globalnav-drop.nivel1 li{
-	border-color: #FFFFFF;
+	border-color: #FFFFFF !important;
     border-style: solid;
     border-width: 0 1px 0 0;
 }
