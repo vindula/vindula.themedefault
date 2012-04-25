@@ -80,6 +80,9 @@
 		<drop css:content=".documentFirstHeading" />
 	</rules>
 	
+	 <!-- Vidula Chat -->
+     <after css:content-children="#online-contacts_viewlet" css:theme="#pagina" css:if-content="#online-contacts_viewlet" />
+
 	<!-- Portal Footer -->
 	<copy css:content-children="#macro_logofooter" css:theme="#rodape .logo" />
 	<copy css:content-children="#macro_textfooter" css:theme="#informacao" />
