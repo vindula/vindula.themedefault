@@ -5,3 +5,7 @@ Changelog
 ------------------
 
 
+1.1 - 2012-04-25
+--------------------
+
+- alteração do metodo de filtragem de conteudos para o menu do portal   

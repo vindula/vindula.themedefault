@@ -99,7 +99,7 @@ class MenuViewlet(grok.Viewlet):
             if 'vindula_themeconfig' in control.keys():
                 thema = control['vindula_themeconfig']    
                 
-                try:itens = thema.itens_menu
+                try:itens = thema.getItens_menu()
                 except:itens = None
                 
                 if itens:
@@ -120,9 +120,8 @@ class MenuViewlet(grok.Viewlet):
             if 'vindula_themeconfig' in control.keys():
                 thema = control['vindula_themeconfig']    
                 
-                try:itens = thema.ativa_menudropdown
-                except:itens = False
-                result = itens
+                try:result = thema.getAtiva_menudropdown()
+                except:result = False
 
             return result
         else:
@@ -130,21 +129,23 @@ class MenuViewlet(grok.Viewlet):
     
 
     def getMenu(self):
-        query={}
+        
         portal_properties = getToolByName(self.context, 'portal_properties')
         navtree_properties = getattr(portal_properties, 'navtree_properties')
         portal = self.context.portal_url.getPortalObject()
-        query['types'] = self.getContentTypes()
-        if navtree_properties.getProperty('enable_wf_state_filtering', False):
-            query['review_state'] = navtree_properties.getProperty('wf_states_to_show', [])
-                
-        urltool = getSite().portal_url
-        query['path'] = {'query': '/'.join(portal.getPhysicalPath()), 'depth': 1}
-        query['sort_on'] = 'getObjPositionInParent'
-        ctool = getSite().portal_catalog
-        menus = ctool(**query)      
         
-        #menus = portal.objectValues(['ATFolder','ATLink','vindula.content.content.vindulacontentmacro'])
+        if navtree_properties.getProperty('enable_wf_state_filtering', False):
+            state = navtree_properties.getProperty('wf_states_to_show', ['published','internal'])
+        else:
+            state = ['published','internal']        
+                
+
+        ctool = getSite().portal_catalog
+        menus = ctool(portal_type = self.getContentTypes(), 
+                     review_state = state,
+                     path={'query': '/'.join(portal.getPhysicalPath()), 'depth': 1},
+                     sort_on = 'getObjPositionInParent')
+        
         if menus:
             L = []
             for obj in menus:
