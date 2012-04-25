@@ -205,6 +205,79 @@
 /* ...Nivel 2 */
 
 
+/* 
+ * * * NAV DROP DOWN * * *
+ */
+
+#portal-globalnav-drop .nivel2 {
+	top: 30px;
+	margin-top: 0;
+    width: 300px;
+}
+
+#portal-globalnav-drop .nivel2 li,
+#portal-globalnav-drop .nivel2 li.selected {
+    border-width: 0 0 1px 0 !important;
+	border-color: #FFFFFF !important;
+	float: none;
+}
+
+#portal-globalnav-drop .nivel2 li:last-child {
+    border-width: 0 !important;
+}
+
+#portal-globalnav-drop .selected a, 
+#portal-globalnav-drop li:hover a {
+	background-color: #000000;
+	color:#F58220; 
+}
+
+#portal-globalnav-drop.nivel1 li.selected a:hover{
+	color:#F58220 !important; 
+}
+
+#portal-globalnav-drop.nivel1 li{
+	border-color: #FFFFFF !important;
+    border-style: solid;
+    border-width: 0 1px 0 0;
+}
+
+#portal-globalnav-drop.nivel1 li.selected{
+	margin: 0;
+}
+
+#portal-globalnav-drop li { text-align: center; padding: 0 !important;}
+#portal-globalnav-drop li a{ padding: 8px 20px 7px; display: inline-block;}
+#portal-globalnav-drop li ul {display: none; width:200px; z-index: 1000;}
+#portal-globalnav-drop li ul li a{ padding: 9px 12px 8px; }
+	
+#portal-globalnav-drop {
+	padding:0; 
+	margin: 0 0 12px;
+	list-style: none;
+	min-height: 30px;
+}
+	
+#portal-globalnav-drop li {
+	float:left; 
+	position:relative;
+}
+
+#portal-globalnav-drop li:hover ul li.selected a.hide,
+#portal-globalnav-drop li:hover ul li:hover ul li.selected a.hide  {color:#F58220;}
+#portal-globalnav-drop li:hover ul {display:block; position:absolute; left:0;}
+#portal-globalnav-drop li:hover ul li a.hide {color:#FFFFFF !important;}
+#portal-globalnav-drop li:hover ul li {float:none; text-align: left;}
+#portal-globalnav-drop li:hover ul li a {display:block;}
+#portal-globalnav-drop li:hover ul li:hover a.hide {background:#F58220; color:#000000 !important;}
+
+#portal-globalnav-drop li:hover ul li ul {display:none;}
+#portal-globalnav-drop li:hover ul li:hover ul li a.hide {background-color:#000000; color:#FFFFFF !important;}
+
+#portal-globalnav-drop li:hover ul li:hover ul {display:block; position:absolute; left:300px; top: 0; border-left: 1px #FFFFFF solid}
+#portal-globalnav-drop li:hover ul li ul li:hover a.hide {background:#F58220; color:#000000 !important;}
+
+
 /* Links menu... */
 #nav a{
 	color:#000000;
