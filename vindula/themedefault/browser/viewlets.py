@@ -154,13 +154,15 @@ class MenuViewlet(grok.Viewlet):
             return L
         
     def getSubMenu(self):
-        query={}
+
         portal_properties = getToolByName(self.context, 'portal_properties')
         navtree_properties = getattr(portal_properties, 'navtree_properties')
         portal = self.context.portal_url.getPortalObject()
-        query['types'] = self.getContentTypes()
+        
         if navtree_properties.getProperty('enable_wf_state_filtering', False):
-            query['review_state'] = navtree_properties.getProperty('wf_states_to_show', [])
+            state = navtree_properties.getProperty('wf_states_to_show', ['published','internal'])
+        else:
+            state = ['published','internal']
         
         if self.context.portal_type == 'HomePage':
             if self.context.getRef_itemMenu():
@@ -174,15 +176,13 @@ class MenuViewlet(grok.Viewlet):
         if context != portal:
             while context.aq_parent != portal:
                 context = context.aq_parent
-                
-            urltool = getSite().portal_url
-            query['path'] = {'query': '/'.join(context.getPhysicalPath()), 'depth': 1}
-            query['sort_on'] = 'getObjPositionInParent'
-            ctool = getSite().portal_catalog
-            submenus = ctool(**query)
             
-            #defaultView()
-            #submenus = context.objectValues(('ATFolder','ATLink','vindula.content.content.vindulacontentmacro'))
+            ctool = getSite().portal_catalog
+            submenus = ctool(portal_type = self.getContentTypes(), 
+                             review_state = state,
+                             path={'query': '/'.join(context.getPhysicalPath()), 'depth': 1},
+                             sort_on = 'getObjPositionInParent')
+            
             if submenus:
                 L = []
                 for obj in submenus:
@@ -198,7 +198,7 @@ class MenuViewlet(grok.Viewlet):
         navtree_properties = getattr(portal_properties, 'navtree_properties')
         site_properties = getattr(portal_properties, 'site_properties')
         
-        try: 
+        try:  
             rootPath = getNavigationRoot(self.context)
             dpath='/'.join([rootPath,tab.id])
         except:
