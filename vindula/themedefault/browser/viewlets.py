@@ -127,12 +127,9 @@ class MenuViewlet(grok.Viewlet):
         else:
             return result
     
-
-    def getMenu(self):
-        
+    def getQueryMenu(self, path):
         portal_properties = getToolByName(self.context, 'portal_properties')
         navtree_properties = getattr(portal_properties, 'navtree_properties')
-        portal = self.context.portal_url.getPortalObject()
         
         if navtree_properties.getProperty('enable_wf_state_filtering', False):
             state = navtree_properties.getProperty('wf_states_to_show', ['published','internal'])
@@ -141,10 +138,16 @@ class MenuViewlet(grok.Viewlet):
                 
 
         ctool = getSite().portal_catalog
-        menus = ctool(portal_type = self.getContentTypes(), 
+        itens = ctool(portal_type = self.getContentTypes(), 
                      review_state = state,
-                     path={'query': '/'.join(portal.getPhysicalPath()), 'depth': 1},
+                     path={'query': path, 'depth': 1},
                      sort_on = 'getObjPositionInParent')
+        
+        return itens
+
+    def getMenu(self):
+        portal = self.context.portal_url.getPortalObject()
+        menus = self.getQueryMenu('/'.join(portal.getPhysicalPath()))
         
         if menus:
             L = []
@@ -154,16 +157,7 @@ class MenuViewlet(grok.Viewlet):
             return L
         
     def getSubMenu(self):
-
-        portal_properties = getToolByName(self.context, 'portal_properties')
-        navtree_properties = getattr(portal_properties, 'navtree_properties')
         portal = self.context.portal_url.getPortalObject()
-        
-        if navtree_properties.getProperty('enable_wf_state_filtering', False):
-            state = navtree_properties.getProperty('wf_states_to_show', ['published','internal'])
-        else:
-            state = ['published','internal']
-        
         if self.context.portal_type == 'HomePage':
             if self.context.getRef_itemMenu():
                 context = self.context.getRef_itemMenu()
@@ -172,16 +166,11 @@ class MenuViewlet(grok.Viewlet):
         else:
             context = self.context
         
-        
         if context != portal:
             while context.aq_parent != portal:
                 context = context.aq_parent
             
-            ctool = getSite().portal_catalog
-            submenus = ctool(portal_type = self.getContentTypes(), 
-                             review_state = state,
-                             path={'query': '/'.join(context.getPhysicalPath()), 'depth': 1},
-                             sort_on = 'getObjPositionInParent')
+            submenus = self.getQueryMenu('/'.join(context.getPhysicalPath()))
             
             if submenus:
                 L = []
@@ -191,46 +180,24 @@ class MenuViewlet(grok.Viewlet):
                 return L
 
     def getSubMenuDrop(self, tab, nivel = 1):
-        query={}
         result=[]
         portal_properties = getToolByName(self.context, 'portal_properties')
-        portal_catalog = getToolByName(self.context, 'portal_catalog')
         navtree_properties = getattr(portal_properties, 'navtree_properties')
-        site_properties = getattr(portal_properties, 'site_properties')
         
-        try:  
-            rootPath = getNavigationRoot(self.context)
-            dpath='/'.join([rootPath,tab.id])
-        except:
-            dpath = '/'
-            dpath += '/'.join(tab['url'].split('/')[3:])
-        query['path'] = {'query' : dpath, 'depth' : 1}
-
-        query['portal_type'] = self.getContentTypes()
-
-        sortAttribute = navtree_properties.getProperty('sortAttribute', None)
-        if sortAttribute is not None:
-            query['sort_on'] = sortAttribute
-
-            sortOrder = navtree_properties.getProperty('sortOrder', None)
-            if sortOrder is not None:
-                query['sort_order'] = sortOrder
-
-        if navtree_properties.getProperty('enable_wf_state_filtering', False):
-            query['review_state'] = navtree_properties.getProperty('wf_states_to_show', [])
-
-        query['is_default_page'] = False
-
-        if site_properties.getProperty('disable_nonfolderish_sections', False):
-            query['is_folderish'] = True
-
         # Get ids not to list and make a dict to make the search fast
         idsNotToList = navtree_properties.getProperty('idsNotToList', ())
         excludedIds = {}
         for id in idsNotToList:
             excludedIds[id]=1
 
-        rawresult = portal_catalog.searchResults(**query)
+        try:  
+            rootPath = getNavigationRoot(self.context)
+            dpath='/'.join([rootPath,tab.id])
+        except:
+            dpath = '/'
+            dpath += '/'.join(tab['url'].split('/')[3:])
+        
+        rawresult = self.getQueryMenu(dpath)
 
         # now add the content to results
         for item in rawresult:

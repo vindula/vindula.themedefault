@@ -9,3 +9,5 @@ Changelog
 --------------------
 
 - alteração do metodo de filtragem de conteudos para o menu do portal   
+- alteração do metodo de busca dos itens do menu
+
