@@ -42,10 +42,12 @@
 		            	<select size="1" id="departamento" name="departamento" style="width:100%;">
 							<option value="0" >Todos ...</option>	
 							<tal:rep repeat="item view/list_filtro">
-								<option tal:define="id_request request/departamento | python:''" 
-										tal:attributes="value python:item.__getattribute__(filtro) or None;
-										selected python: str(id_request)==str(item.__getattribute__(filtro)) or str(item.__getattribute__(filtro))"
-										tal:content="python:item.__getattribute__(filtro) or None">Marketing 
+								<option tal:define="id_request request/departamento | python:'';
+									 				itemDep python:item.__getattribute__(filtro)"
+										tal:condition="itemDep"
+										tal:attributes="value itemDep|nothing;
+										selected python: str(id_request)==str(itemDep)"
+										tal:content="itemDep|nothing">Marketing 
 				               </option>
 							   
 							</tal:rep>

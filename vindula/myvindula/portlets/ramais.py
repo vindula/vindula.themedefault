@@ -123,16 +123,13 @@ class Renderer(base.Renderer):
             return ctx.UID()
         else:
             return None
-        
-        
     
     def list_filtro(self):
         campo = self.data.filtro_departamento
         result = ModelsFuncDetails().get_allFuncDetails()
         if result:
             classe = 'ModelsFuncDetails.'+str(campo)
-            return result.group_by(eval(classe))
-        
+            return result.group_by(eval(classe)).order_by()
     
     def list_departamentos(self):
         return  ModelsDepartment().get_department()

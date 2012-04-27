@@ -229,7 +229,8 @@ class ModelsDepartment(Storm, BaseStore):
         caminho = urltool.getPortalPath() #+'/jornal-da-caixa/banners-do-jornal';
         ctool = getSite().portal_catalog
         data = ctool(portal_type='OrganizationalStructure', 
-                      review_state='published',
+                      review_state=['published','internal'],
+                      sort_on = 'sortable_title',
                       path=caminho)   
         
         #data = self.store.find(ModelsDepartment)

@@ -8,7 +8,6 @@ Changelog
 
 1.1 - 2012-03-29
 ------------------
-
 - Adição do TinyMCE no campo de Pensamentos do Vindula
 - Alteração do evento de paginação do portlet aniversariosReload
 
@@ -16,6 +15,8 @@ Changelog
 
 1.1 - 2012-04-24
 -----------------
-
 - Definindo um selected no Portlet Busca de Ramais, caso esteja dentro de uma Estrutura Organizacional.
 
+1.1 - 2012-04-24
+-----------------
+- Ajuste do portlet ramais para departamentos em ordem alfabetica 
