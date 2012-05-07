@@ -3,9 +3,26 @@ $j = jQuery.noConflict();
 function confirmExcluir(){
 		if (confirm('Tem certeja que deseja excluir este usuário?')){
 			return true;
-		}else;
+		}else{
 			return false;
+		}
 	};
+
+function confirmAlterarUserName () {
+    var username = $j('#username').val();
+    var username_old = $j('#username-old').val();
+    
+    if (username != username_old){
+        if (confirm('Tem certeza que deseja alterar o username deste usuário? \n'+
+                    'Ao realizar está alteração todas as relações feitas com o username antigo serão perdidas.')){
+            return true;
+        }else{
+            return false;
+        }         
+    }else{
+        return true;      
+    }
+}
 
 $j(document).ready(function(){	
 	$j('#cancel-coment').live('click',function(){
@@ -26,8 +43,4 @@ $j(document).ready(function(){
 			text.text(' Ver');
 		}
 	})
-	
-	
-	
-				
 });	

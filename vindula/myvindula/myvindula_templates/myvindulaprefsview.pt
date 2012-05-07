@@ -84,18 +84,20 @@
 							
 							
 							<div class="field" tal:attributes="class python: view.field_class(errors, 'username')"
-											   tal:condition="python: manage and 'newuser' in request.keys()">
+											   tal:condition="python: manage or 'newuser' in request.keys()">
 								<label for="username">Username</label>
 			                    <span class="fieldRequired" title="Obrigatório">(Obrigatório)</span>	
 			                    <div class="formHelp">Digite o username do usuário.</div>
 								<div tal:content="errors/username|nothing"></div>
+								<input id="username-old" type="hidden" value="" name="username-old"  tal:attributes="value request/username-old | form_values/username | nothing">
 			                    <input id="username" type="text" value="" name="username"  tal:attributes="value request/username | form_values/username | nothing">
 								
 								<input id="newuser" type="hidden" value="" name="newuser" >
 							</div>	
 								
 							<input id="username" type="hidden" value="" name="username" tal:attributes="value request/username| username |nothing"
-													 tal:condition="python: not manage or not 'newuser' in request.keys()">
+													 tal:condition="python: not manage and not 'newuser' in request.keys()">
+															
 															
 							<tal:def define="html python:view.geraCampos(form_data)">
 								<tal:rep repeat="x html">
@@ -109,7 +111,15 @@
 					   		<br/>
 							<div style="float:left; width:100%">
 								<input style="width:100px" class="button-erp" type="submit" value="Voltar" name="form.voltar" >
-								<input style="width:100px;" class="button-erp" type="submit" value="Salvar" name="form.submited">
+								
+								<input style="width:100px;" class="button-erp" type="submit" value="Salvar" name="form.submited"
+										tal:condition="python: not manage">
+								
+								
+								<input style="width:100px;" class="button-erp" type="submit" value="Salvar" name="form.submited"
+										onclick="return confirmAlterarUserName();"
+										tal:condition="python: manage or 'newuser' in request.keys()">
+										
 								
 								<input style="width:100px;" class="button-erp" type="submit" value="Excluir" name="form.excluir"
 									   onclick="return confirmExcluir();" 

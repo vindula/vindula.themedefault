@@ -96,6 +96,12 @@ class ModelsFuncDetails(Storm, BaseStore):
         funcDetails = ModelsFuncDetails(**kwargs)
         self.store.add(funcDetails)
         self.store.flush()        
+        
+    def del_FuncDetails(self, username):
+        result = self.get_FuncDetails(username)
+        if result:
+            self.store.remove(result)
+            self.store.flush()
     
     def get_allFuncDetails(self, ordem='nome'):
         if ordem == 'admicao':
@@ -1185,7 +1191,7 @@ class SchemaFunc(BaseFunc):
               'delegations'             : {'required': False, 'type' : to_utf8, 'label':'Personalizado 3',        'decription':u'Campo para personalizar',                      'ordem':30},
               'customised_message'      : {'required': False, 'type' : to_utf8, 'label':'Personalizado 4',        'decription':u'Campo para personalizar',                      'ordem':31},
               
-              'username'                : {'required': True, 'type' : to_utf8, 'label':'Nome de Usuário'        },}  #Campo Obrigatorio
+              'username'                : {'required': True, 'type' : to_utf8, 'label':'Nome de Usuário',        'decription':u'Digite o CPF do funcionário',                    'ordem':28},}  #Campo Obrigatorio
               #'vin_myvindula_department_id': {'required': False, 'type' : int,     'label':'Departamento'           },} #Campo Obrigatorio
 
                     
@@ -1273,7 +1279,6 @@ class SchemaFunc(BaseFunc):
                         ModelsDepartment().set_department(**D)
                         
                         #context.context.addUserGroup(user_id,departament)
-                        
                             
                 if 'skills_expertise' in form_keys:
                     ModelsMyvindulaFuncdetailCouses().del_funcdetailCouser(user_id)
@@ -1291,7 +1296,6 @@ class SchemaFunc(BaseFunc):
                         D['username'] = user_id
                         D['id_courses'] = int(languages)
                         ModelsMyvindulaFuncdetailLanguages().set_funcdetailLanguages(**D)
-                
                 
                 if user_id != 'acl_users':
                     # editando...
@@ -1319,31 +1323,46 @@ class SchemaFunc(BaseFunc):
                     
                     if not manage:
                         user.setMemberProperties(user_plone)
-               
-
                         
                 elif user_id == 'acl_users':
-                    #adicionando...
+                    diff = False
+                    if form.get('username', None) !=\
+                        form.get('username-old', None): 
+                        
+                        try:user_del = unicode(form.get('username-old'),'utf-8')
+                        except:user_del = form.get('username-old')
+                        
+                        ModelsFuncDetails().del_FuncDetails(user_del)
+                        diff = True
+                    
+                    #Adicionando...
                     result = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username == data.get('username','')).one()
                     if not result:
                         database = ModelsFuncDetails(**data)
                         self.store.add(database)
                         self.store.flush()
+                        
+                    elif not diff:
+                        if data['photograph'] is None:
+                            data['photograph'] = result.photograph
+                        
+                        for campo in campos.keys():
+                            value = data.get(campo, None)
+                            setattr(result, campo, value)
+
                     else:
                        errors['username'] = 'Ja existem um usuário com este username, por favor escolha outro usernome'
                        
                        form_data['errors'] = errors
                        form_data['data'] = data
                        return form_data 
-                            
+                
                 #Redirect back to the front page with a status message
                 IStatusMessage(context.request).addStatusMessage(_(u"Seu perfil foi editado com sucesso!!"), "info")
                 if manage:
                     context.request.response.redirect(success_url_manage)
                 else:
                     context.request.response.redirect(success_url)
-
-
                                    
             else:
                 form_data['errors'] = errors
