@@ -11,7 +11,7 @@
 					.geral_lista_comentarios .comments-cont .comments-cont{display:block !important;}
 				</style>
 				
-				<div id="content" tal:define="view_listhowareu python: context.restrictedTraverse('@@howareu-list-all');
+				<div id="content-comment" tal:define="view_listhowareu python: context.restrictedTraverse('@@howareu-list-all');
 											  view_myvindula python: context.restrictedTraverse('@@myvindula');
 											  member context/@@plone_portal_state/member;
 											  logado python:str(member)!='Anonymous User';
