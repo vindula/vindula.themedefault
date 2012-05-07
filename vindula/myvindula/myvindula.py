@@ -41,7 +41,7 @@ from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, M
 from vindula.controlpanel.browser.models import ModelsCompanyInformation
 
 class MyVindulaView(grok.View):
-    grok.context(INavigationRoot)
+    grok.context(Interface)
     grok.require('zope2.View')
     grok.name('myvindula')
 
