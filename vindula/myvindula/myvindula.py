@@ -25,9 +25,7 @@ from plone.z3cform.crud import crud
 from datetime import date
 from DateTime.DateTime import DateTime
 from datetime import datetime 
-import calendar
-import base64
-import pickle
+import calendar, logging, base64, pickle
 
 from vindula.myvindula.validation import valida_form
 
@@ -39,6 +37,8 @@ from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, M
                                    ModelsFuncHolerite, ModelsFuncHoleriteDescricao, ModelsConfgMyvindula
                                    
 from vindula.controlpanel.browser.models import ModelsCompanyInformation
+
+logger = logging.getLogger('vindula.myvindula')
 
 class MyVindulaView(grok.View):
     grok.context(Interface)
@@ -1099,17 +1099,26 @@ class MyVindulaImportSecondView(grok.View):
                     if form[campo] != '' and campo not in ignore_fields:
                         indice = int(form[campo])-1
                         dados[campo] = self.to_utf8(dados_linha[indice].replace('"',''))
-                    else:
+                    else: 
                         if campo == 'username':
-                            if criar_user:                                    
+                            if criar_user:
                                 name = dados_linha[int(form['name'])-1].replace('"','').lower().split(' ')
-                                matricula = dados_linha[int(form['registration'])-1].replace('"','')
-                                x = len(name)
-                                username = name[0] + name[x-1] + str(matricula)
-                                    
-                                if not ModelsFuncDetails().get_FuncDetails(self.to_utf8(username)):    
-                                    dados[campo] = self.to_utf8(username)
-                                    check_user = True
+
+                                username = name[0] + name[-1]
+                                cont = 1
+ 
+                                if form['registration']:
+                                    matricula = dados_linha[int(form['registration'])-1].replace('"','')    
+                                    username += str(matricula)
+                                
+                                usr = username
+                                while ModelsFuncDetails().get_FuncDetails(self.to_utf8(usr)):
+                                    usr = username + str(cont)
+                                    cont +=1
+                                  
+                                dados[campo] = self.to_utf8(usr)
+                                check_user = True
+                                                                   
                                     
                             elif merge_user:
                                 if form[campo] != '':
@@ -1155,6 +1164,8 @@ class MyVindulaImportSecondView(grok.View):
                     lista_erros.append(erros)
                     error = 2
                     success = False
+                
+                logger.info("%s - %s "% (erros,data_user))
                     
             if linhas_error:
                 success = False
