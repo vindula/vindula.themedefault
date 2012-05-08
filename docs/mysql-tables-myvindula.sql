@@ -66,10 +66,45 @@ CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_confgfuncdetails` (
   `blogs` TINYINT(1) NULL DEFAULT '0' ,
   `customised_message` TINYINT(1) NULL DEFAULT '0' ,
   `vin_myvindula_department` TINYINT(1) NULL DEFAULT '0' ,
+  `name_view` TINYINT(1) NULL DEFAULT '1' ,
+  `phone_number_view` TINYINT(1) NULL DEFAULT '1' ,
+  `cell_phone_view` TINYINT(1) NULL DEFAULT '1' ,
+  `email_view` TINYINT(1) NULL DEFAULT '1' ,
+  `employee_id_view` TINYINT(1) NULL DEFAULT '1' ,
+  `date_birth_view` TINYINT(1) NULL DEFAULT '1' ,
+  `registration_view` TINYINT(1) NULL DEFAULT '1' ,
+  `enterprise_view` TINYINT(1) NULL DEFAULT '1' ,
+  `position_view` TINYINT(1) NULL DEFAULT '1' ,
+  `admission_date_view` TINYINT(1) NULL DEFAULT '1' ,
+  `cost_center_view` TINYINT(1) NULL DEFAULT '1' ,
+  `job_role_view` TINYINT(1) NULL DEFAULT '1' ,
+  `organisational_unit_view` TINYINT(1) NULL DEFAULT '1' ,
+  `location_view` TINYINT(1) NULL DEFAULT '1' ,
+  `reports_to_view` TINYINT(1) NULL DEFAULT '1' ,
+  `postal_address_view` TINYINT(1) NULL DEFAULT '1' ,
+  `special_roles_view` TINYINT(1) NULL DEFAULT '1' ,
+  `photograph_view` TINYINT(1) NULL DEFAULT '1' ,
+  `nickname_view` TINYINT(1) NULL DEFAULT '1' ,
+  `pronunciation_name_view` TINYINT(1) NULL DEFAULT '1' ,
+  `committess_view` TINYINT(1) NULL DEFAULT '1' ,
+  `projetcs_view` TINYINT(1) NULL DEFAULT '1' ,
+  `personal_information_view` TINYINT(1) NULL DEFAULT '1' ,
+  `skills_expertise_view` TINYINT(1) NULL DEFAULT '1' ,
+  `license_plate_numbers_view` TINYINT(1) NULL DEFAULT '1' ,
+  `profit_centre_view` TINYINT(1) NULL DEFAULT '1' ,
+  `languages_view` TINYINT(1) NULL DEFAULT '1' ,
+  `availability_view` TINYINT(1) NULL DEFAULT '1' ,
+  `papers_published_view` TINYINT(1) NULL DEFAULT '1' ,
+  `teaching_research_view` TINYINT(1) NULL DEFAULT '1' ,
+  `delegations_view` TINYINT(1) NULL DEFAULT '1' ,
+  `resume_view` TINYINT(1) NULL DEFAULT '1' ,
+  `blogs_view` TINYINT(1) NULL DEFAULT '1' ,
+  `customised_message_view` TINYINT(1) NULL DEFAULT '1' ,
+  `vin_myvindula_department_view` TINYINT(1) NULL DEFAULT '1' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
-DEFAULT CHARACTER SET = latin1;
+DEFAULT CHARACTER SET = latin1
 
 
 -- -----------------------------------------------------
