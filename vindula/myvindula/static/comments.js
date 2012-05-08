@@ -13,8 +13,7 @@ function confirmAlterarUserName () {
     var username_old = $j('#username-old').val();
     
     if (username != username_old){
-        if (confirm('Tem certeza que deseja alterar o username deste usuário? \n'+
-                    'Ao realizar está alteração todas as relações feitas com o username antigo serão perdidas.')){
+        if (confirm('Todas as informações criadas pelo antigo username serão excluídas. Deseja confirmar alteração?')){
             return true;
         }else{
             return false;
