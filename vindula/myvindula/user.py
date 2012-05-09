@@ -102,6 +102,8 @@ class ModelsFuncDetails(Storm, BaseStore):
         if result:
             self.store.remove(result)
             self.store.flush()
+            
+            return result.photograph 
     
     def get_allFuncDetails(self, ordem='nome'):
         if ordem == 'admicao':
@@ -1326,18 +1328,21 @@ class SchemaFunc(BaseFunc):
                         
                 elif user_id == 'acl_users':
                     diff = False
+                    path_user = u''
                     if form.get('username', None) !=\
                         form.get('username-old', None): 
                         
                         try:user_del = unicode(form.get('username-old'),'utf-8')
                         except:user_del = form.get('username-old')
                         
-                        ModelsFuncDetails().del_FuncDetails(user_del)
+                        path_user = ModelsFuncDetails().del_FuncDetails(user_del)
                         diff = True
                     
                     #Adicionando...
                     result = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username == data.get('username','')).one()
                     if not result:
+                        data['photograph'] = path_user
+                        
                         database = ModelsFuncDetails(**data)
                         self.store.add(database)
                         self.store.flush()
