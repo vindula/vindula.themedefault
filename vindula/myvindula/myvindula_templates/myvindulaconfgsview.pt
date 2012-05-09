@@ -19,7 +19,7 @@
 									  username form_data/username|python:{};
 									  config_myvindula form_data/config_myvindula|python:{};">
 	        
-	        <h1>Habilitar / Desabilitar Campos do My Vindula</h1>
+	        <h1>Campos do Perfil de usu&aacute;rio</h1>
 			
 			<div id="interna" >    		
 		        <form name="myvindulaconfgs" id="myvindulaconfgs" enctype="multipart/form-data"

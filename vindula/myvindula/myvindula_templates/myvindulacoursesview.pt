@@ -7,7 +7,7 @@
     <div metal:fill-slot="content">            
 	    <div id="content" tal:define="form_data view/load_list | python:{};">
 	        
-	        <h1>Listagem do Cursos Cadatrados</h1>
+	        <h1>Cursos</h1>
 			<br />
 			<p><a tal:attributes="href string:${here/portal_url}/vindula-control-panel">Vindula Control Panel</a></p>
 			<div id="interna" >
