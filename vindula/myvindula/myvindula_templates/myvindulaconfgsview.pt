@@ -26,7 +26,7 @@
 		        	  class="enableAutoFocus" action="myvindulaconfgs" method="POST">
 
 		            <fieldset style="float: left">
-		            	<legend>Campos Habilitados Para Visualização</legend>
+		            	<legend>Campos Habilitados Para Edição</legend>
 						<!-- ID da user--> 
 						<input id="id" type="hidden" value="" name="id" tal:attributes="value request/id| id |nothing">
 	
@@ -38,7 +38,7 @@
 					
 					</fieldset>
 					<fieldset style="float:right">
-		            	<legend>Campos Habilitados Para Edição</legend>
+		            	<legend>Campos Habilitados Para Visualização</legend>
 						<!-- ID da user--> 
 						<input id="id" type="hidden" value="" name="id" tal:attributes="value request/id| id |nothing">
 	
