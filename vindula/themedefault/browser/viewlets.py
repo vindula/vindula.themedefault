@@ -235,9 +235,14 @@ class MenuViewlet(grok.Viewlet):
     def isSelected(self, obj):
         if self.context.portal_type == 'HomePage':
             if self.context.getRef_itemMenu():
-                if obj.absolute_url() ==  self.context.getRef_itemMenu().absolute_url() or\
-                   obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL'):
-                    return 'selected'
+                try:
+                    if obj.absolute_url() ==  self.context.getRef_itemMenu().absolute_url() or\
+                       obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL'):
+                        return 'selected'
+                except:
+                    if obj['url'] == self.context.getRef_itemMenu().absolute_url() or\
+                       obj['url'] in self.context.REQUEST.get('ACTUAL_URL'):
+                        return 'selected'
         try:
             if obj.absolute_url() in self.context.REQUEST.get('ACTUAL_URL'):
                 return 'selected'
