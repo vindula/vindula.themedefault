@@ -194,8 +194,12 @@ class MenuViewlet(grok.Viewlet):
             rootPath = getNavigationRoot(self.context)
             dpath='/'.join([rootPath,tab.id])
         except:
+            url = tab['url'].split('/')
+            plone_site = getSite()
             dpath = '/'
-            dpath += '/'.join(tab['url'].split('/')[3:])
+            if url[3] != plone_site.id:
+                dpath += plone_site.id+'/'
+            dpath += '/'.join(url[3:])
         
         rawresult = self.getQueryMenu(dpath)
 
