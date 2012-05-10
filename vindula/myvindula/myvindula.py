@@ -507,21 +507,22 @@ class MyVindulalistAll(grok.View, BaseFunc):
         form = self.request.form
         result = None
         config_muit_user = self.context.restrictedTraverse('@@myvindula-conf-userpanel').config_muit_user()
+        filtro_busca = self.context.restrictedTraverse('@@myvindula-conf-userpanel').check_filtro_busca_user()
         
         if 'title' in form.keys() or 'SearchSubmit' in form.keys():
             title = form.get('title','').strip()
             departamento= form.get('departamento','0')
             ramal = form.get('ramal','').strip()
             if title or departamento !='0' or ramal:
-                result_set = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'),True)
+                result_set = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'),filtro_busca)
                 if result_set:
                     result = self.rs_to_list(result_set)
         elif not config_muit_user:
-            result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'),True)
+            result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'),filtro_busca)
             if result_set:
                     result = self.rs_to_list(result_set)
         elif 'all' in form.keys():
-            result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'),True)
+            result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'),filtro_busca)
             if result_set:
                     result = self.rs_to_list(result_set)
                     

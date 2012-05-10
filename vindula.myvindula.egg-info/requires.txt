@@ -1,5 +1,4 @@
 setuptools
 plone.app.dexterity
 storm
-collective.cropimage
 plone.namedfile[blobs]

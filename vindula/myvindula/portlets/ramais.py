@@ -73,7 +73,7 @@ class Assignment(base.Assignment):
         """This property is used to give the title of the portlet in the
         "manage portlets" screen.
         """
-        return "Portlet Ramais"
+        return "Portlet busca de pessoas"
     
 
     
@@ -142,6 +142,8 @@ class Renderer(base.Renderer):
     def busca_usuarios(self):
         form = self.request.form
         result = None
+        filtro_busca = self.context.restrictedTraverse('@@myvindula-conf-userpanel').check_filtro_busca_user()
+        
         if 'SearchSubmit' in form.keys():
             title = form.get('title','').strip()
             departamento= form.get('departamento','')
@@ -168,7 +170,7 @@ class Renderer(base.Renderer):
                         else:
                             result = None
                     elif self.data.filtro_departamento == 'departamentos':
-                        data = ModelsFuncDetails().get_FuncBusca(title,departamento,ramal,True)
+                        data = ModelsFuncDetails().get_FuncBusca(title,departamento,ramal,filtro_busca)
                         if data:
                             result = data
                         else:
