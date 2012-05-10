@@ -1387,7 +1387,7 @@ class SchemaFunc(BaseFunc):
                     except: user_id = form.get('username')
                     
             record = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username == user_id).one()
-            import pdb;pdb.set_trace()
+
             self.store.remove(record)
             self.store.flush()
             
