@@ -1376,8 +1376,18 @@ class SchemaFunc(BaseFunc):
           
         # se clicou em excluir
         elif 'form.excluir' in form_keys:
+            if user_id == 'acl_users':
+                if form.get('username', None) !=\
+                    form.get('username-old', None): 
+                
+                    try: user_id = unicode(form.get('username-old'))
+                    except: user_id = form.get('username-old')
+                else:
+                    try: user_id = unicode(form.get('username'))
+                    except: user_id = form.get('username')
+                    
             record = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username == user_id).one()
-            
+            import pdb;pdb.set_trace()
             self.store.remove(record)
             self.store.flush()
             
