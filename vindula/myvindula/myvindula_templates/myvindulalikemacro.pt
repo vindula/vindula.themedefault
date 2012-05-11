@@ -2,7 +2,7 @@
 	<tal:def define="member context/@@plone_portal_state/member;
 					 view_like python:context.restrictedTraverse('@@myvindula-comments');
 					 data_like python:view_like.get_like(item.id,item._name_class);
-					 like_user python: data_like.find(username=unicode(member.getId())).count()">
+					 like_user python: data_like.find(username=unicode(member.getUserName())).count()">
 	
 		<tal:cond condition="like_user">
 			<span tal:condition="python:data_like.count()>2" tal:content="python:'Voce é mais '+str(data_like.count()-1)+' pessoas já curtiram isso.'"></span>

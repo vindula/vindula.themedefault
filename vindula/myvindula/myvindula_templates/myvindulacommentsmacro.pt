@@ -33,7 +33,7 @@
 		                <p tal:replace="item/text|nothing" />
 			  		</div>
 			  		<form action="#" method="post" enctype="multipart/form-data" style="text-align: right;"
-					  		tal:condition="python: 'Manager' in member.getRoles() or str(member.id) == str(user)"
+					  		tal:condition="python: 'Manager' in member.getRoles() or str(member.getUserName()) == str(user)"
 					        tal:attributes="action string:${context/absolute_url}/myvindula-comments">
 							<input type="hidden" name="form.excluir:boolean" value="True" />
 

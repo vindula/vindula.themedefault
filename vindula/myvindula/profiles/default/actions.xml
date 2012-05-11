@@ -4,7 +4,7 @@
        <object name="myvindula" meta_type="CMF Action" i18n:domain="plone" insert-before="*">
         <property name="title" i18n:translate="">Meu Perfil</property>
         <property name="description" i18n:translate=""></property>
-        <property name="url_expr">python: '%s/myvindulalistuser?user=%s' % (portal_url, context.portal_membership.getAuthenticatedMember())</property>
+        <property name="url_expr">python: '%s/myvindulalistuser?user=%s' % (portal_url, context.portal_membership.getAuthenticatedMember().getUserName())</property>
         <property name="icon_expr"></property>
         <property name="available_expr">python:member is not None</property>
         <property name="permissions">

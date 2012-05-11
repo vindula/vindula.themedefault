@@ -239,7 +239,7 @@ class MyVindulaPrefsView(grok.View, BaseFunc):
                                                    chain=['one_state_workflow',])
         form = self.request.form
         membership = self.context.portal_membership
-        user_login = membership.getAuthenticatedMember()
+        user_login = membership.getAuthenticatedMember().getUserName()
         error_url = self.context.absolute_url() + '/@@myvindulamanagealluser'
         
         if 'user' in form.keys() and not'newuser' in form.keys():
@@ -249,26 +249,39 @@ class MyVindulaPrefsView(grok.View, BaseFunc):
             #user = membership.getMemberById(user_decodficado)
 
             user = ModelsFuncDetails().get_FuncDetails(user_decodficado)
+            user_DB = True 
         
         elif 'newuser' in form.keys():
             return SchemaFunc().registration_processes(self, 'acl_users', True)    
         
         else:    
             user = membership.getAuthenticatedMember()
-            
+            user_DB = False
 
         if user:
             if self.checa_login():
-                if str(user.id) == str(user_login.id):
-                    return SchemaFunc().registration_processes(self, user, False)
+                if user_DB:
+                    if str(user.id) == str(user_login):
+                        return SchemaFunc().registration_processes(self, user, False)
+                    else:
+                        return SchemaFunc().registration_processes(self, user, True)
                 else:
-                    return SchemaFunc().registration_processes(self, user, True)
+                    if str(user.getUserName()) == str(user_login):
+                        return SchemaFunc().registration_processes(self, user, False)
+                    else:
+                        return SchemaFunc().registration_processes(self, user, True)
                     #return self.request.response.redirect(error_url)
             else:
-                if str(user.id) == str(user_login.id):
-                    return SchemaFunc().registration_processes(self, user, False)
+                if user_DB:
+                    if str(user.id) == str(user_login):
+                        return SchemaFunc().registration_processes(self, user, False)
+                    else:
+                        return self.request.response.redirect(error_url)
                 else:
-                    return self.request.response.redirect(error_url)
+                    if str(user.getUserName()) == str(user_login):
+                        return SchemaFunc().registration_processes(self, user, False)
+                    else:
+                        return self.request.response.redirect(error_url)
         
         else:
             return self.request.response.redirect(error_url)
@@ -278,7 +291,7 @@ class MyVindulaPrefsView(grok.View, BaseFunc):
         groups = self.context.portal_groups
         
         user_login = membership.getAuthenticatedMember()
-        user_groups = groups.getGroupsByUserId(user_login.id)
+        user_groups = groups.getGroupsByUserId(user_login.getId())
         
         checa = False
         if 'Manager' in user_login.getRoles():
@@ -388,7 +401,7 @@ class MyVindulaListUser(grok.View):
 
     
     def get_howareu(self, user):
-        member =  self.context.restrictedTraverse('@@plone_portal_state').member().getId();
+        member =  self.context.restrictedTraverse('@@plone_portal_state').member().getUserName();
         user = self.request.form.get('user',str(member))
         D={}
         D['username'] = user
@@ -402,7 +415,7 @@ class MyVindulaListUser(grok.View):
     
     def load_list(self):
         #vars = BaseFunc().getParametersFromURL(self)
-        member =  self.context.restrictedTraverse('@@plone_portal_state').member().getId();
+        member =  self.context.restrictedTraverse('@@plone_portal_state').member().getUserName();
         user = self.request.form.get('user',str(member))
         return ModelsFuncDetails().get_FuncDetails(unicode(user, 'utf-8'))
 
@@ -630,7 +643,7 @@ class MyVindulaListMyContent(grok.View):
         membership = self.context.portal_membership
         user_login = membership.getAuthenticatedMember()
         
-        if user_login.getId():
+        if user_login.getUserName():
             ctool = getSite().portal_catalog
             items = ctool(path = {'query': '/', 'depth': 99},
                           Creator=user_login.getId())        
@@ -651,7 +664,7 @@ class MyVindulaManageAllUser(grok.View, BaseFunc):
         groups = self.context.portal_groups
         
         user_login = membership.getAuthenticatedMember()
-        user_groups = groups.getGroupsByUserId(user_login.id)
+        user_groups = groups.getGroupsByUserId(user_login.getId())
         
         checa = False
         if 'Manager' in user_login.getRoles():
@@ -1409,7 +1422,7 @@ class MyVindulaHoleriteView(grok.View, BaseFunc):
     
         membership = self.context.portal_membership
         user_login = membership.getAuthenticatedMember()
-        user = str(user_login.id)
+        user = str(user_login.getUserName())
         
         prefs_user = self.get_prefs_user(user)
         if prefs_user:

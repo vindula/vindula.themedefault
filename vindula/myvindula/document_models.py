@@ -194,8 +194,8 @@ class SchemaDocument(BaseFunc):
 
         membership = ctx.context.portal_membership
         user_login = membership.getAuthenticatedMember()
-        try:user = unicode(user_login.id, 'utf-8')
-        except:user = user_login.id
+        try:user = unicode(user_login.getUserName(), 'utf-8')
+        except:user = user_login.getUserName()
         
         campos = self.campos
                

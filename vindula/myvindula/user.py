@@ -1205,12 +1205,12 @@ class SchemaFunc(BaseFunc):
         form_keys = form.keys() # var tipo 'list' que guarda todas as chaves do formulario (keys)
         campos = self.campos
         #user = context.context.portal_membership.getAuthenticatedMember()
-        
+
         if not manage:
             try:
-                user_id = unicode(user.id, 'utf-8')    
+                user_id = unicode(user.getUserName(), 'utf-8')    
             except:
-                user_id = user.id
+                user_id = user.getUserName()
          
         else:
             if user != 'acl_users':
