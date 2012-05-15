@@ -736,8 +736,12 @@ class MyVindulaFirstRegistreView(grok.View):
         
         else:
             result = ModelsCompanyInformation().get_CompanyInformation()
-            return result
-    
+            if result:
+                return result[0]
+            else:
+                return {}
+            
+            
     def get_saldacao(self):
         hora = datetime.now().strftime('%H')
         if hora > '17':
@@ -747,6 +751,13 @@ class MyVindulaFirstRegistreView(grok.View):
         else:
             return 'Bom dia, '
     
+    def get_prefs_user(self, user):
+        try:
+            user_id = unicode(user, 'utf-8')    
+        except:
+            user_id = user 
+
+        return ModelsFuncDetails().get_FuncDetails(user_id)    
 
 
 class MyVindulaListBirthdays(grok.View):
@@ -1284,6 +1295,7 @@ class MyVindulaImportHoleriteView(grok.View, BaseFunc):
                 file = form.get('txt_file','')
                 if file:
                     texto = file.read()
+                    texto = texto.replace('\r','')
                     registros = texto.split('\x1b2\n')
                     for reg in registros:
                         D = {}
@@ -1291,9 +1303,14 @@ class MyVindulaImportHoleriteView(grok.View, BaseFunc):
                         linhas = reg.split('\n')
                         max = len(linhas)-1
                         cont = 0
-                        while cont <= max:
-                            linha = linhas[cont]
+                        entra = False
+                        #while cont <= max:
+                        
+                        for linha in linhas:
+                            
+                            #linha = linhas[cont]
                             if len(linha) == 80:
+                                entra = True
                                 if cont == 0:
                                     D['cod_empresa'] = linha[0:3] 
                                     D['empresa'] = linha[5:51]
@@ -1311,8 +1328,10 @@ class MyVindulaImportHoleriteView(grok.View, BaseFunc):
                                     D['competencia'] = tmp[1]+'/'+tmp[0] 
                                 
                                 elif cont == 4:
+                                    
                                     D['matricula'] = linha[0:5]
                                     D['nome'] = linha[6:51]
+                                    D['cpf']  = linha[69:80]
                     
                                 elif cont >= 8 and cont <= 23:
                                     E = {}
@@ -1336,8 +1355,8 @@ class MyVindulaImportHoleriteView(grok.View, BaseFunc):
                                     D['base_fgts'] = linha[26:38]
                                     D['fgts_mes'] = linha[40:50]
                                     D['base_irrf'] = linha[52:70]
-                                
-                            cont += 1
+                            if entra:    
+                                cont += 1
                         if D:
                             convertido = self.converte_dadosByDB(D)
                             id = ModelsFuncHolerite().set_FuncHolerite(**convertido)
@@ -1368,19 +1387,15 @@ class MyVindulaFindHoleriteView(grok.View, BaseFunc):
     
     def load_list(self):
         form = self.request.form
-        if 'matricula' in form.keys() and 'competencia' in form.keys():
-            matricula = form.get('matricula','')
-            competencia = form.get('competencia','')
-            try:
-                matricula = unicode(matricula,'utf-8')
-            except:
-                pass
-            try:
-                competencia = unicode(competencia,'utf-8')
-            except:
-                pass
+        if 'cpf' in form.keys() and 'competencia' in form.keys():
+
+            try:cpf = unicode(form.get('cpf',''),'utf-8')
+            except:cpf = form.get('cpf','')
+            
+            try:competencia = unicode(form.get('competencia',''),'utf-8')
+            except:competencia = form.get('competencia','')
                 
-            return ModelsFuncHolerite().get_FuncHolerites_byMatriculaAndCompetencia(matricula, competencia)
+            return ModelsFuncHolerite().get_FuncHolerites_byCPFAndCompetencia(cpf, competencia)
 
 
 class MyVindulaDelHoleriteView(grok.View, BaseFunc):
@@ -1393,6 +1408,7 @@ class MyVindulaDelHoleriteView(grok.View, BaseFunc):
         success_url = self.context.absolute_url() + '/myvindula-import-holerite'
         if 'date' in form.keys():
             data_lote = form['date']
+
             data_lote = datetime.strptime(data_lote,'%Y-%m-%d %H:%M:%S')
             ModelsFuncHolerite().del_HoleritesLote(data_lote)
             
@@ -1426,8 +1442,8 @@ class MyVindulaHoleriteView(grok.View, BaseFunc):
         
         prefs_user = self.get_prefs_user(user)
         if prefs_user:
-            matricula = prefs_user.registration
-            holerites = ModelsFuncHolerite().get_FuncHolerites_byMatricula(matricula)
+            cpf = prefs_user.teaching_research
+            holerites = ModelsFuncHolerite().get_FuncHolerites_byCPF(cpf)
             D = {}
             if holerites:
                 if holerites.count() > 1:
@@ -1444,3 +1460,32 @@ class MyVindulaHoleriteView(grok.View, BaseFunc):
         
         else:
                 return []
+            
+            
+class MyVindulaPrintHoleriteView(grok.View, BaseFunc):
+    grok.context(ISiteRoot)
+    grok.require('zope2.View')
+    grok.name('imprimir-holerite')
+    
+    def get_prefs_user(self, user):
+        user_id = unicode(user, 'utf-8')    
+        return ModelsFuncDetails().get_FuncDetails(user_id)
+    
+    def get_descricao_holerite(self, id_holerite):
+        result = ModelsFuncHoleriteDescricao().get_FuncHoleriteDescricoes_byid(id_holerite)
+        if result: 
+            return result
+        else:
+            return [] 
+    
+    def load_list(self):
+        form = self.request.form
+        if 'cpf' in form.keys() and 'competencia' in form.keys():
+
+            try:cpf = unicode(form.get('cpf',''),'utf-8')
+            except:cpf = form.get('cpf','')
+            
+            try:competencia = unicode(form.get('competencia',''),'utf-8')
+            except:competencia = form.get('competencia','')
+                
+            return ModelsFuncHolerite().get_FuncHolerites_byCPFAndCompetencia(cpf, competencia)      

@@ -5,7 +5,7 @@
             <div id="interna">
 				<div class="import-user" tal:define="data view/load_list|nothing">
                     
-					<h1 tal:content="string:${view/get_saldacao|nothing} colaborador da ${data/short_name|nothing}" />
+					<h1 tal:content="string:${view/get_saldacao|nothing} colaborador da ${data/short_name|python:''}" />
 					
 					<h3>Verificamos que este &eacute o seu primeiro acesso e para que a Intranet funcione corretamente,
 						precisamos que voc&ecirc; atualize seus dados pessoais.</h3>
@@ -14,7 +14,7 @@
                     <br />
 					<form action="myvindula-first-registre" method="post" enctype="multipart/form-data">
 						
-						<input type="submit" id='continuar' name="continuar" value="Clique aque para continua" style="height:45px;width:200px;">
+						<input type="submit" id='continuar' name="continuar" value="Clique aqui para continua" style="height:45px;width:200px;">
 						<br /><br />
 						<input type="submit" id='voltar' name="voltar" value="N&atilde;o, Obrigado" style="height:25px;width:100px;">
 						

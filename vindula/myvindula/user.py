@@ -283,6 +283,7 @@ class ModelsFuncHolerite(Storm, BaseStore):
     
     id = Int(primary=True)
     nome = Unicode()
+    cpf = Unicode()
     matricula = Unicode() 
     cargo= Unicode()
     cod_cargo = Unicode()
@@ -313,15 +314,15 @@ class ModelsFuncHolerite(Storm, BaseStore):
         
         return funcHolerite.id       
     
-    def get_FuncHolerites_byMatricula(self, matricula):
-        data = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.matricula==matricula).order_by(ModelsFuncHolerite.competencia)
+    def get_FuncHolerites_byCPF(self, cpf):
+        data = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.cpf==cpf).order_by(ModelsFuncHolerite.competencia)
         if data.count() > 0:
             return data
         else:
             return None    
     
-    def get_FuncHolerites_byMatriculaAndCompetencia(self, matricula, competencia):
-        data = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.matricula==matricula, ModelsFuncHolerite.competencia==competencia).one()
+    def get_FuncHolerites_byCPFAndCompetencia(self, cpf, competencia):
+        data = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.cpf==cpf, ModelsFuncHolerite.competencia==competencia).one()
         if data:
             return data
         else:
@@ -1088,21 +1089,29 @@ class BaseFunc(BaseStore):
                 html.append(i)
                 i+=1
             for campo in campos.keys():
-                   
-                    index = campos[campo].get('ordem',0)
-                    tmp = ""
-                    tmp += "<!-- Campo %s -->"%(campo)
-                    tmp += "<div class='%s'>"%(self.field_class(errors, campo))
-                    tmp += "   <label for='%s'>%s</label>"%(campo,campos[campo]['label'])
-                    if campos[campo]['required'] == True:
-                        tmp += "   <span class='fieldRequired' title='Obrigatório'>(Obrigatório)</span>"
+                type_campo = campos[campo]['type']
+                index = campos[campo].get('ordem',0)
+                tmp = ""
+                tmp += "<!-- Campo %s -->"%(campo)
+                tmp += "<div class='%s'>"%(self.field_class(errors, campo))
+                tmp += "   <label for='%s'>%s</label>"%(campo,campos[campo]['label'])
+                
+                if campos[campo]['required'] == True:
+                    tmp += "   <span class='fieldRequired' title='Obrigatório'>(Obrigatório)</span>"
 
-                    tmp += "   <div class='formHelp'>%s.</div>"%(campos[campo]['decription'])   
-                    tmp += "   <div >%s</div>"%(errors.get(campo,''))
+                tmp += "   <div class='formHelp'>%s.</div>"%(campos[campo]['decription'])   
+                tmp += "   <div >%s</div>"%(errors.get(campo,''))
+                if type_campo == 'file':
+                    if campo == 'logo_corporate' and data:
+                        tmp += "<img src='%s' height='60px'/><br />" %( getSite().portal_url() +'/company-logo?cnpj='+data.get('cnpj',''))
+                    
+                    tmp += "<input id='%s' type='file' value='%s' name='%s' size='25'  accept='image/*'/>"%(campo,'',campo)
+                else:
                     tmp += "<input id='%s' type='text' value='%s' name='%s' size='25'/>"%(campo,self.getValue(campo,self.request,data),campo)
-                    tmp += "</div>"
-                    html.pop(index)
-                    html.insert(index, tmp)    
+                
+                tmp += "</div>"
+                html.pop(index)
+                html.insert(index, tmp)    
             
             return html
         

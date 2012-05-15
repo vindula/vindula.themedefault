@@ -259,6 +259,7 @@ DROP TABLE IF EXISTS `myvindulaDB`.`vin_myvindula_holerite` ;
 CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_holerite` (
   `id` INT(100) NOT NULL AUTO_INCREMENT ,
   `nome` VARCHAR(45) NULL DEFAULT NULL ,
+  `cpf` VARCHAR(45) NULL DEFAULT NULL ,
   `matricula` VARCHAR(45) NULL DEFAULT NULL ,
   `cargo` VARCHAR(45) NULL DEFAULT NULL ,
   `cod_cargo` VARCHAR(45) NULL DEFAULT NULL ,
