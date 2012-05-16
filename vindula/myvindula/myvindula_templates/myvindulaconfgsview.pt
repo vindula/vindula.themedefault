@@ -19,13 +19,14 @@
 									  username form_data/username|python:{};
 									  config_myvindula form_data/config_myvindula|python:{};">
 	        
-	        <h1>Habilitar / Desabilitar Campos do My Vindula</h1>
+	        <h1>Campos do Perfil de usu&aacute;rio</h1>
 			
 			<div id="interna" >    		
-		        <form name="myvindulaconfgs" id="myvindulaconfgs" enctype="multipart/form-data" class="enableAutoFocus" action="myvindulaconfgs" method="POST">
+		        <form name="myvindulaconfgs" id="myvindulaconfgs" enctype="multipart/form-data"
+		        	  class="enableAutoFocus" action="myvindulaconfgs" method="POST">
 
-		            <fieldset>
-		            	<legend>Campos Habilitados</legend>
+		            <fieldset style="float: left">
+		            	<legend>Campos Habilitados Para Edição</legend>
 						<!-- ID da user--> 
 						<input id="id" type="hidden" value="" name="id" tal:attributes="value request/id| id |nothing">
 	
@@ -36,6 +37,19 @@
 						</tal:def>
 					
 					</fieldset>
+					<fieldset style="float:right">
+		            	<legend>Campos Habilitados Para Visualização</legend>
+						<!-- ID da user--> 
+						<input id="id" type="hidden" value="" name="id" tal:attributes="value request/id| id |nothing">
+	
+						<tal:def define="html python:view.geraConfCampos(form_data,False)">
+							<tal:rep repeat="x html">
+								<div tal:content="structure x"/>
+							</tal:rep>
+						</tal:def>
+					
+					</fieldset>
+					<div class="visualClear"></div>
 					<!-- Botões de ação -->	
 				   	<fieldset>
 			            <br />		

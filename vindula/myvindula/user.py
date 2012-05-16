@@ -378,6 +378,7 @@ class ModelsFuncHoleriteDescricao(Storm, BaseStore):
 class ModelsConfgMyvindula(Storm, BaseStore):
     __storm_table__ = 'vin_myvindula_confgfuncdetails'
     
+    #Campos de edição
     id = Int(primary=True)
     name = Bool()
     phone_number = Bool()
@@ -413,6 +414,43 @@ class ModelsConfgMyvindula(Storm, BaseStore):
     blogs = Bool()
     customised_message = Bool()
     vin_myvindula_department = Bool()  
+
+    #Campos de Visão
+    name_view = Bool()
+    phone_number_view = Bool()
+    cell_phone_view = Bool()
+    email_view = Bool()
+    employee_id_view = Bool()
+    #username = Bool()
+    date_birth_view = Bool()
+    registration_view = Bool()
+    enterprise_view = Bool()
+    position_view = Bool()
+    admission_date_view = Bool()
+    cost_center_view = Bool()
+    organisational_unit_view = Bool()
+    reports_to_view = Bool()
+    location_view = Bool()
+    postal_address_view = Bool()
+    special_roles_view = Bool()
+    photograph_view = Bool()
+    nickname_view = Bool()
+    pronunciation_name_view = Bool()
+    committess_view = Bool()
+    projetcs_view = Bool()
+    personal_information_view = Bool()
+    skills_expertise_view = Bool()
+    profit_centre_view = Bool()
+    languages_view = Bool()
+    availability_view = Bool()
+    papers_published_view = Bool()
+    teaching_research_view =Bool()
+    delegations_view = Bool()
+    resume_view = Bool()
+    blogs_view = Bool()
+    customised_message_view = Bool()
+    vin_myvindula_department_view = Bool()  
+
 
     #loads data into DataBase    
     def get_configuration(self):
@@ -1041,18 +1079,32 @@ class BaseFunc(BaseStore):
             
             return html
 
-    def geraConfCampos(self,form_data):
+    def geraConfCampos(self,form_data,start=True):
         if type(form_data) == dict:
             errors = form_data.get('errors',None)
             data = form_data.get('data',None)
             campos = form_data.get('campos',None)
+            notCampos = []
+                                    
+            if start:
+                for i in campos.keys():
+                    if 'view' in i:
+                        notCampos.append(i)
+            else:
+                for i in campos.keys():
+                    if not 'view' in i:
+                        notCampos.append(i)
+                
             html = []
             i=0
-            while i < len(campos.keys()):
+            
+            cont = len(campos) - len(notCampos)
+            while i < cont:
                 html.append(i)
                 i+=1
+
             for campo in campos.keys():
-                if campo != 'id' and campo != 'username':
+                if campo != 'id' and campo != 'username' and not campo in notCampos:
                     index = campos[campo].get('ordem',0)
                     tmp = ""
                     tmp += "<!-- Campo %s -->"%(campo)
@@ -1387,7 +1439,8 @@ class SchemaFunc(BaseFunc):
         
 class SchemaConfgMyvindula(BaseFunc):
     
-    campos = {'vin_myvindula_department': {'required': False, 'type' : bool, 'label':'Departamento',      'ordem':0},
+    campos = {#Campos Edição
+              'vin_myvindula_department': {'required': False, 'type' : bool, 'label':'Departamento',      'ordem':0},
               'name'                    : {'required': False, 'type' : bool, 'label':'Nome',              'ordem':1},
               'nickname'                : {'required': False, 'type' : bool, 'label':'Apelido',           'ordem':2},
               'phone_number'            : {'required': False, 'type' : bool, 'label':'Telefone',          'ordem':3},
@@ -1419,10 +1472,44 @@ class SchemaConfgMyvindula(BaseFunc):
               'teaching_research'     : {'required': False, 'type' : bool, 'label':'CPF',                    'ordem':29},
               'resume'                : {'required': False, 'type' : bool, 'label':'Personalizado 2',        'ordem':30},
               'delegations'           : {'required': False, 'type' : bool, 'label':'Personalizado 3',        'ordem':31},
-              'customised_message'    : {'required': False, 'type' : bool, 'label':'Personalizado 4',        'ordem':32},}
+              'customised_message'    : {'required': False, 'type' : bool, 'label':'Personalizado 4',        'ordem':32},
               
-              #'username'              : {'required': False, 'type' : bool, 'label':'Nome de Usuário',}}
+              #Campos Visão
+              'vin_myvindula_department_view': {'required': False, 'type' : bool, 'label':'Departamento',      'ordem':0},
+              'name_view'                    : {'required': False, 'type' : bool, 'label':'Nome',              'ordem':1},
+              'nickname_view'                : {'required': False, 'type' : bool, 'label':'Apelido',           'ordem':2},
+              'phone_number_view'            : {'required': False, 'type' : bool, 'label':'Telefone',          'ordem':3},
+              'cell_phone_view'              : {'required': False, 'type' : bool, 'label':'Celular',           'ordem':4},
+              'email_view'                   : {'required': False, 'type' : bool, 'label':'E-mail',            'ordem':5},
+              'employee_id_view'             : {'required': False, 'type' : bool, 'label':'ID Funcionário',    'ordem':6},
+              'date_birth_view'            : {'required': False, 'type' : bool, 'label':'Data de Nascimento',     'ordem':7},
+              'registration_view'          : {'required': False, 'type' : bool, 'label':'Matrícula',              'ordem':8},
+              'enterprise_view'            : {'required': False, 'type' : bool, 'label':'Empresa',                'ordem':9},
+              'position_view'              : {'required': False, 'type' : bool, 'label':'Cargo',                  'ordem':10},
+              'admission_date_view'        : {'required': False, 'type' : bool, 'label':'Data de Admissão',       'ordem':11},
+              'cost_center_view'           : {'required': False, 'type' : bool, 'label':'Centro de Custo',        'ordem':12},
+              'organisational_unit_view'   : {'required': False, 'type' : bool, 'label':'Unidade organizacional', 'ordem':13},
+              'reports_to_view'            : {'required': False, 'type' : bool, 'label':'Reporta-se a',           'ordem':14},
+              'location_view'              : {'required': False, 'type' : bool, 'label':'Localização',            'ordem':15},
+              'postal_address_view'        : {'required': False, 'type' : bool, 'label':'Endereço Postal',        'ordem':16},
+              'special_roles_view'         : {'required': False, 'type' : bool, 'label':'Funções Especiais',      'ordem':17},
+              'photograph_view'            : {'required': False, 'type' : bool, 'label':'Foto',                   'ordem':18},
+              'pronunciation_name_view'    : {'required': False, 'type' : bool, 'label':'Pronuncia do nome',      'ordem':19},
+              'committess_view'            : {'required': False, 'type' : bool, 'label':'Comissão',               'ordem':20},
+              'projetcs_view'              : {'required': False, 'type' : bool, 'label':'Projetos',               'ordem':21},
+              'personal_information_view'  : {'required': False, 'type' : bool, 'label':'Informações pessoais',   'ordem':22},
+              'skills_expertise_view'      : {'required': False, 'type' : bool, 'label':'Habilidades'          ,  'ordem':23},
+              'profit_centre_view'         : {'required': False, 'type' : bool, 'label':'Centro de Lucro',        'ordem':24},
+              'languages_view'             : {'required': False, 'type' : bool, 'label':'Idioma',                 'ordem':25},
+              'availability_view'          : {'required': False, 'type' : bool, 'label':'Disponibilidade',        'ordem':26},
+              'papers_published_view'      : {'required': False, 'type' : bool, 'label':'Artigos Publicados',     'ordem':27},
+              'blogs_view'                 : {'required': False, 'type' : bool, 'label':'Blogs',                  'ordem':28},
+              'teaching_research_view'     : {'required': False, 'type' : bool, 'label':'CPF',                    'ordem':29},
+              'resume_view'                : {'required': False, 'type' : bool, 'label':'Personalizado 2',        'ordem':30},
+              'delegations_view'           : {'required': False, 'type' : bool, 'label':'Personalizado 3',        'ordem':31},
+              'customised_message_view'    : {'required': False, 'type' : bool, 'label':'Personalizado 4',        'ordem':32},
               
+              }
    
     def configuration_processes(self,context):
         success_url = context.context.absolute_url() + '/@@vindula-control-panel'

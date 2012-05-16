@@ -5,7 +5,7 @@
 		xmlns:i18n="http://xml.zope.org/namespaces/i18n">
  
  <!-- Basic metadata -->
- <property name="title" i18n:translate="">Vindula List Documents User</property>
+ <property name="title" i18n:translate="">Gerenciamento de Documentos Corporativos</property>
  <property name="description" i18n:translate="">Listagem dos documentos dos Usuário.</property>
  <property name="content_icon">++resource++vindula.myvindula.images/vindulalistdocumentuser.png</property>
  <property name="allow_discussion">False</property>

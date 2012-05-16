@@ -6,8 +6,8 @@
     	
 	<portlet
 		addview="vindula.myvindula.PortletRamaisVindula"
-		title="Portlet Ramais Vindula"
-		description="Portlet Ramais Vindula"
+		title="Portlet busca de pessoas"
+		description="Portlet busca de pessoas"
 	    />		
 	
 	<portlet

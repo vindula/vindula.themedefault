@@ -343,7 +343,7 @@ class MyVindulaListUser(grok.View):
     def valida_pessoal(self):
         configuracao1= self.get_campos()
         
-        campos = ['employee_id','nickname','pronunciation_name','date_birth']
+        campos = ['employee_id_view','nickname_view','pronunciation_name_view','date_birth_view']
         for i in campos:
             if configuracao1:
                 if configuracao1.__getattribute__(i):
@@ -354,7 +354,7 @@ class MyVindulaListUser(grok.View):
     def valida_contato(self):
         configuracao1= self.get_campos()
         
-        campos = ['email','phone_number','location','postal_address']
+        campos = ['email_view','phone_number_view','location_view','postal_address_view']
         for i in campos:
             if configuracao1:
                 if configuracao1.__getattribute__(i):
@@ -364,8 +364,8 @@ class MyVindulaListUser(grok.View):
          
     def valida_corporativo(self):
         configuracao1= self.get_campos()
-        campos = ['enterprise','registration','position','admission_date','registration','cost_center',\
-                  'profit_centre','special_roles','organisational_unit','delegations','reports_to']
+        campos = ['enterprise_view','registration_view','position_view','admission_date_view','registration_view','cost_center_view',\
+                  'profit_centre_view','special_roles_view','organisational_unit_view','delegations_view','reports_to_view']
 
         for i in campos:
             if configuracao1:
@@ -376,8 +376,8 @@ class MyVindulaListUser(grok.View):
         
     def valida_others(self):
         configuracao1= self.get_campos()
-        campos = ['committess','registration','projetcs','personal_information','skills_expertise','languages',\
-                  'availability','papers_published','teaching_research','resume','blogs','customised_message']
+        campos = ['committess_view','registration_view','projetcs_view','personal_information_view','skills_expertise_view','languages_view',\
+                  'availability_view','papers_published_view','teaching_research_view','resume_view','blogs_view','customised_message_view']
         
         for i in campos:
             if configuracao1:
@@ -551,21 +551,22 @@ class MyVindulalistAll(grok.View, BaseFunc):
         form = self.request.form
         result = None
         config_muit_user = self.context.restrictedTraverse('@@myvindula-conf-userpanel').config_muit_user()
+        filtro_busca = self.context.restrictedTraverse('@@myvindula-conf-userpanel').check_filtro_busca_user()
         
         if 'title' in form.keys() or 'SearchSubmit' in form.keys():
             title = form.get('title','').strip()
             departamento= form.get('departamento','0')
             ramal = form.get('ramal','').strip()
             if title or departamento !='0' or ramal:
-                result_set = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'),True)
+                result_set = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'),filtro_busca)
                 if result_set:
                     result = self.rs_to_list(result_set)
         elif not config_muit_user:
-            result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'),True)
+            result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'),filtro_busca)
             if result_set:
                     result = self.rs_to_list(result_set)
         elif 'all' in form.keys():
-            result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'),True)
+            result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'),filtro_busca)
             if result_set:
                     result = self.rs_to_list(result_set)
                     
