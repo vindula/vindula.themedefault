@@ -1,0 +1,35 @@
+<div id="banner_homepage">
+	<tal:cond tal:condition="python: context.portal_type == 'HomePage'">
+		<tal:def tal:condition="homepage_view/context/getActive_banner" tal:define="homepage_view python: context.restrictedTraverse('@@view');">
+			<link rel="stylesheet" type="text/css" href="/++resource++vindula.themedefault/css/banner_homepage.css">
+			<!-- start: BANNER -->
+			<div id="banner_home" tal:condition="homepage_view/context/getRef_banner">
+				<tal:def define="banners homepage_view/getBanner">
+					<input id="cycle-timeout-banner" type="hidden" tal:attributes="value homepage_view/context/getTime_transition_banner">
+					<div class="paginacao pag_homepage" tal:condition="python: len(homepage_view.context.getRef_banner()) > 1">
+						<a id="cycle-prev-banner" class="pag_anterior pag_all" title="Anterior">
+							<img src="/++theme++vindula.themedefault/images/buttons/anterior.png" />
+						</a>
+						<p class="cycle-nav-banner" id="cycle-nav-banner"></p><p tal:content="python: '/' + str(len(homepage_view.context.getRef_banner()))"></p>
+						<a id="cycle-next-banner" class="pag_proximo pag_all" title="Pr&oacute;ximo">
+							<img src="/++theme++vindula.themedefault/images/buttons/proximo.png" />
+						</a>
+					</div>
+					<div id="box_banner">
+						<div id="cont_banner">
+							<div tal:repeat="banner banners">
+								<tal:cond condition="not: banner/url_image">
+									<img tal:attributes="src banner/image; alt banner/title;">	
+								</tal:cond>
+								<tal:cond condition="banner/url_image">
+									<a tal:attributes="href banner/url_image; target banner/target"><img tal:attributes="src banner/image; alt banner/title;"></a>
+								</tal:cond>
+							</div>
+						</div>
+					</div>
+				</tal:def>
+			</div>
+			<!-- end: BANNER -->
+		</tal:def>
+	</tal:cond>
+</div>

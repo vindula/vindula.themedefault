@@ -43,6 +43,8 @@
 	<copy css:content-children="#links-adcionais" css:theme="#links-adcionais" />
 		
 	<copy css:content-children="#portal-breadcrumbs" css:theme="#geral_breadcrumb" />
+	
+	<copy css:content-children="#banner_homepage" css:theme="#banner_homepage" css:if-content="#vindula-home-page"/>
 
 	<!-- Portal Column Content -->
 	<copy css:content-children="#portal-column-content" css:theme=".contBoxTipo" />

@@ -256,3 +256,9 @@ class MenuViewlet(grok.Viewlet):
         if (obj.id in url and obj_url.index(obj.id) == url.index(obj.id))or\
             self.context.id == obj.id:
             return 'selected'
+        
+        
+class BannerViewlet(grok.Viewlet): 
+    grok.name('vindula.themedefault.banner') 
+    grok.require('zope2.View')
+    grok.viewletmanager(IAboveContent) 

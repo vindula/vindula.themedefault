@@ -22,6 +22,52 @@ from vindula.themedefault.config import *
 
 
 HomePage_schema =  ATDocumentSchema.copy() + Schema((
+                                                     
+#Configurar Banner  -------------------------------------
+                                                     
+    BooleanField(
+        name='active_banner',
+        widget=BooleanWidget(
+            label=_(u"Ativar banner na homepage"),
+            description=_(u"Selecione para ativar o banner na homepage"),
+            label_msgid='vindula_themedefault_label_active_banner',
+            description_msgid='vindula_themedefault_help_active_banner',
+            i18n_domain='vindula_themedefault',
+        ),
+    ),
+
+    ReferenceField('ref_banner',
+        multiValued=1,
+        allowed_types=('Image', 'Banner'),
+        relationship='ref_banner',
+        widget=ReferenceBrowserWidget(
+            default_search_index='SearchableText',
+            label=_(u"Seleção do objeto de seleção do banner"),
+            description=_(u"Selecione o objeto que será mostrada no banner."),
+            
+            label_msgid='vindula_themedefault_label_ref_banner',
+            description_msgid='vindula_themedefault_help_ref_banner',
+            i18n_domain='vindula_themedefault',
+            ),
+        required=False
+    ),
+    
+    IntegerField(
+        name='time_transition_banner',
+        widget=IntegerWidget(
+            label=_(u"Velocidade da rotação do banner"),
+            description=_(u"Tempo em milisegundos que a imagem do banner leva para rotacionar, \
+                          insira apenas números iteiros."),
+            
+            label_msgid='vindula_themedefault_label_time_transition_banner',
+            description_msgid='vindula_themedefault_help_time_transition_banner',
+            i18n_domain='vindula_themedefault',
+        ),
+        default=8000,
+        required=True,
+    ),
+    
+#Fim Configurar Banner  -------------------------------------
 
     TextField(
             name='content_top',
@@ -103,6 +149,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
             ),
         required=False
     ),
+
 
 #FieldSet Noticias-------------------------------------
 #*********Destaque de  Noticias*****************
@@ -387,3 +434,41 @@ class HomePageView(grok.View):
                        sort_on='effective',
                        sort_order='descending',)
         return news
+    
+    def getBanner(self):
+        L = []
+        if self.context.getRef_banner():
+            for banner in self.context.getRef_banner():
+                try:
+                    type_obj = banner.Type()
+                except:
+                    return L
+                D={}
+                D['url_image'] = ''
+                D['image'] = ''
+                D['title'] = banner.title
+                if type_obj == 'Image':
+                    D['image'] = banner.absolute_url()
+                elif type_obj == 'Banner':
+                    if banner.getLink():
+                        D['target'] = banner.getTarget()
+                        if banner.getRawImagem_banner():
+                            D['image'] = banner.getRawImagem_banner().absolute_url()
+                        link = banner.getLink()
+                        if link: 
+                            if link[:4] == 'http':
+                                D['url_image'] = link
+                            else:
+                                D['url_image'] = 'http://%s' % link
+                L.append(D)
+        return L
+         
+        
+        
+        
+        
+        
+        
+        
+        
+        
