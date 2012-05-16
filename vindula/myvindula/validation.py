@@ -24,12 +24,15 @@ def valida_form(configuracao, form):
         
         if configuracao.get(campo).get('required', None) is not None:
             if configuracao[campo]['required'] == True: # configuracao: campo e obrigatorio
-                if valor == '' or valor.isspace(): # se o campo estiver vazio
-                    errors[campo] = u'Este campo é obrigatório' # indica o campo vazio
+                try:
+                    if valor == '' or valor.isspace(): # se o campo estiver vazio
+                        errors[campo] = u'Este campo é obrigatório' # indica o campo vazio
+                except:
+                    import pdb;pdb.set_trace()
                             
         if configuracao[campo]['type'] == date:
             if valor != '':   
-                try:
+                try: 
                     if valor.find('/') != -1:
                         data = tuple(valor) # pega a string no formato '00/00/0000' e transforma em tupla dividindo os elementos
                         

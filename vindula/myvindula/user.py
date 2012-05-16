@@ -96,6 +96,14 @@ class ModelsFuncDetails(Storm, BaseStore):
         funcDetails = ModelsFuncDetails(**kwargs)
         self.store.add(funcDetails)
         self.store.flush()        
+        
+    def del_FuncDetails(self, username):
+        result = self.get_FuncDetails(username)
+        if result:
+            self.store.remove(result)
+            self.store.flush()
+            
+            return result.photograph 
     
     def get_allFuncDetails(self, ordem='nome'):
         if ordem == 'admicao':
@@ -275,6 +283,7 @@ class ModelsFuncHolerite(Storm, BaseStore):
     
     id = Int(primary=True)
     nome = Unicode()
+    cpf = Unicode()
     matricula = Unicode() 
     cargo= Unicode()
     cod_cargo = Unicode()
@@ -305,15 +314,15 @@ class ModelsFuncHolerite(Storm, BaseStore):
         
         return funcHolerite.id       
     
-    def get_FuncHolerites_byMatricula(self, matricula):
-        data = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.matricula==matricula).order_by(ModelsFuncHolerite.competencia)
+    def get_FuncHolerites_byCPF(self, cpf):
+        data = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.cpf==cpf).order_by(ModelsFuncHolerite.competencia)
         if data.count() > 0:
             return data
         else:
             return None    
     
-    def get_FuncHolerites_byMatriculaAndCompetencia(self, matricula, competencia):
-        data = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.matricula==matricula, ModelsFuncHolerite.competencia==competencia).one()
+    def get_FuncHolerites_byCPFAndCompetencia(self, cpf, competencia):
+        data = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.cpf==cpf, ModelsFuncHolerite.competencia==competencia).one()
         if data:
             return data
         else:
@@ -1132,21 +1141,29 @@ class BaseFunc(BaseStore):
                 html.append(i)
                 i+=1
             for campo in campos.keys():
-                   
-                    index = campos[campo].get('ordem',0)
-                    tmp = ""
-                    tmp += "<!-- Campo %s -->"%(campo)
-                    tmp += "<div class='%s'>"%(self.field_class(errors, campo))
-                    tmp += "   <label for='%s'>%s</label>"%(campo,campos[campo]['label'])
-                    if campos[campo]['required'] == True:
-                        tmp += "   <span class='fieldRequired' title='Obrigatório'>(Obrigatório)</span>"
+                type_campo = campos[campo]['type']
+                index = campos[campo].get('ordem',0)
+                tmp = ""
+                tmp += "<!-- Campo %s -->"%(campo)
+                tmp += "<div class='%s'>"%(self.field_class(errors, campo))
+                tmp += "   <label for='%s'>%s</label>"%(campo,campos[campo]['label'])
+                
+                if campos[campo]['required'] == True:
+                    tmp += "   <span class='fieldRequired' title='Obrigatório'>(Obrigatório)</span>"
 
-                    tmp += "   <div class='formHelp'>%s.</div>"%(campos[campo]['decription'])   
-                    tmp += "   <div >%s</div>"%(errors.get(campo,''))
+                tmp += "   <div class='formHelp'>%s.</div>"%(campos[campo]['decription'])   
+                tmp += "   <div >%s</div>"%(errors.get(campo,''))
+                if type_campo == 'file':
+                    if campo == 'logo_corporate' and data:
+                        tmp += "<img src='%s' height='60px'/><br />" %( getSite().portal_url() +'/company-logo?cnpj='+data.get('cnpj',''))
+                    
+                    tmp += "<input id='%s' type='file' value='%s' name='%s' size='25'  accept='image/*'/>"%(campo,'',campo)
+                else:
                     tmp += "<input id='%s' type='text' value='%s' name='%s' size='25'/>"%(campo,self.getValue(campo,self.request,data),campo)
-                    tmp += "</div>"
-                    html.pop(index)
-                    html.insert(index, tmp)    
+                
+                tmp += "</div>"
+                html.pop(index)
+                html.insert(index, tmp)    
             
             return html
         
@@ -1237,7 +1254,7 @@ class SchemaFunc(BaseFunc):
               'delegations'             : {'required': False, 'type' : to_utf8, 'label':'Personalizado 3',        'decription':u'Campo para personalizar',                      'ordem':30},
               'customised_message'      : {'required': False, 'type' : to_utf8, 'label':'Personalizado 4',        'decription':u'Campo para personalizar',                      'ordem':31},
               
-              'username'                : {'required': True, 'type' : to_utf8, 'label':'Nome de Usuário'        },}  #Campo Obrigatorio
+              'username'                : {'required': True, 'type' : to_utf8, 'label':'Nome de Usuário',        'decription':u'Digite o CPF do funcionário',                    'ordem':28},}  #Campo Obrigatorio
               #'vin_myvindula_department_id': {'required': False, 'type' : int,     'label':'Departamento'           },} #Campo Obrigatorio
 
                     
@@ -1249,12 +1266,12 @@ class SchemaFunc(BaseFunc):
         form_keys = form.keys() # var tipo 'list' que guarda todas as chaves do formulario (keys)
         campos = self.campos
         #user = context.context.portal_membership.getAuthenticatedMember()
-        
+
         if not manage:
             try:
-                user_id = unicode(user.id, 'utf-8')    
+                user_id = unicode(user.getUserName(), 'utf-8')    
             except:
-                user_id = user.id
+                user_id = user.getUserName()
          
         else:
             if user != 'acl_users':
@@ -1325,7 +1342,6 @@ class SchemaFunc(BaseFunc):
                         ModelsDepartment().set_department(**D)
                         
                         #context.context.addUserGroup(user_id,departament)
-                        
                             
                 if 'skills_expertise' in form_keys:
                     ModelsMyvindulaFuncdetailCouses().del_funcdetailCouser(user_id)
@@ -1343,7 +1359,6 @@ class SchemaFunc(BaseFunc):
                         D['username'] = user_id
                         D['id_courses'] = int(languages)
                         ModelsMyvindulaFuncdetailLanguages().set_funcdetailLanguages(**D)
-                
                 
                 if user_id != 'acl_users':
                     # editando...
@@ -1371,31 +1386,49 @@ class SchemaFunc(BaseFunc):
                     
                     if not manage:
                         user.setMemberProperties(user_plone)
-               
-
                         
                 elif user_id == 'acl_users':
-                    #adicionando...
+                    diff = False
+                    path_user = u''
+                    if form.get('username', None) !=\
+                        form.get('username-old', None): 
+                        
+                        try:user_del = unicode(form.get('username-old'),'utf-8')
+                        except:user_del = form.get('username-old')
+                        
+                        path_user = ModelsFuncDetails().del_FuncDetails(user_del)
+                        diff = True
+                    
+                    #Adicionando...
                     result = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username == data.get('username','')).one()
                     if not result:
+                        data['photograph'] = path_user
+                        
                         database = ModelsFuncDetails(**data)
                         self.store.add(database)
                         self.store.flush()
+                        
+                    elif not diff:
+                        if data['photograph'] is None:
+                            data['photograph'] = result.photograph
+                        
+                        for campo in campos.keys():
+                            value = data.get(campo, None)
+                            setattr(result, campo, value)
+
                     else:
                        errors['username'] = 'Ja existem um usuário com este username, por favor escolha outro usernome'
                        
                        form_data['errors'] = errors
                        form_data['data'] = data
                        return form_data 
-                            
+                
                 #Redirect back to the front page with a status message
                 IStatusMessage(context.request).addStatusMessage(_(u"Seu perfil foi editado com sucesso!!"), "info")
                 if manage:
                     context.request.response.redirect(success_url_manage)
                 else:
                     context.request.response.redirect(success_url)
-
-
                                    
             else:
                 form_data['errors'] = errors
@@ -1404,8 +1437,18 @@ class SchemaFunc(BaseFunc):
           
         # se clicou em excluir
         elif 'form.excluir' in form_keys:
+            if user_id == 'acl_users':
+                if form.get('username', None) !=\
+                    form.get('username-old', None): 
+                
+                    try: user_id = unicode(form.get('username-old'))
+                    except: user_id = form.get('username-old')
+                else:
+                    try: user_id = unicode(form.get('username'))
+                    except: user_id = form.get('username')
+                    
             record = self.store.find(ModelsFuncDetails, ModelsFuncDetails.username == user_id).one()
-            
+
             self.store.remove(record)
             self.store.flush()
             

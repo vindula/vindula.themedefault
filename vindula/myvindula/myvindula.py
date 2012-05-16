@@ -25,9 +25,7 @@ from plone.z3cform.crud import crud
 from datetime import date
 from DateTime.DateTime import DateTime
 from datetime import datetime 
-import calendar
-import base64
-import pickle
+import calendar, logging, base64, pickle
 
 from vindula.myvindula.validation import valida_form
 
@@ -39,6 +37,8 @@ from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, M
                                    ModelsFuncHolerite, ModelsFuncHoleriteDescricao, ModelsConfgMyvindula
                                    
 from vindula.controlpanel.browser.models import ModelsCompanyInformation
+
+logger = logging.getLogger('vindula.myvindula')
 
 class MyVindulaView(grok.View):
     grok.context(Interface)
@@ -239,7 +239,7 @@ class MyVindulaPrefsView(grok.View, BaseFunc):
                                                    chain=['one_state_workflow',])
         form = self.request.form
         membership = self.context.portal_membership
-        user_login = membership.getAuthenticatedMember()
+        user_login = membership.getAuthenticatedMember().getUserName()
         error_url = self.context.absolute_url() + '/@@myvindulamanagealluser'
         
         if 'user' in form.keys() and not'newuser' in form.keys():
@@ -249,26 +249,39 @@ class MyVindulaPrefsView(grok.View, BaseFunc):
             #user = membership.getMemberById(user_decodficado)
 
             user = ModelsFuncDetails().get_FuncDetails(user_decodficado)
+            user_DB = True 
         
         elif 'newuser' in form.keys():
             return SchemaFunc().registration_processes(self, 'acl_users', True)    
         
         else:    
             user = membership.getAuthenticatedMember()
-            
+            user_DB = False
 
         if user:
             if self.checa_login():
-                if str(user.id) == str(user_login.id):
-                    return SchemaFunc().registration_processes(self, user, False)
+                if user_DB:
+                    if str(user.id) == str(user_login):
+                        return SchemaFunc().registration_processes(self, user, False)
+                    else:
+                        return SchemaFunc().registration_processes(self, user, True)
                 else:
-                    return SchemaFunc().registration_processes(self, user, True)
+                    if str(user.getUserName()) == str(user_login):
+                        return SchemaFunc().registration_processes(self, user, False)
+                    else:
+                        return SchemaFunc().registration_processes(self, user, True)
                     #return self.request.response.redirect(error_url)
             else:
-                if str(user.id) == str(user_login.id):
-                    return SchemaFunc().registration_processes(self, user, False)
+                if user_DB:
+                    if str(user.id) == str(user_login):
+                        return SchemaFunc().registration_processes(self, user, False)
+                    else:
+                        return self.request.response.redirect(error_url)
                 else:
-                    return self.request.response.redirect(error_url)
+                    if str(user.getUserName()) == str(user_login):
+                        return SchemaFunc().registration_processes(self, user, False)
+                    else:
+                        return self.request.response.redirect(error_url)
         
         else:
             return self.request.response.redirect(error_url)
@@ -278,7 +291,7 @@ class MyVindulaPrefsView(grok.View, BaseFunc):
         groups = self.context.portal_groups
         
         user_login = membership.getAuthenticatedMember()
-        user_groups = groups.getGroupsByUserId(user_login.id)
+        user_groups = groups.getGroupsByUserId(user_login.getId())
         
         checa = False
         if 'Manager' in user_login.getRoles():
@@ -388,7 +401,7 @@ class MyVindulaListUser(grok.View):
 
     
     def get_howareu(self, user):
-        member =  self.context.restrictedTraverse('@@plone_portal_state').member().getId();
+        member =  self.context.restrictedTraverse('@@plone_portal_state').member().getUserName();
         user = self.request.form.get('user',str(member))
         D={}
         D['username'] = user
@@ -402,7 +415,7 @@ class MyVindulaListUser(grok.View):
     
     def load_list(self):
         #vars = BaseFunc().getParametersFromURL(self)
-        member =  self.context.restrictedTraverse('@@plone_portal_state').member().getId();
+        member =  self.context.restrictedTraverse('@@plone_portal_state').member().getUserName();
         user = self.request.form.get('user',str(member))
         return ModelsFuncDetails().get_FuncDetails(unicode(user, 'utf-8'))
 
@@ -631,7 +644,7 @@ class MyVindulaListMyContent(grok.View):
         membership = self.context.portal_membership
         user_login = membership.getAuthenticatedMember()
         
-        if user_login.getId():
+        if user_login.getUserName():
             ctool = getSite().portal_catalog
             items = ctool(path = {'query': '/', 'depth': 99},
                           Creator=user_login.getId())        
@@ -652,7 +665,7 @@ class MyVindulaManageAllUser(grok.View, BaseFunc):
         groups = self.context.portal_groups
         
         user_login = membership.getAuthenticatedMember()
-        user_groups = groups.getGroupsByUserId(user_login.id)
+        user_groups = groups.getGroupsByUserId(user_login.getId())
         
         checa = False
         if 'Manager' in user_login.getRoles():
@@ -724,8 +737,12 @@ class MyVindulaFirstRegistreView(grok.View):
         
         else:
             result = ModelsCompanyInformation().get_CompanyInformation()
-            return result
-    
+            if result:
+                return result[0]
+            else:
+                return {}
+            
+            
     def get_saldacao(self):
         hora = datetime.now().strftime('%H')
         if hora > '17':
@@ -735,6 +752,13 @@ class MyVindulaFirstRegistreView(grok.View):
         else:
             return 'Bom dia, '
     
+    def get_prefs_user(self, user):
+        try:
+            user_id = unicode(user, 'utf-8')    
+        except:
+            user_id = user 
+
+        return ModelsFuncDetails().get_FuncDetails(user_id)    
 
 
 class MyVindulaListBirthdays(grok.View):
@@ -1100,17 +1124,26 @@ class MyVindulaImportSecondView(grok.View):
                     if form[campo] != '' and campo not in ignore_fields:
                         indice = int(form[campo])-1
                         dados[campo] = self.to_utf8(dados_linha[indice].replace('"',''))
-                    else:
+                    else: 
                         if campo == 'username':
-                            if criar_user:                                    
+                            if criar_user:
                                 name = dados_linha[int(form['name'])-1].replace('"','').lower().split(' ')
-                                matricula = dados_linha[int(form['registration'])-1].replace('"','')
-                                x = len(name)
-                                username = name[0] + name[x-1] + str(matricula)
-                                    
-                                if not ModelsFuncDetails().get_FuncDetails(self.to_utf8(username)):    
-                                    dados[campo] = self.to_utf8(username)
-                                    check_user = True
+
+                                username = name[0] + name[-1]
+                                cont = 1
+ 
+                                if form['registration']:
+                                    matricula = dados_linha[int(form['registration'])-1].replace('"','')    
+                                    username += str(matricula)
+                                
+                                usr = username
+                                while ModelsFuncDetails().get_FuncDetails(self.to_utf8(usr)):
+                                    usr = username + str(cont)
+                                    cont +=1
+                                  
+                                dados[campo] = self.to_utf8(usr)
+                                check_user = True
+                                                                   
                                     
                             elif merge_user:
                                 if form[campo] != '':
@@ -1156,6 +1189,8 @@ class MyVindulaImportSecondView(grok.View):
                     lista_erros.append(erros)
                     error = 2
                     success = False
+                
+                logger.info("%s - %s "% (erros,data_user))
                     
             if linhas_error:
                 success = False
@@ -1261,6 +1296,7 @@ class MyVindulaImportHoleriteView(grok.View, BaseFunc):
                 file = form.get('txt_file','')
                 if file:
                     texto = file.read()
+                    texto = texto.replace('\r','')
                     registros = texto.split('\x1b2\n')
                     for reg in registros:
                         D = {}
@@ -1268,9 +1304,14 @@ class MyVindulaImportHoleriteView(grok.View, BaseFunc):
                         linhas = reg.split('\n')
                         max = len(linhas)-1
                         cont = 0
-                        while cont <= max:
-                            linha = linhas[cont]
+                        entra = False
+                        #while cont <= max:
+                        
+                        for linha in linhas:
+                            
+                            #linha = linhas[cont]
                             if len(linha) == 80:
+                                entra = True
                                 if cont == 0:
                                     D['cod_empresa'] = linha[0:3] 
                                     D['empresa'] = linha[5:51]
@@ -1288,8 +1329,10 @@ class MyVindulaImportHoleriteView(grok.View, BaseFunc):
                                     D['competencia'] = tmp[1]+'/'+tmp[0] 
                                 
                                 elif cont == 4:
+                                    
                                     D['matricula'] = linha[0:5]
                                     D['nome'] = linha[6:51]
+                                    D['cpf']  = linha[69:80]
                     
                                 elif cont >= 8 and cont <= 23:
                                     E = {}
@@ -1313,8 +1356,8 @@ class MyVindulaImportHoleriteView(grok.View, BaseFunc):
                                     D['base_fgts'] = linha[26:38]
                                     D['fgts_mes'] = linha[40:50]
                                     D['base_irrf'] = linha[52:70]
-                                
-                            cont += 1
+                            if entra:    
+                                cont += 1
                         if D:
                             convertido = self.converte_dadosByDB(D)
                             id = ModelsFuncHolerite().set_FuncHolerite(**convertido)
@@ -1345,19 +1388,15 @@ class MyVindulaFindHoleriteView(grok.View, BaseFunc):
     
     def load_list(self):
         form = self.request.form
-        if 'matricula' in form.keys() and 'competencia' in form.keys():
-            matricula = form.get('matricula','')
-            competencia = form.get('competencia','')
-            try:
-                matricula = unicode(matricula,'utf-8')
-            except:
-                pass
-            try:
-                competencia = unicode(competencia,'utf-8')
-            except:
-                pass
+        if 'cpf' in form.keys() and 'competencia' in form.keys():
+
+            try:cpf = unicode(form.get('cpf',''),'utf-8')
+            except:cpf = form.get('cpf','')
+            
+            try:competencia = unicode(form.get('competencia',''),'utf-8')
+            except:competencia = form.get('competencia','')
                 
-            return ModelsFuncHolerite().get_FuncHolerites_byMatriculaAndCompetencia(matricula, competencia)
+            return ModelsFuncHolerite().get_FuncHolerites_byCPFAndCompetencia(cpf, competencia)
 
 
 class MyVindulaDelHoleriteView(grok.View, BaseFunc):
@@ -1370,6 +1409,7 @@ class MyVindulaDelHoleriteView(grok.View, BaseFunc):
         success_url = self.context.absolute_url() + '/myvindula-import-holerite'
         if 'date' in form.keys():
             data_lote = form['date']
+
             data_lote = datetime.strptime(data_lote,'%Y-%m-%d %H:%M:%S')
             ModelsFuncHolerite().del_HoleritesLote(data_lote)
             
@@ -1399,12 +1439,12 @@ class MyVindulaHoleriteView(grok.View, BaseFunc):
     
         membership = self.context.portal_membership
         user_login = membership.getAuthenticatedMember()
-        user = str(user_login.id)
+        user = str(user_login.getUserName())
         
         prefs_user = self.get_prefs_user(user)
         if prefs_user:
-            matricula = prefs_user.registration
-            holerites = ModelsFuncHolerite().get_FuncHolerites_byMatricula(matricula)
+            cpf = prefs_user.teaching_research
+            holerites = ModelsFuncHolerite().get_FuncHolerites_byCPF(cpf)
             D = {}
             if holerites:
                 if holerites.count() > 1:
@@ -1421,3 +1461,32 @@ class MyVindulaHoleriteView(grok.View, BaseFunc):
         
         else:
                 return []
+            
+            
+class MyVindulaPrintHoleriteView(grok.View, BaseFunc):
+    grok.context(ISiteRoot)
+    grok.require('zope2.View')
+    grok.name('imprimir-holerite')
+    
+    def get_prefs_user(self, user):
+        user_id = unicode(user, 'utf-8')    
+        return ModelsFuncDetails().get_FuncDetails(user_id)
+    
+    def get_descricao_holerite(self, id_holerite):
+        result = ModelsFuncHoleriteDescricao().get_FuncHoleriteDescricoes_byid(id_holerite)
+        if result: 
+            return result
+        else:
+            return [] 
+    
+    def load_list(self):
+        form = self.request.form
+        if 'cpf' in form.keys() and 'competencia' in form.keys():
+
+            try:cpf = unicode(form.get('cpf',''),'utf-8')
+            except:cpf = form.get('cpf','')
+            
+            try:competencia = unicode(form.get('competencia',''),'utf-8')
+            except:competencia = form.get('competencia','')
+                
+            return ModelsFuncHolerite().get_FuncHolerites_byCPFAndCompetencia(cpf, competencia)      

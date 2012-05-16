@@ -682,6 +682,67 @@ UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 -- -----------------------------------------------------
+-- Table `myvindulaDB`.`vin_myvindula_holerite`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `myvindulaDB`.`vin_myvindula_holerite` ;
+
+CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_holerite` (
+  `id` INT(100) NOT NULL AUTO_INCREMENT ,
+  `nome` VARCHAR(45) NULL DEFAULT NULL ,
+  `cpf` VARCHAR(45) NULL DEFAULT NULL ,
+  `matricula` VARCHAR(45) NULL DEFAULT NULL ,
+  `cargo` VARCHAR(45) NULL DEFAULT NULL ,
+  `cod_cargo` VARCHAR(45) NULL DEFAULT NULL ,
+  `date_creation` DATETIME NOT NULL ,
+  `competencia` VARCHAR(45) NULL DEFAULT NULL ,
+  `empresa` VARCHAR(45) NULL DEFAULT NULL ,
+  `cod_empresa` VARCHAR(45) NULL DEFAULT NULL ,
+  `endereco_empresa` VARCHAR(70) NULL DEFAULT NULL ,
+  `cidade_empresa` VARCHAR(45) NULL DEFAULT NULL ,
+  `estado_empresa` VARCHAR(45) NULL DEFAULT NULL ,
+  `cnpj_empresa` VARCHAR(45) NULL DEFAULT NULL ,
+  `total_vencimento` VARCHAR(45) NULL DEFAULT NULL ,
+  `total_desconto` VARCHAR(45) NULL DEFAULT NULL ,
+  `valor_liquido` VARCHAR(45) NULL DEFAULT NULL ,
+  `salario_base` VARCHAR(45) NULL DEFAULT NULL ,
+  `base_Inss` VARCHAR(45) NULL DEFAULT NULL ,
+  `base_fgts` VARCHAR(45) NULL DEFAULT NULL ,
+  `fgts_mes` VARCHAR(45) NULL DEFAULT NULL ,
+  `base_irrf` VARCHAR(45) NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `myvindulaDB`.`vin_myvindula_descricao_holerite`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `myvindulaDB`.`vin_myvindula_descricao_holerite` ;
+
+CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_descricao_holerite` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `codigo` VARCHAR(45) NULL DEFAULT NULL ,
+  `descricao` VARCHAR(45) NULL DEFAULT NULL ,
+  `ref` VARCHAR(45) NULL DEFAULT NULL ,
+  `vencimentos` VARCHAR(45) NULL DEFAULT NULL ,
+  `descontos` VARCHAR(45) NULL DEFAULT NULL ,
+  `vin_myvindula_holerite_id` INT(100) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_vin_myvindula_descricao_holerite_vin_myvindula_holerite1` (`vin_myvindula_holerite_id` ASC) ,
+  CONSTRAINT `fk_vin_myvindula_descricao_holerite_vin_myvindula_holerite1`
+    FOREIGN KEY (`vin_myvindula_holerite_id` )
+    REFERENCES `myvindulaDB`.`vin_myvindula_holerite` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = latin1;
+
+
+
+
+-- -----------------------------------------------------
 -- Table `myvindulaDB`.`vin_myvindula_config_documents`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `myvindulaDB`.`vin_myvindula_config_documents` ;

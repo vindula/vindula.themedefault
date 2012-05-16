@@ -11,7 +11,7 @@
 
     <div metal:fill-slot="content" tal:define="member python:context.portal_membership.getAuthenticatedMember();
 											   logado python:str(member)!='Anonymous User';
-											   user python:member.getId() or None">
+											   user python:member.getUserName() or None">
 											   
 		<metal:use use-macro="context/@@myvindulapanel/macros/page"/>
 		

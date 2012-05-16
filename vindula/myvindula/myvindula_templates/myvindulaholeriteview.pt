@@ -31,7 +31,7 @@
 						<div id="select-holerite">
 							<h4>Pagamentos anteriores</h4>
 							<input type="hidden" id="portal_url" tal:attributes="value context/portal_url|nothing">
-							<input type="hidden" id="matricula" tal:attributes="value item/matricula|nothing">
+							<input type="hidden" id="cpf" tal:attributes="value item/cpf|nothing">
 							<select id="select-holerite" name="select-holerite">
 								<option value="">Competência</option>
 								<tal:rep repeat="opt select">
@@ -42,15 +42,15 @@
 				
 							</select>
 						</div>
-						
-						<h4> Ultimo Pagameto </h4>
+						<br />
+						<h4>Ultimo Pagamento</h4>
 						<!-- Spinner -->
 						<div id="spinner" class="display-none" style="text-align:center;">
 							<img src="" alt="spinner" align="center" tal:attributes="src string:${view/static}/ajaxLoader.gif" />
 						</div>										
-						<!--tal:rep repeat=" item holerite"-->
-							<div id="holerite">
-								<div class="border"  style="width: 660px;">
+						<div id="holerite-cont">
+							<div id="holerite" style="width: 660px;">
+								<div class="border">
 									<div class="row title even">
 										<div class="cell width-full position-0">
 											<span >Empresa</span>	
@@ -99,8 +99,11 @@
 										<div class="cell width-2 position-0">
 											<span tal:content="item/matricula|nothing" />
 										</div>
-										<div class="cell width-16 position-2">
+										<div class="cell width-10 position-2">
 											<span tal:content="item/nome|nothing" />
+										</div>
+										<div class="cell width-4 position-12">
+											<span tal:content="string: CPF: ${item/cpf|nothing}" />
 										</div>
 									</div>
 								</div>
@@ -185,7 +188,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="row title even">
+								<div class="row title even teste">
 									<div class="cell width-3 position-0">
 										<span>Sal&aacute;rio Base</span>
 									</div>
@@ -202,7 +205,7 @@
 										<span>Base IRRF</span>
 									</div>
 								</div>
-								<div class="row even center">
+								<div class="row even center teste">
 									<div class="cell width-3 position-0">
 										<span tal:content="item/salario_base|nothing" />
 									</div>
@@ -220,7 +223,12 @@
 									</div>								
 								</div>
 							</div>
-						<!--/tal:rep-->
+							<br />
+							<div style="width:100%; margin-top: 10px;">
+								<input type="button" value="Imprimir" tal:attributes="onclick string:window.open('${context/portal_url}/imprimir-holerite?cpf=${item/cpf}&competencia=${item/competencia}', 'popupwindow', 'scrollbars=yes,width=670,height=600');;return true;;"
+									 />
+							</div>	
+						</div>
 					</tal:cond>
 					<tal:cond condition="not: item">
 						<h3>Voce Não Possui demostrativos de pagamento</h3>
