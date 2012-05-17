@@ -1,42 +1,22 @@
 <html>
 	<head>
 		<title> Impressão de Holerite</title>
-		
 		<link tal:attributes="href string:${context/portal_url|nothing}/columns.css"
-			  media="screen" type="text/css" rel="stylesheet" xmlns="">
+			  media="all" type="text/css" rel="stylesheet" xmlns="">
 		<link tal:attributes="href string:${context/portal_url|nothing}/public.css"
-			  media="screen" type="text/css" rel="stylesheet" xmlns="">			  
-		
-		<link rel="stylesheet" href="" type="text/css"
-			  tal:attributes="href string:${context/portal_url|nothing}/++resource++vindula.themedefault/css/vindula_theme.css">
-		
-		<link rel="stylesheet" href="" type="text/css"
-			  tal:attributes="href string:${context/portal_url|nothing}/++resource++vindula.themedefault/css/geral.css">
-			  
-		<link rel="stylesheet" href="" type="text/css"
-			  tal:attributes="href string:${context/portal_url|nothing}/++resource++vindula.themedefault/css/rodape.css">			  
-		
-		<link rel="stylesheet" href="" type="text/css"
-			  tal:attributes="href string:${context/portal_url|nothing}/++resource++vindula.themedefault/css/cont_pagina.css">			  
+			  media="all" type="text/css" rel="stylesheet" xmlns="">
+		<link rel="stylesheet" href="" type="text/css" media="all"
+			  tal:attributes="href string:${context/portal_url|nothing}/++resource++vindula.myvindula/form_holerite.css">	  
+		<style media="all" type="text/css">
+			body{background:none;}
+			*{font-family: Helvetica !important;margin: 0;padding:0;text-decoration:none;}
+			.even{background: #DDD;}
+			.odd{background:#FFF}
+		</style>			  
 
-		<link rel="stylesheet" href="" type="text/css"
-			  tal:attributes="href string:${context/portal_url|nothing}/++resource++vindula.themedefault/css/topo_nav.css">				
-		
-		<link rel="stylesheet" href="" type="text/css"
-			  tal:attributes="href string:${context/portal_url|nothing}/++resource++vindula.themedefault/css/titulos.css">		
-		
-		<link rel="stylesheet" href="" type="text/css" 
-			  tal:attributes="href string:${context/portal_url|nothing}/++resource++vindula.myvindula/form_holerite.css">
-
-		<style>
-			body{
-				background:none; 
-			}
-		</style>		
 		<script type="application/javascript">
-				window.print();
-		</script>	  
-				
+			window.print();
+		</script>
 	</head>
 	<body tal:define="item view/load_list|nothing">
 		
@@ -46,11 +26,10 @@
 				height="60px"
 				 />
 			
-			<div id="holerite"> 
-				<img src="/++resource++vindula.themedefault/images/icons/logo_topo.png"
-					 tal:attributes="src string:${context/portal_url|nothing}/company-logo?cnpj=${item/cnpj_empresa|nothing}"
-					 style="float: left; position:fixed; top: 40%; left: 14%; opacity: 0.25" width="450px"/>
-					
+			<div id="holerite">
+					<div style="height: 0pt; position: relative; left: 16%; opacity: 0.25" id="logo-holerite"> 
+						<img tal:attributes="src string:${context/portal_url|nothing}/company-logo?cnpj=${item/cnpj_empresa|nothing}" width="450px"/>
+					</div>	
 					<div class="border"  style="width: 660px;">
 						<div class="row title even">
 							<div class="cell width-full position-0">
@@ -225,5 +204,10 @@
 					</div>
 			</div>
 		</div>
+		<script type="text/javascript">
+				var img = document.getElementById('logo-holerite');
+				var div = document.getElementById('holerite');
+				img.style.top =  (div.clientHeight*0.40)+'px';
+		</script>
 	</body>
 </html>

@@ -1481,10 +1481,16 @@ class MyVindulaPrintHoleriteView(grok.View, BaseFunc):
     
     def load_list(self):
         form = self.request.form
-        if 'cpf' in form.keys() and 'competencia' in form.keys():
+        
+        membership = self.context.portal_membership
+        user_login = membership.getAuthenticatedMember()
+        prefs_user = self.get_prefs_user(user_login.getUserName())
+        
+        
+        if prefs_user and 'competencia' in form.keys():
 
-            try:cpf = unicode(form.get('cpf',''),'utf-8')
-            except:cpf = form.get('cpf','')
+            try:cpf = unicode(prefs_user.teaching_research,'utf-8')
+            except:cpf = prefs_user.teaching_research
             
             try:competencia = unicode(form.get('competencia',''),'utf-8')
             except:competencia = form.get('competencia','')
