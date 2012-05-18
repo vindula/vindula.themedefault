@@ -2,7 +2,7 @@
     <body metal:use-macro="here/main_template/macros/master">
     	
 		<metal:js fill-slot="javascript_head_slot">
-            <script type="text/javascript" tal:attributes="src string:${view/static}/import_export_user.js"></script>
+            <script type="text/javascript" tal:attributes="src string:${view/static}/js/import_export_user.js"></script>
         </metal:js>
 		
         <div metal:fill-slot="content">

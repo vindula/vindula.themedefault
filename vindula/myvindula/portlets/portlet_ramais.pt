@@ -78,8 +78,7 @@
 								             		 alt="" border="0"
 						             		 		 width="35"
 											 		 height="49"
-													 tal:define="photo obj/photograph|nothing"
-								             		 tal:attributes="src python:view.getPhoto(photo);
+								             		 tal:attributes="src string:${here/portal_url}/user-image?username=${obj/username|nothing};
 											 						 alt obj/name|nothing;
 																	 title obj/name|nothing;" />
 											</a>

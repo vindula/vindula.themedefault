@@ -44,9 +44,7 @@
 									 tal:repeat="item batch">
 					            
 								<a tal:attributes="href python: here.portal_url() + '/myvindulaprefs?user=' + view.encodeUser(item.username)">
-					              <img tal:define="photo item/username|nothing; img python:view_listuser.getPhoto(photo)" 
-					                 tal:condition="img"
-					                 tal:attributes="src img">
+					              <img  tal:attributes="src string: ${context/portal_url|nothing}/user-image?username=${item/username|nothing}">
 					              <br />
 					              <span tal:content="item/name|nothing"></span>
 					            </a>

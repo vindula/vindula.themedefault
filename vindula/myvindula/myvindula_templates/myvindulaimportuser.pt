@@ -13,7 +13,7 @@
 			<tal:dummy tal:define="dummy python:request.set('disable_border',1)" />
 		</metal:block-->
 		<script type="text/javascript" src="ajax_importuser.js" 
-				tal:attributes="src string:${view/static}/ajax_importuser.js"></script>
+				tal:attributes="src string:${view/static}/js/ajax_importuser.js"></script>
 
 		<div id="content">				
 			 <h1>Sincroniza&ccedil;&atilde;o de Usu&aacute;rios</h1>

@@ -1,7 +1,7 @@
 <html metal:use-macro="here/main_template/macros/master">
 	<head>
 		<metal:js fill-slot="javascript_head_slot">
-    		<script type="text/javascript" src="" tal:attributes="src string:${view/static}/ajax_holerite.js"></script>
+    		<script type="text/javascript" src="" tal:attributes="src string:${view/static}/js/ajax_holerite.js"></script>
 		</metal:js>
 		
 		<metal:styleslot fill-slot="style_slot">
@@ -17,7 +17,7 @@
 		 <div metal:fill-slot="content">         
 	        <!--metal:use use-macro="context/@@myvindulapanel/macros/page"/-->
 			<metal:page metal:define-macro="page">
-				<script type="text/javascript" src="" tal:attributes="src string:${view/static}/ajax_holerite.js"></script>
+				<script type="text/javascript" src="" tal:attributes="src string:${view/static}/js/ajax_holerite.js"></script>
 				<link rel="stylesheet" href="" type="text/css" tal:attributes="href string:${view/static}/form_holerite.css">
 				
 				<div id="content" tal:define="view python:context.restrictedTraverse('@@myvindula-holerite');

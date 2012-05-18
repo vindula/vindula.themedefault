@@ -2,7 +2,7 @@
 <body metal:use-macro="here/main_template/macros/master">
 <metal:js fill-slot="javascript_head_slot">
 	<script type="text/javascript" 
-    tal:attributes="src string:${view/static}/ajax_comments-curtir.js"></script>
+    tal:attributes="src string:${view/static}/js/ajax_comments-curtir.js"></script>
 </metal:js>	
 
 <metal:block fill-slot="top_slot">
@@ -29,7 +29,7 @@
 																		form_data python:view.get_prefs_user(user) or {};"> 
 								<div class="commentImage">
 				                    <img src="defaultUser.png" alt="" border="0" height="30"
-					             		 tal:attributes="src python:view.getPhoto(user);
+					             		 tal:attributes="src string: ${context/portal_url|nothing}/user-image?username=${item/username|nothing};
 								 						 alt form_data/name|nothing;
 														 title form_data/name|nothing;" />
 				                </div>

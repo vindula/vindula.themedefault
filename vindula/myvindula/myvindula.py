@@ -30,28 +30,26 @@ import calendar, logging, base64, pickle
 from vindula.myvindula.validation import valida_form
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from vindula.myvindula.user import BaseFunc, SchemaFunc, SchemaConfgMyvindula, ModelsDepartment, ModelsFuncDetails,\
-                                   ImportUser, ModelsMyvindulaHowareu, ModelsMyvindulaComments, ModelsMyvindulaLike,\
-                                   ManageCourses, ManageLanguages, ModelsMyvindulaFuncdetailCouses,ModelsMyvindulaCourses,\
+from vindula.myvindula.user import BaseFunc, ModelsDepartment, ModelsFuncDetails,\
+                                   ModelsMyvindulaHowareu, ModelsMyvindulaComments, ModelsMyvindulaLike,\
+                                   ModelsMyvindulaFuncdetailCouses,ModelsMyvindulaCourses,\
                                    ModelsMyvindulaFuncdetailLanguages, ModelsMyvindulaLanguages, ModelsMyvindulaRecados ,\
                                    ModelsFuncHolerite, ModelsFuncHoleriteDescricao, ModelsConfgMyvindula
+
+from vindula.myvindula.registration import SchemaFunc, SchemaConfgMyvindula, ImportUser, ManageCourses, ManageLanguages
+
                                    
 from vindula.controlpanel.browser.models import ModelsCompanyInformation
 
+from vindula.myvindula.utils import UtilMyvindula
+
 logger = logging.getLogger('vindula.myvindula')
 
-class MyVindulaView(grok.View):
+class MyVindulaView(grok.View, UtilMyvindula):
     grok.context(Interface)
     grok.require('zope2.View')
     grok.name('myvindula')
 
-    def get_prefs_user(self, user):
-        try:
-            user_id = unicode(user, 'utf-8')    
-        except:
-            user_id = user 
-
-        return ModelsFuncDetails().get_FuncDetails(user_id)
     
     def get_howareu(self, user):
         D={}
@@ -62,18 +60,18 @@ class MyVindulaView(grok.View):
     def get_department(self):
         return ModelsDepartment().get_department()
 
-    def get_photo_user(self,prefs_user):
-        if prefs_user:
-            if prefs_user.photograph is not None and \
-                not ' ' in prefs_user.photograph  and \
-                not prefs_user.photograph == '':
-                #return self.context.absolute_url()+'/'+prefs_user.photograph #+ '/image_thumb'
-                return BaseFunc().get_imageVindulaUser(prefs_user.photograph)
-            
-            else:
-                return self.context.absolute_url()+'/defaultUser.png'
-        else:
-            return self.context.absolute_url()+'/defaultUser.png'
+#    def get_photo_user(self,prefs_user):
+#        if prefs_user:
+#            if prefs_user.photograph is not None and \
+#                not ' ' in prefs_user.photograph  and \
+#                not prefs_user.photograph == '':
+#                #return self.context.absolute_url()+'/'+prefs_user.photograph #+ '/image_thumb'
+#                return BaseFunc().get_imageVindulaUser(prefs_user.photograph)
+#            
+#            else:
+#                return self.context.absolute_url()+'/defaultUser.png'
+#        else:
+#            return self.context.absolute_url()+'/defaultUser.png'
     
     
     def checkHomeFolder(self):
@@ -342,7 +340,7 @@ class AjaxView(grok.View):
     def importUser(self,form):
         return ImportUser().importUser(self,form)
     
-class MyVindulaListUser(grok.View):
+class MyVindulaListUser(grok.View, UtilMyvindula):
     #grok.context(ISiteRoot)
     grok.context(Interface)
     grok.require('zope2.View')
@@ -442,16 +440,16 @@ class MyVindulaListUser(grok.View):
             IStatusMessage(self.request).addStatusMessage(_(u'Registro removido com sucesso.'),"info")        
               
 
-    def get_prefs_user(self, user):
-        try:
-            user_id = unicode(user, 'utf-8')    
-        except:
-            user_id = user 
-
-        return ModelsFuncDetails().get_FuncDetails(user_id)
+#    def get_prefs_user(self, user):
+#        try:
+#            user_id = unicode(user, 'utf-8')    
+#        except:
+#            user_id = user 
+#
+#        return ModelsFuncDetails().get_FuncDetails(user_id)
 
     def getPhoto(self,photo):
-        prefs_user = self.get_prefs_user(photo)
+        prefs_user = UtilMyvindula().get_prefs_user(photo)
         if prefs_user:
             if prefs_user.photograph is not None and \
                 not ' ' in prefs_user.photograph  and \
@@ -510,7 +508,7 @@ class MyVindulaUserPerfil(grok.View):
     
     
 
-class MyVindulaListRecados(grok.View):
+class MyVindulaListRecados(grok.View,UtilMyvindula):
     grok.context(ISiteRoot)
     grok.require('zope2.View')
     grok.name('myvindulalistrecados')
@@ -521,26 +519,26 @@ class MyVindulaListRecados(grok.View):
         return ModelsMyvindulaRecados().get_myvindula_recados(**D)
 
        
-    def get_prefs_user(self, user):
-        try:
-            user_id = unicode(user, 'utf-8')    
-        except:
-            user_id = user 
+#    def get_prefs_user(self, user):
+#        try:
+#            user_id = unicode(user, 'utf-8')    
+#        except:
+#            user_id = user 
+#
+#        return ModelsFuncDetails().get_FuncDetails(user_id)
 
-        return ModelsFuncDetails().get_FuncDetails(user_id)
-
-    def getPhoto(self,photo):
-        prefs_user = self.get_prefs_user(photo)
-        if prefs_user:
-            if prefs_user.photograph is not None and \
-                not ' ' in prefs_user.photograph  and \
-                not prefs_user.photograph == '':
-                return BaseFunc().get_imageVindulaUser(prefs_user.photograph)
-                #return self.context.absolute_url()+'/'+prefs_user.photograph # + '/image_thumb'
-            else:
-                return self.context.absolute_url()+'/defaultUser.png'
-        else:
-            return self.context.absolute_url()+'/defaultUser.png'
+#    def getPhoto(self,photo):
+#        prefs_user = self.get_prefs_user(photo)
+#        if prefs_user:
+#            if prefs_user.photograph is not None and \
+#                not ' ' in prefs_user.photograph  and \
+#                not prefs_user.photograph == '':
+#                return BaseFunc().get_imageVindulaUser(prefs_user.photograph)
+#                #return self.context.absolute_url()+'/'+prefs_user.photograph # + '/image_thumb'
+#            else:
+#                return self.context.absolute_url()+'/defaultUser.png'
+#        else:
+#            return self.context.absolute_url()+'/defaultUser.png'
         
     def update(self):
         form = self.request.form
@@ -714,7 +712,7 @@ class MyVindulaManageAllUser(grok.View, BaseFunc):
     def encodeUser(self,user):
         return base64.b16encode(user)
     
-class MyVindulaFirstRegistreView(grok.View):
+class MyVindulaFirstRegistreView(grok.View, UtilMyvindula):
     grok.context(ISiteRoot)
     grok.require('zope2.View')
     grok.name('myvindula-first-registre')
@@ -752,13 +750,13 @@ class MyVindulaFirstRegistreView(grok.View):
         else:
             return 'Bom dia, '
     
-    def get_prefs_user(self, user):
-        try:
-            user_id = unicode(user, 'utf-8')    
-        except:
-            user_id = user 
-
-        return ModelsFuncDetails().get_FuncDetails(user_id)    
+#    def get_prefs_user(self, user):
+#        try:
+#            user_id = unicode(user, 'utf-8')    
+#        except:
+#            user_id = user 
+#
+#        return ModelsFuncDetails().get_FuncDetails(user_id)    
 
 
 class MyVindulaListBirthdays(grok.View):
@@ -860,7 +858,7 @@ class MyVindulaLikeMacro(grok.View):
     
     
     
-class MyVindulaComments(grok.View):
+class MyVindulaComments(grok.View, UtilMyvindula):
     grok.context(Interface)
     grok.require('zope2.View')
     grok.name('myvindula-comments')
@@ -888,13 +886,13 @@ class MyVindulaComments(grok.View):
             
     
     
-    def get_prefs_user(self, user):
-        try:
-            user_id = unicode(user, 'utf-8')    
-        except:
-            user_id = user 
-
-        return ModelsFuncDetails().get_FuncDetails(user_id)
+#    def get_prefs_user(self, user):
+#        try:
+#            user_id = unicode(user, 'utf-8')    
+#        except:
+#            user_id = user 
+#
+#        return ModelsFuncDetails().get_FuncDetails(user_id)
     
     def get_comments(self,id,type):
         D={}
@@ -908,18 +906,18 @@ class MyVindulaComments(grok.View):
         D['type'] = type_obj
         return ModelsMyvindulaLike().get_myvindula_like(**D)
     
-    def get_photo_user(self,prefs_user):
-        if prefs_user:
-            if prefs_user.photograph is not None and \
-                not ' ' in prefs_user.photograph  and \
-                not prefs_user.photograph == '':
-                return BaseFunc().get_imageVindulaUser(prefs_user.photograph)
-                #return self.context.absolute_url()+'/'+prefs_user.photograph # + '/image_thumb'
-            else:
-                return self.context.absolute_url()+'/defaultUser.png'
-        else:
-            return self.context.absolute_url()+'/defaultUser.png'
-    
+#    def get_photo_user(self,prefs_user):
+#        if prefs_user:
+#            if prefs_user.photograph is not None and \
+#                not ' ' in prefs_user.photograph  and \
+#                not prefs_user.photograph == '':
+#                return BaseFunc().get_imageVindulaUser(prefs_user.photograph)
+#                #return self.context.absolute_url()+'/'+prefs_user.photograph # + '/image_thumb'
+#            else:
+#                return self.context.absolute_url()+'/defaultUser.png'
+#        else:
+#            return self.context.absolute_url()+'/defaultUser.png'
+#    
     def update(self):
         """ Receive itself from request and do some actions """
         form = self.request.form
@@ -1419,14 +1417,14 @@ class MyVindulaDelHoleriteView(grok.View, BaseFunc):
         pass
         
         
-class MyVindulaHoleriteView(grok.View, BaseFunc):
+class MyVindulaHoleriteView(grok.View, UtilMyvindula):
     grok.context(ISiteRoot)
     grok.require('zope2.View')
     grok.name('myvindula-holerite')
     
-    def get_prefs_user(self, user):
-        user_id = unicode(user, 'utf-8')    
-        return ModelsFuncDetails().get_FuncDetails(user_id)
+#    def get_prefs_user(self, user):
+#        user_id = unicode(user, 'utf-8')    
+#        return ModelsFuncDetails().get_FuncDetails(user_id)
     
     def get_descricao_holerite(self, id_holerite):
         result = ModelsFuncHoleriteDescricao().get_FuncHoleriteDescricoes_byid(id_holerite)
@@ -1463,14 +1461,14 @@ class MyVindulaHoleriteView(grok.View, BaseFunc):
                 return []
             
             
-class MyVindulaPrintHoleriteView(grok.View, BaseFunc):
+class MyVindulaPrintHoleriteView(grok.View, UtilMyvindula):
     grok.context(ISiteRoot)
     grok.require('zope2.View')
     grok.name('imprimir-holerite')
     
-    def get_prefs_user(self, user):
-        user_id = unicode(user, 'utf-8')    
-        return ModelsFuncDetails().get_FuncDetails(user_id)
+#    def get_prefs_user(self, user):
+#        user_id = unicode(user, 'utf-8')    
+#        return ModelsFuncDetails().get_FuncDetails(user_id)
     
     def get_descricao_holerite(self, id_holerite):
         result = ModelsFuncHoleriteDescricao().get_FuncHoleriteDescricoes_byid(id_holerite)

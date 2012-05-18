@@ -1,0 +1,131 @@
+<html>
+	<head>
+		<script type="text/javascript" 
+    				tal:attributes="src string:${context/portal_url}/jquery.js"></script>
+    				
+		<script type="text/javascript" 
+    				tal:attributes="src string:${view/static}/cropper/js/jquery.Jcrop.js"></script>
+    				
+		<link type="text/css" charset="utf-8" rel="stylesheet" 
+					  tal:attributes="href string:${view/static}/cropper/css/jquery.Jcrop.css"/>
+				
+		<link rel="stylesheet" href="/public.css" />
+		<link rel="stylesheet" href="/++resource++vindula.themedefault/css/vindula_theme.css" />
+		<link rel="stylesheet" href="/++resource++vindula.themedefault/css/geral.css" />	
+ 		<link rel="stylesheet" href="/++resource++vindula.themedefault/css/cont_pagina.css" />
+ 		<link rel="stylesheet" href="/++resource++vindula.themedefault/css/topo_nav.css" />
+ 		<link rel="stylesheet" href="/++resource++vindula.themedefault/css/titulos.css" />
+	</head>
+    <body style="background:none; ">
+		<div 
+		 	 tal:define="member context/@@plone_portal_state/member" id="content">         
+				<h1>Alterar sua imagem do perfil</h1>
+				<div id="upload-image" tal:condition="python: not request.get('form.submitted',None) and
+															  not request.get('form.crop',None)">
+					<fieldset id="fieldset-global-settings">
+				    	<legend id="fieldsetlegend-global-settings">Faça o upload da sua foto</legend>
+						<form method="post" enctype="multipart/form-data" name="upload-imge" id="myform"
+							 tal:attributes="action string:${context/absolute_url|nothing}/myvindula-user-crop">
+							
+							<input type="hidden" id="username" name="username" value="" 
+								    tal:attributes="value member/getUserName|nothing">
+							<input name="photo" id="photo" type="file" value="" accept="image/*"/>
+							
+							<div id="buttom">
+								<input type="hidden" name="form.submitted:boolean" value="True" />
+								<input type="submit" name="submit" value="Enviar" class="context bt_comments" />
+							</div>
+						</form>
+					</fieldset>
+				</div>
+				<div id="crop-image" tal:condition="request/form.submitted|nothing">
+					<script type="text/javascript" charset="utf-8">
+						$j = jQuery.noConflict();
+						
+						function exibePreview(c)
+					    {
+					        var rx = 100 / c.w;
+					        var ry = 100 / c.h;
+					        var img = document.getElementById('usertImage'); 
+							//or however you get a handle to the IMG
+							var img_width = img.width;
+							var img_height = img.height;
+					        
+					        // atualiza CSS do preview para refletir o tamanho da imagem enviada
+					        // e o posicionamento do crop
+					        $j('#preview').css({
+					            width: Math.round(rx * img_width) + 'px',
+					            height: Math.round(ry * img_height) + 'px',
+					            marginLeft: '-' + Math.round(rx * c.x) + 'px',
+					            marginTop: '-' + Math.round(ry * c.y) + 'px'
+					        });
+					        
+					        // campos hidden que armazenam os valores
+					        $j('#cort-x').val(c.x);
+						    $j('#cort-y').val(c.y);
+						    $j('#cort-x2').val(c.x2);
+						    $j('#cort-y2').val(c.y2);
+					    }
+
+						
+						$j(document).ready(function(){
+							$j(function(){
+							    $j('#usertImage').Jcrop({
+							    	onChange: exibePreview,
+		    						onSelect: exibePreview,
+		    						aspectRatio: 1
+							    });
+							});
+						});
+					</script>
+					<fieldset id="fieldset-global-settings">
+				    	<legend id="fieldsetlegend-global-settings">Marque a area da fotoa ser salva</legend>
+						<form method="post" enctype="multipart/form-data" name="crop-imge" id="myform"
+							 tal:attributes="action string:${context/absolute_url|nothing}/myvindula-user-crop">
+							
+							<input type="hidden" id="username" name="username" value="" 
+								    tal:attributes="value member/getUserName|nothing">
+
+							<div id="testWrap">
+								<img alt="Recortar Imagem" id="usertImage"
+									 tal:attributes="src string: ${context/portal_url|nothing}/user-image?id=${view/id_photo|nothing}&full=true"
+									 />
+							</div>
+							<h2>Preview</h2>
+							<div style="width:100px;height: 100px;overflow: hidden;">
+								<img alt="Recortar Imagem" id="preview"
+								     tal:attributes="src string: ${context/portal_url|nothing}/user-image?id=${view/id_photo|nothing}&full=true"/>
+							</div>
+							
+							<input type="hidden" name="id" id="id" tal:attributes="value view/id_photo|nothing"/>
+							<!-- Informação de crop da imagem-->
+							<input type="hidden" name="cort-x" id="cort-x" />
+							<input type="hidden" name="cort-y" id="cort-y" />
+							<input type="hidden" name="cort-x2" id="cort-x2" />
+							<input type="hidden" name="cort-y2" id="cort-y2" />
+							
+							<div id="buttom">
+								<input type="hidden" name="form.crop:boolean" value="True" />
+								<input type="submit" name="submit" value="Cortar" class="context bt_comments" />
+							</div>
+						</form>
+					</fieldset>
+
+				</div>
+				<div id="crop-susseco" tal:condition="request/form.crop|nothing">
+					<h2>Preview</h2>
+					<div style="width:100px;height: 100px;overflow: hidden;">
+						<img alt="Preview" id="preview"
+						     tal:attributes="src string: ${context/portal_url|nothing}/user-image?id=${view/id_photo|nothing}"/>
+					</div>
+					<!--div id="buttom">
+						<a style="cursor:pointer" class="close">
+							<input type="button" name="submit" value="Fechar" class="context bt_comments" />
+						</a>
+					
+					</div-->
+																			
+				</div>
+		</div>
+	</body>
+</html>

@@ -1,8 +1,9 @@
 <html metal:use-macro="here/main_template/macros/master">
 	<head>
 		<metal:js fill-slot="javascript_head_slot">
-			<script type="text/javascript" tal:attributes="src string:${view/static}/comments.js"></script>
-    		<script type="text/javascript" src="" tal:attributes="src string:${view/static}/mascara.js"></script>
+			<script type="text/javascript" tal:attributes="src string:${view/static}/js/comments.js"></script>
+    		<script type="text/javascript" src="" tal:attributes="src string:${view/static}/js/mascara.js"></script>
+    		<script type="text/javascript" src="" tal:attributes="src string:${view/static}/js/popup.js"></script>
 		</metal:js>
 		<metal:block fill-slot="top_slot">
 		        <tal:dummy tal:define="dummy python:request.set('disable_border',1)" />

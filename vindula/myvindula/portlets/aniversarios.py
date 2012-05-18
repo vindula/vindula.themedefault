@@ -179,16 +179,16 @@ class Renderer(base.Renderer):
         else:
             return 'info_boxTipo2 borderDif'
         
-    def getPhoto(self,photo):
-        if photo is not None and not ' ' in photo:
-            url_foto = BaseFunc().get_imageVindulaUser(photo)
-            if url_foto:
-                return url_foto
-                #return self.context.absolute_url()+'/'+photo #+ '/image_thumb'
-            else:
-                return self.context.absolute_url()+'/defaultUser.png'
-        else:
-            return self.context.absolute_url()+'/defaultUser.png' 
+#    def getPhoto(self,photo):
+#        if photo is not None and not ' ' in photo:
+#            url_foto = BaseFunc().get_imageVindulaUser(photo)
+#            if url_foto:
+#                return url_foto
+#                #return self.context.absolute_url()+'/'+photo #+ '/image_thumb'
+#            else:
+#                return self.context.absolute_url()+'/defaultUser.png'
+#        else:
+#            return self.context.absolute_url()+'/defaultUser.png' 
 
         
 class AddForm(base.AddForm):

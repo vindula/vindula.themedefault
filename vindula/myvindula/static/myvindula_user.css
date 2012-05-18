@@ -67,7 +67,7 @@ h2.h2title {
 }
 .userpage #personal #photo img {
 	border: 2px solid #999999;
-    width: 120px;
+    /*width: 120px;*/
    	height: 150px;
 }
 .userpage #personal #data {
@@ -167,15 +167,15 @@ h2.h2title {
 .userlist div.user {
 	float:left;
 	text-align: center;
-	width: 140px;
-	height: 145px;
+	width: 105px;
+	height: 125px;
 	margin: 12px;
 } 
 
 .userlist div.user img {
 	border: 1px solid #CCCCCC;
 	height: 90px;
-	width: 60px;
+	/*width: 60px;*/
 }
 
 /* 

@@ -25,8 +25,8 @@
 		   tal:condition="enable"
            i18n:domain="plone">
 	
-	<script type="text/javascript" src="" tal:attributes="src string:${view_coments/static}/ajax_comments-curtir.js"></script>
-	<script type="text/javascript" src="" tal:attributes="src string:${view_coments/static}/comments.js"></script>
+	<script type="text/javascript" src="" tal:attributes="src string:${view_coments/static}/js/ajax_comments-curtir.js"></script>
+	<script type="text/javascript" src="" tal:attributes="src string:${view_coments/static}/js/comments.js"></script>
 	<link rel="stylesheet" type="text/css" tal:attributes="href string:${view_coments/static}/myvindula_comments.css" />
 	<input type="hidden" id="portal_url" tal:attributes="value context/portal_url|nothing">	
 	<input type="hidden" id="context_url" tal:attributes="value context/absolute_url|nothing">
@@ -75,7 +75,7 @@
 		                    <img src="defaultUser.png"
 			             		 alt="" border="0"
 			             		 height="30"
-			             		 tal:attributes="src python:view_coments.get_photo_user(user_comment);
+			             		 tal:attributes="src string:${here/portal_url}/user-image?username=${item/username|nothing};
 						 						 alt user_comment/name|nothing;
 												 title user_comment/name|nothing;" />
 		                </div>
