@@ -212,7 +212,7 @@ CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_funcdetails` (
   `location` VARCHAR(45) NULL DEFAULT NULL ,
   `postal_address` VARCHAR(45) NULL DEFAULT NULL ,
   `special_roles` VARCHAR(45) NULL DEFAULT NULL ,
-  `photograph` TEXT NULL DEFAULT NULL ,
+--  `photograph` TEXT NULL DEFAULT NULL ,
   `nickname` VARCHAR(45) NULL DEFAULT NULL ,
   `pronunciation_name` VARCHAR(45) NULL DEFAULT NULL ,
   `committess` VARCHAR(45) NULL DEFAULT NULL ,
@@ -230,6 +230,16 @@ CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_funcdetails` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = latin1;
+
+
+CREATE TABLE  `myvindulaDB`.`vin_myvindula_photo_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) NOT NULL,
+  `date_creation` datetime NOT NULL,
+  `photograph` longblob,
+  `thumb` longblob,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1
 
 
 -- -----------------------------------------------------
