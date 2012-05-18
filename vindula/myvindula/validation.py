@@ -28,7 +28,7 @@ def valida_form(configuracao, form):
                     if valor == '' or valor.isspace(): # se o campo estiver vazio
                         errors[campo] = u'Este campo é obrigatório' # indica o campo vazio
                 except:
-                    import pdb;pdb.set_trace()
+                    pass
                             
         if configuracao[campo]['type'] == date:
             if valor != '':   
