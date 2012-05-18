@@ -19,4 +19,9 @@ Changelog
 
 1.1 - 2012-04-24
 -----------------
-- Ajuste do portlet ramais para departamentos em ordem alfabetica 
+- Ajuste do portlet ramais para departamentos em ordem alfabetica
+
+
+1.1 - 2012-05-18
+-----------------
+- Criação de mecanismo para cortar a imagem do perfil do usuario
