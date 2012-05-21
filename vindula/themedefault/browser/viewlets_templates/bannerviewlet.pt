@@ -1,6 +1,6 @@
 <div id="banner_homepage">
 	<tal:cond tal:condition="python: context.portal_type == 'HomePage'">
-		<tal:def tal:condition="homepage_view/context/getActive_banner" tal:define="homepage_view python: context.restrictedTraverse('@@view');">
+		<tal:def tal:condition="homepage_view/context/getActive_banner | nothing" tal:define="homepage_view python: context.restrictedTraverse('@@view');">
 			<link rel="stylesheet" type="text/css" href="/++resource++vindula.themedefault/css/banner_homepage.css">
 			<!-- start: BANNER -->
 			<div id="banner_home" tal:condition="homepage_view/context/getRef_banner">
