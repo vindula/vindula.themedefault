@@ -52,8 +52,20 @@ class IPortletAniversarios(IPortletDataProvider):
                                 description=unicode("Selecione o fitro que sera usado no portlet", 'utf-8'),
                                 vocabulary=TypesSearch().__call__())
     
+    type_search_list = schema.Choice(title=unicode("Tipo de filtro para a listagem", 'utf-8'),
+                                description=unicode("Selecione o fitro que sera usado na lista de aniversariantes", 'utf-8'),
+                                vocabulary=TypesSearch().__call__())
+    
     show_picture = schema.Bool(title=unicode("Exibir foto", 'utf-8'),
-                                       description=unicode("Selecione para mostrar a foto dos aniversarientes no portlet.", 'utf-8'))
+                               description=unicode("Selecione para mostrar a foto dos aniversarientes no portlet.", 'utf-8'),
+                               default=True,
+                               )
+   
+    principal_user = schema.TextLine(title=unicode("Destaque do aniversariante", 'utf-8'),
+                                     description=unicode("Adicione o campo com a informação princial do aniversariante como 'name' para Nome ou 'nickname' para\
+                                                          Apelido ou outros.", 'utf-8'),
+                                     default = u'name',
+                                     required=True)
     
     details_user = schema.Text(title=unicode("Detalhes do aniversariante", 'utf-8'),
                                   description=unicode("Adicione detalhes sobre o aniversariante como Empresa, Matricula e outros. \
@@ -68,12 +80,15 @@ class Assignment(base.Assignment):
 
     implements(IPortletAniversarios)
     # TODO: Add keyword parameters for configurable parameters here
-    def __init__(self, title_portlet=u'', quantidade_portlet=u'',type_search=u'',details_user=u'',show_picture=u''):
+    def __init__(self, title_portlet=u'', quantidade_portlet=u'',principal_user = u'',
+                type_search=u'',details_user=u'',show_picture=u'',type_search_list=u''):
        self.title_portlet = title_portlet
        self.quantidade_portlet = quantidade_portlet
        self.type_search = type_search
        self.details_user = details_user
+       self.principal_user = principal_user
        self.show_picture = show_picture
+       self.type_search_list = type_search_list
 
     @property
     def title(self):
@@ -100,20 +115,47 @@ class Renderer(base.Renderer):
     def show_picture(self):
         return self.data.show_picture
     
+    def get_type_search_list(self):
+        return self.data.type_search_list
+    
+    
+    def get_principal_campo(self, obj):
+        campo = self.data.principal_user
+        if campo:
+            try: return obj.get(campo,'')
+            except: return obj.get('name',obj.get('username','')) 
+        else:
+            try: return obj.get('name',obj.get('username',''))
+            except: return ''
+                        
+    def nome_filtro(self):
+        filtro = self.get_type_search_list()
+        if filtro == 1:
+            return "do Dia"
+        elif filtro == 7:
+            return "da Semana"
+        elif filtro == 30:
+            return "do Mês"
+        else:
+            return ''
+    
+    
     def get_details_user(self, user):
         if self.data.details_user: 
-            try:
-                lines = self.data.details_user.splitlines()
-                L = []
-                for line in lines:
-                    D = {}
-                    line = line.replace('[', '').replace(']', '').split(' | ')
+            
+            lines = self.data.details_user.splitlines()
+            L = []
+            for line in lines:
+                D = {}
+                line = line.replace('[', '').replace(']', '').split(' | ')
+                try:
                     D['label'] = line[0]
                     D['content'] = user.get(line[1])
                     L.append(D)
-                return L
-            except:
-                pass
+                except :
+                    pass
+            return L
+            
         return None
     
     def get_quantidade_portlet(self):

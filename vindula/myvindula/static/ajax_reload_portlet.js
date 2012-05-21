@@ -10,7 +10,8 @@ $j(document).ready(function(){
 		var show_picture = $j('#show_picture').val();
 		var details_user = $j('#details_user').val();
 		var search_random = $j('#search_random').val();
-		
+		var principal_user = $j('#principal_user').val();
+				
 		var max_result = $j('#max_result').val();
 		
 		if (parseInt(max_result) > parseInt(quantidade)) {
@@ -24,6 +25,7 @@ $j(document).ready(function(){
 					show_picture:show_picture,
 					details_user:details_user,
 					search_random:search_random,
+					principal_user:principal_user,
 					b_start:b_start}, function(data){
 			
 				if (div == 1) {

@@ -38,7 +38,16 @@ class IPortletRamais(IPortletDataProvider):
 
 
     show_picture = schema.Bool(title=unicode("Exibir foto", 'utf-8'),
-                                       description=unicode("Selecione para mostrar a foto dos aniversarientes no portlet.", 'utf-8'))
+                               description=unicode("Selecione para mostrar a foto dos aniversarientes no portlet.", 'utf-8'),
+                               default=True,
+                               )
+    
+    principal_user = schema.TextLine(title=unicode("Destaque do aniversariante", 'utf-8'),
+                                     description=unicode("Adicione o campo com a informação princial do aniversariante como 'name' para Nome ou 'nickname' para\
+                                                          Apelido ou outros.", 'utf-8'),
+                                     default = u'name',
+                                     required=True)
+    
     
     details_user = schema.Text(title=unicode("Detalhes do ramais", 'utf-8'),
                                   description=unicode("Adicione detalhes sobre os usuários como Empresa, Matricula e outros. \
@@ -60,20 +69,22 @@ class Assignment(base.Assignment):
     implements(IPortletRamais)
 
     # TODO: Add keyword parameters for configurable parameters here
-    def __init__(self, title_portlet=u'', quantidade_portlet=u'', filtro_departamento=u'', show_picture=u'', details_user=u'',details_text=u''):
+    def __init__(self, title_portlet=u'', quantidade_portlet=u'', filtro_departamento=u'',\
+                 show_picture=u'', details_user=u'',details_text=u'',principal_user=''):
        self.title_portlet = title_portlet
        self.quantidade_portlet = quantidade_portlet
        self.filtro_departamento = filtro_departamento
        self.show_picture = show_picture
        self.details_user = details_user
        self.details_text = details_text
+       self.principal_user = principal_user
 
     @property
     def title(self):
         """This property is used to give the title of the portlet in the
         "manage portlets" screen.
         """
-        return "Portlet busca de pessoas"
+        return "Portlet Busca de Pessoas"
     
 
     
@@ -98,25 +109,34 @@ class Renderer(base.Renderer):
     def get_details_text(self):
         return self.data.details_text
     
+    def get_principal_campo(self, obj):
+        campo = self.data.principal_user
+        if campo:
+            try: return obj.__getattribute__(campo)
+            except: return obj.__getattribute__('name') 
+        else:
+            try: return obj.__getattribute__('name')
+            except: return ''    
+    
     def get_details_user(self, user):
         if self.data.details_user: 
-            try:
-                lines = self.data.details_user.splitlines()
-                L = []
-                
-                for line in lines:
-                    D = {}
-                    line = line.replace('[', '').replace(']', '').split(' | ')
+            lines = self.data.details_user.splitlines()
+            L = []
+            
+            for line in lines:
+                D = {}
+                line = line.replace('[', '').replace(']', '').split(' | ')
+                try:
                     D['label'] = line[0]
                     D['content'] = user.__getattribute__(line[1])
                     L.append(D)
-                return L
-            except:
-                pass
+                except:
+                    pass
+            return L
+
         return None
     
     def get_uid_struct_org(self,ctx):
-        #import pdb;pdb.set_trace()
         if ctx.portal_type != 'Plone Site' and ctx.portal_type != 'OrganizationalStructure':
             return self.get_uid_struct_org(ctx.aq_inner.aq_parent)
         elif ctx.portal_type == 'OrganizationalStructure': 
@@ -167,7 +187,7 @@ class Renderer(base.Renderer):
                 if type(ramal) != unicode:
                     ramal = unicode(ramal, 'utf-8')
                     
-                result = ModelsFuncDetails().get_FuncBusca(title,'0',ramal,True)
+                result = ModelsFuncDetails().get_FuncBusca(title,'0',ramal,filtro_busca)
                 if result:
 
                     if departamento != '0' and self.data.filtro_departamento != 'departamentos':

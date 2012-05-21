@@ -785,6 +785,30 @@ class MyVindulaListBirthdays(grok.View):
         
         return ModelsDepartment().get_departmentByUsername(user)     
         
+    def get_campos_list_user(self):
+        if 'control-panel-objects' in  getSite().keys():
+            control = getSite()['control-panel-objects']
+            if 'vindula_aniversariantesconfig' in control.keys():
+                list = control['vindula_aniversariantesconfig']
+            else:
+                list = None
+        
+        if list: 
+            lines = list.list_campos_user.splitlines()
+            L = []
+
+            for line in lines:
+                D = {}
+                line = line.replace('[', '').replace(']', '').split(' | ')
+                try:D['label'] = line[0]
+                except:D['label'] = ''
+                
+                try:D['content'] = line[1]
+                except:D['content'] = ''
+                
+                L.append(D)
+            return L
+        
     def get_birthdaysToday(self, type_filter):
         results = []
         if type_filter == 1:
