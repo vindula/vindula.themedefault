@@ -348,56 +348,75 @@ class MyVindulaListUser(grok.View):
     grok.require('zope2.View')
     grok.name('myvindulalistuser')
     
-    
     def get_campos(self):
-        configuracao= ModelsConfgMyvindula().get_configuration()
+        conf = {}
+        campos = SchemaConfgMyvindula().campos
+        for item in campos.keys():
+            dado = ModelsConfgMyvindula().getConfig_edit(item)
+            if dado:
+                conf[item] = dado
+            else:
+                conf[item] = True
+        
+    
+        return conf
+    
+    
+    def get_ConfugCampos(self, campo):
+        configuracao= ModelsConfgMyvindula().getConfig_views(campo)
         return configuracao
    
     def valida_pessoal(self):
-        configuracao1= self.get_campos()
+        #configuracao1= self.get_campos()
         
-        campos = ['employee_id_view','nickname_view','pronunciation_name_view','date_birth_view']
+        campos = ['employee_id','nickname','pronunciation_name','date_birth']
         for i in campos:
-            if configuracao1:
-                if configuracao1.__getattribute__(i):
-                    return True
+            if ModelsConfgMyvindula().getConfig_views(i):
+                return True
             
         return False
         
     def valida_contato(self):
-        configuracao1= self.get_campos()
+        #configuracao1= self.get_campos()
         
-        campos = ['email_view','phone_number_view','location_view','postal_address_view']
+        campos = ['email','phone_number','location','postal_address']
         for i in campos:
-            if configuracao1:
-                if configuracao1.__getattribute__(i):
-                    return True
+            if ModelsConfgMyvindula().getConfig_views(i):
+                return True
             
         return False
          
     def valida_corporativo(self):
-        configuracao1= self.get_campos()
-        campos = ['enterprise_view','registration_view','position_view','admission_date_view','registration_view','cost_center_view',\
-                  'profit_centre_view','special_roles_view','organisational_unit_view','delegations_view','reports_to_view']
+        #configuracao1= self.get_campos()
+        campos = ['enterprise','registration','position','admission_date','registration','cost_center',\
+                  'profit_centre','special_roles','organisational_unit','delegations','reports_to']
 
         for i in campos:
-            if configuracao1:
-                if configuracao1.__getattribute__(i):
-                    return True
+            if ModelsConfgMyvindula().getConfig_views(i):
+                return True            
             
         return False
         
     def valida_others(self):
-        configuracao1= self.get_campos()
-        campos = ['committess_view','registration_view','projetcs_view','personal_information_view','skills_expertise_view','languages_view',\
-                  'availability_view','papers_published_view','teaching_research_view','resume_view','blogs_view','customised_message_view']
+        #configuracao1= self.get_campos()
+        campos = ['committess','registration','projetcs','personal_information','skills_expertise','languages',\
+                  'availability','papers_published','teaching_research','resume','blogs','customised_message']
         
         for i in campos:
-            if configuracao1:
-                if configuracao1.__getattribute__(i):
-                    return True
+            if ModelsConfgMyvindula().getConfig_views(i):
+                return True    
         
         return False
+
+    def get_label_filed(self, campo):
+        result = ModelsConfgMyvindula().get_configuration_By_fields(campo)
+        default = SchemaConfgMyvindula().campos.get(campo)
+        
+        if result:
+            return result.__getattribute__('label')
+        else:
+            return default.get('label')
+
 
     
     def get_howareu(self, user):
