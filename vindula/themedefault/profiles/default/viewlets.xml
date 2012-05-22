@@ -9,7 +9,8 @@
 	
 	
 	<order manager="plone.abovecontent" skinname="*">
- 		<viewlet name="vindula.themedefault.menu" insert-before="plone.path_bar"/>
+ 		<viewlet name="vindula.themedefault.menu"   insert-before="plone.path_bar"/>
+		<viewlet name="vindula.themedefault.banner" insert-after="plone.path_bar"/>
 	</order>
 	
 	
