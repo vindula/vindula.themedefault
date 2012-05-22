@@ -63,6 +63,11 @@ class IPortletAniversariosReload(IPortletDataProvider):
     show_picture = schema.Bool(title=unicode("Exibir foto", 'utf-8'),
                                        description=unicode("Selecione para mostrar a foto dos aniversarientes no portlet.", 'utf-8'))
     
+    show_anonymous = schema.Bool(title=unicode("Exibir portlet para anonimos", 'utf-8'),
+                               description=unicode("Selecione para mostrar o portlet para usuarios anonimos que acessarem o portal.", 'utf-8'),
+                               default=True,
+                               )
+        
     tempo_rotacao = schema.Int(title=unicode("Tempo de Rodação do Itens", 'utf-8'),
                                description=unicode("Tempo em milisegundos que o portlet leva para rotacionar os itens, \
                                                       insira apenas números iteiros..", 'utf-8'),
@@ -92,7 +97,7 @@ class Assignment(base.Assignment):
     implements(IPortletAniversariosReload)
     # TODO: Add keyword parameters for configurable parameters here
     def __init__(self, title_portlet=u'', quantidade_portlet=u'',type_search=u'',\
-                 details_user=u'',show_picture=u'', principal_user=u'' ,\
+                 details_user=u'',show_picture=u'', principal_user=u'',show_anonymous=u'',\
                  search_random=u'',tempo_rotacao=u'',type_search_list=u''):
        
        self.title_portlet = title_portlet
@@ -101,6 +106,7 @@ class Assignment(base.Assignment):
        self.principal_user = principal_user
        self.details_user = details_user
        self.show_picture = show_picture
+       self.show_anonymous = show_anonymous
        self.search_random = search_random
        self.tempo_rotacao = tempo_rotacao
        self.type_search_list = type_search_list
@@ -132,6 +138,20 @@ class Renderer(base.Renderer):
     
     def show_picture(self):
         return self.data.show_picture
+    
+    def show_anonymous(self):
+        return self.data.show_anonymous
+    
+    @property
+    def available(self):
+        membership = self.context.portal_membership
+        if membership.isAnonymousUser():
+            if self.show_anonymous():
+                return True
+            else:
+                return False 
+        else:
+            return True 
     
     def get_principal_user(self):
         return self.data.principal_user

@@ -60,6 +60,11 @@ class IPortletAniversarios(IPortletDataProvider):
                                description=unicode("Selecione para mostrar a foto dos aniversarientes no portlet.", 'utf-8'),
                                default=True,
                                )
+    
+    show_anonymous = schema.Bool(title=unicode("Exibir portlet para anonimos", 'utf-8'),
+                               description=unicode("Selecione para mostrar o portlet para usuarios anonimos que acessarem o portal.", 'utf-8'),
+                               default=True,
+                               )
    
     principal_user = schema.TextLine(title=unicode("Destaque do aniversariante", 'utf-8'),
                                      description=unicode("Adicione o campo com a informação princial do aniversariante como 'name' para Nome ou 'nickname' para\
@@ -80,13 +85,14 @@ class Assignment(base.Assignment):
 
     implements(IPortletAniversarios)
     # TODO: Add keyword parameters for configurable parameters here
-    def __init__(self, title_portlet=u'', quantidade_portlet=u'',principal_user = u'',
+    def __init__(self, title_portlet=u'', quantidade_portlet=u'',principal_user = u'',show_anonymous=u'',
                 type_search=u'',details_user=u'',show_picture=u'',type_search_list=u''):
        self.title_portlet = title_portlet
        self.quantidade_portlet = quantidade_portlet
        self.type_search = type_search
        self.details_user = details_user
        self.principal_user = principal_user
+       self.show_anonymous = show_anonymous
        self.show_picture = show_picture
        self.type_search_list = type_search_list
 
@@ -115,9 +121,22 @@ class Renderer(base.Renderer):
     def show_picture(self):
         return self.data.show_picture
     
+    def show_anonymous(self):
+        return self.data.show_anonymous
+    
+    @property
+    def available(self):
+        membership = self.context.portal_membership
+        if membership.isAnonymousUser():
+            if self.show_anonymous():
+                return True
+            else:
+                return False 
+        else:
+            return True 
+    
     def get_type_search_list(self):
         return self.data.type_search_list
-    
     
     def get_principal_campo(self, obj):
         campo = self.data.principal_user
