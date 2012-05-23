@@ -37,9 +37,9 @@
 									<div class="documentByLine name-user">
 										<h4>
 											<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${prefs_user/username|nothing}">
-												<span tal:replace="prefs_user/name" /> | 
+												<span tal:replace="prefs_user/name|nothing" /> | 
 						                    	<span tal:condition="item/date_creation|nothing"  
-													  tal:replace="python:item.date_creation.strftime('%d/%m/%Y  %H:%M')" />
+													  tal:replace="python:item.date_creation.strftime('%d/%m/%Y  %H:%M') or None" />
 											</a>
 										</h4>
 					                </div>

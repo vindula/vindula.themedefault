@@ -231,7 +231,7 @@
 						</div>
 					</tal:cond>
 					<tal:cond condition="not: item">
-						<h3>Voce Não Possui demostrativos de pagamento</h3>
+						<h3>Voce não possui demonstrativos de pagamento.</h3>
 					
 					</tal:cond>
 				</div>

@@ -26,3 +26,5 @@ Changelog
 1.1.4 - 2012-05-23
 --------------------
 - Correções de ortografia no porduto
+- Resolvido problema na view do Mural do Vindula.
+

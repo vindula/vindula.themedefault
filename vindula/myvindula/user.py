@@ -315,6 +315,11 @@ class ModelsFuncHolerite(Storm, BaseStore):
         return funcHolerite.id       
     
     def get_FuncHolerites_byCPF(self, cpf):
+        #Checando se atributo é None, se for já não retorna nenhum holerite
+        #Por seguranca retorna None quando CPF = None, pois na importacao, 
+        #pode ser improtado algum holerite com cpf vazio 
+        if cpf == None: return None
+        
         data = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.cpf==cpf).order_by(ModelsFuncHolerite.competencia)
         if data.count() > 0:
             return data
@@ -322,6 +327,9 @@ class ModelsFuncHolerite(Storm, BaseStore):
             return None    
     
     def get_FuncHolerites_byCPFAndCompetencia(self, cpf, competencia):
+        #Checagem de seguranca
+        if cpf == None: return None
+        
         data = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.cpf==cpf, ModelsFuncHolerite.competencia==competencia).one()
         if data:
             return data
