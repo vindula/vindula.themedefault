@@ -45,7 +45,7 @@
 						  class="enableAutoFocus" action="myvindulaprefs" method="POST">
 			            
 						<fieldset>
-			            	<legend>Personal Information</legend>
+			            	<legend>Informações Pessoais</legend>
 							<!-- ID da user--> 
 							
 							<input id="user" type="hidden" value="" name="user" tal:condition="manage" tal:attributes="value request/user|nothing">
@@ -55,7 +55,7 @@
 											   tal:condition="python: view.checaEstado(config_myvindula,'vin_myvindula_department') or manage">
 								<label for="vin_myvindula_department">Departamentos</label>
 			                    <span class="fieldRequired" title="Obrigatório">(Obrigatório)</span>	
-			                    <div class="formHelp">Selecione o departamendo do funcionario.</div>
+			                    <div class="formHelp">Selecione o departamento do funcionário.</div>
 								<div tal:content="errors/vin_myvindula_department|nothing"></div>
 			                    <tal:cond condition="departamentos">
 			                    	<div class="boxSelecao" name="vin_myvindula_department"
@@ -91,13 +91,11 @@
 								<div tal:content="errors/username|nothing"></div>
 								<input id="username-old" type="hidden" value="" name="username-old"  tal:attributes="value request/username-old | form_values/username | nothing">
 			                    <input id="username" type="text" value="" name="username"  tal:attributes="value request/username | form_values/username | nothing">
-								
 								<input id="newuser" type="hidden" value="" name="newuser" >
 							</div>	
 								
 							<input id="username" type="hidden" value="" name="username" tal:attributes="value request/username| username |nothing"
 													 tal:condition="python: not manage and not 'newuser' in request.keys()">
-															
 															
 							<tal:def define="html python:view.geraCampos(form_data)">
 								<tal:rep repeat="x html">
@@ -115,11 +113,9 @@
 								<input style="width:100px;" class="button-erp" type="submit" value="Salvar" name="form.submited"
 										tal:condition="python: not manage">
 								
-								
 								<input style="width:100px;" class="button-erp" type="submit" value="Salvar" name="form.submited"
 										onclick="return confirmAlterarUserName();"
 										tal:condition="python: manage or 'newuser' in request.keys()">
-										
 								
 								<input style="width:100px;" class="button-erp" type="submit" value="Excluir" name="form.excluir"
 									   onclick="return confirmExcluir();" 

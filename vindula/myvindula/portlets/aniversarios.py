@@ -44,16 +44,16 @@ class IPortletAniversarios(IPortletDataProvider):
                                   description=unicode("Título que aparecerá no cabeçalho do portlet.", 'utf-8'),
                                   required=True)
     
-    quantidade_portlet = schema.Int(title=unicode("Quantidade de Items", 'utf-8'),
+    quantidade_portlet = schema.Int(title=unicode("Quantidade de Itens", 'utf-8'),
                                   description=unicode("Quantidade limite de itens mostrado no portlet.", 'utf-8'),
                                   required=True)
    
     type_search = schema.Choice(title=unicode("Tipo do filtro", 'utf-8'),
-                                description=unicode("Selecione o fitro que sera usado no portlet", 'utf-8'),
+                                description=unicode("Selecione o filtro que será usado no portlet", 'utf-8'),
                                 vocabulary=TypesSearch().__call__())
     
     show_picture = schema.Bool(title=unicode("Exibir foto", 'utf-8'),
-                                       description=unicode("Selecione para mostrar a foto dos aniversarientes no portlet.", 'utf-8'))
+                                       description=unicode("Selecione para mostrar a foto dos aniversariantes no portlet.", 'utf-8'))
     
     details_user = schema.Text(title=unicode("Detalhes do aniversariante", 'utf-8'),
                                   description=unicode("Adicione detalhes sobre o aniversariante como Empresa, Matricula e outros. \

@@ -52,22 +52,22 @@ class IPortletAniversariosReload(IPortletDataProvider):
                                   required=True)
    
     type_search = schema.Choice(title=unicode("Tipo do filtro", 'utf-8'),
-                                description=unicode("Selecione o fitro que sera usado no portlet", 'utf-8'),
+                                description=unicode("Selecione o filtro que será usado no portlet", 'utf-8'),
                                 vocabulary=TypesSearch().__call__())
     
     show_picture = schema.Bool(title=unicode("Exibir foto", 'utf-8'),
-                                       description=unicode("Selecione para mostrar a foto dos aniversarientes no portlet.", 'utf-8'))
+                                       description=unicode("Selecione para mostrar a foto dos aniversariantes no portlet.", 'utf-8'))
     
-    tempo_rotacao = schema.Int(title=unicode("Tempo de Rodação do Itens", 'utf-8'),
-                               description=unicode("Tempo em milisegundos que o portlet leva para rotacionar os itens, \
-                                                      insira apenas números iteiros..", 'utf-8'),
+    tempo_rotacao = schema.Int(title=unicode("Tempo de Rotação dos Itens", 'utf-8'),
+                               description=unicode("Tempo em milissegundos que o portlet leva para rotacionar os itens, \
+                                                      insira apenas números inteiros..", 'utf-8'),
                                default=8000,
                                required=True)
     
-    search_random = schema.Bool(title=unicode("Ordem Randomica dos resultados", 'utf-8'),
-                                       description=unicode("Selecione para mostrar abilitar a ordenação randomica dos aniversarientes no portlet.", 'utf-8'))
+    search_random = schema.Bool(title=unicode("Ordem Randômica dos resultados", 'utf-8'),
+                                       description=unicode("Selecione para abilitar a ordenação randômica dos aniversariantes no portlet.", 'utf-8'))
     
-    details_user = schema.Text(title=unicode("Detalhes do aniversariante", 'utf-8'),
+    details_user = schema.Text(title=unicode("Detalhes do aniversariantes", 'utf-8'),
                                   description=unicode("Adicione detalhes sobre o aniversariante como Empresa, Matricula e outros. \
                                                        Adicione um campo por linha, no formato [Label] | [Campo].", 'utf-8'),
                                   required=False)

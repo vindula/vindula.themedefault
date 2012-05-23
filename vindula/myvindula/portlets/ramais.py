@@ -27,18 +27,18 @@ class IPortletRamais(IPortletDataProvider):
                                   description=unicode("Título que aparecerá no cabeçalho do portlet.", 'utf-8'),
                                   required=True)
     
-    quantidade_portlet = schema.Int(title=unicode("Quantidade de Items", 'utf-8'),
-                                  description=unicode("quantidade limite de item mostrado no portlet.", 'utf-8'),
+    quantidade_portlet = schema.Int(title=unicode("Quantidade de Itens", 'utf-8'),
+                                  description=unicode("Quantidade limite de item mostrado no portlet.", 'utf-8'),
                                   required=True)
     
     filtro_departamento = schema.TextLine(title=unicode("Dados do campo departamento", 'utf-8'),
-                                  description=unicode("Adicione qual dado do banco de dados sera usado para filtro dos usuários,(valor Padrão: 'departamentos')", 'utf-8'),
+                                  description=unicode("Adicione qual dado do banco de dados será usado para filtro dos usuários,\
+                                                      (Valor Padrão: 'departamentos')", 'utf-8'),
                                   default=unicode('departamentos','utf-8'),
                                   required=True) 
 
-
     show_picture = schema.Bool(title=unicode("Exibir foto", 'utf-8'),
-                                       description=unicode("Selecione para mostrar a foto dos aniversarientes no portlet.", 'utf-8'))
+                                       description=unicode("Selecione para mostrar a foto dos aniversariantes no portlet.", 'utf-8'))
     
     details_user = schema.Text(title=unicode("Detalhes do ramais", 'utf-8'),
                                   description=unicode("Adicione detalhes sobre os usuários como Empresa, Matricula e outros. \
@@ -46,7 +46,7 @@ class IPortletRamais(IPortletDataProvider):
                                   required=False)
     
     details_text = schema.Text(title=unicode("Texto do portlet", 'utf-8'),
-                                  description=unicode("Adicione o texto que sera mostrado no final da busca de ramais.", 'utf-8'),
+                                  description=unicode("Adicione o texto que será mostrado no final da busca de ramais.", 'utf-8'),
                                   required=False)
 
 

@@ -214,7 +214,7 @@ class MyVindulaRecursosHumanosView(grok.View, BaseFunc):
     grok.require('zope2.View')
     grok.name('myvindula-recursos-humanos')
     
-    def getMacro(self,link='myvindula-holerite'):
+    def getMacro(self,link='myvindula-documents'):
         if 'id' in self.request.keys():
             set_macro = self.request['id']
             return 'context/'+ set_macro +'/macros/page'

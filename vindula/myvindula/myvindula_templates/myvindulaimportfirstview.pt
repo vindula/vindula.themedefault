@@ -19,12 +19,12 @@
                     <h2 class="h2title">Importar CSV de usu&aacute;rios</h2>
                     <p>O arquivo para importação deve estar no formato CSV e seguir a seguinte formatação:</p>
                     <p>1&ordf; linha: Titulo da coluna, separado por ponto e virgula (;)</p>
-                    <p>Demais linhas: Os dados do funcionario, separado por ponto e virgula (;)</p>
+                    <p>Demais linhas: Os dados do funcion&aacute;rio, separado por ponto e virgula (;)</p>
                     <p>Ex: </p>
                     <p>Nome;Cargo;Apelido;Empresa</p>
                     <p>Pedro Silva;Analista;Pedro;Empresa Ltda.</p>
                     <p>Maria Laura dos Santos;Secretaria;;Empresa Ltda.</p>
-                    <p>Obs: Se a linha tiver um ponto e virgula segido do outro (;;), a colula correspondente será cadastrada em branco.</p>
+                    <p>Obs: Se a linha tiver um ponto e virgula seguido do outro (;;), a coluna correspondente será cadastrada em branco.</p>
                     <form method="post" enctype="multipart/form-data">
                         <span><input type="file" name="csv_file" size="30" accept="csv"></span>
                         <span><input type="submit" name="load_file" value="Enviar"></span>
