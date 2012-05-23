@@ -1,5 +1,6 @@
 <div id="menu_viewlet" tal:define="menus viewlet/getMenu | nothing;
-								   use_dropdown viewlet/getUseDropDown;">
+								   use_dropdown viewlet/getUseDropDown;
+								   sub_nivel viewlet/getSubMenuNivel2">
 								   	
 	<tal:cond condition="use_dropdown">
 		<ul id="portal-globalnav-drop" class="nivel1" tal:condition="menus">
@@ -10,7 +11,7 @@
 						<tal:rep repeat="subTab subTabs">
 							<li tal:condition="subTab" tal:define="subtid subTab/id|nothing" tal:attributes="id string:portalsubtab-${subtid}; class python: viewlet.isSelected(subTab)">
 								<a class="hide" href="" tal:content="subTab/name|nothing" tal:attributes="href subTab/url|nothing; title subTab/description|nothing;">SubTab Name</a>
-								<tal:def define="subSubTabs python: viewlet.getSubMenuDrop(subTab, 2)">
+								<tal:def tal:condition="sub_nivel | nothing"  define="subSubTabs python: viewlet.getSubMenuDrop(subTab, 2)">
 									<ul class="nivel3" tal:condition="subSubTabs">
 										<tal:rep repeat="subSubTab subSubTabs">
 											<li tal:condition="subSubTab" tal:define="subtid subSubTab/id|nothing" tal:attributes="id string:portalsubtab-${subtid}; class python: viewlet.isSelected(subSubTab)">

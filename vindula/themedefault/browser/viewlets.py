@@ -178,7 +178,23 @@ class MenuViewlet(grok.Viewlet):
                     if self.checkObj(obj.getObject()):
                         L.append(obj.getObject())
                 return L
+    
+    def getSubMenuNivel2(self):
+        result = False
+        portal = self.context.portal_url.getPortalObject()
+        if 'control-panel-objects' in portal.keys():
+            control = portal['control-panel-objects']
+            
+            if 'vindula_themeconfig' in control.keys():
+                thema = control['vindula_themeconfig']    
+                
+                try:result = thema.getAtiva_menudropdown_nivel2()
+                except:result = False
 
+            return result
+        else:
+            return result
+    
     def getSubMenuDrop(self, tab, nivel = 1):
         result=[]
         portal_properties = getToolByName(self.context, 'portal_properties')
