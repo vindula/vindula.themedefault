@@ -111,15 +111,16 @@
 								<input style="width:100px" class="button-erp" type="submit" value="Voltar" name="form.voltar" >
 								
 								<input style="width:100px;" class="button-erp" type="submit" value="Salvar" name="form.submited"
-										tal:condition="python: not manage">
+										tal:condition="python: not manage or 'newuser' in request.keys()">
 								
-								<input style="width:100px;" class="button-erp" type="submit" value="Salvar" name="form.submited"
-										onclick="return confirmAlterarUserName();"
-										tal:condition="python: manage or 'newuser' in request.keys()">
+								<tal:cond condition="python: manage and not 'newuser' in request.keys()">
+									<input style="width:100px;" class="button-erp" type="submit" value="Salvar" name="form.submited"
+											onclick="return confirmAlterarUserName();">
 								
-								<input style="width:100px;" class="button-erp" type="submit" value="Excluir" name="form.excluir"
-									   onclick="return confirmExcluir();" 
-									   tal:condition="python: manage and not 'newuser' in request.keys()">
+									<input style="width:100px;" class="button-erp" type="submit" value="Excluir" name="form.excluir"
+										   onclick="return confirmExcluir();">
+								</tal:cond>
+								
 							</div>
 						</fieldset>
 					</form>
