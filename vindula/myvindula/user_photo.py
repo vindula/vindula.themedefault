@@ -58,7 +58,8 @@ class MyVindulaUserCropImageView(grok.View):
         form = self.request.form
         submitted = form.get('form.submitted', False)
         croped = form.get('form.crop', False)
-                   
+        self.error = ''
+        
         if submitted:
             try:username = unicode(form.get('username',''))
             except:username = form.get('username','')  
@@ -66,8 +67,9 @@ class MyVindulaUserCropImageView(grok.View):
             if form['photo'].filename != '':
                 photo = form.get('photo',None)    
                 filename = photo.filename # pega o nome do arquivo
-                if filename.endswith('png') or filename.endswith('jpg') or \
-                    filename.endswith('gif'):    
+                if filename.endswith('png') or filename.endswith('PNG') or\
+                   filename.endswith('jpg') or filename.endswith('JPG') or\
+                    filename.endswith('gif')  or filename.endswith('GIF'):    
                     
                     data = photo.read()       
                     img_org = Image.open(StringIO.StringIO(data))
@@ -90,11 +92,9 @@ class MyVindulaUserCropImageView(grok.View):
                         img_org.thumbnail((novaLargura, novaAltura), Image.ANTIALIAS)
 
                         
-                        
                     imagefile = StringIO.StringIO()
                     img_org.save(imagefile,'JPEG')
                     buffer = imagefile.getvalue() 
-                    
                                      
                     M ={}
                     M['data'] = buffer
@@ -112,7 +112,10 @@ class MyVindulaUserCropImageView(grok.View):
                     else:
                         check_user.photograph = photograph
                         self.id_photo = check_user.id
-            
+                else:
+                    self.error = 'Arquivo não suportado, insira um arquivo de imagem.' 
+            else:
+                self.error = 'Insira um arquivo de imagem.'
                     
         elif croped:
             try:username = unicode(form.get('username',''))

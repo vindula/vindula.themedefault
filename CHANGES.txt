@@ -25,3 +25,8 @@ Changelog
 1.1 - 2012-05-18
 -----------------
 - Criação de mecanismo para cortar a imagem do perfil do usuario
+
+
+1.1.5 - 2012-05-24
+-----------------
+- Ajustes no mecanismo para cortar a imagem para imagens grandes
