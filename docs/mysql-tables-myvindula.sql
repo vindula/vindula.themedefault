@@ -149,7 +149,7 @@ CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_funcdetails` (
   `nickname` VARCHAR(45) NULL DEFAULT NULL ,
   `pronunciation_name` VARCHAR(45) NULL DEFAULT NULL ,
   `committess` VARCHAR(45) NULL DEFAULT NULL ,
-  `projetcs` VARCHAR(45) NULL DEFAULT NULL ,
+  `projects` VARCHAR(45) NULL DEFAULT NULL ,
   `personal_information` VARCHAR(45) NULL DEFAULT NULL ,
   `profit_centre` VARCHAR(45) NULL DEFAULT NULL ,
   `availability` VARCHAR(45) NULL DEFAULT NULL ,

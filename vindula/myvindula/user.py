@@ -75,7 +75,7 @@ class ModelsFuncDetails(Storm, BaseStore):
     nickname = Unicode()
     pronunciation_name = Unicode()
     committess = Unicode()
-    projetcs = Unicode()
+    projects = Unicode()
     personal_information = Unicode()
     #skills_expertise = Unicode()
     profit_centre = Unicode()
@@ -937,6 +937,22 @@ class BaseFunc(BaseStore):
                 return datastr  
             else:
                 return data
+
+    #Retorna o label dos campos dinamicos
+    def get_label_filed(self, campo):
+        result = ModelsConfgMyvindula().get_configuration_By_fields(campo)
+        default = SchemaConfgMyvindula().campos.get(campo)
+        
+        if result:
+            label = result.__getattribute__('label') 
+            if not label:
+                return default.get('label')
+            else:
+                return label
+            
+        else:
+            return default.get('label')
+
             
     def converte_dadosByDB(self, D):
         
@@ -981,7 +997,7 @@ class BaseFunc(BaseStore):
                     tmp += "<!-- Campo %s -->"%(campo)
                     tmp += "<div class='%s'>"%(self.field_class(errors, campo))
                     if self.checaEstado(config_myvindula,campo) or manage:
-                        tmp += "   <label for='%s'>%s</label>"%(campo,campos[campo]['label'])
+                        tmp += "   <label for='%s'>%s</label>"%(campo,self.get_label_filed(campo))
                         if campos[campo]['required'] == True:
                             tmp += "   <span class='fieldRequired' title='Obrigatório'>(Obrigatório)</span>"
     
@@ -1214,7 +1230,7 @@ class SchemaFunc(BaseFunc):
               'photograph'            : {'required': False, 'type' : 'file',  'label':'Foto',                   'decription':u'Coloque a foto do funcionário',                  'ordem':17},
               'pronunciation_name'    : {'required': False, 'type' : to_utf8, 'label':'Pronuncia do nome',      'decription':u'Como se pronuncia o  nome do funcionário',       'ordem':18},
               'committess'            : {'required': False, 'type' : to_utf8, 'label':'Comissão',               'decription':u'Digite a comissão do funcionário',               'ordem':19},
-              'projetcs'              : {'required': False, 'type' : to_utf8, 'label':'Projetos',               'decription':u'Digite os projetos do funcionário',              'ordem':20},
+              'projects'              : {'required': False, 'type' : to_utf8, 'label':'Projetos',               'decription':u'Digite os projetos do funcionário',              'ordem':20},
               'personal_information'  : {'required': False, 'type' : to_utf8, 'label':'Informações pessoais',   'decription':u'Digite as informações pessoais do funcionário',  'ordem':21},
               'skills_expertise'      : {'required': False, 'type' : to_utf8, 'label':'Habilidades'          ,  'decription':u'Digite as habilidades do funcionário',           'ordem':22},
               'profit_centre'         : {'required': False, 'type' : to_utf8, 'label':'Centro de Lucro',        'decription':u'Digite o centro de lucro do funcionário',        'ordem':23},
@@ -1610,7 +1626,11 @@ class SchemaConfgMyvindula(BaseFunc):
                 result = ModelsConfgMyvindula().get_configuration_By_fields(campo)
                 dados = {}
                 if result:
-                    dados['label'] = result.label
+                    label = result.label
+                    if label:
+                        dados['label'] = label
+                    else:
+                        dados['label'] = campos[campo].get('label')
                     dados['edit'] = result.ativo_edit
                     dados['view'] = result.ativo_view
 

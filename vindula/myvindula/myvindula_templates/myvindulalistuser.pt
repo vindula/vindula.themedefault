@@ -255,7 +255,7 @@
 						</tr>
 						<tr tal:condition="python: view.get_ConfugCampos('projects')">
 							<td class="field" tal:content="python: view.get_label_filed('projects')">Projetos</td>
-							<td class="value" tal:content="form_data/projetcs|nothing"></td>
+							<td class="value" tal:content="form_data/projects|nothing"></td>
 						</tr>			
 						<tr tal:condition="python: view.get_ConfugCampos('personal_information')">
 							<td class="field" tal:content="python: view.get_label_filed('personal_information')">Informa&ccedil;&atilde;o pessoal</td>

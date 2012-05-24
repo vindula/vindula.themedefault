@@ -342,7 +342,7 @@ class AjaxView(grok.View):
     def importUser(self,form):
         return ImportUser().importUser(self,form)
     
-class MyVindulaListUser(grok.View):
+class MyVindulaListUser(grok.View, BaseFunc):
     #grok.context(ISiteRoot)
     grok.context(Interface)
     grok.require('zope2.View')
@@ -399,7 +399,7 @@ class MyVindulaListUser(grok.View):
         
     def valida_others(self):
         #configuracao1= self.get_campos()
-        campos = ['committess','registration','projetcs','personal_information','skills_expertise','languages',\
+        campos = ['committess','registration','projects','personal_information','skills_expertise','languages',\
                   'availability','papers_published','teaching_research','resume','blogs','customised_message']
         
         for i in campos:
@@ -408,17 +408,6 @@ class MyVindulaListUser(grok.View):
         
         return False
 
-    def get_label_filed(self, campo):
-        result = ModelsConfgMyvindula().get_configuration_By_fields(campo)
-        default = SchemaConfgMyvindula().campos.get(campo)
-        
-        if result:
-            return result.__getattribute__('label')
-        else:
-            return default.get('label')
-
-
-    
     def get_howareu(self, user):
         member =  self.context.restrictedTraverse('@@plone_portal_state').member().getUserName();
         user = self.request.form.get('user',str(member))
@@ -1070,7 +1059,7 @@ class MyVindulaImportFirstView(grok.View):
                 else:
                     IStatusMessage(self.request).addStatusMessage(_(u"Erro ao carregar arquivo, contate o administrados do portal."), "error")
                 
-class MyVindulaImportSecondView(grok.View):
+class MyVindulaImportSecondView(grok.View, BaseFunc): 
     grok.context(INavigationRoot)
     grok.require('cmf.ManagePortal')
     grok.name('myvindula-import-second')
@@ -1108,7 +1097,9 @@ class MyVindulaImportSecondView(grok.View):
                 index = fields[field].get('ordem',0)
                 D = {}
                 D['name'] = field
-                D['label'] = fields.get(field).get('label')
+                if field != 'username':
+                    D['label'] = self.get_label_filed(field)
+
                 fields_vin.pop(index)
                 fields_vin.insert(index, D)    
                 

@@ -19,4 +19,12 @@ Changelog
 
 1.1 - 2012-04-24
 -----------------
-- Ajuste do portlet ramais para departamentos em ordem alfabetica 
+- Ajuste do portlet ramais para departamentos em ordem alfabetica
+
+
+1.1.5 - 2012-05-24
+-----------------
+- Opção no portlet ramais e aniversariantes para permitir exibição a usuarios anônimos
+- Correções de ortografia
+- Criação de mecanismo para alterar o label  dos campos do perfil do usuário
+- criação do mecanismo para alterar os campos da view de mais aniversariante do portlet  

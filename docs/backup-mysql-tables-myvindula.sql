@@ -96,7 +96,7 @@ CREATE TABLE `vin_myvindula_funcdetails` (
   `nickname` varchar(45) DEFAULT NULL,
   `pronunciation_name` varchar(45) DEFAULT NULL,
   `committess` varchar(45) DEFAULT NULL,
-  `projetcs` varchar(45) DEFAULT NULL,
+  `projects` varchar(45) DEFAULT NULL,
   `personal_information` varchar(45) DEFAULT NULL,
   `profit_centre` varchar(45) DEFAULT NULL,
   `availability` varchar(45) DEFAULT NULL,

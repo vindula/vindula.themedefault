@@ -63,8 +63,8 @@ class IPortletAniversariosReload(IPortletDataProvider):
     show_picture = schema.Bool(title=unicode("Exibir foto", 'utf-8'),
                                        description=unicode("Selecione para mostrar a foto dos aniversarientes no portlet.", 'utf-8'))
     
-    show_anonymous = schema.Bool(title=unicode("Exibir portlet para anonimos", 'utf-8'),
-                               description=unicode("Selecione para mostrar o portlet para usuarios anonimos que acessarem o portal.", 'utf-8'),
+    show_anonymous = schema.Bool(title=unicode("Exibir portlet para anônimos", 'utf-8'),
+                               description=unicode("Selecione para mostrar o portlet para usuarios anônimos que acessarem o portal.", 'utf-8'),
                                default=True,
                                )
         
