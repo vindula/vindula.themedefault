@@ -43,7 +43,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         widget=ReferenceBrowserWidget(
             default_search_index='SearchableText',
             label=_(u"Seleção do objeto de seleção do banner"),
-            description=_(u"Selecione o objeto que será mostrada no banner."),
+            description=_(u"Selecione o objeto que será mostrado no banner."),
             
             label_msgid='vindula_themedefault_label_ref_banner',
             description_msgid='vindula_themedefault_help_ref_banner',
@@ -56,8 +56,8 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         name='time_transition_banner',
         widget=IntegerWidget(
             label=_(u"Velocidade da rotação do banner"),
-            description=_(u"Tempo em milisegundos que a imagem do banner leva para rotacionar, \
-                          insira apenas números iteiros."),
+            description=_(u"Tempo em milissegundos que a imagem do banner leva para rotacionar, \
+                          insira apenas números inteiros."),
             
             label_msgid='vindula_themedefault_label_time_transition_banner',
             description_msgid='vindula_themedefault_help_time_transition_banner',
@@ -141,7 +141,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         widget=ReferenceBrowserWidget(
             default_search_index='SearchableText',
             label=_(u"Seleção do objeto de seleção do menu"),
-            description=_(u"Selecione o objeto que sera mostrada no menu."),
+            description=_(u"Selecione o objeto que será mostrado no menu."),
             
             label_msgid='vindula_themedefault_label_ref_itemMenu',
             description_msgid='vindula_themedefault_help_ref_itemMenu',
@@ -188,8 +188,8 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         name='time_transitionsnews',
         widget=IntegerWidget(
             label=_(u"Velocidade da rotação"),
-            description=_(u"Tempo em milisegundos que a notícia destaque leva para rotacionar, \
-                          insira apenas números iteiros."),
+            description=_(u"Tempo em milissegundos que a notícia destaque leva para rotacionar, \
+                          insira apenas números inteiros."),
             
             label_msgid='vindula_themedefault_label_time_transitionsnews',
             description_msgid='vindula_themedefault_help_time_transitionsnews',
@@ -220,7 +220,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         relationship='news_othernews',
         widget=ReferenceBrowserWidget(
             default_search_index='SearchableText',
-            label=_(u"Local das outras noticias"),
+            label=_(u"Local das outras notícias"),
             description=_(u"Selecione o local das notícias. \
                             Se nada for selecionado, o sistema irá buscar notícias em todo o portal."),
             base_query={'review_state':'published'},
@@ -236,7 +236,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         widget=IntegerWidget(
             label=_(u"Quantidade de notícias da área de sub destaque"),
             description=_(u"Quantidade de notícias que deverão aparecer na área de sub destaques, \
-                      insira apenas números iteiros."),
+                      insira apenas números inteiros."),
             
             label_msgid='vindula_themedefault_label_number_othernews',
             description_msgid='vindula_themedefault_help_number_othernews',
@@ -282,7 +282,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         widget=IntegerWidget(
             label=_(u"Quantidade de itens na área das outras notícias"),
             description=_(u"Quantidade de notícias sem destaque que deverão aparecer, \
-                          insira apenas números iteiros."),
+                          insira apenas números inteiros."),
             
             label_msgid='vindula_themedefault_label_number_medianews',
             description_msgid='vindula_themedefault_help_number_medianews',
@@ -404,21 +404,33 @@ class HomePageView(grok.View):
         
     def getMediaNews(self):
         news = self.searchNews(self.context.getLocal_medianews())
-        if self.context.getLocal_othernews():
-            path_otherNew = self.context.getLocal_othernews().absolute_url()
-        else:
-            path_otherNew = getSite().absolute_url()
-        
+#        if self.context.getLocal_othernews():
+#            path_otherNew = self.context.getLocal_othernews().absolute_url()
+#        else:
+#            path_otherNew = getSite().absolute_url()
+
         if news:
             L = []
-            for new in news[:self.context.getNumber_medianews()]:  
-                obj = new.getObject()
+            path_otherNew = self.getOtherNews()
+            if path_otherNew:
+                items = path_otherNew.get('news')
+                for i in items:
+                    path_otherNew = i.get('link','')
                 
-                if obj.absolute_url().find(path_otherNew) <= -1: 
+            
+            for new in news:  
+                obj = new.getObject()
+
+                if not obj.absolute_url() in path_otherNew : 
                     D = {}
                     D['title'] = obj.Title()
                     D['link'] = obj.absolute_url()
                     L.append(D)
+                
+                if len(L) == self.context.getNumber_medianews():
+                    break
+                
+            
             return L
 
         

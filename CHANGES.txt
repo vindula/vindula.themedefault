@@ -11,3 +11,11 @@ Changelog
 - alteração do metodo de filtragem de conteudos para o menu do portal   
 - alteração do metodo de busca dos itens do menu
 
+1.1.1 - 2012-05-23
+--------------------
+- Correções de ortografia no porduto
+- Ajustes na listagem de outras noticias da homePage
+
+1.1.2 - 2012-05-24
+--------------------
+- remoção da tag 'xmlns' da template do diazo 
