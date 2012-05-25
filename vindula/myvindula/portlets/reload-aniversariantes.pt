@@ -37,8 +37,8 @@
 							</h4>
 								<p>
 									<tal:rep repeat="detail details" condition="details">
-										<span tal:condition="python: detail['label'] and detail['content']" tal:content="string: ${detail/label}: "> </span>
-										<span tal:condition="detail/content" tal:content="detail/content"> </span>
+										<span class="quebraLinha" tal:condition="python: detail['label'] and detail['content']" tal:content="string: ${detail/label}: "> </span>
+										<span class="quebraLinha" tal:condition="detail/content" tal:content="detail/content"> </span>
 										<br tal:condition="python: detail['label'] or detail['content']">
 									</tal:rep>
 								</p>

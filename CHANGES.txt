@@ -28,3 +28,7 @@ Changelog
 - Correções de ortografia no porduto
 - Resolvido problema na view do Mural do Vindula.
 
+1.1.5 - 2012-05-25
+--------------------
+- Adicionada a classe quebraLinha nos portlets aniversariantes e ramais
+
