@@ -28,6 +28,7 @@ from vindula.myvindula.validation import valida_form
 from datetime import date , datetime 
 import pickle
 
+
 #import sys
 #from storm.tracer import debug #debug(True, stream=sys.stdout)
 
@@ -1033,9 +1034,19 @@ class BaseFunc(BaseStore):
 #                            else: 
 #                                 tmp += "<img src='%s' style='width:100px;height:100px;' /><br />"%(self.getPhoto(campo,self.request,data))
 #                            tmp += "<input id='photograph' type='file' value='%s' name='photograph' size='25' />"%(self.getPhoto(campo,self.request,data))
-                            url = getSite().portal_url() + '/myvindula-user-crop'
-                            tmp +="<div id='%s'><a href='%s' class='crop-foto'>Editar Foto</a>" %(campo,url)
-                            tmp +="<div id='preview-user'> </div></div>"
+                            url = getSite().portal_url()
+                            from vindula.myvindula.user_photo import ModelsPhotoUser
+                            user_foto = ModelsPhotoUser().get_ModelsPhotoUser_byUsername(user)
+                            
+                            tmp +="<div id='%s'><a href='%s/myvindula-user-crop' class='crop-foto'>Editar Foto</a>" %(campo,url)
+                            if user_foto:
+                                tmp += "<div id='preview-user'><img height='150px' src='%s/user-image?username=%s' /></div>" %(url,user)
+                                tmp += "<a href='%s/myvindula-user-delcrop' class='excluir-foto'>Excluir Foto</a>" %(url)
+                            else:
+                                tmp += "<div id='preview-user'></div>"
+                                tmp += "<a href='%s/myvindula-user-delcrop' style='display:none' class='excluir-foto'>Excluir Foto</a>" %(url)
+                            
+                            tmp += "</div>"
                         
                         elif campo == 'date_birth' or campo == 'admission_date':
                             tmp += """<input id='%s' type='text' maxlength='10' onKeyDown='Mascara(this,Data);' onKeyPress='Mascara(this,Data);' onKeyUp='Mascara(this,Data);'

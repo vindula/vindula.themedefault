@@ -98,12 +98,11 @@
 						$j(document).ready(function(){
 							$j('div.close', window.parent.document).trigger('click');
 							window.parent.mostraFoto();
+							
 						});
 						
 						
 					</script>	
-						<a class="close" style="display: none" id="form.cancelar">close</a>
-						
 				</div>
 				<!--div id="crop-susseco" tal:condition="request/form.crop|nothing">
 					<h2>Preview</h2>

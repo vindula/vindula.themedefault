@@ -12,7 +12,7 @@ from PIL import Image
 #Imports regarding the connection of the database 'strom'
 from storm.locals import *
 from storm.locals import Store
-from vindula.myvindula.user import BaseStore, BaseFunc
+from vindula.myvindula.user import BaseFunc, BaseStore
 from vindula.myvindula import PROJECT_ROOT_PATH
 import pickle, StringIO
 
@@ -30,7 +30,14 @@ class ModelsPhotoUser(Storm, BaseStore):
         setup = ModelsPhotoUser(**kwargs)
         self.store.add(setup)
         self.store.flush()
-        return setup.id         
+        return setup.id          
+    
+    def del_ModelsPhotoUser(self, username):
+        result = self.get_ModelsPhotoUser_byUsername(username)
+        if result:
+            self.store.remove(result)
+            self.store.flush()
+
     
     def get_ModelsPhotoUser_byID(self,id):
         data = self.store.find(ModelsPhotoUser, ModelsPhotoUser.id == id).one()
@@ -140,7 +147,8 @@ class MyVindulaUserCropImageView(grok.View):
             img = Image.open(StringIO.StringIO(imagem))
             
             area = img.crop(box)
-            area.thumbnail((168, 168), Image.ANTIALIAS)
+            #area.thumbnail((168, 168), Image.ANTIALIAS)
+            area = area.resize((168, 168), Image.ANTIALIAS)
             if imagem_data:
                 imagefilecrop = StringIO.StringIO()
                 area.save(imagefilecrop,'JPEG')
@@ -198,5 +206,22 @@ class MyVindulaUserImage(grok.View, BaseFunc):
                 buffer = ''
             
             self.request.response.write(buffer)
+
+
+#Views de eclução da Image do usuario ---------------------------------------------------   
+class MyVindulaUserDelImage(grok.View, BaseFunc):
+    grok.context(Interface)
+    grok.require('zope2.View')
+    grok.name('myvindula-user-delcrop')
+    
+    def update(self):
+        form = self.request.form
+
+        if 'form.excluir' in form.keys():
+            try: username = unicode(form.get('username',''))
+            except: username = form.get('username','')  
+              
+            ModelsPhotoUser().del_ModelsPhotoUser(username)
+            
             
             
