@@ -28,10 +28,12 @@ Changelog
 - Correções de ortografia no porduto
 - Resolvido problema na view do Mural do Vindula.
 
-1.1.5 - 2012-05-25
---------------------
-
 1.1.6 - 2012-05-28
 ---------------------
 - adição do campo Ip no comentario do myvindula
 - ajuste no metodo de salvar o username no comentario 
+
+1.1.7 - 2012-05-28
+----------------------
+- ajustes nos metodos de curtir e descurtir
+- ajustes na permição de excluir comentarios do portal

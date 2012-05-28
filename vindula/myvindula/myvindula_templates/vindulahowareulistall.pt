@@ -2,11 +2,11 @@
 	<body metal:use-macro="here/main_template/macros/master">
 	
 	  	<div metal:fill-slot="content">
-			<h2 class="h2title">Em que os usuarios estão pensando</h2>
+			<h2 class="h2title">Em que os usuários estão pensando</h2>
       		<meta:macro metal:define-macro="page-view">    
       			<script type="text/javascript" src="++resource++vindula.myvindula/ajax_comments-curtir.js"></script>
       			<input type="hidden" id="portal_url" tal:attributes="value context/portal_url|nothing">    
-				<input type="hidden" id="context_url" tal:attributes="value string:${context/absolute_url|nothing}/howareu-list-all">
+				<input type="hidden" id="context_url" tal:attributes="value string:${context/absolute_url|nothing}">
 				<style type="text/css">
 					.geral_lista_comentarios .comments-cont .comments-cont{display:block !important;}
 				</style>
@@ -68,6 +68,7 @@
 											<input type="hidden" name="type" id="type" value="ModelsMyvindulaHowareu" />
 										</div>
 										<input type="button" value="Comentar" class="comments bt_comments" tal:attributes="id item/id|nothing" />
+										
 										<form action="#" method="post" enctype="multipart/form-data" style="float:right"
 											tal:condition="python: 'Manager' in member.getRoles()"
 					                		tal:attributes="action string:${context/absolute_url}/howareu-list-all">

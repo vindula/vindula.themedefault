@@ -842,17 +842,16 @@ class MyVindulaLike(grok.View):
     
     def update(self):
         """ Receive itself from request and do some actions """
+        member = getSite().portal_membership
         form = self.request.form
         dislike = form.get('dislike','False')
-
-        if eval(dislike):     
-            ModelsMyvindulaLike().del_myvindula_like(**form)
+        
+        if not member.isAnonymousUser():
+            form['username'] = member.getAuthenticatedMember().getUserName()
+            if eval(dislike):     
+                ModelsMyvindulaLike().del_myvindula_like(**form)
   
-        else:
-            member = getSite().portal_membership
-            if not member.isAnonymousUser():
-                form['username'] = member.getAuthenticatedMember().getUserName()
-          
+            else:
                 ModelsMyvindulaLike().set_myvindula_like(**form)
 
 
