@@ -377,7 +377,12 @@ class HomePageView(grok.View):
         
     def getOtherNews(self):
         news = self.searchNews(self.context.getLocal_othernews())
-        if news:
+        if self.context.getLocal_othernews() is None:
+                url = ''
+        else:
+            url = self.context.getLocal_othernews().absolute_url()
+        
+        if news and self.context.getNumber_othernews():
             L = []
             for new in news[:self.context.getNumber_othernews()]:
                 obj = new.getObject()
@@ -395,13 +400,9 @@ class HomePageView(grok.View):
                      
                 L.append(D)
                 
-            if self.context.getLocal_othernews() is None:
-                url = ''
-            else:
-                url = self.context.getLocal_othernews().absolute_url()
-                
             return {'news' : L, 'url': url }
-        
+        else:
+            return {'news' : [], 'url': url }
     def getMediaNews(self):
         news = self.searchNews(self.context.getLocal_medianews())
 #        if self.context.getLocal_othernews():
@@ -409,7 +410,7 @@ class HomePageView(grok.View):
 #        else:
 #            path_otherNew = getSite().absolute_url()
 
-        if news:
+        if news and self.context.getNumber_medianews():
             L = []
             path_otherNew = self.getOtherNews()
             if path_otherNew:
@@ -432,7 +433,8 @@ class HomePageView(grok.View):
                 
             
             return L
-
+        else:
+            return []
         
     def searchNews(self, local=None):
         if local is None:
@@ -474,13 +476,3 @@ class HomePageView(grok.View):
                                 D['url_image'] = 'http://%s' % link
                 L.append(D)
         return L
-         
-        
-        
-        
-        
-        
-        
-        
-        
-        
