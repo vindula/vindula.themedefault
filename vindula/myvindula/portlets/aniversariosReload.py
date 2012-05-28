@@ -167,6 +167,18 @@ class Renderer(base.Renderer):
     
     def get_tempo_rotacao(self):
         return self.data.tempo_rotacao
+    
+    def nome_filtro(self):
+        filtro = self.get_type_search_list()
+        if filtro == 1:
+            return "do Dia"
+        elif filtro == 7:
+            return "da Semana"
+        elif filtro == 30:
+            return "do Mês"
+        else:
+            return ''
+    
         
 class AddForm(base.AddForm):
     """Portlet add form.
@@ -206,17 +218,22 @@ class ReloadPortletView(grok.View):
         if 'show_picture' in self.request.keys():
             valor = self.request['show_picture']
             return eval(valor)
-    
-    def nome_filtro(self):
-        filtro = self.get_type_search_list()
-        if filtro == 1:
-            return "do Dia"
-        elif filtro == 7:
-            return "da Semana"
-        elif filtro == 30:
-            return "do Mês"
+         
+    def frase_filtro(self):
+        if 'type_search' in self.request.keys():
+            try:filtro = int(self.request['type_search'])
+            except:filtro = self.request['type_search']
         else:
-            return ''        
+            filtro = ''
+        
+        if filtro == 1:
+            return "hoje"
+        elif filtro == 7:
+            return "nesta semana"
+        elif filtro == 30:
+            return "neste mês"
+        else:
+            return 'nos próximos dias'                
     
     def get_details_user(self, user):
         if 'details_user' in self.request.keys(): 

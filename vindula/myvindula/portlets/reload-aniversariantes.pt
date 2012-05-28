@@ -49,7 +49,7 @@
 		
 			<div class="visualClear"></div>
 			<tal:notresults tal:condition="not: view/birthdaysToday">
-				<h4>N&atilde;o h&aacute; aniversariantes nos pr&oacute;ximos dias.</h4>
+				<h4 tal:content="string:Não há aniversariantes ${view/frase_filtro|python:''}.">Não há aniversariantes</h4>
 			</tal:notresults>
 
 		</tal:def> 

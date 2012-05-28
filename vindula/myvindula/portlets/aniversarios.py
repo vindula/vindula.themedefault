@@ -158,6 +158,16 @@ class Renderer(base.Renderer):
         else:
             return ''
     
+    def frase_filtro(self):
+        filtro = self.get_type_search()
+        if filtro == 1:
+            return "hoje"
+        elif filtro == 7:
+            return "nesta semana"
+        elif filtro == 30:
+            return "neste mês"
+        else:
+            return 'nos próximos dias'
     
     def get_details_user(self, user):
         if self.data.details_user: 

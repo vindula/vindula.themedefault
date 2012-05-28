@@ -27,4 +27,9 @@ Changelog
 - Opção no portlet ramais e aniversariantes para permitir exibição a usuarios anônimos
 - Correções de ortografia
 - Criação de mecanismo para alterar o label  dos campos do perfil do usuário
-- criação do mecanismo para alterar os campos da view de mais aniversariante do portlet  
+- criação do mecanismo para alterar os campos da view de mais aniversariante do portlet
+
+
+1.1.8 - 2012-05-28
+----------------------
+- criação de mecanismo para a mensagem do portlet aniversariantes acompanhas a configuração.   
