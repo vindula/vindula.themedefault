@@ -849,7 +849,11 @@ class MyVindulaLike(grok.View):
             ModelsMyvindulaLike().del_myvindula_like(**form)
   
         else:
-            ModelsMyvindulaLike().set_myvindula_like(**form)
+            member = getSite().portal_membership
+            if not member.isAnonymousUser():
+                form['username'] = member.getAuthenticatedMember().getUserName()
+          
+                ModelsMyvindulaLike().set_myvindula_like(**form)
 
 
 
@@ -860,7 +864,7 @@ class MyVindulaLikeMacro(grok.View):
     
     
     
-class MyVindulaComments(grok.View):
+class MyVindulaComments(grok.View, BaseFunc):
     grok.context(Interface)
     grok.require('zope2.View')
     grok.name('myvindula-comments')
@@ -925,11 +929,21 @@ class MyVindulaComments(grok.View):
         form = self.request.form
         submitted = form.get('form.submitted-comment', False)
         excluir = form.get('form.excluir', False)
-        redirect = form.get('url_context',self.context.absolute_url())
+        request = self.request.environ
+        
+        if 'HTTP_REFERER' in request:
+            redirect = request.get('HTTP_REFERER',self.context.absolute_url())
+        else:
+            redirect = self.context.absolute_url()
         
         if submitted:
-            ModelsMyvindulaComments().set_myvindula_comments(**form)
-            return self.request.response.redirect(redirect)
+            member = getSite().portal_membership
+            if not member.isAnonymousUser():
+                form['username'] = member.getAuthenticatedMember().getUserName()
+                form['ip'] = self.get_ip(self.request)
+            
+                ModelsMyvindulaComments().set_myvindula_comments(**form)
+                return self.request.response.redirect(redirect)
         
         elif excluir:
             id_comments = int(form.get('id_comments','0'))

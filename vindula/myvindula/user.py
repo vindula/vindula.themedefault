@@ -75,7 +75,7 @@ class ModelsFuncDetails(Storm, BaseStore):
     nickname = Unicode()
     pronunciation_name = Unicode()
     committess = Unicode()
-    projetcs = Unicode()
+    projects = Unicode()
     personal_information = Unicode()
     #skills_expertise = Unicode()
     profit_centre = Unicode()
@@ -593,6 +593,7 @@ class ModelsMyvindulaComments(Storm, BaseStore):
     
     id = Int(primary=True)
     username = Unicode()
+    ip = Unicode()
     date_creation = DateTime()
     type = Unicode()
     id_obj = Unicode()
@@ -601,11 +602,13 @@ class ModelsMyvindulaComments(Storm, BaseStore):
     
     def set_myvindula_comments(self,**kwargs):
         D={}
-        D['username'] = unicode(kwargs.get('username',''), 'utf-8')
-        D['type'] = unicode(kwargs.get('type',''), 'utf-8')
-        D['id_obj'] = unicode(kwargs.get('id_obj',''), 'utf-8')
+        base = BaseFunc() 
+        D['username'] = base.Convert_utf8(kwargs.get('username',''))
+        D['ip'] = base.Convert_utf8(kwargs.get('ip',''))
+        D['type'] = base.Convert_utf8(kwargs.get('type',''))
+        D['id_obj'] = base.Convert_utf8(kwargs.get('id_obj',''))
         D['isPlone'] = kwargs.get('isPlone',False)
-        D['text'] = unicode(kwargs.get('text',''), 'utf-8')
+        D['text'] = base.Convert_utf8(kwargs.get('text',''))
         
         # adicionando...
         comments = ModelsMyvindulaComments(**D)
@@ -644,9 +647,10 @@ class ModelsMyvindulaLike(Storm, BaseStore):
      
     def set_myvindula_like(self,**kwargs):
         D={}
-        D['username'] = unicode(kwargs.get('username',''), 'utf-8')
-        D['type'] = unicode(kwargs.get('type',''), 'utf-8')
-        D['id_obj'] = unicode(kwargs.get('id_obj',''), 'utf-8')
+        base = BaseFunc() 
+        D['username'] =  base.Convert_utf8(kwargs.get('username',''))
+        D['type'] =  base.Convert_utf8(kwargs.get('type',''))
+        D['id_obj'] =  base.Convert_utf8(kwargs.get('id_obj',''))
         D['isPlone'] = eval(kwargs.get('isPlone','False'))
         
         # adicionando...
@@ -851,10 +855,32 @@ class BaseFunc(BaseStore):
         else:
             return ''    
     
+    def Convert_utf8(self,valor):
+        try: return unicode(valor,'utf-8')
+        except: return valor
+    
     def rs_to_list(self, rs):
         if rs:
             return [i for i in rs]
-    
+   
+    def get_ip(self, request):
+        """ Extract the client IP address from the HTTP request in a proxy-compatible way.
+        
+        @return: IP address as a string or None if not available
+        """
+        if "HTTP_X_FORWARDED_FOR" in request.environ:
+            # Virtual host
+            ip = request.environ["HTTP_X_FORWARDED_FOR"]
+        elif "HTTP_HOST" in request.environ:
+            # Non-virtualhost
+            ip = request.environ["REMOTE_ADDR"]
+        else:
+            # Unit test code?
+            ip = None
+        
+        return ip
+   
+   
     def getValue(self,campo,request,data):
         if campo in request.keys():
             if request.get(campo, None):

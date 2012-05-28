@@ -2,7 +2,7 @@
 	<script type="text/javascript"  tal:attributes="src string:${view/static}/comments.js"></script>
 	
 	<input type="hidden" name="url_context" value="">
-	<input type="hidden" name="username" value="" tal:attributes="value context/REQUEST/username|nothing">
+	<!--input type="hidden" name="username" value="" tal:attributes="value context/REQUEST/username|nothing"-->
 	<input type="hidden" name="id_obj" tal:attributes="value context/REQUEST/id_obj|nothing">
 	<input type="hidden" name="type" tal:attributes="value context/REQUEST/type|nothing">
 	<input type="hidden" name="isPlone:boolean" tal:attributes="value context/REQUEST/isPlone|nothing">
