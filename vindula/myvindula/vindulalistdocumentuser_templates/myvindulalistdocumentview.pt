@@ -73,7 +73,7 @@
 						</table>
 						
 					</tal:cond>
-					<tal:cond condition="not: result">
+					<tal:cond condition="python: not result and 'SearchSubmit' in request">
 						<h4>N&atilde;o h&aacute; resultados.</h4>	
 					</tal:cond>
 				</div>
