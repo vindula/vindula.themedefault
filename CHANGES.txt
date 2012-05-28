@@ -32,3 +32,8 @@ Changelog
 - Ajustes no mecanismo para cortar a imagem para imagens grandes
 - Adição do SQl da tabela vin_myvindula_photo_user
 - Adição do mecanismo de Excluir a imagem do Usuario
+
+
+1.1.5 - 2012-05-28
+---------------------
+- Ajustes no tamanho da imagem do usuário para o portlet reload
