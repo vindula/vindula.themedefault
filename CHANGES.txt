@@ -19,3 +19,12 @@ Changelog
 1.1.2 - 2012-05-24
 --------------------
 - remoção da tag 'xmlns' da template do diazo 
+
+1.1.3 - 2012-05-25
+--------------------
+- criada a classe quebraLinha para ser usada nos portlets
+- adicionado a mudança dinamica da cor das barras da pagina de Meu Perfil 
+
+1.1.4 - 2012-05-28
+--------------------
+- Ajustes na listagem de noticias na homepage

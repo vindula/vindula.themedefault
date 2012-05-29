@@ -345,7 +345,7 @@ div#informacao a.theme-edit{margin-top:-30px;}
 .geral_lista_comentarios .comments-cont .comment { padding-left: 25px; }
 
 /* My Vindula User Views... */
-.userpage div.department { background-color: #FAA61A !important; }
+.userpage div.department { background-color: #FAA61A; }
 .userpage #personal { width: 662px; }
 .userpage #personal #photo { width: 165px; }
 .userpage #personal #data { width: 497px; }
@@ -354,7 +354,8 @@ div#informacao a.theme-edit{margin-top:-30px;}
 .userpage table td.value { background-image: url("++resource++vindula.themedefault/images/bkgs/back_td2.jpg"); }
 .userpage #data div.area { width: 487px; }
 .userpage div.area {
-    border-bottom: 2px solid #FAA61A !important;
+    border-bottom: 2px solid #FAA61A;
     width: 652px;
 }
+
 /* ...My Vindula User Views */
