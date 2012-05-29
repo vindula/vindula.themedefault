@@ -167,7 +167,7 @@ class Renderer(base.Renderer):
                 if type(ramal) != unicode:
                     ramal = unicode(ramal, 'utf-8')
                     
-                result = ModelsFuncDetails().get_FuncBusca(title,'0',ramal,True)
+                result = ModelsFuncDetails().get_FuncBusca(title,'0',ramal,filtro_busca)
                 if result:
 
                     if departamento != '0' and self.data.filtro_departamento != 'departamentos':
