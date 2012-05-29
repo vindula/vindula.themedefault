@@ -22,6 +22,7 @@ Changelog
 1.1.3 - 2012-05-22
 -----------------
 - Adicionando campo cpf na tabela MyVindula.
+- Ajuste do portlet ramais para departamentos em ordem alfabetica
 
 1.1.4 - 2012-05-23
 --------------------
@@ -37,3 +38,21 @@ Changelog
 ----------------------
 - ajustes nos metodos de curtir e descurtir
 - ajustes na permição de excluir comentarios do portal
+
+1.1.5 - 2012-05-24
+-----------------
+- Opção no portlet ramais e aniversariantes para permitir exibição a usuarios anônimos
+- Correções de ortografia
+- Criação de mecanismo para alterar o label  dos campos do perfil do usuário
+- criação do mecanismo para alterar os campos da view de mais aniversariante do portlet
+
+1.1.8 - 2012-05-28
+----------------------
+- criação de mecanismo para a mensagem do portlet aniversariantes acompanhas a configuração.   
+
+
+1.1.9 - 2012-05-29
+---------------------
+- merge do master com o branch info-portlet-dinamic
+- correção do css do portlet ramais e aniversariantes para emails grandes
+

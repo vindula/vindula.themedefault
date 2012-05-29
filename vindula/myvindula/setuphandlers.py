@@ -83,44 +83,45 @@ def set_AllowedType_Members(context):
             
         
 def set_field_default(context):
-    try:
-        if not ModelsConfgMyvindula().get_configuration():
-            D={}    
-            D['name'] = True
-            D['phone_number'] = True
-            D['cell_phone'] = True
-            D['email'] = True
-            D['employee_id'] = False
-            #D['username'] = False
-            D['date_birth'] = True
-            D['registration'] = False
-            D['enterprise'] = False
-            D['position'] = False
-            D['admission_date'] = False
-            D['cost_center'] = False 
-            D['organisational_unit'] = False
-            D['reports_to'] = False
-            D['location'] = False
-            D['postal_address'] = False
-            D['special_roles'] = False
-            D['photograph'] = True
-            D['nickname'] = False
-            D['pronunciation_name'] = False
-            D['committess'] = False
-            D['projetcs'] = False
-            D['personal_information'] = False
-            D['skills_expertise'] = True
-            D['profit_centre'] = False
-            D['languages'] = True    
-            D['availability'] = False
-            D['papers_published'] = False
-            D['teaching_research'] = False
-            D['delegations'] = False
-            D['resume'] = False
-            D['blogs'] = False
-            D['customised_message'] = True
-            D['vin_myvindula_department_id'] = True
-            ModelsConfgMyvindula().set_configuration(**D)
-    
-    except:
-        print "Error" 
+#    try:
+#        if not ModelsConfgMyvindula().get_configuration():
+#            D={}    
+#            D['name'] = True
+#            D['phone_number'] = True
+#            D['cell_phone'] = True
+#            D['email'] = True
+#            D['employee_id'] = False
+#            #D['username'] = False
+#            D['date_birth'] = True
+#            D['registration'] = False
+#            D['enterprise'] = False
+#            D['position'] = False
+#            D['admission_date'] = False
+#            D['cost_center'] = False 
+#            D['organisational_unit'] = False
+#            D['reports_to'] = False
+#            D['location'] = False
+#            D['postal_address'] = False
+#            D['special_roles'] = False
+#            D['photograph'] = True
+#            D['nickname'] = False
+#            D['pronunciation_name'] = False
+#            D['committess'] = False
+#            D['projetcs'] = False
+#            D['personal_information'] = False
+#            D['skills_expertise'] = True
+#            D['profit_centre'] = False
+#            D['languages'] = True    
+#            D['availability'] = False
+#            D['papers_published'] = False
+#            D['teaching_research'] = False
+#            D['delegations'] = False
+#            D['resume'] = False
+#            D['blogs'] = False
+#            D['customised_message'] = True
+#            D['vin_myvindula_department_id'] = True
+#            ModelsConfgMyvindula().set_configuration(**D)
+#    
+#    except:
+#        print "Error" 
+    print "Myvindula confguser"

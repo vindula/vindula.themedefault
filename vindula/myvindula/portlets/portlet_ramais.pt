@@ -86,9 +86,9 @@
 						                </div>
 									</tal:cond>
 									<div class="portlet-user-info" tal:attributes="class python: not view.show_picture and 'portlet-user-info-larg' or 'portlet-user-info' "> 											     	      	
-							        	<h4><a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username}"
-											   tal:content="obj/name | obj/username|nothing">func</a></h4>
-							        	<!--p>
+							        	<h4><a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username}">
+							        		   <span tal:content="python: view.get_principal_campo(obj)">func</span></a></h4>
+							        	<!--p>	
 							        		<span tal:replace="obj/position|nothing" /><br />
 											<tal:def define="user obj/username;
 															 departamentos python: view.get_department(user)">
@@ -121,13 +121,8 @@
 			    	<div class="titulo_info_boxTipo2 aling-right">
 				        <h4 tal:condition="python:results.count()>int(quant)">
 				        	<a tal:attributes="href  string:${here/portal_url}/myvindulalistall?title=${request/title|nothing}&ramal=${request/ramal|nothing}&departamento=${request/departamento|nothing}">Mais...</a>
-				            <!--a tal:attributes="href  string:${here/portal_url}/myvindulalistall/title/${request/title|nothing}/ramal/${request/ramal|nothing}/departamento/${request/departamento|nothing}">Mais...</a-->
 				        </h4>
 				    </div>
-				    <!--dd class="portletItem odd">
-				       <p><strong i18n:translate=""><a href="http://portal.saraiva.com.br/corporativo/geral/servicos/consultas/busca-de-ramais/lista-de-ramais-filiais-editora">Lista de Filiais Editora</a></strong></p>
-				       <p><strong i18n:translate=""><a href="http://portal.saraiva.com.br/corporativo/geral/servicos/consultas/busca-de-ramais/lista-de-ramais-lojas-livraria">Lista de Lojas Livraria</a></strong></p>
-				    </dd-->
 
 				</tal:cond>
 			</tal:results>

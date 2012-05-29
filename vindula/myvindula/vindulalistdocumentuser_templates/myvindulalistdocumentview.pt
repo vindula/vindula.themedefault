@@ -12,7 +12,7 @@
 	    	<div id="interna">
 				<div id="busca">
 	    			<fieldset>
-	    				<legend>Buscar de Funcionários</legend>
+	    				<legend>Buscar Funcionários</legend>
 						<form tal:attributes="action string:${context/absolute_url|nothing}/view" method="post" id="documentos-user">
 								<label>Tipo do filtro:</label>
 								<select size="1" id="filtro" name="filtro">
