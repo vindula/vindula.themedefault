@@ -7,7 +7,9 @@
 	<input type="hidden" name="type" tal:attributes="value context/REQUEST/type|nothing">
 	<input type="hidden" name="isPlone:boolean" tal:attributes="value context/REQUEST/isPlone|nothing">
 						                	
-	<textarea  style="width: 100%; height: 81px;" name="text"></textarea>
+	<textarea  tal:define="view_myvindula python:context.restrictedTraverse('@@myvindula');"
+		       tal:attributes="title view_myvindula/getConfTyneMCE|nothing" 
+                         style="width: 100%; height: 85px;" name="text" id="text" class='mce_editable'></textarea>
 	
 	<div class="formControls text-aling">
 	  <input type="hidden" name="form.submitted-comment:boolean" value="True" />

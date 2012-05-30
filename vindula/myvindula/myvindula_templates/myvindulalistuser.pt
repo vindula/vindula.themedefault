@@ -18,6 +18,7 @@
 											   configuracao view/get_campos; 
 											   form_data view/load_list | python:{};
 											   user form_data/username|nothing;
+											   view_myvindula python:context.restrictedTraverse('@@myvindula');
 											   panelView python:context.restrictedTraverse('@@myvindula-conf-userpanel')">
 											   
     	<tal:cont tal:condition="form_data">
@@ -318,7 +319,7 @@
 			
 			
 			<!-- start: Scraps -->
-			<div id="scraps" class="userpage geral_lista_comentarios" tal:condition="panelView/check_recados">
+			<div id="scraps" class=" geral_lista_comentarios" tal:condition="panelView/check_recados">
 				
 				<!-- Scraps Input -->
 				<div id="comment-geral" tal:condition="logado">
@@ -328,7 +329,9 @@
 						
 						<input type="hidden" name="destination" value="" tal:attributes="value user">	
 						<input type="hidden" name="username" value="" tal:attributes="value context/@@plone_portal_state/member|nothing">
-						<textarea  style="width: 100%; height: 81px;" name="text"></textarea>
+						<textarea tal:attributes="title view_myvindula/getConfTyneMCE|nothing" 
+                         style="width: 100%; height: 85px;" name="text" id="text" class='mce_editable'></textarea>	
+						<!--textarea  style="width: 100%; height: 81px;" name="text"></textarea-->
 		
 						<div class="bt_comentar">
 							<input type="hidden" name="form.submitted:boolean" value="True" />
@@ -366,7 +369,7 @@
 									<div metal:use-macro="context/myvindula-like-macro/macros/like" />
 								</div>
 				                <div class="comment-body">
-				                    <p tal:replace="item/text|nothing" />
+				                    <p tal:replace="structure item/text|nothing" />
 						  		</div>
 								<!-- campos input necessario para a criação de comentariso -->
 								<div id="comments" tal:condition="logado" >

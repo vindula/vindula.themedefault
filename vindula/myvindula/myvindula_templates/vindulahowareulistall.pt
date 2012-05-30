@@ -56,7 +56,7 @@
 											<img width="330" tal:attributes="src string:${context/portal_url|nothing}/howareu-image?id=${item/id|nothing}">
 										</div>
 						                <div tal:attributes="class python: item.upload_image and 'cell width-9 position-6' or ''">
-						                    <p tal:replace="item/text|nothing" />
+						                    <p tal:replace="structure item/text|nothing" />
 								  		</div>	
 									</div>
 									<div class="visualClear"></div>
