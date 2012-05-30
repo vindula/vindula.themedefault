@@ -24,7 +24,7 @@
 												                       b_size python:10;
 												                       b_start python:0;
 												                       b_start request/b_start | b_start;">
-						<p tal:content="AnonymousUser"></p>
+
 						<div class="geral_lista_comentarios" tal:define="batch python:Batch(form_data, b_size, int(b_start));"> 
 							<tal:rep repeat="item batch">
 								<div class="comment item_lista"
