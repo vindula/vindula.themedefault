@@ -329,9 +329,10 @@
 						
 						<input type="hidden" name="destination" value="" tal:attributes="value user">	
 						<input type="hidden" name="username" value="" tal:attributes="value context/@@plone_portal_state/member|nothing">
-						<textarea tal:attributes="title view_myvindula/getConfTyneMCE|nothing" 
+						
+						<textarea tal:condition="panelView/check_ativa_richtext" tal:attributes="title view_myvindula/getConfTyneMCE|nothing" 
                          style="width: 100%; height: 85px;" name="text" id="text" class='mce_editable'></textarea>	
-						<!--textarea  style="width: 100%; height: 81px;" name="text"></textarea-->
+						<textarea tal:condition="not:panelView/check_ativa_richtext|python:True "  style="width: 100%; height: 81px;" name="text"></textarea>
 		
 						<div class="bt_comentar">
 							<input type="hidden" name="form.submitted:boolean" value="True" />
@@ -397,7 +398,7 @@
 											<input type="submit" name="excluir" id="excluir" value="Excluir" 
 																	 class="comments bt_comments" tal:attributes="id item/id|nothing" />	
 									</form>
-									<a href="http://www.vindulaportal.com/myvindulalistuser?user=adele&scraps=true">
+									<a tal:attributes="href string:${context/portal_url}/myvindulalistuser?user=${user}&scraps=true">
 										<input type="button" class="comments bt_comments" value="Responder" />
 									</a>
 								<div id="new-comments"></div>

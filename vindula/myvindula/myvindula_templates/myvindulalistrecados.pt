@@ -47,7 +47,7 @@
 									<div metal:use-macro="context/myvindula-like-macro/macros/like" />
 								</div>
 				                <div class="comment-body">
-				                    <p tal:replace="item/text|nothing" />
+				                    <p tal:replace="structure item/text|nothing" />
 						  		</div>
 								<!-- campos input necessario para a criação de comentariso -->
 								<div id="comments" tal:condition="logado" >
@@ -55,7 +55,7 @@
 										<input type="hidden" name="isPlone:boolean" id="isPlone" value="False" />
 										<input type="hidden" name="type" id="type" value="ModelsMyvindulaRecados" />
 									</div>
-									<input type="button" value="Comentar" class="comments bt_comments" tal:attributes="id item/id|nothing" />
+									
 									<form action="#" method="post" enctype="multipart/form-data" style="float:right"
 					                			  tal:attributes="action string:${context/absolute_url}/myvindulalistrecados">
 											<input type="hidden" name="form.excluir:boolean" value="True" />
@@ -64,8 +64,11 @@
 											<input type="submit" name="excluir" id="excluir" value="Excluir" 
 																	 class="comments bt_comments" tal:attributes="id item/id|nothing" />	
 									</form>
-									
+									<a tal:attributes="href string:${context/portal_url}/myvindulalistuser?user=${user}&scraps=true">
+										<input type="button" class="comments bt_comments" value="Responder" />
+									</a>
 									<div id="new-comments"></div>
+									
 								</div>
 							</div>
 							<div class="comments-cont">
