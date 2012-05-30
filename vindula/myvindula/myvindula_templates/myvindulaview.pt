@@ -123,7 +123,7 @@
 										</div>
 										<div class="row comment-body">
 											<div class="cell width-6 position-0" tal:condition="item/upload_image|nothing">
-												<img height="150" tal:attributes="src string:${context/portal_url|nothing}/howareu-image?id=${item/id|nothing}">
+												<img width="220" tal:attributes="src string:${context/portal_url|nothing}/howareu-image?id=${item/id|nothing}">
 											</div>
 							                <div tal:attributes="class python: item.upload_image and 'cell width-9 position-6' or ''">
 							                    <p tal:replace="item/text|nothing" />
