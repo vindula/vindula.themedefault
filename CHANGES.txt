@@ -39,11 +39,6 @@ Changelog
 - ajustes nos metodos de curtir e descurtir
 - ajustes na permição de excluir comentarios do portal
 
-1.1.5 - 2012-05-24
------------------
-<<<<<<< HEAD
-- Ajuste do portlet ramais para departamentos em ordem alfabetica
-
 
 1.1 - 2012-05-18
 -----------------
@@ -52,15 +47,11 @@ Changelog
 
 1.1.5 - 2012-05-24
 -----------------
+- Ajuste do portlet ramais para departamentos em ordem alfabetica
 - Ajustes no mecanismo para cortar a imagem para imagens grandes
 - Adição do SQl da tabela vin_myvindula_photo_user
 - Adição do mecanismo de Excluir a imagem do Usuario
-
-
-1.1.5 - 2012-05-28
----------------------
 - Ajustes no tamanho da imagem do usuário para o portlet reload
-=======
 - Opção no portlet ramais e aniversariantes para permitir exibição a usuarios anônimos
 - Correções de ortografia
 - Criação de mecanismo para alterar o label  dos campos do perfil do usuário
@@ -80,8 +71,3 @@ Changelog
 ----------------------
 - Correção da view de listagem de usuarios pelo portlet ramais, melhoria na busca com filtro dinamico
 - Adição do even/odd na configuração de campos do myvindula
-
-
-
-
->>>>>>> master

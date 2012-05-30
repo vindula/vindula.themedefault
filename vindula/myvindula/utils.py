@@ -1,5 +1,4 @@
-
-
+# coding: utf-8
 
 from vindula.myvindula.user import BaseFunc,ModelsFuncDetails
 
