@@ -396,82 +396,18 @@ class ModelsConfgMyvindula(Storm, BaseStore):
     __storm_table__ = 'vin_myvindula_confgfuncdetails'
     
     #Campos de edição
-    id = Int(primary=True)
-    name = Bool()
-    phone_number = Bool()
-    cell_phone = Bool()
-    email = Bool()
-    employee_id = Bool()
-    #username = Bool()
-    date_birth = Bool()
-    registration = Bool()
-    enterprise = Bool()
-    position = Bool()
-    admission_date = Bool()
-    cost_center = Bool()
-    organisational_unit = Bool()
-    reports_to = Bool()
-    location = Bool()
-    postal_address = Bool()
-    special_roles = Bool()
-    photograph = Bool()
-    nickname = Bool()
-    pronunciation_name = Bool()
-    committess = Bool()
-    projetcs = Bool()
-    personal_information = Bool()
-    skills_expertise = Bool()
-    profit_centre = Bool()
-    languages = Bool()
-    availability = Bool()
-    papers_published = Bool()
-    teaching_research =Bool()
-    delegations = Bool()
-    resume = Bool()
-    blogs = Bool()
-    customised_message = Bool()
-    vin_myvindula_department = Bool()  
-
-    #Campos de Visão
-    name_view = Bool()
-    phone_number_view = Bool()
-    cell_phone_view = Bool()
-    email_view = Bool()
-    employee_id_view = Bool()
-    #username = Bool()
-    date_birth_view = Bool()
-    registration_view = Bool()
-    enterprise_view = Bool()
-    position_view = Bool()
-    admission_date_view = Bool()
-    cost_center_view = Bool()
-    organisational_unit_view = Bool()
-    reports_to_view = Bool()
-    location_view = Bool()
-    postal_address_view = Bool()
-    special_roles_view = Bool()
-    photograph_view = Bool()
-    nickname_view = Bool()
-    pronunciation_name_view = Bool()
-    committess_view = Bool()
-    projetcs_view = Bool()
-    personal_information_view = Bool()
-    skills_expertise_view = Bool()
-    profit_centre_view = Bool()
-    languages_view = Bool()
-    availability_view = Bool()
-    papers_published_view = Bool()
-    teaching_research_view =Bool()
-    delegations_view = Bool()
-    resume_view = Bool()
-    blogs_view = Bool()
-    customised_message_view = Bool()
-    vin_myvindula_department_view = Bool()  
-
+    #id = Int()
+    fields = Unicode(primary=True)
+    ativo_edit = Bool()
+    ativo_view = Bool()
+    label = Unicode()
 
     #loads data into DataBase    
-    def get_configuration(self):
-        data = self.store.find(ModelsConfgMyvindula).one()
+    def get_configuration_By_fields(self, campo):
+        try:campo = unicode(campo, 'utf-8')    
+        except:pass 
+
+        data = self.store.find(ModelsConfgMyvindula, ModelsConfgMyvindula.fields==campo).one()
         if data:
             return data
         else:
@@ -482,6 +418,20 @@ class ModelsConfgMyvindula(Storm, BaseStore):
         config = ModelsConfgMyvindula(**kwargs)
         self.store.add(config)
         self.store.flush()                
+
+    def getConfig_views(self,campo):
+        result = self.get_configuration_By_fields(campo)
+        if result:
+            return result.ativo_view
+        else:
+            return True
+
+    def getConfig_edit(self,campo):
+        result = self.get_configuration_By_fields(campo)
+        if result:
+            return result.ativo_edit
+        else:
+            return True
 
     
 class ModelsMyvindulaHowareu(Storm, BaseStore):
@@ -843,7 +793,7 @@ class BaseFunc(BaseStore):
     def checaEstado(self,config, campo):
         if config:
             try:
-                return config.__getattribute__(campo)
+                return config.get(campo)
             except:
                 return True
         else:
@@ -944,15 +894,27 @@ class BaseFunc(BaseStore):
         else:
             return self.context.absolute_url()+'/'+'defaultUser.png'        
         
-    def checked(self,campo,request,data):
+    def checked(self,campo,request,data,ativa='edit'):
         if campo in request.keys():
             if request.get(campo, '') == True:
                 return "checked"
             else:
                 return ""
         elif campo in data.keys():
-            if data.get(campo,'') == True:
-                return "checked"
+            D = data.get(campo,None)
+            if D:
+                if ativa == 'edit':
+                    if D.get('edit',False):
+                        return "checked"
+                    else:
+                        return ""
+                elif ativa == 'view':
+                    if D.get('view',False):
+                        return "checked"
+                    else:
+                        return ""
+                else:
+                    return ""
             else:
                 return ""
         else:
@@ -1009,6 +971,22 @@ class BaseFunc(BaseStore):
                 return datastr  
             else:
                 return data
+
+    #Retorna o label dos campos dinamicos
+    def get_label_filed(self, campo):
+        result = ModelsConfgMyvindula().get_configuration_By_fields(campo)
+        default = SchemaConfgMyvindula().campos.get(campo)
+        
+        if result:
+            label = result.__getattribute__('label') 
+            if not label:
+                return default.get('label')
+            else:
+                return label
+            
+        else:
+            return default.get('label')
+
             
     def converte_dadosByDB(self, D):
         
@@ -1053,7 +1031,7 @@ class BaseFunc(BaseStore):
                     tmp += "<!-- Campo %s -->"%(campo)
                     tmp += "<div class='%s'>"%(self.field_class(errors, campo))
                     if self.checaEstado(config_myvindula,campo) or manage:
-                        tmp += "   <label for='%s'>%s</label>"%(campo,campos[campo]['label'])
+                        tmp += "   <label for='%s'>%s</label>"%(campo,self.get_label_filed(campo))
                         if campos[campo]['required'] == True:
                             tmp += "   <span class='fieldRequired' title='Obrigatório'>(Obrigatório)</span>"
     
@@ -1127,35 +1105,47 @@ class BaseFunc(BaseStore):
             errors = form_data.get('errors',None)
             data = form_data.get('data',None)
             campos = form_data.get('campos',None)
-            notCampos = []
-                                    
-            if start:
-                for i in campos.keys():
-                    if 'view' in i:
-                        notCampos.append(i)
-            else:
-                for i in campos.keys():
-                    if not 'view' in i:
-                        notCampos.append(i)
+#            notCampos = []
+#                                    
+#            if start:
+#                for i in campos.keys():
+#                    if 'view' in i:
+#                        notCampos.append(i)
+#            else:
+#                for i in campos.keys():
+#                    if not 'view' in i:
+#                        notCampos.append(i)
                 
             html = []
             i=0
             
-            cont = len(campos) - len(notCampos)
-            while i < cont:
+            #cont = len(campos) - len(notCampos)
+            while i < len(campos):
                 html.append(i)
                 i+=1
-
+             
             for campo in campos.keys():
-                if campo != 'id' and campo != 'username' and not campo in notCampos:
+                if campo != 'id' and campo != 'username': #and not campo in notCampos:
                     index = campos[campo].get('ordem',0)
                     tmp = ""
                     tmp += "<!-- Campo %s -->"%(campo)
                     tmp += "<div class='%s'>"%(self.field_class(errors, campo))
-                    tmp += "   <label for='%s'>%s</label>"%(campo,campos[campo]['label'])
-                    tmp += "   <div class='formHelp'>Habilita a edição do campo '%s' pelo funcionário'</div>"%(campos[campo]['label'])   
+                    tmp += "   <label for='%s'>%s</label>"%(campo,data[campo]['label'])
                     tmp += "   <div >%s</div>"%(errors.get(campo,''))
-                    tmp += "<input id='%s' type='checkbox' value='%s' name='%s' size='25' %s/>"%(campo,'true',campo,self.checked(campo,self.request,data))
+                    tmp += "   <div class='formHelp'>"
+                    tmp += "   <input id='%s' type='checkbox' value='%s' name='%s' size='25' %s/>"%('edit_'+campo,'true','edit_'+campo,self.checked(campo,self.request,data,'edit'))
+                    tmp += "   Habilita a edição do campo '%s' pelo funcionário'</div>"%(data[campo]['label'])   
+                    tmp += "   <div class='formHelp'>"
+                    tmp += "   <input id='%s' type='checkbox' value='%s' name='%s' size='25' %s/>"%('view_'+campo,'true','view_'+campo,self.checked(campo,self.request,data,'view'))
+                    tmp += "    Habilita a visualização deste do campo '%s' pelos funcionários'</div>"%(campos[campo]['label'])   
+
+                    tmp += "   <div class='formHelp'>Digite o nome de visualização deste do campo '%s' pelos funcionários'</div>"%(campos[campo]['label'])
+                    value = self.getValue(campo,self.request,data)
+                    try: valor = value.get('label','')
+                    except: valor = value
+                       
+                    tmp += "   <input id='%s' type='text' value='%s' name='%s' size='25' />"%('label_'+campo,valor,'label_'+campo,)
+                    
                     tmp += "</div>" 
                     
                     html.pop(index)
@@ -1275,7 +1265,7 @@ class SchemaFunc(BaseFunc):
               'photograph'            : {'required': False, 'type' : 'file',  'label':'Foto',                   'decription':u'Coloque a foto do funcionário',                  'ordem':17},
               'pronunciation_name'    : {'required': False, 'type' : to_utf8, 'label':'Pronuncia do nome',      'decription':u'Como se pronuncia o  nome do funcionário',       'ordem':18},
               'committess'            : {'required': False, 'type' : to_utf8, 'label':'Comissão',               'decription':u'Digite a comissão do funcionário',               'ordem':19},
-              'projetcs'              : {'required': False, 'type' : to_utf8, 'label':'Projetos',               'decription':u'Digite os projetos do funcionário',              'ordem':20},
+              'projects'              : {'required': False, 'type' : to_utf8, 'label':'Projetos',               'decription':u'Digite os projetos do funcionário',              'ordem':20},
               'personal_information'  : {'required': False, 'type' : to_utf8, 'label':'Informações pessoais',   'decription':u'Digite as informações pessoais do funcionário',  'ordem':21},
               'skills_expertise'      : {'required': False, 'type' : to_utf8, 'label':'Habilidades'          ,  'decription':u'Digite as habilidades do funcionário',           'ordem':22},
               'profit_centre'         : {'required': False, 'type' : to_utf8, 'label':'Centro de Lucro',        'decription':u'Digite o centro de lucro do funcionário',        'ordem':23},
@@ -1313,6 +1303,15 @@ class SchemaFunc(BaseFunc):
             else:
                 user_id = unicode('acl_users','utf-8')
         
+        conf = {}
+        for item in campos.keys():
+            dado = ModelsConfgMyvindula().getConfig_edit(item)
+            if dado:
+                conf[item] = dado
+            else:
+                conf[item] = True
+        
+        
         # divisao dos dicionarios "errors" e "convertidos"
         form_data = {
             'errors': {},
@@ -1320,7 +1319,7 @@ class SchemaFunc(BaseFunc):
             'campos':campos,
             'departametos': ModelsDepartment().get_department(),
             'username' : user_id,
-            'config_myvindula':ModelsConfgMyvindula().get_configuration(),
+            'config_myvindula':conf,
             'manage':manage,}
         
         # se clicou no botao "Voltar"
@@ -1538,7 +1537,7 @@ class SchemaConfgMyvindula(BaseFunc):
               'photograph'            : {'required': False, 'type' : bool, 'label':'Foto',                   'ordem':18},
               'pronunciation_name'    : {'required': False, 'type' : bool, 'label':'Pronuncia do nome',      'ordem':19},
               'committess'            : {'required': False, 'type' : bool, 'label':'Comissão',               'ordem':20},
-              'projetcs'              : {'required': False, 'type' : bool, 'label':'Projetos',               'ordem':21},
+              'projects'              : {'required': False, 'type' : bool, 'label':'Projetos',               'ordem':21},
               'personal_information'  : {'required': False, 'type' : bool, 'label':'Informações pessoais',   'ordem':22},
               'skills_expertise'      : {'required': False, 'type' : bool, 'label':'Habilidades'          ,  'ordem':23},
               'profit_centre'         : {'required': False, 'type' : bool, 'label':'Centro de Lucro',        'ordem':24},
@@ -1551,41 +1550,6 @@ class SchemaConfgMyvindula(BaseFunc):
               'delegations'           : {'required': False, 'type' : bool, 'label':'Personalizado 3',        'ordem':31},
               'customised_message'    : {'required': False, 'type' : bool, 'label':'Personalizado 4',        'ordem':32},
               
-              #Campos Visão
-              'vin_myvindula_department_view': {'required': False, 'type' : bool, 'label':'Departamento',      'ordem':0},
-              'name_view'                    : {'required': False, 'type' : bool, 'label':'Nome',              'ordem':1},
-              'nickname_view'                : {'required': False, 'type' : bool, 'label':'Apelido',           'ordem':2},
-              'phone_number_view'            : {'required': False, 'type' : bool, 'label':'Telefone',          'ordem':3},
-              'cell_phone_view'              : {'required': False, 'type' : bool, 'label':'Celular',           'ordem':4},
-              'email_view'                   : {'required': False, 'type' : bool, 'label':'E-mail',            'ordem':5},
-              'employee_id_view'             : {'required': False, 'type' : bool, 'label':'ID Funcionário',    'ordem':6},
-              'date_birth_view'            : {'required': False, 'type' : bool, 'label':'Data de Nascimento',     'ordem':7},
-              'registration_view'          : {'required': False, 'type' : bool, 'label':'Matrícula',              'ordem':8},
-              'enterprise_view'            : {'required': False, 'type' : bool, 'label':'Empresa',                'ordem':9},
-              'position_view'              : {'required': False, 'type' : bool, 'label':'Cargo',                  'ordem':10},
-              'admission_date_view'        : {'required': False, 'type' : bool, 'label':'Data de Admissão',       'ordem':11},
-              'cost_center_view'           : {'required': False, 'type' : bool, 'label':'Centro de Custo',        'ordem':12},
-              'organisational_unit_view'   : {'required': False, 'type' : bool, 'label':'Unidade organizacional', 'ordem':13},
-              'reports_to_view'            : {'required': False, 'type' : bool, 'label':'Reporta-se a',           'ordem':14},
-              'location_view'              : {'required': False, 'type' : bool, 'label':'Localização',            'ordem':15},
-              'postal_address_view'        : {'required': False, 'type' : bool, 'label':'Endereço Postal',        'ordem':16},
-              'special_roles_view'         : {'required': False, 'type' : bool, 'label':'Funções Especiais',      'ordem':17},
-              'photograph_view'            : {'required': False, 'type' : bool, 'label':'Foto',                   'ordem':18},
-              'pronunciation_name_view'    : {'required': False, 'type' : bool, 'label':'Pronuncia do nome',      'ordem':19},
-              'committess_view'            : {'required': False, 'type' : bool, 'label':'Comissão',               'ordem':20},
-              'projetcs_view'              : {'required': False, 'type' : bool, 'label':'Projetos',               'ordem':21},
-              'personal_information_view'  : {'required': False, 'type' : bool, 'label':'Informações pessoais',   'ordem':22},
-              'skills_expertise_view'      : {'required': False, 'type' : bool, 'label':'Habilidades'          ,  'ordem':23},
-              'profit_centre_view'         : {'required': False, 'type' : bool, 'label':'Centro de Lucro',        'ordem':24},
-              'languages_view'             : {'required': False, 'type' : bool, 'label':'Idioma',                 'ordem':25},
-              'availability_view'          : {'required': False, 'type' : bool, 'label':'Disponibilidade',        'ordem':26},
-              'papers_published_view'      : {'required': False, 'type' : bool, 'label':'Artigos Publicados',     'ordem':27},
-              'blogs_view'                 : {'required': False, 'type' : bool, 'label':'Blogs',                  'ordem':28},
-              'teaching_research_view'     : {'required': False, 'type' : bool, 'label':'CPF',                    'ordem':29},
-              'resume_view'                : {'required': False, 'type' : bool, 'label':'Personalizado 2',        'ordem':30},
-              'delegations_view'           : {'required': False, 'type' : bool, 'label':'Personalizado 3',        'ordem':31},
-              'customised_message_view'    : {'required': False, 'type' : bool, 'label':'Personalizado 4',        'ordem':32},
-              
               }
    
     def configuration_processes(self,context):
@@ -1594,7 +1558,7 @@ class SchemaConfgMyvindula(BaseFunc):
         form = context.request # var tipo 'dict' que guarda todas as informacoes do formulario (keys,items,values)
         form_keys = form.keys() # var tipo 'list' que guarda todas as chaves do formulario (keys)
         campos = self.campos
-        config = ModelsConfgMyvindula().get_configuration()
+        config = False #ModelsConfgMyvindula().get_configuration()
        
         # divisao dos dicionarios "errors" e "convertidos"
         form_data = {
@@ -1611,18 +1575,68 @@ class SchemaConfgMyvindula(BaseFunc):
               # Inicia o processamento do formulario
               # chama a funcao que valida os dados extraidos do formulario (valida_form) 
               errors, data = valida_form(campos, context.request.form)  
-
+              
               if not errors:
-                  if config:
-                      for campo in campos.keys():
-                          value = data.get(campo, None)
-                          setattr(config, campo, value)
-
-                  else:
-                      # adicionando...
-                      configuration = ModelsConfgMyvindula(**data)
-                      self.store.add(configuration)
-                      self.store.flush()
+                  
+                  for campo in campos.keys():
+                      edit = False
+                      L = []
+                      for i in form_keys:
+                          if campo in i:
+                              L.append(i)  
+                      
+                      
+                      result = ModelsConfgMyvindula().get_configuration_By_fields(campo)
+                      if result:
+                          edit = True
+                              
+                      D = {}
+                      for item in L:
+                        if 'edit' in item:
+                            if form.get(item):
+                                D['ativo_edit'] = True
+                            else:
+                                D['ativo_edit'] = False
+                               
+                        elif 'view' in item:
+                            if form.get(item):
+                                D['ativo_view'] = True 
+                            else:
+                                D['ativo_view'] = False
+                            
+                        elif 'label' in item:
+                            try: valor = unicode(form.get(item),'utf-8')
+                            except: valor = form.get(item)
+                            
+                            D['label'] = valor
+                      
+                      if not 'ativo_edit' in D.keys():
+                          D['ativo_edit'] = False
+                      
+                      if not 'ativo_view' in D.keys():
+                          D['ativo_view'] = False
+                      
+                      if edit:
+                          for data in D.keys():
+                              setattr(result, data, D.get(data))
+                              self.store.flush()
+                      else:
+                          try: field = unicode(campo,'utf-8')
+                          except: field = campo
+                          D['fields'] = field
+                          ModelsConfgMyvindula().set_configuration(**D)  
+                  
+                  
+#                  if config:
+#                      
+#                          value = data.get(campo, None)
+#                          setattr(config, campo, value)
+#
+#                  else:
+#                      # adicionando...
+#                      configuration = ModelsConfgMyvindula(**data)
+#                      self.store.add(configuration)
+#                      self.store.flush()
                   
                   context.request.response.redirect(success_url)        
                        
@@ -1632,16 +1646,37 @@ class SchemaConfgMyvindula(BaseFunc):
                   return form_data
           
         # se for um formulario de edicao
-        elif config:    
-            D = {}
-            for campo in campos.keys():
-                D[campo] = getattr(config, campo, '')
-            
-            form_data['data'] = D
-            return form_data
+#        elif config:    
+#            D = {}
+#            for campo in campos.keys():
+#                D[campo] = getattr(config, campo, '')
+#            
+#            form_data['data'] = D
+#            return form_data
               
         # se for um formulario de adicao
         else:
+            D = {}
+            for campo in campos.keys():
+                result = ModelsConfgMyvindula().get_configuration_By_fields(campo)
+                dados = {}
+                if result:
+                    label = result.label
+                    if label:
+                        dados['label'] = label
+                    else:
+                        dados['label'] = campos[campo].get('label')
+                    dados['edit'] = result.ativo_edit
+                    dados['view'] = result.ativo_view
+
+                else:
+                    dados['label'] = campos[campo].get('label')
+                    dados['edit'] = True
+                    dados['view'] = True
+            
+            
+                D[campo] = dados
+            form_data['data'] = D
             return form_data
 
 

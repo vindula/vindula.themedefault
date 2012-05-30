@@ -1,7 +1,10 @@
 <html>
 	<body metal:use-macro="here/main_template/macros/master">
+		<metal:block fill-slot="top_slot">
+			<tal:dummy tal:define="dummy python:request.set('disable_border',1)" />
+		</metal:block>
 	
-	  	<div metal:fill-slot="content">
+	  	<div metal:fill-slot="content-core">
 			<h2 class="h2title">Em que os usuários estão pensando</h2>
       		<meta:macro metal:define-macro="page-view">    
       			<script type="text/javascript" src="++resource++vindula.myvindula/ajax_comments-curtir.js"></script>
@@ -14,14 +17,14 @@
 				<div id="content-comment" tal:define="view_listhowareu python: context.restrictedTraverse('@@howareu-list-all');
 											  view_myvindula python: context.restrictedTraverse('@@myvindula');
 											  member context/@@plone_portal_state/member;
-											  logado python:str(member)!='Anonymous User';
+											  AnonymousUser context/portal_membership/isAnonymousUser|python:True;
 											  form_data view_listhowareu/load_dados|python:[]">
 	                           					     
 		        	<div id="interna" class="howareulist" tal:define="Batch python:modules['Products.CMFPlone'].Batch;
 												                       b_size python:10;
 												                       b_start python:0;
 												                       b_start request/b_start | b_start;">
-						
+
 						<div class="geral_lista_comentarios" tal:define="batch python:Batch(form_data, b_size, int(b_start));"> 
 							<tal:rep repeat="item batch">
 								<div class="comment item_lista"
@@ -43,7 +46,7 @@
 											</a>
 										</h4>
 					                </div>
-									<div id="like">
+									<div id="like" tal:condition="not: AnonymousUser">
 										<div tal:attributes="id item/id|nothing">
 											<input type="hidden" name="isPlone:boolean" id="isPlone" value="False" />
 											<input type="hidden" name="type" id="type" value="ModelsMyvindulaHowareu" />
@@ -61,7 +64,7 @@
 									</div>
 									<div class="visualClear"></div>
 									<!-- campos input necessario para a criação de comentariso -->
-									<div id="comments" >
+									<div id="comments" tal:condition="not: AnonymousUser">
 										<div tal:attributes="id item/id|nothing">
 											
 											<input type="hidden" name="isPlone:boolean" id="isPlone" value="False" />

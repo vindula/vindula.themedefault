@@ -55,6 +55,11 @@ class IPortletAniversariosReload(IPortletDataProvider):
                                 description=unicode("Selecione o filtro que será usado no portlet", 'utf-8'),
                                 vocabulary=TypesSearch().__call__())
     
+    type_search_list = schema.Choice(title=unicode("Tipo de filtro para a listagem", 'utf-8'),
+                                description=unicode("Selecione o fitro que sera usado na lista de aniversariantes", 'utf-8'),
+                                vocabulary=TypesSearch().__call__())
+    
+    
     show_picture = schema.Bool(title=unicode("Exibir foto", 'utf-8'),
                                        description=unicode("Selecione para mostrar a foto dos aniversariantes no portlet.", 'utf-8'))
     
@@ -63,14 +68,26 @@ class IPortletAniversariosReload(IPortletDataProvider):
                                                       insira apenas números inteiros..", 'utf-8'),
                                default=8000,
                                required=True)
-    
+
+    show_anonymous = schema.Bool(title=unicode("Exibir portlet para anônimos", 'utf-8'),
+                               description=unicode("Selecione para mostrar o portlet para usuarios anônimos que acessarem o portal.", 'utf-8'),
+                               default=True,
+                               )
+        
     search_random = schema.Bool(title=unicode("Ordem Randômica dos resultados", 'utf-8'),
                                        description=unicode("Selecione para abilitar a ordenação randômica dos aniversariantes no portlet.", 'utf-8'))
-    
+
     details_user = schema.Text(title=unicode("Detalhes do aniversariantes", 'utf-8'),
-                                  description=unicode("Adicione detalhes sobre o aniversariante como Empresa, Matricula e outros. \
-                                                       Adicione um campo por linha, no formato [Label] | [Campo].", 'utf-8'),
-                                  required=False)
+                               description=unicode("Adicione detalhes sobre o aniversariante como Empresa, Matricula e outros. \
+                                                    Adicione um campo por linha, no formato [Label] | [Campo].", 'utf-8'),
+                               required=False)
+
+    principal_user = schema.TextLine(title=unicode("Destaque do aniversariante", 'utf-8'),
+                                 description=unicode("Adicione o campo com a informação princial do aniversariante como 'name' para Nome ou 'nickname' para\
+                                                      Apelido ou outros.", 'utf-8'),
+                                 default = u'name',
+                                 required=True)
+
 
 class Assignment(base.Assignment):
     """Portlet assignment.
@@ -81,15 +98,19 @@ class Assignment(base.Assignment):
     implements(IPortletAniversariosReload)
     # TODO: Add keyword parameters for configurable parameters here
     def __init__(self, title_portlet=u'', quantidade_portlet=u'',type_search=u'',\
-                 details_user=u'',show_picture=u'',search_random=u'',tempo_rotacao=u''):
+                 details_user=u'',show_picture=u'', principal_user=u'',show_anonymous=u'',\
+                 search_random=u'',tempo_rotacao=u'',type_search_list=u''):
        
        self.title_portlet = title_portlet
        self.quantidade_portlet = quantidade_portlet
        self.type_search = type_search
+       self.principal_user = principal_user
        self.details_user = details_user
        self.show_picture = show_picture
+       self.show_anonymous = show_anonymous
        self.search_random = search_random
        self.tempo_rotacao = tempo_rotacao
+       self.type_search_list = type_search_list
 
     @property
     def title(self):
@@ -113,8 +134,28 @@ class Renderer(base.Renderer):
     def get_type_search(self):
         return self.data.type_search
     
+    def get_type_search_list(self):
+        return self.data.type_search_list
+    
     def show_picture(self):
         return self.data.show_picture
+    
+    def show_anonymous(self):
+        return self.data.show_anonymous
+    
+    @property
+    def available(self):
+        membership = self.context.portal_membership
+        if membership.isAnonymousUser():
+            if self.show_anonymous():
+                return True
+            else:
+                return False 
+        else:
+            return True 
+    
+    def get_principal_user(self):
+        return self.data.principal_user
     
     def get_details_user(self, user):
         return self.data.details_user 
@@ -127,6 +168,17 @@ class Renderer(base.Renderer):
     
     def get_tempo_rotacao(self):
         return self.data.tempo_rotacao
+    
+    def nome_filtro(self):
+        filtro = self.get_type_search_list()
+        if filtro == 1:
+            return "Aniversariantes do Dia"
+        elif filtro == 7:
+            return "Aniversariantes da Semana"
+        elif filtro == 30:
+            return "Aniversariantes do Mês"
+        else:
+            return "Próximos Aniversariantes"
         
 class AddForm(base.AddForm):
     """Portlet add form.
@@ -166,7 +218,22 @@ class ReloadPortletView(grok.View):
         if 'show_picture' in self.request.keys():
             valor = self.request['show_picture']
             return eval(valor)
+         
+    def frase_filtro(self):
+        if 'type_search' in self.request.keys():
+            try:filtro = int(self.request['type_search'])
+            except:filtro = self.request['type_search']
+        else:
+            filtro = ''
         
+        if filtro == 1:
+            return "hoje"
+        elif filtro == 7:
+            return "nesta semana"
+        elif filtro == 30:
+            return "neste mês"
+        else:
+            return 'nos próximos dias'                
     
     def get_details_user(self, user):
         if 'details_user' in self.request.keys(): 
@@ -176,13 +243,30 @@ class ReloadPortletView(grok.View):
                 for line in lines:
                     D = {}
                     line = line.replace('[', '').replace(']', '').split(' | ')
-                    D['label'] = line[0]
-                    D['content'] = user.get(line[1])
-                    L.append(D)
+                    try:
+                        D['label'] = line[0]
+                        D['content'] = user.get(line[1])
+                        L.append(D)
+                    except:
+                        pass
                 return L
             except:
                 pass
         return None
+
+    
+    def get_principal_campo(self, obj):
+        if 'principal_user' in self.request.keys():
+            campo = self.request['principal_user']
+        else:
+            campo = None
+        
+        if campo:
+            try: return obj.get(campo,'')
+            except: return obj.get('name',obj.get('username','')) 
+        else:
+            try: return obj.get('name',obj.get('username',''))
+            except: return ''    
     
         
     def get_department(self, user):

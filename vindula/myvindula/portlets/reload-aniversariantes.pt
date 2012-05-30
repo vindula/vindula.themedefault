@@ -33,7 +33,7 @@
 						<div class="portlet-user-info" tal:attributes="class python: not view.show_picture and 'portlet-user-info-larg' or 'portlet-user-info'">
 							<h4>
 								<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username|nothing}"
-									tal:content="obj/name|obj/username|nothing">func</a>
+									tal:content="python: view.get_principal_campo(obj)">func</a>
 							</h4>
 								<p>
 									<tal:rep repeat="detail details" condition="details">
@@ -46,15 +46,10 @@
 					</div>
 				</div>
 			</tal:results>
-			<!--div class="titulo_info_boxTipo2 aling-right">
-				<h4 tal:define="x python:len(results)>int(quant)" tal:condition="x">
-					<a tal:attributes="href string:${here/portal_url}/myvindulalistbirthdays?filtro=${view/get_type_search|nothing}">Mais...</a>
-				</h4>
-			</div-->
-			
+		
 			<div class="visualClear"></div>
 			<tal:notresults tal:condition="not: view/birthdaysToday">
-				<h4>N&atilde;o h&aacute; aniversariantes nos pr&oacute;ximos dias.</h4>
+				<h4 tal:content="string:Não há aniversariantes ${view/frase_filtro|python:''}.">Não há aniversariantes</h4>
 			</tal:notresults>
 
 		</tal:def> 

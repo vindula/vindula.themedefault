@@ -1,7 +1,11 @@
 <html>
 	<body metal:use-macro="here/main_template/macros/master">
+		
+		<metal:block fill-slot="top_slot">
+			<tal:dummy tal:define="dummy python:request.set('disable_border',1)" />
+		</metal:block>
 	
-	  	<div metal:fill-slot="content">
+	  	<div metal:fill-slot="content-core">
 			<h2 class="h2title">Usu&aacute;rios do portal</h2>
       		<meta:macro metal:define-macro="page-view">                  
 				<tal:def define="member python:context.portal_membership.getAuthenticatedMember();

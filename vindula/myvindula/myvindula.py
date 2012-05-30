@@ -342,64 +342,72 @@ class AjaxView(grok.View):
     def importUser(self,form):
         return ImportUser().importUser(self,form)
     
-class MyVindulaListUser(grok.View):
+class MyVindulaListUser(grok.View, BaseFunc):
     #grok.context(ISiteRoot)
     grok.context(Interface)
     grok.require('zope2.View')
     grok.name('myvindulalistuser')
     
-    
     def get_campos(self):
-        configuracao= ModelsConfgMyvindula().get_configuration()
+        conf = {}
+        campos = SchemaConfgMyvindula().campos
+        for item in campos.keys():
+            dado = ModelsConfgMyvindula().getConfig_edit(item)
+            if dado:
+                conf[item] = dado
+            else:
+                conf[item] = True
+        
+    
+        return conf
+    
+    
+    def get_ConfugCampos(self, campo):
+        configuracao= ModelsConfgMyvindula().getConfig_views(campo)
         return configuracao
    
     def valida_pessoal(self):
-        configuracao1= self.get_campos()
+        #configuracao1= self.get_campos()
         
-        campos = ['employee_id_view','nickname_view','pronunciation_name_view','date_birth_view']
+        campos = ['employee_id','nickname','pronunciation_name','date_birth']
         for i in campos:
-            if configuracao1:
-                if configuracao1.__getattribute__(i):
-                    return True
+            if ModelsConfgMyvindula().getConfig_views(i):
+                return True
             
         return False
         
     def valida_contato(self):
-        configuracao1= self.get_campos()
+        #configuracao1= self.get_campos()
         
-        campos = ['email_view','phone_number_view','location_view','postal_address_view']
+        campos = ['email','phone_number','location','postal_address']
         for i in campos:
-            if configuracao1:
-                if configuracao1.__getattribute__(i):
-                    return True
+            if ModelsConfgMyvindula().getConfig_views(i):
+                return True
             
         return False
          
     def valida_corporativo(self):
-        configuracao1= self.get_campos()
-        campos = ['enterprise_view','registration_view','position_view','admission_date_view','registration_view','cost_center_view',\
-                  'profit_centre_view','special_roles_view','organisational_unit_view','delegations_view','reports_to_view']
+        #configuracao1= self.get_campos()
+        campos = ['enterprise','registration','position','admission_date','registration','cost_center',\
+                  'profit_centre','special_roles','organisational_unit','delegations','reports_to']
 
         for i in campos:
-            if configuracao1:
-                if configuracao1.__getattribute__(i):
-                    return True
+            if ModelsConfgMyvindula().getConfig_views(i):
+                return True            
             
         return False
         
     def valida_others(self):
-        configuracao1= self.get_campos()
-        campos = ['committess_view','registration_view','projetcs_view','personal_information_view','skills_expertise_view','languages_view',\
-                  'availability_view','papers_published_view','teaching_research_view','resume_view','blogs_view','customised_message_view']
+        #configuracao1= self.get_campos()
+        campos = ['committess','registration','projects','personal_information','skills_expertise','languages',\
+                  'availability','papers_published','teaching_research','resume','blogs','customised_message']
         
         for i in campos:
-            if configuracao1:
-                if configuracao1.__getattribute__(i):
-                    return True
+            if ModelsConfgMyvindula().getConfig_views(i):
+                return True    
         
         return False
 
-    
     def get_howareu(self, user):
         member =  self.context.restrictedTraverse('@@plone_portal_state').member().getUserName();
         user = self.request.form.get('user',str(member))
@@ -570,21 +578,44 @@ class MyVindulalistAll(grok.View, BaseFunc):
             title = form.get('title','').strip()
             departamento= form.get('departamento','0')
             ramal = form.get('ramal','').strip()
+            filtro = form.get('filtro','departamentos').strip()
+            
             if title or departamento !='0' or ramal:
-                result_set = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'),filtro_busca)
-                if result_set:
-                    result = self.rs_to_list(result_set)
-        elif not config_muit_user:
-            result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'),filtro_busca)
-            if result_set:
-                    result = self.rs_to_list(result_set)
-        elif 'all' in form.keys():
+            
+                if type(title) != unicode:
+                    title = unicode(title, 'utf-8')
+                
+                if type(departamento) != unicode:
+                    departamento = unicode(departamento, 'utf-8')
+                    
+                if type(ramal) != unicode:
+                    ramal = unicode(ramal, 'utf-8')
+                    
+                result = ModelsFuncDetails().get_FuncBusca(title,'0',ramal,filtro_busca)
+                if result:
+
+                    if departamento != '0' and filtro != 'departamentos':
+                        busca = "result.find("+ filtro + "=u'" + departamento+"')"
+                        data = eval(busca)
+                        if data.count() != 0:
+                            result = self.rs_to_list(data)
+                        else:
+                            result = []
+                    elif departamento == 'departamentos':
+                        data = ModelsFuncDetails().get_FuncBusca(title,departamento,ramal,filtro_busca)
+                        if data:
+                            result = self.rs_to_list(data)
+                        else:
+                            result = []
+            
+        elif not config_muit_user or 'all' in form.keys():
             result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'),filtro_busca)
             if result_set:
                     result = self.rs_to_list(result_set)
                     
         return result
     
+      
 #    def rs_to_list(self, rs):
 #        if rs:
 #            return [i for i in rs]
@@ -784,6 +815,30 @@ class MyVindulaListBirthdays(grok.View):
             user_id = user
         
         return ModelsDepartment().get_departmentByUsername(user)     
+        
+    def get_campos_list_user(self):
+        if 'control-panel-objects' in  getSite().keys():
+            control = getSite()['control-panel-objects']
+            if 'vindula_aniversariantesconfig' in control.keys():
+                list = control['vindula_aniversariantesconfig']
+            else:
+                list = None
+        
+        if list: 
+            lines = list.list_campos_user.splitlines()
+            L = []
+
+            for line in lines:
+                D = {}
+                line = line.replace('[', '').replace(']', '').split(' | ')
+                try:D['label'] = line[0]
+                except:D['label'] = ''
+                
+                try:D['content'] = line[1]
+                except:D['content'] = ''
+                
+                L.append(D)
+            return L
         
     def get_birthdaysToday(self, type_filter):
         results = []
@@ -1040,7 +1095,7 @@ class MyVindulaImportFirstView(grok.View):
                 else:
                     IStatusMessage(self.request).addStatusMessage(_(u"Erro ao carregar arquivo, contate o administrados do portal."), "error")
                 
-class MyVindulaImportSecondView(grok.View):
+class MyVindulaImportSecondView(grok.View, BaseFunc): 
     grok.context(INavigationRoot)
     grok.require('cmf.ManagePortal')
     grok.name('myvindula-import-second')
@@ -1078,7 +1133,9 @@ class MyVindulaImportSecondView(grok.View):
                 index = fields[field].get('ordem',0)
                 D = {}
                 D['name'] = field
-                D['label'] = fields.get(field).get('label')
+                if field != 'username':
+                    D['label'] = self.get_label_filed(field)
+
                 fields_vin.pop(index)
                 fields_vin.insert(index, D)    
                 

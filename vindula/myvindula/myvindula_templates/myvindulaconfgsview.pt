@@ -25,21 +25,24 @@
 		        <form name="myvindulaconfgs" id="myvindulaconfgs" enctype="multipart/form-data"
 		        	  class="enableAutoFocus" action="myvindulaconfgs" method="POST">
 
-		            <fieldset style="float: left">
+		            <fieldset>
 		            	<legend>Campos Habilitados Para Edição</legend>
-						<!-- ID da user--> 
+						<!-- ID da user
 						<input id="id" type="hidden" value="" name="id" tal:attributes="value request/id| id |nothing">
-	
+						--> 
 						<tal:def define="html python:view.geraConfCampos(form_data)">
 							<tal:rep repeat="x html">
-								<div tal:content="structure x"/>
+								<div tal:define="class_odd repeat/x/odd;
+									 			 class_even repeat/x/even"
+									 tal:attributes="class python: (class_odd and 'odd') or (class_even and 'even')"   
+									tal:content="structure x" />
 							</tal:rep>
 						</tal:def>
 					
 					</fieldset>
-					<fieldset style="float:right">
+					<!--fieldset style="float:right">
 		            	<legend>Campos Habilitados Para Visualização</legend>
-						<!-- ID da user--> 
+						<!-- ID da user-- 
 						<input id="id" type="hidden" value="" name="id" tal:attributes="value request/id| id |nothing">
 	
 						<tal:def define="html python:view.geraConfCampos(form_data,False)">
@@ -48,7 +51,7 @@
 							</tal:rep>
 						</tal:def>
 					
-					</fieldset>
+					</fieldset-->
 					<div class="visualClear"></div>
 					<!-- Botões de ação -->	
 				   	<fieldset>
