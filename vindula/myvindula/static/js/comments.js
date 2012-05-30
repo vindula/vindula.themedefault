@@ -42,4 +42,5 @@ $j(document).ready(function(){
 			text.text(' Ver');
 		}
 	})
+	
 });	

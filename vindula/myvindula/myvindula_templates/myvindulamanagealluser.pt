@@ -16,7 +16,7 @@
 		        			<fieldset>
 		            			<legend>Adicionar novo Funcionários</legend>
 								<a tal:attributes="href string:${context/portal_url|nothing}/myvindulaprefs?newuser=''"><strong>Clique aqui</strong></a>
-									<span>para adcionar novo funcionário</span>
+									<span>para adicionar novo funcionário</span>
 							</fieldset>
 		        		</div>
 						<div id="busca">

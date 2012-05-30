@@ -6,12 +6,12 @@ $j(document).ready(function(){
 	$j('input.comments').click(function(){
 		var url = $j('#portal_url').val() + "/myvindula-comments";
 		var ctx = $j(this);
-		var username = $j('#username').val();
+		//var username = $j('#username').val();
 		var id_obj = $j(this).attr('id');
 		var type = $j(this).parent().find('#'+id_obj).find('#type').val();
 		var isPlone = $j(this).parent().find('#'+id_obj).find('#isPlone').val();
 		
-		$j.get(url,{username:username,
+		$j.get(url,{//username:username,
  				    id_obj:id_obj,
 					type:type,
 					isPlone:isPlone}, function(data){
@@ -29,13 +29,13 @@ $j(document).ready(function(){
 		var url_sucess = $j('#context_url').val();
 		var ctx = $j(this);
 		
-		var username = $j('#username').val();
+		//var username = $j('#username').val();
 		var id_obj = $j(this).attr('id');
 		var type = $j(this).parent().find('#'+id_obj).find('#type').val();
 		var isPlone = $j(this).parent().find('#'+id_obj).find('#isPlone').val();
 		
 		var dislike = $j(this).attr('src');
-		$j.get(url,{username:username,
+		$j.get(url,{//username:username,
  				    id_obj:id_obj,
 					type:type,
 					isPlone:isPlone,

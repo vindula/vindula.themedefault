@@ -12,6 +12,7 @@
 			<input type="hidden" tal:attributes="value view/get_search_random" name="search_random" id="search_random">
 			<input type="hidden" tal:attributes="value view/get_tempo_rotacao" name="tempo_rotacao" id="tempo_rotacao">
 			
+			<input type="hidden" tal:attributes="value view/get_principal_user" name="principal_user" id="principal_user">
 			<input type="hidden" tal:attributes="value view/details_user" name="details_user" id="details_user">
 			<input type="hidden" name="b_start" id="b_start" value="0">
 			<script tal:attributes="src string:${context/portal_url}/++theme++vindula.themedefault/js/cycle.js"></script>
@@ -36,7 +37,8 @@
 			<div class="titulo_info_boxTipo2 aling-right">
 				<br />
 				<h4>
-					<a tal:attributes="href string:${here/portal_url}/myvindulalistbirthdays?filtro=7">Aniversariantes da Semana</a>
+					<a tal:attributes="href string:${here/portal_url}/myvindulalistbirthdays?filtro=${view/get_type_search_list|nothing}"
+					   tal:content="view/nome_filtro|python:''">Aniversariantes da Semana</a>
 				</h4>
 			</div>			
 		</div>    	

@@ -50,7 +50,7 @@
 						</div>										
 						<div id="holerite-cont">
 							<div id="holerite" style="width: 660px;">
-								<div class="border">
+								<div class="border" style="float: none;">
 									<div class="row title even">
 										<div class="cell width-full position-0">
 											<span >Empresa</span>	
@@ -225,13 +225,13 @@
 							</div>
 							<br />
 							<div style="width:100%; margin-top: 10px;">
-								<input type="button" value="Imprimir" tal:attributes="onclick string:window.open('${context/portal_url}/imprimir-holerite?cpf=${item/cpf}&competencia=${item/competencia}', 'popupwindow', 'scrollbars=yes,width=670,height=600');;return true;;"
+								<input type="button" value="Imprimir" tal:attributes="onclick string:window.open('${context/portal_url}/imprimir-holerite?competencia=${item/competencia}', 'popupwindow', 'scrollbars=yes,width=670,height=600');;return true;;"
 									 />
 							</div>	
 						</div>
 					</tal:cond>
 					<tal:cond condition="not: item">
-						<h3>Voce Não Possui demostrativos de pagamento</h3>
+						<h3>Voce não possui demonstrativos de pagamento.</h3>
 					
 					</tal:cond>
 				</div>

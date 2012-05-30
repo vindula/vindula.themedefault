@@ -165,9 +165,9 @@
 									<td class="field">Comissão</td>
 									<td class="value" tal:content="form_data/committess|nothing"></td>
 								</tr>
-								<tr tal:condition="configuracao/projetcs|nothing">
+								<tr tal:condition="configuracao/projects|nothing">
 									<td class="field">Projetos</td>
-									<td class="value" tal:content="form_data/projetcs|nothing"></td>
+									<td class="value" tal:content="form_data/projects|nothing"></td>
 								</tr>			
 								<tr tal:condition="configuracao/personal_information|nothing">
 									<td class="field">Informa&ccedil;&atilde;o pessoal</td>

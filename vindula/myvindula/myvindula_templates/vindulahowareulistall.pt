@@ -1,12 +1,15 @@
 <html>
 	<body metal:use-macro="here/main_template/macros/master">
+		<metal:block fill-slot="top_slot">
+			<tal:dummy tal:define="dummy python:request.set('disable_border',1)" />
+		</metal:block>
 	
-	  	<div metal:fill-slot="content">
-			<h2 class="h2title">Em que os usuarios estão pensando</h2>
+	  	<div metal:fill-slot="content-core">
+			<h2 class="h2title">Em que os usuários estão pensando</h2>
       		<meta:macro metal:define-macro="page-view">    
       			<script type="text/javascript" src="++resource++vindula.myvindula/js/ajax_comments-curtir.js"></script>
       			<input type="hidden" id="portal_url" tal:attributes="value context/portal_url|nothing">    
-				<input type="hidden" id="context_url" tal:attributes="value string:${context/absolute_url|nothing}/howareu-list-all">
+				<input type="hidden" id="context_url" tal:attributes="value string:${context/absolute_url|nothing}">
 				<style type="text/css">
 					.geral_lista_comentarios .comments-cont .comments-cont{display:block !important;}
 				</style>
@@ -14,14 +17,14 @@
 				<div id="content-comment" tal:define="view_listhowareu python: context.restrictedTraverse('@@howareu-list-all');
 											  view_myvindula python: context.restrictedTraverse('@@myvindula');
 											  member context/@@plone_portal_state/member;
-											  logado python:str(member)!='Anonymous User';
+											  AnonymousUser context/portal_membership/isAnonymousUser|python:True;
 											  form_data view_listhowareu/load_dados|python:[]">
 	                           					     
 		        	<div id="interna" class="howareulist" tal:define="Batch python:modules['Products.CMFPlone'].Batch;
 												                       b_size python:10;
 												                       b_start python:0;
 												                       b_start request/b_start | b_start;">
-						
+						<p tal:content="AnonymousUser"></p>
 						<div class="geral_lista_comentarios" tal:define="batch python:Batch(form_data, b_size, int(b_start));"> 
 							<tal:rep repeat="item batch">
 								<div class="comment item_lista"
@@ -37,13 +40,13 @@
 									<div class="documentByLine name-user">
 										<h4>
 											<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${prefs_user/username|nothing}">
-												<span tal:replace="prefs_user/name" /> | 
+												<span tal:replace="prefs_user/name|nothing" /> | 
 						                    	<span tal:condition="item/date_creation|nothing"  
-													  tal:replace="python:item.date_creation.strftime('%d/%m/%Y  %H:%M')" />
+													  tal:replace="python:item.date_creation.strftime('%d/%m/%Y  %H:%M') or None" />
 											</a>
 										</h4>
 					                </div>
-									<div id="like">
+									<div id="like" tal:condition="not: AnonymousUser">
 										<div tal:attributes="id item/id|nothing">
 											<input type="hidden" name="isPlone:boolean" id="isPlone" value="False" />
 											<input type="hidden" name="type" id="type" value="ModelsMyvindulaHowareu" />
@@ -53,7 +56,7 @@
 									</div>
 									<div class="row comment-body">
 										<div class="cell width-6 position-0" tal:condition="item/upload_image|nothing">
-											<img height="150" tal:attributes="src string:${context/portal_url|nothing}/howareu-image?id=${item/id|nothing}">
+											<img width="330" tal:attributes="src string:${context/portal_url|nothing}/howareu-image?id=${item/id|nothing}">
 										</div>
 						                <div tal:attributes="class python: item.upload_image and 'cell width-9 position-6' or ''">
 						                    <p tal:replace="item/text|nothing" />
@@ -61,13 +64,14 @@
 									</div>
 									<div class="visualClear"></div>
 									<!-- campos input necessario para a criação de comentariso -->
-									<div id="comments" >
+									<div id="comments" tal:condition="not: AnonymousUser">
 										<div tal:attributes="id item/id|nothing">
 											
 											<input type="hidden" name="isPlone:boolean" id="isPlone" value="False" />
 											<input type="hidden" name="type" id="type" value="ModelsMyvindulaHowareu" />
 										</div>
 										<input type="button" value="Comentar" class="comments bt_comments" tal:attributes="id item/id|nothing" />
+										
 										<form action="#" method="post" enctype="multipart/form-data" style="float:right"
 											tal:condition="python: 'Manager' in member.getRoles()"
 					                		tal:attributes="action string:${context/absolute_url}/howareu-list-all">

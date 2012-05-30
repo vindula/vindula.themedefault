@@ -29,93 +29,15 @@ USE `myvindulaDB` ;
 DROP TABLE IF EXISTS `vin_myvindula_confgfuncdetails`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE  TABLE IF NOT EXISTS `myvindulaDB`.`vin_myvindula_confgfuncdetails` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT ,
-  `name` TINYINT(1) NULL DEFAULT '0' ,
-  `phone_number` TINYINT(1) NULL DEFAULT '0' ,
-  `cell_phone` TINYINT(1) NULL DEFAULT '0' ,
-  `email` TINYINT(1) NULL DEFAULT '0' ,
-  `employee_id` TINYINT(1) NULL DEFAULT '0' ,
-  `date_birth` TINYINT(1) NULL DEFAULT '0' ,
-  `registration` TINYINT(1) NULL DEFAULT '0' ,
-  `enterprise` TINYINT(1) NULL DEFAULT '0' ,
-  `position` TINYINT(1) NULL DEFAULT '0' ,
-  `admission_date` TINYINT(1) NULL DEFAULT '0' ,
-  `cost_center` TINYINT(1) NULL DEFAULT '0' ,
-  `job_role` TINYINT(1) NULL DEFAULT '0' ,
-  `organisational_unit` TINYINT(1) NULL DEFAULT '0' ,
-  `reports_to` TINYINT(1) NULL DEFAULT '0' ,
-  `location` TINYINT(1) NULL DEFAULT '0' ,
-  `postal_address` TINYINT(1) NULL DEFAULT '0' ,
-  `special_roles` TINYINT(1) NULL DEFAULT '0' ,
-  `photograph` TINYINT(1) NULL DEFAULT '0' ,
-  `nickname` TINYINT(1) NULL DEFAULT '0' ,
-  `pronunciation_name` TINYINT(1) NULL DEFAULT '0' ,
-  `committess` TINYINT(1) NULL DEFAULT '0' ,
-  `projetcs` TINYINT(1) NULL DEFAULT '0' ,
-  `personal_information` TINYINT(1) NULL DEFAULT '0' ,
-  `skills_expertise` TINYINT(1) NULL DEFAULT '0' ,
-  `license_plate_numbers` TINYINT(1) NULL DEFAULT '0' ,
-  `profit_centre` TINYINT(1) NULL DEFAULT '0' ,
-  `languages` TINYINT(1) NULL DEFAULT '0' ,
-  `availability` TINYINT(1) NULL DEFAULT '0' ,
-  `papers_published` TINYINT(1) NULL DEFAULT '0' ,
-  `teaching_research` TINYINT(1) NULL DEFAULT '0' ,
-  `delegations` TINYINT(1) NULL DEFAULT '0' ,
-  `resume` TINYINT(1) NULL DEFAULT '0' ,
-  `blogs` TINYINT(1) NULL DEFAULT '0' ,
-  `customised_message` TINYINT(1) NULL DEFAULT '0' ,
-  `vin_myvindula_department` TINYINT(1) NULL DEFAULT '0' ,
-  `name_view` TINYINT(1) NULL DEFAULT '1' ,
-  `phone_number_view` TINYINT(1) NULL DEFAULT '1' ,
-  `cell_phone_view` TINYINT(1) NULL DEFAULT '1' ,
-  `email_view` TINYINT(1) NULL DEFAULT '1' ,
-  `employee_id_view` TINYINT(1) NULL DEFAULT '1' ,
-  `date_birth_view` TINYINT(1) NULL DEFAULT '1' ,
-  `registration_view` TINYINT(1) NULL DEFAULT '1' ,
-  `enterprise_view` TINYINT(1) NULL DEFAULT '1' ,
-  `position_view` TINYINT(1) NULL DEFAULT '1' ,
-  `admission_date_view` TINYINT(1) NULL DEFAULT '1' ,
-  `cost_center_view` TINYINT(1) NULL DEFAULT '1' ,
-  `job_role_view` TINYINT(1) NULL DEFAULT '1' ,
-  `organisational_unit_view` TINYINT(1) NULL DEFAULT '1' ,
-  `location_view` TINYINT(1) NULL DEFAULT '1' ,
-  `reports_to_view` TINYINT(1) NULL DEFAULT '1' ,
-  `postal_address_view` TINYINT(1) NULL DEFAULT '1' ,
-  `special_roles_view` TINYINT(1) NULL DEFAULT '1' ,
-  `photograph_view` TINYINT(1) NULL DEFAULT '1' ,
-  `nickname_view` TINYINT(1) NULL DEFAULT '1' ,
-  `pronunciation_name_view` TINYINT(1) NULL DEFAULT '1' ,
-  `committess_view` TINYINT(1) NULL DEFAULT '1' ,
-  `projetcs_view` TINYINT(1) NULL DEFAULT '1' ,
-  `personal_information_view` TINYINT(1) NULL DEFAULT '1' ,
-  `skills_expertise_view` TINYINT(1) NULL DEFAULT '1' ,
-  `license_plate_numbers_view` TINYINT(1) NULL DEFAULT '1' ,
-  `profit_centre_view` TINYINT(1) NULL DEFAULT '1' ,
-  `languages_view` TINYINT(1) NULL DEFAULT '1' ,
-  `availability_view` TINYINT(1) NULL DEFAULT '1' ,
-  `papers_published_view` TINYINT(1) NULL DEFAULT '1' ,
-  `teaching_research_view` TINYINT(1) NULL DEFAULT '1' ,
-  `delegations_view` TINYINT(1) NULL DEFAULT '1' ,
-  `resume_view` TINYINT(1) NULL DEFAULT '1' ,
-  `blogs_view` TINYINT(1) NULL DEFAULT '1' ,
-  `customised_message_view` TINYINT(1) NULL DEFAULT '1' ,
-  `vin_myvindula_department_view` TINYINT(1) NULL DEFAULT '1' ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-AUTO_INCREMENT = 2
-DEFAULT CHARACTER SET = latin1
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `vin_myvindula_confgfuncdetails`
---
+CREATE TABLE  `myvindulaDB`.`vin_myvindula_confgfuncdetails` (
+  `fields` varchar(45) NOT NULL,
+  `ativo_edit` tinyint(1) DEFAULT '1',
+  `ativo_view` tinyint(1) DEFAULT '1',
+  `label` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`fields`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
 
-LOCK TABLES `vin_myvindula_confgfuncdetails` WRITE;
-/*!40000 ALTER TABLE `vin_myvindula_confgfuncdetails` DISABLE KEYS */;
-INSERT INTO `vin_myvindula_confgfuncdetails` VALUES (1,1,1,0,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1);
-/*!40000 ALTER TABLE `vin_myvindula_confgfuncdetails` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -174,7 +96,7 @@ CREATE TABLE `vin_myvindula_funcdetails` (
   `nickname` varchar(45) DEFAULT NULL,
   `pronunciation_name` varchar(45) DEFAULT NULL,
   `committess` varchar(45) DEFAULT NULL,
-  `projetcs` varchar(45) DEFAULT NULL,
+  `projects` varchar(45) DEFAULT NULL,
   `personal_information` varchar(45) DEFAULT NULL,
   `profit_centre` varchar(45) DEFAULT NULL,
   `availability` varchar(45) DEFAULT NULL,

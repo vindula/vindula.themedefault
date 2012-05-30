@@ -6,19 +6,42 @@ Changelog
 
 
 
-1.1 - 2012-03-29
+1.1.0 - 2012-03-29
 ------------------
 - Adição do TinyMCE no campo de Pensamentos do Vindula
 - Alteração do evento de paginação do portlet aniversariosReload
 
-
-
-1.1 - 2012-04-24
+1.1.1 - 2012-04-24
 -----------------
 - Definindo um selected no Portlet Busca de Ramais, caso esteja dentro de uma Estrutura Organizacional.
 
-1.1 - 2012-04-24
+1.1.2 - 2012-04-24
 -----------------
+- Ajuste do portlet ramais para departamentos em ordem alfabetica 
+
+1.1.3 - 2012-05-22
+-----------------
+- Adicionando campo cpf na tabela MyVindula.
+- Ajuste do portlet ramais para departamentos em ordem alfabetica
+
+1.1.4 - 2012-05-23
+--------------------
+- Correções de ortografia no porduto
+- Resolvido problema na view do Mural do Vindula.
+
+1.1.6 - 2012-05-28
+---------------------
+- adição do campo Ip no comentario do myvindula
+- ajuste no metodo de salvar o username no comentario 
+
+1.1.7 - 2012-05-28
+----------------------
+- ajustes nos metodos de curtir e descurtir
+- ajustes na permição de excluir comentarios do portal
+
+1.1.5 - 2012-05-24
+-----------------
+<<<<<<< HEAD
 - Ajuste do portlet ramais para departamentos em ordem alfabetica
 
 
@@ -37,3 +60,28 @@ Changelog
 1.1.5 - 2012-05-28
 ---------------------
 - Ajustes no tamanho da imagem do usuário para o portlet reload
+=======
+- Opção no portlet ramais e aniversariantes para permitir exibição a usuarios anônimos
+- Correções de ortografia
+- Criação de mecanismo para alterar o label  dos campos do perfil do usuário
+- criação do mecanismo para alterar os campos da view de mais aniversariante do portlet
+
+1.1.8 - 2012-05-28
+----------------------
+- criação de mecanismo para a mensagem do portlet aniversariantes acompanhas a configuração.   
+
+
+1.1.9 - 2012-05-29
+---------------------
+- merge do master com o branch info-portlet-dinamic
+- correção do css do portlet ramais e aniversariantes para emails grandes
+
+1.1.10 - 2012-05-29
+----------------------
+- Correção da view de listagem de usuarios pelo portlet ramais, melhoria na busca com filtro dinamico
+- Adição do even/odd na configuração de campos do myvindula
+
+
+
+
+>>>>>>> master

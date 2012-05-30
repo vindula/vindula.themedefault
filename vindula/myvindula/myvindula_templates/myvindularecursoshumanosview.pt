@@ -19,7 +19,7 @@
 	   <tal:def define="enable_holerite context/@@myvindula-conf-userpanel/check_holerite;
 						enable_documents context/@@myvindula-conf-userpanel/check_documents;
 						
-						enable_link python:enable_holerite and 'myvindula-holerite' or enable_documents and 'myvindula-documents';
+						enable_link python:enable_documents and 'myvindula-documents' or enable_holerite and 'myvindula-holerite';
 						
 						link request/id| enable_link;">	
 		    
@@ -33,7 +33,18 @@
 	                id="content-views"
 	                tal:define="view_name view/__name__"
 	                i18n:domain="plone">
-	                	
+	                
+	                <tal:cond condition="enable_documents">
+						<li id="contentview-user_data-personal-data"
+		                    	tal:define="selected python:link=='myvindula-documents';"
+		                    tal:attributes="class python:selected and 'selected' or 'plain'">
+		                    <a href=""
+		                       tal:attributes="href string:${context/portal_url}/@@myvindula-recursos-humanos?id=myvindula-documents"
+		                       i18n:translate="">
+		                        Documentos
+		                    </a>
+		                </li>
+					</tal:cond>
 					<tal:cond condition="enable_holerite">
 						<li id="contentview-user_data-personal-holerite"
 			                    tal:define="selected python:link=='myvindula-holerite'"
@@ -45,19 +56,7 @@
 			                    </a>
 			            </li>
 					</tal:cond>
-					<tal:cond condition="enable_documents">
-						<li id="contentview-user_data-personal-data"
-		                    	tal:define="selected python:link=='myvindula-documents';"
-		                    tal:attributes="class python:selected and 'selected' or 'plain'">
-		                    <a href=""
-		                       tal:attributes="href string:${context/portal_url}/@@myvindula-recursos-humanos?id=myvindula-documents"
-		                       i18n:translate="">
-		                        Documentos
-		                    </a>
-		                </li>
-					</tal:cond>
 	            </ul>
-	
 	            <div class="contentActions">&nbsp;</div>
 	        </div>
 			<div id="content" tal:define="macro python:view.getMacro(link)">

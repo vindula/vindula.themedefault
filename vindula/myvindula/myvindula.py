@@ -212,7 +212,7 @@ class MyVindulaRecursosHumanosView(grok.View, BaseFunc):
     grok.require('zope2.View')
     grok.name('myvindula-recursos-humanos')
     
-    def getMacro(self,link='myvindula-holerite'):
+    def getMacro(self,link='myvindula-documents'):
         if 'id' in self.request.keys():
             set_macro = self.request['id']
             return 'context/'+ set_macro +'/macros/page'
@@ -346,58 +346,66 @@ class MyVindulaListUser(grok.View, UtilMyvindula):
     grok.require('zope2.View')
     grok.name('myvindulalistuser')
     
-    
     def get_campos(self):
-        configuracao= ModelsConfgMyvindula().get_configuration()
+        conf = {}
+        campos = SchemaConfgMyvindula().campos
+        for item in campos.keys():
+            dado = ModelsConfgMyvindula().getConfig_edit(item)
+            if dado:
+                conf[item] = dado
+            else:
+                conf[item] = True
+        
+    
+        return conf
+    
+    
+    def get_ConfugCampos(self, campo):
+        configuracao= ModelsConfgMyvindula().getConfig_views(campo)
         return configuracao
    
     def valida_pessoal(self):
-        configuracao1= self.get_campos()
+        #configuracao1= self.get_campos()
         
-        campos = ['employee_id_view','nickname_view','pronunciation_name_view','date_birth_view']
+        campos = ['employee_id','nickname','pronunciation_name','date_birth']
         for i in campos:
-            if configuracao1:
-                if configuracao1.__getattribute__(i):
-                    return True
+            if ModelsConfgMyvindula().getConfig_views(i):
+                return True
             
         return False
         
     def valida_contato(self):
-        configuracao1= self.get_campos()
+        #configuracao1= self.get_campos()
         
-        campos = ['email_view','phone_number_view','location_view','postal_address_view']
+        campos = ['email','phone_number','location','postal_address']
         for i in campos:
-            if configuracao1:
-                if configuracao1.__getattribute__(i):
-                    return True
+            if ModelsConfgMyvindula().getConfig_views(i):
+                return True
             
         return False
          
     def valida_corporativo(self):
-        configuracao1= self.get_campos()
-        campos = ['enterprise_view','registration_view','position_view','admission_date_view','registration_view','cost_center_view',\
-                  'profit_centre_view','special_roles_view','organisational_unit_view','delegations_view','reports_to_view']
+        #configuracao1= self.get_campos()
+        campos = ['enterprise','registration','position','admission_date','registration','cost_center',\
+                  'profit_centre','special_roles','organisational_unit','delegations','reports_to']
 
         for i in campos:
-            if configuracao1:
-                if configuracao1.__getattribute__(i):
-                    return True
+            if ModelsConfgMyvindula().getConfig_views(i):
+                return True            
             
         return False
         
     def valida_others(self):
-        configuracao1= self.get_campos()
-        campos = ['committess_view','registration_view','projetcs_view','personal_information_view','skills_expertise_view','languages_view',\
-                  'availability_view','papers_published_view','teaching_research_view','resume_view','blogs_view','customised_message_view']
+        #configuracao1= self.get_campos()
+        campos = ['committess','registration','projects','personal_information','skills_expertise','languages',\
+                  'availability','papers_published','teaching_research','resume','blogs','customised_message']
         
         for i in campos:
-            if configuracao1:
-                if configuracao1.__getattribute__(i):
-                    return True
+            if ModelsConfgMyvindula().getConfig_views(i):
+                return True    
         
         return False
 
-    
     def get_howareu(self, user):
         member =  self.context.restrictedTraverse('@@plone_portal_state').member().getUserName();
         user = self.request.form.get('user',str(member))
@@ -568,21 +576,44 @@ class MyVindulalistAll(grok.View, BaseFunc):
             title = form.get('title','').strip()
             departamento= form.get('departamento','0')
             ramal = form.get('ramal','').strip()
+            filtro = form.get('filtro','departamentos').strip()
+            
             if title or departamento !='0' or ramal:
-                result_set = ModelsFuncDetails().get_FuncBusca(unicode(title, 'utf-8'),unicode(departamento,'utf-8'),unicode(ramal, 'utf-8'),filtro_busca)
-                if result_set:
-                    result = self.rs_to_list(result_set)
-        elif not config_muit_user:
-            result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'),filtro_busca)
-            if result_set:
-                    result = self.rs_to_list(result_set)
-        elif 'all' in form.keys():
+            
+                if type(title) != unicode:
+                    title = unicode(title, 'utf-8')
+                
+                if type(departamento) != unicode:
+                    departamento = unicode(departamento, 'utf-8')
+                    
+                if type(ramal) != unicode:
+                    ramal = unicode(ramal, 'utf-8')
+                    
+                result = ModelsFuncDetails().get_FuncBusca(title,'0',ramal,filtro_busca)
+                if result:
+
+                    if departamento != '0' and filtro != 'departamentos':
+                        busca = "result.find("+ filtro + "=u'" + departamento+"')"
+                        data = eval(busca)
+                        if data.count() != 0:
+                            result = self.rs_to_list(data)
+                        else:
+                            result = []
+                    elif departamento == 'departamentos':
+                        data = ModelsFuncDetails().get_FuncBusca(title,departamento,ramal,filtro_busca)
+                        if data:
+                            result = self.rs_to_list(data)
+                        else:
+                            result = []
+            
+        elif not config_muit_user or 'all' in form.keys():
             result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'),filtro_busca)
             if result_set:
                     result = self.rs_to_list(result_set)
                     
         return result
     
+      
 #    def rs_to_list(self, rs):
 #        if rs:
 #            return [i for i in rs]
@@ -783,6 +814,30 @@ class MyVindulaListBirthdays(grok.View):
         
         return ModelsDepartment().get_departmentByUsername(user)     
         
+    def get_campos_list_user(self):
+        if 'control-panel-objects' in  getSite().keys():
+            control = getSite()['control-panel-objects']
+            if 'vindula_aniversariantesconfig' in control.keys():
+                list = control['vindula_aniversariantesconfig']
+            else:
+                list = None
+        
+        if list: 
+            lines = list.list_campos_user.splitlines()
+            L = []
+
+            for line in lines:
+                D = {}
+                line = line.replace('[', '').replace(']', '').split(' | ')
+                try:D['label'] = line[0]
+                except:D['label'] = ''
+                
+                try:D['content'] = line[1]
+                except:D['content'] = ''
+                
+                L.append(D)
+            return L
+        
     def get_birthdaysToday(self, type_filter):
         results = []
         if type_filter == 1:
@@ -840,14 +895,17 @@ class MyVindulaLike(grok.View):
     
     def update(self):
         """ Receive itself from request and do some actions """
+        member = getSite().portal_membership
         form = self.request.form
         dislike = form.get('dislike','False')
-
-        if eval(dislike):     
-            ModelsMyvindulaLike().del_myvindula_like(**form)
+        
+        if not member.isAnonymousUser():
+            form['username'] = member.getAuthenticatedMember().getUserName()
+            if eval(dislike):     
+                ModelsMyvindulaLike().del_myvindula_like(**form)
   
-        else:
-            ModelsMyvindulaLike().set_myvindula_like(**form)
+            else:
+                ModelsMyvindulaLike().set_myvindula_like(**form)
 
 
 
@@ -855,7 +913,6 @@ class MyVindulaLikeMacro(grok.View):
     grok.context(Interface)
     grok.require('zope2.View')
     grok.name('myvindula-like-macro')  
-    
     
     
 class MyVindulaComments(grok.View, UtilMyvindula):
@@ -923,11 +980,21 @@ class MyVindulaComments(grok.View, UtilMyvindula):
         form = self.request.form
         submitted = form.get('form.submitted-comment', False)
         excluir = form.get('form.excluir', False)
-        redirect = form.get('url_context',self.context.absolute_url())
+        request = self.request.environ
+        
+        if 'HTTP_REFERER' in request:
+            redirect = request.get('HTTP_REFERER',self.context.absolute_url())
+        else:
+            redirect = self.context.absolute_url()
         
         if submitted:
-            ModelsMyvindulaComments().set_myvindula_comments(**form)
-            return self.request.response.redirect(redirect)
+            member = getSite().portal_membership
+            if not member.isAnonymousUser():
+                form['username'] = member.getAuthenticatedMember().getUserName()
+                form['ip'] = self.get_ip(self.request)
+            
+                ModelsMyvindulaComments().set_myvindula_comments(**form)
+                return self.request.response.redirect(redirect)
         
         elif excluir:
             id_comments = int(form.get('id_comments','0'))
@@ -1025,7 +1092,7 @@ class MyVindulaImportFirstView(grok.View):
                 else:
                     IStatusMessage(self.request).addStatusMessage(_(u"Erro ao carregar arquivo, contate o administrados do portal."), "error")
                 
-class MyVindulaImportSecondView(grok.View):
+class MyVindulaImportSecondView(grok.View, BaseFunc): 
     grok.context(INavigationRoot)
     grok.require('cmf.ManagePortal')
     grok.name('myvindula-import-second')
@@ -1063,7 +1130,9 @@ class MyVindulaImportSecondView(grok.View):
                 index = fields[field].get('ordem',0)
                 D = {}
                 D['name'] = field
-                D['label'] = fields.get(field).get('label')
+                if field != 'username':
+                    D['label'] = self.get_label_filed(field)
+
                 fields_vin.pop(index)
                 fields_vin.insert(index, D)    
                 
@@ -1479,10 +1548,16 @@ class MyVindulaPrintHoleriteView(grok.View, UtilMyvindula):
     
     def load_list(self):
         form = self.request.form
-        if 'cpf' in form.keys() and 'competencia' in form.keys():
+        
+        membership = self.context.portal_membership
+        user_login = membership.getAuthenticatedMember()
+        prefs_user = self.get_prefs_user(user_login.getUserName())
+        
+        
+        if prefs_user and 'competencia' in form.keys():
 
-            try:cpf = unicode(form.get('cpf',''),'utf-8')
-            except:cpf = form.get('cpf','')
+            try:cpf = unicode(prefs_user.teaching_research,'utf-8')
+            except:cpf = prefs_user.teaching_research
             
             try:competencia = unicode(form.get('competencia',''),'utf-8')
             except:competencia = form.get('competencia','')

@@ -23,8 +23,8 @@
 						<table class="documentos">
 							<tr>
 								<th width="25%">Documento</th>
-								<th width="25%">Eviado</th>
-								<th width="50%">Eviar novo documento / substituir documento atual</th>
+								<th width="25%">Enviado</th>
+								<th width="50%">Enviar novo documento / substituir documento atual</th>
 							</tr>
 							<tal:rep repeat="item docs">
 								<tal:cond condition="item/flag_ativo|nothing">
