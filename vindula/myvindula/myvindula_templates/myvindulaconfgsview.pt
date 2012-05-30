@@ -32,7 +32,10 @@
 						--> 
 						<tal:def define="html python:view.geraConfCampos(form_data)">
 							<tal:rep repeat="x html">
-								<div tal:content="structure x"/>
+								<div tal:define="class_odd repeat/x/odd;
+									 			 class_even repeat/x/even"
+									 tal:attributes="class python: (class_odd and 'odd') or (class_even and 'even')"   
+									tal:content="structure x" />
 							</tal:rep>
 						</tal:def>
 					

@@ -56,3 +56,11 @@ Changelog
 - merge do master com o branch info-portlet-dinamic
 - correção do css do portlet ramais e aniversariantes para emails grandes
 
+1.1.10 - 2012-05-29
+----------------------
+- Correção da view de listagem de usuarios pelo portlet ramais, melhoria na busca com filtro dinamico
+- Adição do even/odd na configuração de campos do myvindula
+
+
+
+

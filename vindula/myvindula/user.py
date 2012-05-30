@@ -1123,7 +1123,7 @@ class BaseFunc(BaseStore):
             while i < len(campos):
                 html.append(i)
                 i+=1
-            
+             
             for campo in campos.keys():
                 if campo != 'id' and campo != 'username': #and not campo in notCampos:
                     index = campos[campo].get('ordem',0)
@@ -1132,13 +1132,14 @@ class BaseFunc(BaseStore):
                     tmp += "<div class='%s'>"%(self.field_class(errors, campo))
                     tmp += "   <label for='%s'>%s</label>"%(campo,data[campo]['label'])
                     tmp += "   <div >%s</div>"%(errors.get(campo,''))
-                    tmp += "   <div class='formHelp'>Habilita a edição do campo '%s' pelo funcionário'</div>"%(data[campo]['label'])   
+                    tmp += "   <div class='formHelp'>"
                     tmp += "   <input id='%s' type='checkbox' value='%s' name='%s' size='25' %s/>"%('edit_'+campo,'true','edit_'+campo,self.checked(campo,self.request,data,'edit'))
-
-                    tmp += "   <div class='formHelp'>Habilita a visualização deste do campo '%s' pelos funcionários'</div>"%(campos[campo]['label'])   
+                    tmp += "   Habilita a edição do campo '%s' pelo funcionário'</div>"%(data[campo]['label'])   
+                    tmp += "   <div class='formHelp'>"
                     tmp += "   <input id='%s' type='checkbox' value='%s' name='%s' size='25' %s/>"%('view_'+campo,'true','view_'+campo,self.checked(campo,self.request,data,'view'))
-                    
-                    tmp += "   <div class='formHelp'>Disite o nome de visualização deste do campo '%s' pelos funcionários'</div>"%(campos[campo]['label'])
+                    tmp += "    Habilita a visualização deste do campo '%s' pelos funcionários'</div>"%(campos[campo]['label'])   
+
+                    tmp += "   <div class='formHelp'>Digite o nome de visualização deste do campo '%s' pelos funcionários'</div>"%(campos[campo]['label'])
                     value = self.getValue(campo,self.request,data)
                     try: valor = value.get('label','')
                     except: valor = value

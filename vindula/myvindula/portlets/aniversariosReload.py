@@ -172,14 +172,13 @@ class Renderer(base.Renderer):
     def nome_filtro(self):
         filtro = self.get_type_search_list()
         if filtro == 1:
-            return "do Dia"
+            return "Aniversariantes do Dia"
         elif filtro == 7:
-            return "da Semana"
+            return "Aniversariantes da Semana"
         elif filtro == 30:
-            return "do Mês"
+            return "Aniversariantes do Mês"
         else:
-            return ''
-    
+            return "Próximos Aniversariantes"
         
 class AddForm(base.AddForm):
     """Portlet add form.
