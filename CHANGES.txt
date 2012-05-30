@@ -62,5 +62,9 @@ Changelog
 - Adição do even/odd na configuração de campos do myvindula
 
 
+1.1.11 - 2012-05-30
+----------------------
+- Adição da restrição de recados privados para os usuários da intranet   
+
 
 
