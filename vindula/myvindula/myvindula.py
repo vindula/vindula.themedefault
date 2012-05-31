@@ -590,7 +590,7 @@ class MyVindulalistAll(grok.View, BaseFunc):
                     
                 if type(ramal) != unicode:
                     ramal = unicode(ramal, 'utf-8')
-                    
+
                 result = ModelsFuncDetails().get_FuncBusca(title,'0',ramal,filtro_busca)
                 if result:
 
@@ -607,6 +607,8 @@ class MyVindulalistAll(grok.View, BaseFunc):
                             result = self.rs_to_list(data)
                         else:
                             result = []
+                    else:
+                        result = self.rs_to_list(result)
             
         elif not config_muit_user or 'all' in form.keys():
             result_set = ModelsFuncDetails().get_FuncBusca(unicode('', 'utf-8'),unicode('0','utf-8'),unicode('', 'utf-8'),filtro_busca)
