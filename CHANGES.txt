@@ -28,3 +28,7 @@ Changelog
 1.1.4 - 2012-05-28
 --------------------
 - Ajustes na listagem de noticias na homepage
+
+1.1.5 - 2012-06-05
+---------------------
+- Implantação do novo layout do menu dropdown

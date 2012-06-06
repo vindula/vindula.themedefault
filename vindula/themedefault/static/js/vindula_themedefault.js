@@ -70,5 +70,19 @@ $j(document).ready(function(){
 	/* CORRECTING PROBLEMS WITH FLOAT LEFT */ 
 	//$j('div.userlist').height($j('div#geral_colunas').height());
 	//$j('div.food-control-panel').height($j('div#geral_colunas').height());
+	
+	
+	var common_content_filter = '#content>*:not(div.configlet),dl.portalMessage.error,dl.portalMessage.info';
+    var common_jqt_config = {fixed:false,speed:'fast',mask:{color:'#000',opacity: 0.4,loadSpeed:0,closeSpeed:0}};
+
+    // Exemplo dialog
+    $j('a.visualizacao').prepOverlay({
+        subtype: 'image',
+        filter: common_content_filter,
+        closeselector: '[name=form.cancelar]',
+        width: '25%',
+        config: common_jqt_config,
+        });
+	
 	 
 });
