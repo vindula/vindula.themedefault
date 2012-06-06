@@ -67,4 +67,8 @@ Changelog
 - Adição da restrição de recados privados para os usuários da intranet   
 
 
+1.1.12 - 2012-06-06
+----------------------
+- Alteração do label dos campos de edição do myvindula
+
 
