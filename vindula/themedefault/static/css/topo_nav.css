@@ -287,7 +287,7 @@
 #portal-globalnav-drop li ul {display: none; width:166px; z-index: 1000; position: relative;}
 #portal-globalnav-drop li ul li a{ padding: 9px 12px 8px;}
 
-#portal-globalnav-drop {z-index: 1000; position: relative;}
+#portal-globalnav-drop {z-index: 1; position: relative;}
 
 	
 #portal-globalnav-drop {

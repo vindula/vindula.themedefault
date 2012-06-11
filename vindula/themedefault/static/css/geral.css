@@ -41,6 +41,11 @@ body{
     color: #75AD0A !important;
 }
 
+#content .navigation-users .current{
+    font-weight: bolder;
+    text-decoration: underline; 
+}
+
 #bk_cont{
 	background: url("++resource++vindula.themedefault/images/bkgs/bk_conteudo.png") repeat scroll 0 0 transparent;
 }
