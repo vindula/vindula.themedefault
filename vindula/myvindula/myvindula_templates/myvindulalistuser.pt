@@ -3,9 +3,9 @@
 
 <metal:js fill-slot="javascript_head_slot">
 	<script type="text/javascript" 
-    tal:attributes="src string:${view/static}/comments-perfil.js"></script>
+    tal:attributes="src string:${view/static}/js/comments-perfil.js"></script>
 	<script type="text/javascript" 
-    tal:attributes="src string:${view/static}/ajax_comments-curtir.js"></script>
+    tal:attributes="src string:${view/static}/js/ajax_comments-curtir.js"></script>
 </metal:js>	
 	
 <metal:block fill-slot="top_slot">
@@ -71,9 +71,7 @@
 				<!-- start: Personal Information -->
 				<div id="personal">
 					<div id="photo">    
-			            <img tal:define="photo form_data/username|nothing; img python:view.getPhoto(photo)" 
-			                 tal:condition="img"
-			                tal:attributes="src img">
+			            <img tal:attributes="src string: ${context/portal_url|nothing}/user-image?username=${user}">
 					</div>
 				
 					<div id="data" tal:condition="view/valida_pessoal|nothing">
@@ -114,7 +112,7 @@
 							<div class="commentImage">
 								<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${user}">
 				                    <img src="defaultUser.png" border="0" height="30"
-					             		 tal:attributes="src python:view.getPhoto(user);
+					             		 tal:attributes="src string: ${context/portal_url|nothing}/user-image?username=${user};
 								 						 alt form_data/name|nothing;
 														 title form_data/name|nothing;" />
 								</a>
@@ -357,7 +355,7 @@
 								<div class="commentImage">
 									<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${user}">
 					                    <img src="defaultUser.png" border="0" height="30"
-						             		 tal:attributes="src python:view.getPhoto(user);
+						             		 tal:attributes="src string: ${context/portal_url|nothing}/user-image?username=${item/username};
 									 						 alt form_data/name|nothing;
 															 title form_data/name|nothing;" />
 									</a>

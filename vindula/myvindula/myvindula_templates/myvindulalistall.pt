@@ -37,9 +37,7 @@
 								 tal:repeat="item batch">
 									 	
 					            <a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${item/username}">
-					              <img tal:define="photo item/username|nothing; img python:view_listuser.getPhoto(photo)" 
-					                 tal:condition="img"
-					                 tal:attributes="src img">
+					              <img tal:attributes="src string: ${context/portal_url|nothing}/user-image?username=${item/username|nothing}">
 					              <br />
 					              <span tal:content="python:view_listall.checaValor(item.name,item.username)"></span>
 					            </a>

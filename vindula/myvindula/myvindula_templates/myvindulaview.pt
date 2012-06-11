@@ -1,7 +1,7 @@
 <html>
 	<body metal:use-macro="here/main_template/macros/master">
 		<metal:js fill-slot="javascript_head_slot">
-    		<script type="text/javascript" src="" tal:attributes="src string:${view/static}/ajax_comments-curtir.js"></script>
+    		<script type="text/javascript" src="" tal:attributes="src string:${view/static}/js/ajax_comments-curtir.js"></script>
 		</metal:js>
 
 		<metal:block fill-slot="top_slot">
@@ -29,11 +29,11 @@
 				</div>			
 			    
 			    <br />
-			    <div id="userimage" tal:define="x python:view.get_photo_user(prefs_user)">
+			    <div id="userimage">
 			        <img src="defaultUser.png"
 			             alt=""
 			             border="0"
-			             tal:attributes="src python:view.get_photo_user(prefs_user);
+			             tal:attributes="src string: ${context/portal_url|nothing}/user-image?username=${prefs_user/username|nothing};
 						 				 alt prefs_user/name|nothing;
 										 title prefs_user/name|nothing;" />
 			        <br /><br />
@@ -103,7 +103,7 @@
 						                    <img src="defaultUser.png"
 							             		 alt="" border="0"
 							             		 height="30"
-							             		 tal:attributes="src python:view.get_photo_user(prefs_user);
+							             		 tal:attributes="src string: ${context/portal_url|nothing}/user-image?username=${prefs_user/username|nothing};
 										 						 alt prefs_user/name|nothing;
 																 title prefs_user/name|nothing;" />
 						                </div>

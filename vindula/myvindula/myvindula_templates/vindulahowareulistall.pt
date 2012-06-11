@@ -7,7 +7,7 @@
 	  	<div metal:fill-slot="content-core">
 			<h2 class="h2title">Em que os usuários estão pensando</h2>
       		<meta:macro metal:define-macro="page-view">    
-      			<script type="text/javascript" src="++resource++vindula.myvindula/ajax_comments-curtir.js"></script>
+      			<script type="text/javascript" src="++resource++vindula.myvindula/js/ajax_comments-curtir.js"></script>
       			<input type="hidden" id="portal_url" tal:attributes="value context/portal_url|nothing">    
 				<input type="hidden" id="context_url" tal:attributes="value string:${context/absolute_url|nothing}">
 				<style type="text/css">
@@ -33,7 +33,7 @@
 					                    <img src="defaultUser.png"
 						             		 alt="" border="0"
 						             		 height="30"
-						             		 tal:attributes="src python:view_myvindula.get_photo_user(prefs_user);
+						             		 tal:attributes="src string: ${context/portal_url|nothing}/user-image?username=${item/username|nothing};
 									 						 alt prefs_user/name|nothing;
 															 title prefs_user/name|nothing;" />
 					                </div>

@@ -11,7 +11,7 @@
 		                <img src="defaultUser.png"
 		             		 alt="" border="0"
 		             		 height="30"
-		             		 tal:attributes="src python:view_comments.get_photo_user(user_comment);
+		             		 tal:attributes="src string: ${context/portal_url|nothing}/user-image?username=${item/username|nothing};
 					 						 alt user_comment/name|nothing;
 											 title user_comment/name|nothing;" />
 		            </div>
@@ -40,8 +40,7 @@
 							<input type="hidden" name="form.excluir:boolean" value="True" />
 
 							<input type="hidden" name="url_context" id="url_comments" value="">
-							<script type="text/javascript">
-								$j = jQuery.noConflict();
+							<script>  type="text/javascript">
 								$j('input[id="url_comments"]').attr('value',location);
 							</script>
 							<input type="hidden" name="id_comments" id="id_comments" tal:attributes="value item/id|nothing" />

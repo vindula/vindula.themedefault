@@ -1,4 +1,3 @@
-
 CREATE SCHEMA IF NOT EXISTS `myvindulaDB` DEFAULT CHARACTER SET latin1 ;
 USE `myvindulaDB` ;
 

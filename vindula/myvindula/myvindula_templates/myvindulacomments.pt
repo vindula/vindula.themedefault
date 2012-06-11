@@ -1,5 +1,5 @@
 <form action="" name="save-coment" tal:attributes="action string:${context/absolute_url}/myvindula-comments">
-	<script type="text/javascript"  tal:attributes="src string:${view/static}/comments.js"></script>
+	<script type="text/javascript"  tal:attributes="src string:${view/static}/js/comments.js"></script>
 	
 	<input type="hidden" name="url_context" value="">
 	<!--input type="hidden" name="username" value="" tal:attributes="value context/REQUEST/username|nothing"-->
