@@ -75,3 +75,8 @@ Changelog
 1.1.12 - 2012-06-06
 ----------------------
 - Alteração do label dos campos de edição do myvindula
+
+
+1.1.13 -2012-06-11 
+---------------------
+- Correção da busca de aniversariantes para o filtro do tipo 'Proximos Aniversariantes'  
