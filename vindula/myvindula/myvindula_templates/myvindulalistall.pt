@@ -18,7 +18,6 @@
 											                       b_start python:0;
 											                       b_start request/b_start | b_start">
 		        		<div id="busca">
-		        			<h3>Buscar de Funcionários</h3>
 		        			<form action="/myvindulalistall" method="post" id="portlet-ramais">
 		        				<div style="float: left; padding-right: 5px;">
 							    	<label>Nome:</label>
