@@ -95,6 +95,10 @@
 													  tal:content="python: form_data.date_birth.strftime('%d/%m')"></td>
 									<td class="value" tal:condition="not: form_data/date_birth|nothing"></td>												  
 								</tr>
+								<tr tal:condition="python: view.get_ConfugCampos('email')">
+									<td class="field" tal:content="python: view.get_label_filed('email')">E-mail</td>
+									<td class="value" tal:content="form_data/email|nothing"></td>
+								</tr>
 							</table>
 						<a id="send-mail" tal:condition="form_data/email|python: view.get_ConfugCampos('email')" 
 										  tal:attributes="href string:mailto:${form_data/email|nothing}">Enviar e-mail</a>
@@ -175,15 +179,15 @@
 					<div class="area"><span >Contato</span></div>
 					<img class="type-info" tal:attributes="src string:${view/static}/images/user_contact.png" />
 					<table>
-						<tr tal:condition="python: view.get_ConfugCampos('email')">
-							<td class="field" tal:content="python: view.get_label_filed('pronunciation_name')">E-mail</td>
-							<td class="value" tal:content="form_data/email|nothing"></td>
-						</tr>
 						<tr tal:condition="python: view.get_ConfugCampos('phone_number')">
 							<td class="field" tal:content="python: view.get_label_filed('phone_number')">Telefone</td>
 							<td class="value" tal:content="form_data/phone_number|nothing"></td>
 						</tr>
-						<tr tal:condition="python: view.get_ConfugCampos('location_view')">
+						<tr tal:condition="python: view.get_ConfugCampos('cell_phone')">
+							<td class="field" tal:content="python: view.get_label_filed('cell_phone')">Celular</td>
+							<td class="value" tal:content="form_data/cell_phone|nothing"></td>
+						</tr>
+						<tr tal:condition="python: view.get_ConfugCampos('location')">
 							<td class="field" tal:content="python: view.get_label_filed('location')">Localiza&ccedil;&atilde;o</td>
 							<td class="value" tal:content="form_data/location|nothing"></td>
 						</tr>
