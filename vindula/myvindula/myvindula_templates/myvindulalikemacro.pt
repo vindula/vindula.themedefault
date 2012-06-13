@@ -5,8 +5,8 @@
 					 like_user python: data_like.find(username=unicode(member.getUserName())).count()">
 	
 		<tal:cond condition="like_user">
-			<span tal:condition="python:data_like.count()>2" tal:content="python:'Voce é mais '+str(data_like.count()-1)+' pessoas já curtiram isso.'"></span>
-			<span tal:condition="python:data_like.count()==2" >Voce e mais uma pessoa curtiu isso.</span>
+			<span tal:condition="python:data_like.count()>2" tal:content="python:'Voce e mais '+str(data_like.count()-1)+' pessoas já curtiram isso.'"></span>
+			<span tal:condition="python:data_like.count()==2" >Voce e mais uma pessoa curtiram isso.</span>
 			<span tal:condition="python:data_like.count()==1" >Voce curtiu isso.</span>
 			<span class="link" tal:attributes="id item/id|nothing" src="True">(Desfazer Curtir)</span>
 		</tal:cond>
