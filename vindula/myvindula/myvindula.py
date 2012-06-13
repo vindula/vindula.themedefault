@@ -37,9 +37,9 @@ from vindula.myvindula.user import BaseFunc, ModelsDepartment, ModelsFuncDetails
                                    ModelsFuncHolerite, ModelsFuncHoleriteDescricao, ModelsConfgMyvindula
 
 from vindula.myvindula.registration import SchemaFunc, SchemaConfgMyvindula, ImportUser, ManageCourses, ManageLanguages
-
                                    
 from vindula.controlpanel.browser.models import ModelsCompanyInformation
+from vindula.chat.utils.models import ModelsUserOpenFire
 
 from vindula.myvindula.utils import UtilMyvindula
 
@@ -773,6 +773,35 @@ class MyVindulaFirstRegistreView(grok.View, UtilMyvindula):
             else:
                 return {}
             
+    def checkCampoVazio(self,campo):
+          member = getSite().portal_membership
+          data = self.get_prefs_user(member.getAuthenticatedMember().getUserName())
+          if data:
+              if campo == 'name':
+                  if data.__getattribute__('name') == member.getAuthenticatedMember().getUserName():
+                      return True
+              
+              elif data.__getattribute__(campo):
+                  # Campo Não Esta vazio
+                  return False
+
+              else:
+                  # Campo Esta vazio
+                  return True
+          else:
+              # Campo Esta vazio
+              return True
+    
+    def checkUserXMPP(self):
+        member = getSite().portal_membership
+        try: user = self.to_utf8(member.getAuthenticatedMember().getUserName())
+        except: user =  member.getAuthenticatedMember().getUserName()
+        data = ModelsUserOpenFire().get_UserOpenFire_by_username(user)
+        if data:
+            return True
+        else:
+            return False
+    
             
     def get_saldacao(self):
         hora = datetime.now().strftime('%H')
