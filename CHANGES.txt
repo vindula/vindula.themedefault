@@ -84,3 +84,8 @@ Changelog
 1.1.13 -2012-06-13 
 ---------------------
 - Correção no nos campos do perfil do usuário
+
+
+1.1.14 - 2012-06-13
+---------------------
+- Criação do metodo de criação do usuario no openfire ao logar na intranet
