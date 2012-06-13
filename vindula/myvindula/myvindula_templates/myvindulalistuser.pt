@@ -400,8 +400,8 @@
 											<input type="submit" name="excluir" id="excluir" value="Excluir" 
 																	 class="comments bt_comments" tal:attributes="id item/id|nothing" />	
 									</form>
-									<a tal:attributes="href string:${context/portal_url}/myvindulalistuser?user=${user}&scraps=true">
-										<input type="button" class="comments bt_comments" value="Responder" />
+									<a>
+										<input type="button" tal:attributes="onClick string: location.href='${context/portal_url}/myvindulalistuser?user=${user}&scraps=true'" class="comments bt_comments" value="Responder" />
 									</a>
 								<div id="new-comments"></div>
 								</div>
