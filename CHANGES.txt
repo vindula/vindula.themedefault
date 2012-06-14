@@ -90,10 +90,8 @@ Changelog
 ---------------------
 - Criação do metodo de criação do usuario no openfire ao logar na intranet
 
-
 1.1.15 - 2012-06-13 
 ----------------------
 - Criação de metodo de compatibilidade da foto do usuário, para busca a foto tanto da imagem com crop quando da imagem antiga
-
-
+- Correção do botão responder no IE
 
