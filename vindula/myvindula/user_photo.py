@@ -9,6 +9,8 @@ from Products.CMFCore.utils import getToolByName
 from zope.app.component.hooks import getSite
 from PIL import Image
 
+from vindula.myvindula.user import ModelsFuncDetails
+
 #Imports regarding the connection of the database 'strom'
 from storm.locals import *
 from storm.locals import Store
@@ -180,6 +182,8 @@ class MyVindulaUserImage(grok.View, BaseFunc):
             try: username = unicode(form.get('username',''))
             except: username = form.get('username','')  
             campo_image = ModelsPhotoUser().get_ModelsPhotoUser_byUsername(username)
+            dados_user = ModelsFuncDetails().get_FuncDetails(username)
+            
         
         else:
             campo_image = None
@@ -196,16 +200,30 @@ class MyVindulaUserImage(grok.View, BaseFunc):
             #self.request.response.setHeader('Content-Disposition','attachment; filename=%s'%(filename))
             self.request.response.write(x['data'])
         
-        else:
-            #import pdb;pdb.set_trace()
-            defaulUser = PROJECT_ROOT_PATH + '/static/images/defaultUser.png'
-            try:
-                file = open(defaulUser,'r')
-                buffer = file.read()
-            except:
-                buffer = ''
+        elif dados_user and dados_user.photograph:
+                local = dados_user.photograph.split('/')
+                try:
+                    objeto = getSite()[local[0]][local[1]][local[2]]
+                    if objeto.photograph:
+                        self.request.response.setHeader("Content-Type", "image/jpeg", 0)
+                        self.request.response.write(objeto.photograph.data)        
+                except:
+                    self.loadDefault()
             
-            self.request.response.write(buffer)
+        else:
+            self.loadDefault()
+            
+
+    def loadDefault(self):
+        defaulUser = PROJECT_ROOT_PATH + '/static/images/defaultUser.png'
+        try:
+            file = open(defaulUser,'r')
+            buffer = file.read()
+        except:
+            buffer = ''
+        
+        self.request.response.write(buffer)
+        
 
 
 #Views de eclução da Image do usuario ---------------------------------------------------   

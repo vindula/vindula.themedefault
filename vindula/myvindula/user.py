@@ -74,7 +74,7 @@ class ModelsFuncDetails(Storm, BaseStore):
     location = Unicode()
     postal_address = Unicode()
     special_roles = Unicode()
-    #photograph = Unicode()
+    photograph = Unicode()
     nickname = Unicode()
     pronunciation_name = Unicode()
     committess = Unicode()

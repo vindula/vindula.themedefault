@@ -66,8 +66,8 @@ h2.h2title {
 }
 .userpage #personal #photo img {
 	border: 2px solid #999999;
-    /*width: 120px;*/
-   	height: 150px;
+    width: 160px;
+   	/*height: 150px;*/
 }
 .userpage #personal #data {
 	width:70%;
