@@ -100,6 +100,11 @@
 		<div class="row border">
 			<div class="cell width-10 position-0 title" >
 				<span>mensagem</span>
+				<div class="row">
+					<div class="cell width-13 position-0" >
+						<span tal:content="item/observacao|nothing">Observação</span>
+					</div>	
+				</div>
 			</div>
 			<div class="cell width-6-5 position-10 border-horz even">
 				<div class="row">
@@ -174,7 +179,7 @@
 		</div>
 	</div>
 	<div style="width:100%; margin-top: 10px;">
-		<input type="button" value="Imprimir" tal:attributes="onclick string:window.open('${context/portal_url}/imprimir-holerite?cpf=${item/cpf}&competencia=${item/competencia}', 'popupwindow', 'scrollbars=yes,width=670,height=600');;return true;;"
+		<input type="button" value="Imprimir" tal:attributes="onclick string:window.open('${context/portal_url}/imprimir-holerite?cpf=${item/cpf}&id=${item/id}', 'popupwindow', 'scrollbars=yes,width=670,height=600');;return true;;"
 			 />
 	</div>
 	</tal:def>

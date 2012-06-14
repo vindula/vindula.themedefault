@@ -15,14 +15,16 @@
 						<h3>Ultimas Importações</h3>
 						<tal:def define="itens view/get_lastImport">
 							<div class="row even">
-								<div class="cell width-5 position-0">
+								<div class="cell width-3 position-0">
 									<span>Quantidade de Dados Importados</span>
-									
 								</div>
-								<div class="cell width-4 position-5">
+								<div class="cell width-4 position-3">
 									<span>Data da Importação</span>
 								</div>
-								<div class="cell width-3 position-9">
+								<div class="cell width-7 position-6">
+									<span>Empresa</span>
+								</div>
+								<div class="cell width-3 position-13">
 									<span>Remover Lote ?</span>
 								</div>
 								
@@ -30,14 +32,18 @@
 							<tal:rep repeat="item itens">
 								<div tal:define="even repeat/item/even|nothing" 
 									  class="row" tal:attributes="class python:even and 'row' or 'row even'">
-									<div class="cell width-5 position-0">
-										<span tal:content="python:view.CountDados(item.date_creation)">Quantidade de Dados Importados</span>
+									<div class="cell width-3 position-0" style="text-align: center;">
+										<span tal:content="item/contador">Quantidade de Dados Importados</span>
 									</div>
-									<div class="cell width-4 position-5">
-										<span tal:content="python:item.date_creation.strftime('%d/%m/%Y - %H:%M') ">Data da Importação</span>
+									<div class="cell width-4 position-3">
+										<span tal:content="item/date_creation">Data da Importação</span>
 									</div>
-									<div class="cell width-3 position-9">
-										<a tal:attributes="href string:${context/portal_url|nothing}/myvindula-del-holerite?date=${item/date_creation|nothing}"
+									<div class="cell width-7 position-6">
+										<span tal:content="item/empresa">Empresa</span>
+									</div>
+									
+									<div class="cell width-3 position-13">
+										<a tal:attributes="href python: context.portal_url()+'/myvindula-del-holerite?date='+item.get('date_excluir').strftime('%Y-%m-%d %H:%M')+'&empresa='+item.get('empresa','')"
 										   onclick="if (confirm('Tem certeza que deseja excluir todo o lote de dados importados?')){return true;}else{return false;};"
 										>Remover</a>
 									</div>

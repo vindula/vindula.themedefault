@@ -1378,99 +1378,259 @@ class MyVindulaImportHoleriteView(grok.View, BaseFunc):
         else:
             return []
         
-    def CountDados(self, data):
-        result = ModelsFuncHolerite().get_FuncHolerites_byData(data)
-        if result: 
-            return result.count()
-        else:
-            return 0
+#    def CountDados(self, data):
+#        result = ModelsFuncHolerite().get_FuncHolerites_byData(data)
+#        if result: 
+#            return result.count()
+#        else:
+#            return 0
               
-    
     def load_file(self):
+        from pprint import pprint
+        from copy import copy
         form = self.request.form
-        if 'load_file' in form.keys():
-            
+        erro = False
+        holerite_erro = None
+        holerites = []
+        modelo_holerite = {'cod_empresa':None,
+                           'empresa':None,
+                           'endereco_empresa':None,
+                           'estado_empresa':None,
+                           'cnpj_empresa':None,
+                           'competencia':None,
+                           'matricula':None,
+                           'nome':None,
+                           'cpf':None,
+                           'completo':False,
+                           'itens_holerite':[],
+                           'itens_holerite_check':False,
+                           'total_vencimento':None,
+                           'total_desconto':None,
+                           'valor_liquido':None,
+                           'salario_base':None,
+                           'base_Inss':None,
+                           'base_fgts':None,
+                           'fgts_mes':None,
+                           'base_irrf':None}
+        
+        holerite = copy(modelo_holerite)
+        
+        if 'load_file' in form.keys():            
             if 'txt_file' in form.keys():
                 file = form.get('txt_file','')
                 if file:
                     texto = file.read()
-                    texto = texto.replace('\r','')
-                    registros = texto.split('\x1b2\n')
-                    for reg in registros:
-                        D = {}
-                        L = []
-                        linhas = reg.split('\n')
-                        max = len(linhas)-1
-                        cont = 0
-                        entra = False
-                        #while cont <= max:
-                        
-                        for linha in linhas:
-                            
-                            #linha = linhas[cont]
-                            if len(linha) == 80:
-                                entra = True
-                                if cont == 0:
-                                    D['cod_empresa'] = linha[0:3] 
-                                    D['empresa'] = linha[5:51]
-                                    #D['cidade_empresa'] = linha[] 
-                                
-                                elif cont == 1:
-                                    D['endereco_empresa'] = linha[5:60]                    
-                                    D['estado_empresa'] = linha[60:62]
-                                
-                                elif cont == 2:    
-                                    D['cnpj_empresa'] = linha[5:23]
-                                    tmp = linha[56:63]
-                                    tmp = tmp.strip()
-                                    tmp = tmp.split('/')
-                                    D['competencia'] = tmp[1]+'/'+tmp[0] 
-                                
-                                elif cont == 4:
-                                    
-                                    D['matricula'] = linha[0:5]
-                                    D['nome'] = linha[6:51]
-                                    D['cpf']  = linha[69:80]
+                    texto = texto.replace('\r','').replace('\x1b2','') #.replace('#','')
+                    cont = 1
                     
-                                elif cont >= 8 and cont <= 23:
-                                    E = {}
-                                    E['codigo'] = linha[0:3]
-                                    E['descricao'] = linha[4:33]
-                                    E['ref'] = linha[34:43]
-                                    E['vencimentos'] = linha[44:57]
-                                    E['descontos'] = linha[58:70]
-                                    
-                                    L.append(E)
-                                elif cont == 24:
-                                    D['total_vencimento'] = linha[42:55]
-                                    D['total_desconto'] = linha[56:70]
+                    for linha in texto.split('\n'):
+                        #Checando linhas vazias, se a linha for vazia ou só espaço, vai retornar uma lista vazia e nao entrar no if.
+                        check_linha = [i for i in linha.split(' ') if i != '']
+                        
+                        #Pulando linhas vazias
+                        if check_linha != []:
+                            #Buscando cod_empresa e empresa
+                            if holerite['cod_empresa'] == None:                                
+                                holerite['cod_empresa'] = linha[:4]
+                                holerite['empresa'] = linha[5:]
+                            
+                            #Buscando dados de endereço
+                            elif holerite['endereco_empresa'] == None: 
+                                linha_list = [i for i in linha.lstrip().rstrip().split('  ') if i != '']
+                                holerite['endereco_empresa'] = ' '.join(linha_list[:-1])
+                                holerite['estado_empresa'] = linha[len(linha_list)-1].lstrip()
+                                                        
+                            elif holerite['cnpj_empresa'] == None:
+                                linha_list = [i for i in linha.lstrip().rstrip().split(' ') if i != '']
+                                holerite['cnpj_empresa'] = linha_list[0]
+                                holerite['competencia'] = linha_list[1]
                                 
-                                elif cont == 26:
-                                    D['valor_liquido'] = linha[56:70]
+                            elif holerite['matricula'] == None:
+                                holerite['matricula'] = linha.split(' ')[0]
+                                linha_list = [i for i in linha.split(' ')[+1:] if i != '']
+                                holerite['nome'] = ' '.join(linha_list[:-1]) 
+                                holerite['cpf'] = linha_list[len(linha_list)-1]
+                            
+                            #Importando itens do holerite
+                            elif holerite['matricula'] != None and holerite['itens_holerite_check'] == False:
+                                    itens_holerite = {'codigo':None,
+                                                      'descricao':None,
+                                                      'ref':None,
+                                                      'vencimentos':None,
+                                                      'descontos':None,}
                                     
-                                elif cont == 28:
-                                    D['salario_base'] = linha[0:13]
-                                    D['base_Inss'] = linha[14:25]
-                                    D['base_fgts'] = linha[26:38]
-                                    D['fgts_mes'] = linha[40:50]
-                                    D['base_irrf'] = linha[52:70]
-                            if entra:    
-                                cont += 1
-                        if D:
-                            convertido = self.converte_dadosByDB(D)
+                                    itens = copy(itens_holerite)
+                                    
+                                    itens['codigo'] = linha.split('  ')[0].split(' ')[0] 
+                                    itens['descricao'] = ' '.join(linha.split('  ')[0].split(' ')[+1:])
+                                    
+                                    if itens['codigo'] != '' and itens['codigo'].isdigit() and cont <= 15:
+                                        linha_valores = [i for i in linha.split('  ')[+1:] if i != '']
+                                        
+                                        if len(linha_valores) > 1:
+                                            itens['ref'] = linha_valores[0]
+                                            valor_indefinido = linha_valores[1]
+                                        else:
+                                            valor_indefinido = linha_valores[0]
+            
+                                        if linha[linha.find(valor_indefinido):].count(' ') >= 26:                                    
+                                            itens['vencimentos'] = valor_indefinido
+                                        else:
+                                            itens['descontos'] = valor_indefinido
+                                        
+                                        holerite['itens_holerite'].append(itens)
+                                        cont = cont + 1    
+                                    else:
+                                        holerite['itens_holerite_check'] = True
+                                        
+                            #Separando valores da linha, para distinguir observacao de valor liquido e valor desconto
+                            linha_obervacao = [i for i in linha.split('  ') if i != '' and i != ' ']
+                            
+                            if linha.lstrip().rstrip() == '##########':                    
+                                #Marca o holerite como completo e vai para o proximo
+                                holerite['completo'] = True   
+                            
+                            elif holerite['total_vencimento'] == None and holerite['itens_holerite_check'] == True:
+                                linha_list = [i for i in linha.lstrip( ).rstrip().split('  ') if i != '']
+                                if len(linha_list) == 3:
+                                    # Linha[0] mensagem ignorada
+                                    holerite['observacao'] = linha_list[0]
+                                    holerite['total_vencimento'] = linha_list[1]
+                                    holerite['total_desconto'] = linha_list[2]
+                                elif len(linha_list) == 2:
+                                    holerite['total_vencimento'] = linha_list[0]
+                                    holerite['total_desconto'] = linha_list[1]
+                                
+                                elif len(linha_list) == 1:
+                                    holerite['observacao'] = linha_list[0]
+                                #else:
+                                #    #Marca o holerite como completo e vai para o proximo
+                                #    holerite['completo'] = True
+                            elif holerite.has_key('observacao') and len(linha_obervacao) == 1 and linha[0] != ' ' and holerite['valor_liquido'] == None:
+                                holerite['observacao'] = holerite['observacao'] +' '+ linha_obervacao[0]
+                                
+
+                            elif holerite['total_desconto'] != None and holerite['valor_liquido'] == None:
+                                linha_list = [i for i in linha.lstrip().rstrip().split(' ') if i != '']
+                                holerite['valor_liquido'] = linha_list[0] 
+                            
+                            elif holerite['valor_liquido'] != None and  holerite['salario_base'] == None:
+                                linha_list = [i for i in linha.lstrip().rstrip().split(' ') if i != '']
+                                holerite['salario_base'] = linha_list[0]
+                                holerite['base_Inss'] = linha_list[1]
+                                holerite['base_fgts'] = linha_list[2]
+                                holerite['fgts_mes'] = linha_list[3]
+                                holerite['base_irrf'] = linha_list[4]
+                               
+                                holerite['completo'] = True
+
+                                
+                            if holerite['completo'] == True:
+                                holerites.append(holerite)
+                                holerite = copy(modelo_holerite)
+                                holerite['itens_holerite'] = []
+                                cont = 1
+                            
+                    if holerites:
+                        for holerite in holerites:
+                            itens = copy(holerite['itens_holerite'])
+                            convertido = self.converte_dadosByDB(holerite)
                             id = ModelsFuncHolerite().set_FuncHolerite(**convertido)
-                            for item in L:
-                                try:
-                                    item['vin_myvindula_holerite_id'] = id
-                                    desc_convertido = self.converte_dadosByDB(item)
-                                    ModelsFuncHoleriteDescricao().set_FuncHoleriteDescricao(**item)
-                                except:
-                                    item['vin_myvindula_holerite_id'] = id
-                                    desc_convertido = self.converte_dadosByDB(item)
-                                    ModelsFuncHoleriteDescricao().set_FuncHoleriteDescricao(**item)
-        
+                            
+                            for item in itens:
+                                item['vin_myvindula_holerite_id'] = id
+                                desc_convertido = self.converte_dadosByDB(item)
+                                ModelsFuncHoleriteDescricao().set_FuncHoleriteDescricao(**desc_convertido)
+                            
+                    
         else:
             return None
+     
+#    def load_file_old(self):
+#        form = self.request.form
+#        if 'load_file' in form.keys():
+#            
+#            if 'txt_file' in form.keys():
+#                file = form.get('txt_file','')
+#                if file:
+#                    texto = file.read()
+#                    texto = texto.replace('\r','')
+#                    registros = texto.split('\x1b2\n')
+#                    for reg in registros:
+#                        D = {}
+#                        L = []
+#                        linhas = reg.split('\n')
+#                        max = len(linhas)-1
+#                        cont = 0
+#                        entra = False
+#                        #while cont <= max:
+#                        
+#                        for linha in linhas:
+#                            
+#                            #linha = linhas[cont]
+#                            if len(linha) == 80:
+#                                entra = True
+#                                if cont == 0:
+#                                    D['cod_empresa'] = linha[0:3] 
+#                                    D['empresa'] = linha[5:51]
+#                                    #D['cnomeidade_empresa'] = linha[] 
+#                                
+#                                elif cont == 1:
+#                                    D['endereco_empresa'] = linha[5:60]                    
+#                                    D['estado_empresa'] = linha[60:62]
+#                                
+#                                elif cont == 2:    
+#                                    D['cnpj_empresa'] = linha[5:23]
+#                                    tmp = linha[56:63]
+#                                    tmp = tmp.strip()
+#                                    tmp = tmp.split('/')
+#                                    D['competencia'] = tmp[1]+'/'+tmp[0] 
+#                                
+#                                elif cont == 4:
+#                                    
+#                                    D['matricula'] = linha[0:5]
+#                                    D['nome'] = linha[6:51]
+#                                    D['cpf']  = linha[69:80]
+#                    
+#                                elif cont >= 8 and cont <= 23:
+#                                    E = {}
+#                                    E['codigo'] = linha[0:3]
+#                                    E['descricao'] = linha[4:33]
+#                                    E['ref'] = linha[34:43]
+#                                    E['vencimentos'] = linha[44:57]
+#                                    E['descontos'] = linha[58:70]
+#                                    
+#                                    L.append(E)
+#                                elif cont == 24:
+#                                    D['total_vencimento'] = linha[42:55]
+#                                    D['total_desconto'] = linha[56:70]
+#                                
+#                                elif cont == 26:
+#                                    D['valor_liquido'] = linha[56:70]
+#                                    
+#                                elif cont == 28:
+#                                    D['salario_base'] = linha[0:13]
+#                                    D['base_Inss'] = linha[14:25]
+#                                    D['base_fgts'] = linha[26:38]
+#                                    D['fgts_mes'] = linha[40:50]
+#                                    D['base_irrf'] = linha[52:70]
+#                            if entra:    
+#                                cont += 1
+#                        if D:
+#                            convertido = self.converte_dadosByDB(D)
+#                            id = ModelsFuncHolerite().set_FuncHolerite(**convertido)
+#                            for item in L:
+#                                try:
+#                                    item['vin_myvindula_holerite_id'] = id
+#                                    desc_convertido = self.converte_dadosByDB(item)
+#                                    ModelsFuncHoleriteDescricao().set_FuncHoleriteDescricao(**item)
+#                                except:
+#                                    item['vin_myvindula_holerite_id'] = id
+#                                    desc_convertido = self.converte_dadosByDB(item)
+#                                    ModelsFuncHoleriteDescricao().set_FuncHoleriteDescricao(**item)
+#        
+#        else:
+#            return None
         
 class MyVindulaFindHoleriteView(grok.View, BaseFunc):
     grok.context(Interface)
@@ -1486,15 +1646,14 @@ class MyVindulaFindHoleriteView(grok.View, BaseFunc):
     
     def load_list(self):
         form = self.request.form
-        if 'cpf' in form.keys() and 'competencia' in form.keys():
+        if 'cpf' in form.keys() and 'id' in form.keys():
 
             try:cpf = unicode(form.get('cpf',''),'utf-8')
             except:cpf = form.get('cpf','')
             
-            try:competencia = unicode(form.get('competencia',''),'utf-8')
-            except:competencia = form.get('competencia','')
-                
-            return ModelsFuncHolerite().get_FuncHolerites_byCPFAndCompetencia(cpf, competencia)
+            id = int(form.get('id','0'))
+               
+            return ModelsFuncHolerite().get_FuncHolerites_byCPFAndID(cpf, id)
 
 
 class MyVindulaDelHoleriteView(grok.View, BaseFunc):
@@ -1505,11 +1664,14 @@ class MyVindulaDelHoleriteView(grok.View, BaseFunc):
     def update(self):
         form = self.request.form
         success_url = self.context.absolute_url() + '/myvindula-import-holerite'
-        if 'date' in form.keys():
+        if 'date' in form.keys() and 'empresa' in form.keys():
             data_lote = form['date']
+            
+            try:empresa = unicode(form['empresa'],'utf-8')
+            except:empresa = form['empresa']
 
-            data_lote = datetime.strptime(data_lote,'%Y-%m-%d %H:%M:%S')
-            ModelsFuncHolerite().del_HoleritesLote(data_lote)
+            data_lote = datetime.strptime(data_lote,'%Y-%m-%d %H:%M')
+            ModelsFuncHolerite().del_HoleritesLote(data_lote,empresa)
             
         self.request.response.redirect(success_url)
     
@@ -1585,12 +1747,11 @@ class MyVindulaPrintHoleriteView(grok.View, UtilMyvindula):
         prefs_user = self.get_prefs_user(user_login.getUserName())
         
         
-        if prefs_user and 'competencia' in form.keys():
+        if prefs_user and 'id' in form.keys():
 
             try:cpf = unicode(prefs_user.teaching_research,'utf-8')
             except:cpf = prefs_user.teaching_research
             
-            try:competencia = unicode(form.get('competencia',''),'utf-8')
-            except:competencia = form.get('competencia','')
+            id = int(form.get('id','0'))
                 
-            return ModelsFuncHolerite().get_FuncHolerites_byCPFAndCompetencia(cpf, competencia)      
+            return ModelsFuncHolerite().get_FuncHolerites_byCPFAndID(cpf, id)      

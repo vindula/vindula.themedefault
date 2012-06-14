@@ -130,6 +130,12 @@
 					<div class="row border">
 						<div class="cell width-10 position-0 title" >
 							<span>mensagem</span>
+							<div class="row">
+								<div class="cell width-13 position-0" >
+									<span tal:content="item/observacao|nothing">Observação</span>
+								</div>	
+							</div>
+							
 						</div>
 						<div class="cell width-6-5 position-10 border-horz even">
 							<div class="row">

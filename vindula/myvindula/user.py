@@ -71,7 +71,7 @@ class ModelsFuncDetails(Storm, BaseStore):
     cost_center = Unicode()
     organisational_unit = Unicode()
     reports_to = Unicode()
-    location = Unicode()
+    location = Unicode() 
     postal_address = Unicode()
     special_roles = Unicode()
     photograph = Unicode()
@@ -300,6 +300,7 @@ class ModelsFuncHolerite(Storm, BaseStore):
     cnpj_empresa = Unicode()
     total_vencimento = Unicode()
     total_desconto = Unicode()
+    observacao = Unicode()
     valor_liquido = Unicode()
     salario_base = Unicode()
     base_Inss = Unicode()
@@ -308,7 +309,7 @@ class ModelsFuncHolerite(Storm, BaseStore):
     base_irrf = Unicode()
     
     descricao = Reference(id, "ModelsFuncHoleriteDescricao.vin_myvindula_holerite_id")
-    
+       
     def set_FuncHolerite(self, **kwargs):
         # adicionando...
         funcHolerite = ModelsFuncHolerite(**kwargs)
@@ -322,18 +323,17 @@ class ModelsFuncHolerite(Storm, BaseStore):
         #Por seguranca retorna None quando CPF = None, pois na importacao, 
         #pode ser improtado algum holerite com cpf vazio 
         if cpf == None: return None
-        
         data = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.cpf==cpf).order_by(ModelsFuncHolerite.competencia)
         if data.count() > 0:
             return data
         else:
             return None    
     
-    def get_FuncHolerites_byCPFAndCompetencia(self, cpf, competencia):
+    def get_FuncHolerites_byCPFAndID(self, cpf,id):
         #Checagem de seguranca
         if cpf == None: return None
         
-        data = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.cpf==cpf, ModelsFuncHolerite.competencia==competencia).one()
+        data = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.cpf==cpf, ModelsFuncHolerite.id==id).one()
         if data:
             return data
         else:
@@ -346,15 +346,23 @@ class ModelsFuncHolerite(Storm, BaseStore):
         else:
             return None        
     
-    def get_FuncHolerites_Import(self):
-        data = self.store.find(ModelsFuncHolerite)
-        if data.count() > 0:
-            return data.group_by(ModelsFuncHolerite.date_creation)
-        else:
-            return None    
+    def get_FuncHolerites_Import(self):        
+        result = self.store.execute("SELECT count(*),DATE_FORMAT(date_creation,'%d/%m/%Y %H:%i') as data,\
+                                    date_creation, empresa FROM vin_myvindula_holerite group by data,empresa")
+        L = []        
+        for i in result:
+            L.append({'contador':i[0],
+                      'date_creation':i[1],
+                      'date_excluir':i[2], 
+                      'empresa':i[3],                      
+                      })        
+        return L    
 
-    def del_HoleritesLote(self, date):
-        results = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.date_creation==date)
+    def del_HoleritesLote(self, date,empresa):
+        #import pdb;pdb.set_trace()
+        results = self.store.find(ModelsFuncHolerite, ModelsFuncHolerite.date_creation>=date,
+                                                      ModelsFuncHolerite.date_creation<=date.replace(second=59),
+                                                      ModelsFuncHolerite.empresa==empresa)
         if results:
             for result in results:
                 ModelsFuncHoleriteDescricao().del_HoleritesDescricao(result.id)
@@ -993,18 +1001,23 @@ class BaseFunc(BaseStore):
 
             
     def converte_dadosByDB(self, D):
-        
         keys = D.keys()
         for item in keys:
-            valor = D[item]
-            if type(valor) == str: 
-                valor = valor.strip()
-                try:
-                    D[item] = unicode(valor, 'utf-8')
-                except:
-                    D[item] = unicode(valor, 'ISO-8859-1')
-            else:
-                D[item] = valor
+            if item == 'itens_holerite' or\
+               item == 'itens_holerite_check' or\
+               item == 'completo':
+                D.pop(item)
+            else: 
+                valor = D[item]
+                if type(valor) == str: 
+                    valor = valor.strip()
+                    try:
+                        D[item] = unicode(valor, 'utf-8')
+                    except:
+                        D[item] = unicode(valor, 'ISO-8859-1')
+                else:
+                    D[item] = valor
+        
         return D
                  
     def geraCampos(self,form_data):
