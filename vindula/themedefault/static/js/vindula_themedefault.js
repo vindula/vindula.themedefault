@@ -4,14 +4,17 @@ $j = jQuery.noConflict();
 	function setTextPortalPersonaltools(){
 		var time = new Date();
 		time = time.getHours();
-		if (time > 17)  var msg = 'Boa noite, ';
-		else if (time > 12) var msg = 'Boa tarde, ';
-		else var msg = 'Bom dia, ';
+		if (time > 17){
+		  var msg = 'Boa noite, ';
+		} else if (time > 12){
+		  var msg = 'Boa tarde, ';
+		} else {
+		  var msg = 'Bom dia, ';
+		}
 		$j('a#user-name').text(msg + $j('a#user-name').text());
 	};
 
 $j(document).ready(function(){
-	
 	setTextPortalPersonaltools();
 
 	/* ADJUSTMENTS */ 
@@ -29,16 +32,15 @@ $j(document).ready(function(){
 	var links = $j('div#links-adcionais').html();
 	$j('div#links-adcionais').insertBefore('dl#portal-personaltools #personaltools-logout');
 
-
 	/*
 	$j('div.autocompleteInputWidget span.option label span').text(function(index, text){
 	 	if ($j(this).text() == '(nothing)') $j(this).text('Nenhum');
-	});*/
+	});
 	
-	/*
 	$j('dd.actionMenuContent a.contenttype-collection').attr("class", "contenttype-topic");
-	$j('dd.actionMenuContent a.contenttype-link img').hide();*/
 	
+	$j('dd.actionMenuContent a.contenttype-link img').hide();
+    */
 	
 	/* LINK THEME EDIT */
 	$j('div.logo').hover(function(){
@@ -52,7 +54,6 @@ $j(document).ready(function(){
 	},function() {
 		$j('div#informacao a.theme-edit').css("display", "none");
 	});
-	
 	
 	/* COMMENT BUTTON 
 	var flag = 0;
@@ -81,8 +82,7 @@ $j(document).ready(function(){
         filter: common_content_filter,
         closeselector: '[name=form.cancelar]',
         width: '25%',
-        config: common_jqt_config,
+        config: common_jqt_config
         });
-	
-	 
+
 });

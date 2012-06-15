@@ -68,6 +68,17 @@ div#data #portal-personaltools a#user-name {
 	height: 15px;
 }
 
+div#data #portal-personaltools #links-adcionais{
+    float: left;
+}
+div#data #portal-personaltools #links-adcionais li a{
+    white-space: normal;
+    word-wrap: break-word;
+}
+div#data dd.actionMenuContent li {
+    display: block;
+}
+
 div#data dd.actionMenuContent li a {
 	line-height: 2em;
 }
