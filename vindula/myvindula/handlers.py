@@ -30,7 +30,8 @@ def userupdate(event):
         user_id = user_login.getUserName()
         
     if not ModelsFuncDetails().get_FuncDetails(user_id) or\
-       not ModelsUserOpenFire().get_UserOpenFire_by_username(user_id):
+       not ModelsUserOpenFire().get_UserOpenFire_by_username(user_id) and\
+       user_id != 'admin':
         
         if not ModelsFuncDetails().get_FuncDetails(user_id):
             D = {}

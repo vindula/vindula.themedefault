@@ -330,7 +330,7 @@
   						  tal:attributes="action string:${context/absolute_url}/myvindulalistuser?user=${context/REQUEST/form/user|nothing}&scraps=true">	
 						
 						<input type="hidden" name="destination" value="" tal:attributes="value user">	
-						<input type="hidden" name="username" value="" tal:attributes="value context/@@plone_portal_state/member|nothing">
+						<input type="hidden" name="username" value="" tal:attributes="value python:member.getUserName()">
 						
 						<textarea tal:condition="panelView/check_ativa_richtext" tal:attributes="title view_myvindula/getConfTyneMCE|nothing" 
                          style="width: 100%; height: 85px;" name="text" id="text" class='mce_editable'></textarea>	
@@ -377,15 +377,12 @@
 									</div>
 									<div metal:use-macro="context/myvindula-like-macro/macros/like" ></div>
 									
-
-									
-									
 								</div>
 				                <div class="comment-body">
 				                    <p tal:replace="structure item/text|nothing" />
 						  		</div>
 								<!-- campos input necessario para a criação de comentariso -->
-								<div id="comments" tal:condition="logado" >
+								<div id="comments" tal:condition="logado" class="bt_comentar">
 									<div tal:attributes="id item/id|nothing">
 										<input type="hidden" name="isPlone:boolean" id="isPlone" value="False" />
 										<input type="hidden" name="type" id="type" value="ModelsMyvindulaRecados" />

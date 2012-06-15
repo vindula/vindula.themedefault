@@ -6,7 +6,8 @@
 								  
 			<tal:rep repeat="item comments">
 				<div class="comment item_lista" tal:define="user_comment python: view_comments.get_prefs_user(item.username);
-															user item/username|nothing">
+															user item/username|nothing"
+												tal:condition="user_comment">
 					<div class="commentImage">
 		                <img src="defaultUser.png"
 		             		 alt="" border="0"
@@ -16,8 +17,8 @@
 											 title user_comment/name|nothing;" />
 		            </div>
 					<div class="documentByLine name-user">
-						<h4><a href="" tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${user_comment/username|nothing}">
-								<span tal:replace="user_comment/name|nothing" /> |	 
+						<h4><a href="" tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${item/username|nothing}">
+								<span tal:replace="user_comment/name|item/username" /> |	 
 		                    	<span tal:condition="item/date_creation|nothing"  
 									  tal:replace="python:item.date_creation.strftime('%d/%m/%Y  %H:%M')" />
 							</a>
@@ -28,7 +29,7 @@
 							<input type="hidden" name="isPlone:boolean" id="isPlone" value="False" />
 							<input type="hidden" name="type" id="type" value="ModelsMyvindulaComments" />
 						</div>
-						<div metal:use-macro="context/myvindula-like-macro/macros/like" />
+						<div metal:use-macro="context/myvindula-like-macro/macros/like"> </div>
 						
 					</div>
 		            <div class="comment-body">

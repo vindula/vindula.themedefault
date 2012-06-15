@@ -102,3 +102,11 @@ Changelog
 - Aperfeiçoamento do método de importação de holerites 
 
 
+1.1.17 - 2012-06-15
+----------------------
+- Ajustes na gravação do pensamentos e recados.
+- Correção do layout dos portlets para o IE
+- Corrição do erro de CSS no menu de links pessoais
+
+
+ 

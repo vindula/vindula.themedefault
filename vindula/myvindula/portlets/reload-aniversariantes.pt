@@ -33,10 +33,10 @@
 								<a tal:attributes="href string:${here/portal_url}/myvindulalistuser?user=${obj/username|nothing}"
 									tal:content="python: view.get_principal_campo(obj)">func</a>
 							</h4>
-								<p>
+								<p class="quebraLinha" >
 									<tal:rep repeat="detail details" condition="details">
-										<span class="quebraLinha" tal:condition="python: detail['label'] and detail['content']" tal:content="string: ${detail/label}: "> </span>
-										<span class="quebraLinha" tal:condition="detail/content" tal:content="detail/content"> </span>
+										<span tal:condition="python: detail['label'] and detail['content']" tal:content="string: ${detail/label}: "> </span>
+										<span tal:condition="detail/content" tal:content="detail/content"> </span>
 										<br tal:condition="python: detail['label'] or detail['content']">
 									</tal:rep>
 								</p>

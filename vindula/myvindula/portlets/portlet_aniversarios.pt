@@ -29,7 +29,7 @@
 									tal:content="python: view.get_principal_campo(obj)">func</a>
 							</h4>
 								<!--a href="" tal:attributes="href python: obj.getObject().absolute_url()" tal:content="obj/Title">Employee</a><br /-->
-								<p>
+								<p class="quebraLinha">
 									<!--tal:def define="user obj/username;
 											        departamentos python: view.get_department(user)">
 										<tal:rep repeat="departamento departamentos">
@@ -41,8 +41,8 @@
 									</tal:def>
 									<span tal:content="obj/date_birth|nothing"></span><br /-->
 									<tal:rep repeat="detail details" condition="details">
-										<span class="quebraLinha" tal:condition="python: detail['label'] and detail['content']" tal:content="string: ${detail/label}: "> </span>
-										<span class="quebraLinha" tal:condition="detail/content" tal:content="detail/content"> </span>
+										<span tal:condition="python: detail['label'] and detail['content']" tal:content="string: ${detail/label}: "> </span>
+										<span tal:condition="detail/content" tal:content="detail/content"> </span>
 										<br tal:condition="python: detail['label'] or detail['content']">
 									</tal:rep>
 								</p>
