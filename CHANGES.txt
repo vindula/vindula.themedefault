@@ -108,5 +108,9 @@ Changelog
 - Correção do layout dos portlets para o IE
 - Corrição do erro de CSS no menu de links pessoais
 
+1.1.18 - 2012-06-18
+-----------------------
+- Criação do objeto de coleção para a aba meus conteúdos do usuário 
+
 
  

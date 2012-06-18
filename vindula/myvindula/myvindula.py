@@ -666,24 +666,24 @@ class MyVindulaNewsEmployeeView(grok.View, BaseFunc):
 
 
 
-class MyVindulaListMyContent(grok.View):
-    grok.context(Interface)
-    grok.require('zope2.View')
-    grok.name('myvindula-meus-conteudos')
-    
-    def load_list(self):        
-        membership = self.context.portal_membership
-        user_login = membership.getAuthenticatedMember()
-        
-        if user_login.getUserName():
-            ctool = getSite().portal_catalog
-            items = ctool(path = {'query': '/', 'depth': 99},
-                          Creator=user_login.getId())        
-        
-            return items
-            
-        else:
-            self.request.response.redirect(self.context.absolute_url() + '/login')
+#class MyVindulaListMyContent(grok.View):
+#    grok.context(Interface)
+#    grok.require('zope2.View')
+#    grok.name('myvindula-meus-conteudos')
+#    
+#    def load_list(self):        
+#        membership = self.context.portal_membership
+#        user_login = membership.getAuthenticatedMember()
+#        
+#        if user_login.getUserName():
+#            ctool = getSite().portal_catalog
+#            items = ctool(path = {'query': '/', 'depth': 99},
+#                          Creator=user_login.getId())        
+#        
+#            return items
+#            
+#        else:
+#            self.request.response.redirect(self.context.absolute_url() + '/login')
 
 
 class MyVindulaManageAllUser(grok.View, BaseFunc):

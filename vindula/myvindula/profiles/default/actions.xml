@@ -20,7 +20,7 @@
 		   <property name="permissions">
          		<element value="View"/>
         	</property>
-		   <property name="url_expr">string:${portal_url}/myvindula-meus-conteudos</property>
+		   <property name="url_expr">string:${portal_url}/myvindula-meus-conteudos/folder_contents</property>
 		   <property name="visible">True</property>
        </object>
 

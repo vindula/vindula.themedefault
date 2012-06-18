@@ -80,6 +80,35 @@ def set_AllowedType_Members(context):
 #        if 'index_html' in folder_members.keys():
 #            index = folder_members['index_html']
 #            #index.write("member_search = '/myvindulalistall'\nreturn container.REQUEST.RESPONSE.redirect(member_search)")
+
+
+def create_mycontents(context):
+    portal = context.getSite()
+    portal_workflow = getToolByName(portal, 'portal_workflow')
+    
+    # Creating collect Users mycontents
+    if not 'myvindula-meus-conteudos' in portal.objectIds():
+
+        objects = {'type_name':'Topic',
+                   'id': 'myvindula-meus-conteudos',
+                   'title':'Meus Conteúdos',
+                   'description':'Visualização dos meus conteúdos no portal.',
+                   'customView':True,
+                   'customViewFields':['Title','CreationDate','Description']
+                   }
+
+        portal.invokeFactory(**objects)  
+
+        if 'myvindula-meus-conteudos' in portal.keys():
+            colection = portal['myvindula-meus-conteudos']
+            
+            try:portal_workflow.doActionFor(colection, 'publish')
+            except:portal_workflow.doActionFor(colection, 'publish_internally') 
+                    
+            theCriteria = colection.addCriterion('Creator','ATCurrentAuthorCriterion')
+            colection.setSortCriterion('created',False)
+            
+            colection.manage_setLocalRoles('AuthenticatedUsers', ['Editor', 'Reviewer', 'Reader'])
             
         
 def set_field_default(context):

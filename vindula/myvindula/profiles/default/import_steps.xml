@@ -19,7 +19,12 @@
 	                 title="My Vindula: Hablita campos padrão para edição pelo usuario">
 	    	<dependency step="componentregistry"/>
 		</import-step>
-				
-		
+		<import-step id="vindula.myvindula.create_mycontents" 
+                     version="20120618-01"
+                     handler="vindula.myvindula.setuphandlers.create_mycontents"
+                     title="My Vindula: Cria a coleção dos meus conteudos do portal">
+
+        </import-step>		
+
 		
 	</import-steps>
