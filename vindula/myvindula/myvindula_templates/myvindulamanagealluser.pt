@@ -21,6 +21,7 @@
 		        		</div>
 						<div id="busca">
 		        			<fieldset>
+		        				<legend>Buscar Usuários</legend>
 								<!--tal:cont condition="context/@@myvindula-conf-userpanel/config_muit_user"-->
 									<form action="/myvindulamanagealluser" method="post" id="portlet-ramais">
 										<div style="float: left; padding-right: 5px;">
