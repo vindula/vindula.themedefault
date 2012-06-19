@@ -32,3 +32,8 @@ Changelog
 1.1.5 - 2012-06-05
 ---------------------
 - Implantação do novo layout do menu dropdown
+
+1.1.6 - 2012-06-15
+---------------------
+- Correção do js no ie7 
+- Ajustes do css da aba de links pessoais
