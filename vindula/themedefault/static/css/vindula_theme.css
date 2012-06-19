@@ -270,6 +270,7 @@ div.portlet-user-info-larg{
 /* Gallery Cycle... */
 .gallery-cycle div.info {
 	width:427px;
+	z-index: 0 !important;
 }
 
 .gallery-cycle-controls {
