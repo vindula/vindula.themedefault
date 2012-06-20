@@ -1,0 +1,77 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master">
+
+
+        <metal:js fill-slot="javascript_head_slot">
+        	<script type="text/javascript" >
+        		$j = jQuery.noConflict();
+	            $j(document).ready(function(){
+					/* Aba de edição do conteudo*/
+					$j('#contentview-docs').addClass('selected');
+					$j('#contentview-view').removeClass('selected');   		
+				
+				});
+        	</script>
+	    </metal:js>
+
+<body>
+    <metal:main metal:fill-slot="main">
+    	<div id="content-core">
+			
+			<div tal:define="form_data view/load_form | python:{};
+	                             errors form_data/errors | python:{};
+	                             form_values form_data/data | python:{};">
+	                                              	
+						<h2 tal:condition="request/id|nothing"  
+							tal:content="string:Editação do documento '${form_values/name_document|nothing}'"> </h2>
+						<h2 tal:condition="not: request/id|nothing">Cadastro novo documento </h2>                                              		
+	                    					
+						<form method="post" tal:attributes="action string:${context/absolute_url|nothing}/add-documents">
+							
+	                        <input tal:condition="request/id | nothing" id="id" type="hidden" value="" name="id" tal:attributes="value request/id | nothing" />
+							
+							<div class="field" tal:attributes="class python: view.field_class(errors, 'name_document')">
+			                    <label for="name_document">Nome do Documento</label>
+			                    <span class="fieldRequired" title="Obrigatório">(Obrigatório)</span>
+			                    <div class="formHelp">Insira o nome do documento.</div>
+			                    <div tal:content="errors/name_document|nothing"></div> 
+			                    <input id="name_document" type="text" value="" 
+			                    name="name_document" size="25" tal:attributes="value request/name_document | form_values/name_document | nothing">
+			                </div>
+							
+							<div class="field" tal:attributes="class python: view.field_class(errors, 'flag_ativo')">
+			                    <label for="flag_ativo">Documento Ativo</label>
+			                    <span class="fieldRequired" title="Obrigatório">(Obrigatório)</span>
+			                    <div class="formHelp">Se marcado o documento estará ativo aos usuários.</div>
+			                    <div tal:content="errors/flag_ativo|nothing"></div> 
+			                    
+								<input id="flag_ativo" type="checkbox" value="True" name="flag_ativo" size="25" checked="checked" 
+									   tal:condition="not: request/id|nothing">
+									   
+								<input id="flag_ativo" type="checkbox" value="True" name="flag_ativo" size="25" 
+									   tal:condition="request/id|nothing"
+									   tal:define="marcado python:view.checked('flag_ativo',request,form_values)"
+									   tal:attributes="checked python:marcado and 'checked' or ''">									   
+									   
+			                </div>
+							
+							<!-- Botões de ação --> 
+	                        <fieldset>
+	                            <br/>
+	                            <div style="float:left; width:100%">
+	                                <input style="width:100px" class="button-erp" type="submit" value="Voltar" name="form.voltar">
+	                                <input style="width:100px;" class="button-erp" type="submit" value="Salvar" name="form.submited">
+	                            </div>
+	                        </fieldset>
+							
+						</form>						
+				</div>						 			
+								 			
+	    </div>
+    </metal:main>    
+</body>
+</html>

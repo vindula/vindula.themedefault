@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<object name="portal_actions" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+   <object name="user" meta_type="CMF Action Category">
+       
+       <object name="myvindula" meta_type="CMF Action" i18n:domain="plone" insert-before="*">
+        <property name="title" i18n:translate="">Meu Perfil</property>
+        <property name="description" i18n:translate=""></property>
+        <property name="url_expr">python: '%s/myvindulalistuser' % (portal_url)</property>
+        <property name="icon_expr"></property>
+        <property name="available_expr">python:member is not None</property>
+        <property name="permissions">
+            <element value="View"/>
+        </property>
+        <property name="visible">True</property>
+       </object>
+	   
+		<object name="mystuff" meta_type="CMF Action" i18n:domain="plone" insert-after="myvindula">
+           <property name="title" i18n:translate="">Meus conteúdos</property>
+  		   <property name="available_expr">python:member is not None</property>
+		   <property name="permissions">
+         		<element value="View"/>
+        	</property>
+		   <property name="url_expr">string:${portal_url}/myvindula-meus-conteudos/folder_contents</property>
+		   <property name="visible">True</property>
+       </object>
+
+	   <object name="preferences" meta_type="CMF Action" i18n:domain="plone">
+           <property name="visible">False</property>
+	   </object>
+	   <object name="dashboard" meta_type="CMF Action" i18n:domain="plone">
+           <property name="visible">False</property>
+	   </object>
+	   
+  </object>
+  
+  
+  
+  <object name="site_actions" meta_type="CMF Action Category">
+   <object name="plone_setup" meta_type="CMF Action" i18n:domain="plone">
+    <property name="visible">False</property>
+   </object>
+  </object>
+  <object name="document_actions" meta_type="CMF Action Category">
+    <object name="print" meta_type="CMF Action" i18n:domain="plone">
+      <property name="visible">False</property>
+    </object>
+  </object>
+</object>

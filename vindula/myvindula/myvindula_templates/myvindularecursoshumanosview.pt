@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+
+<head>
+
+</head>
+
+<body>
+   <div class="cell width-full position-0" 
+         metal:fill-slot="content" >
+         
+	   <metal:use use-macro="context/@@myvindulapanel/macros/page"/>
+       
+	   <tal:def define="enable_holerite context/@@myvindula-conf-userpanel/check_holerite;
+						enable_documents context/@@myvindula-conf-userpanel/check_documents;
+						
+						enable_link python:enable_documents and 'myvindula-documents' or enable_holerite and 'myvindula-holerite';
+						
+						link request/id| enable_link;">	
+		    
+			<div id="edit-bar" class="custom"
+				 tal:condition="python: enable_holerite or enable_documents" >
+	            
+				<h5 class="hiddenStructure"
+	                i18n:translate="heading_views">Views</h5>
+	
+	            <ul class="contentViews"
+	                id="content-views"
+	                tal:define="view_name view/__name__"
+	                i18n:domain="plone">
+	                
+	                <tal:cond condition="enable_documents">
+						<li id="contentview-user_data-personal-data"
+		                    	tal:define="selected python:link=='myvindula-documents';"
+		                    tal:attributes="class python:selected and 'selected' or 'plain'">
+		                    <a href=""
+		                       tal:attributes="href string:${context/portal_url}/@@myvindula-recursos-humanos?id=myvindula-documents"
+		                       i18n:translate="">
+		                        Documentos
+		                    </a>
+		                </li>
+					</tal:cond>
+					<tal:cond condition="enable_holerite">
+						<li id="contentview-user_data-personal-holerite"
+			                    tal:define="selected python:link=='myvindula-holerite'"
+			                    tal:attributes="class python:selected and 'selected' or 'plain'">
+			                    <a href=""
+			                       tal:attributes="href string:${context/portal_url}/@@myvindula-recursos-humanos?id=myvindula-holerite"
+			                       i18n:translate="">
+			                        Meus Holerites
+			                    </a>
+			            </li>
+					</tal:cond>
+	            </ul>
+	            <div class="contentActions">&nbsp;</div>
+	        </div>
+			<div id="content" tal:define="macro python:view.getMacro(link)">
+				<tal:cond condition="macro">
+					<metal:block metal:use-macro="python:path(macro)"/>
+				</tal:cond>
+			</div>       	
+       </tal:def>
+    </div>
+</body>
+</html>

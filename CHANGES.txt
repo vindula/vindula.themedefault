@@ -5,6 +5,7 @@ Changelog
 ------------------
 
 
+<<<<<<< HEAD
 1.1 - 2012-04-25
 --------------------
 
@@ -41,3 +42,117 @@ Changelog
 1.1.7	-	2012-06-20
 ---------------------
 - Remoção das abas padrões do Plone Configurações, Datas, Categorização e Propriedade na edição da Homepage.
+=======
+
+1.1.0 - 2012-03-29
+------------------
+- Adição do TinyMCE no campo de Pensamentos do Vindula
+- Alteração do evento de paginação do portlet aniversariosReload
+
+1.1.1 - 2012-04-24
+-----------------
+- Definindo um selected no Portlet Busca de Ramais, caso esteja dentro de uma Estrutura Organizacional.
+
+1.1.2 - 2012-04-24
+-----------------
+- Ajuste do portlet ramais para departamentos em ordem alfabetica 
+
+1.1.3 - 2012-05-22
+-----------------
+- Adicionando campo cpf na tabela MyVindula.
+- Ajuste do portlet ramais para departamentos em ordem alfabetica
+
+1.1.4 - 2012-05-23
+--------------------
+- Correções de ortografia no porduto
+- Resolvido problema na view do Mural do Vindula.
+
+1.1.6 - 2012-05-28
+---------------------
+- adição do campo Ip no comentario do myvindula
+- ajuste no metodo de salvar o username no comentario 
+
+1.1.7 - 2012-05-28
+----------------------
+- ajustes nos metodos de curtir e descurtir
+- ajustes na permição de excluir comentarios do portal
+
+
+1.1.5 - 2012-05-24
+-----------------
+- Ajuste do portlet ramais para departamentos em ordem alfabetica
+- Ajustes no mecanismo para cortar a imagem para imagens grandes
+- Adição do SQl da tabela vin_myvindula_photo_user
+- Adição do mecanismo de Excluir a imagem do Usuario
+- Ajustes no tamanho da imagem do usuário para o portlet reload
+- Opção no portlet ramais e aniversariantes para permitir exibição a usuarios anônimos
+- Correções de ortografia
+- Criação de mecanismo para alterar o label  dos campos do perfil do usuário
+- criação do mecanismo para alterar os campos da view de mais aniversariante do portlet
+
+1.1.8 - 2012-05-28
+----------------------
+- criação de mecanismo para a mensagem do portlet aniversariantes acompanhas a configuração.   
+- Criação de mecanismo para cortar a imagem do perfil do usuario
+
+1.1.9 - 2012-05-29
+---------------------
+- merge do master com o branch info-portlet-dinamic
+- correção do css do portlet ramais e aniversariantes para emails grandes
+
+1.1.10 - 2012-05-29
+----------------------
+- Correção da view de listagem de usuarios pelo portlet ramais, melhoria na busca com filtro dinamico
+- Adição do even/odd na configuração de campos do myvindula
+
+1.1.11 - 2012-05-30
+----------------------
+- Adição da restrição de recados privados para os usuários da intranet   
+
+
+1.1.12 - 2012-06-06
+----------------------
+- Alteração do label dos campos de edição do myvindula
+
+
+1.1.13 -2012-06-11 
+---------------------
+- Correção da busca de aniversariantes para o filtro do tipo 'Proximos Aniversariantes'
+
+
+1.1.13 -2012-06-13 
+---------------------
+- Correção no nos campos do perfil do usuário
+
+
+1.1.14 - 2012-06-13
+---------------------
+- Criação do metodo de criação do usuario no openfire ao logar na intranet
+
+1.1.15 - 2012-06-13 
+----------------------
+- Criação de metodo de compatibilidade da foto do usuário, para busca a foto tanto da imagem com crop quando da imagem antiga
+- Correção do botão responder no IE
+
+
+1.1.16 - 2012-06-14
+---------------------
+- Aperfeiçoamento do método de importação de holerites 
+
+
+1.1.17 - 2012-06-15
+----------------------
+- Ajustes na gravação do pensamentos e recados.
+- Correção do layout dos portlets para o IE
+- Corrição do erro de CSS no menu de links pessoais
+
+1.1.18 - 2012-06-18
+-----------------------
+- Criação do objeto de coleção para a aba meus conteúdos do usuário 
+
+1.1.19	-	2012-06-20
+-----------------------
+- Alteração do nome do link do portlet Aniversariantes de Mais... para Todos.
+
+ 
+>>>>>>> b6f654b7ba9cf143fff1bd235b03f9c240db5826

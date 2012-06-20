@@ -1,0 +1,72 @@
+<html>
+	<body metal:use-macro="here/main_template/macros/master">
+	  	<div metal:fill-slot="content">
+	  		
+			<h1>Gerenciamento de Usu&aacute;rios</h1>
+				<div id="content" tal:define="member python:context.portal_membership.getAuthenticatedMember();
+											  view_listuser python: context.restrictedTraverse('@@myvindulalistuser');
+											  view_listall python: context.restrictedTraverse('@@myvindulalistall');
+		  									  form_data view/load_list | python:{};">
+	                           					     
+		        	<div id="interna" class="userlist" tal:define="Batch python:modules['Products.CMFPlone'].Batch;
+											                       b_size python:20;
+											                       b_start python:0;
+											                       b_start request/b_start | b_start">
+		        		<div id='novo-func'>
+		        			<fieldset>
+		            			<legend>Adicionar novo Funcionários</legend>
+								<a tal:attributes="href string:${context/portal_url|nothing}/myvindulaprefs?newuser=''"><strong>Clique aqui</strong></a>
+									<span>para adicionar novo funcionário</span>
+							</fieldset>
+		        		</div>
+						<div id="busca">
+		        			<fieldset>
+		        				<legend>Buscar Usuários</legend>
+								<!--tal:cont condition="context/@@myvindula-conf-userpanel/config_muit_user"-->
+									<form action="/myvindulamanagealluser" method="post" id="portlet-ramais">
+										<div style="float: left; padding-right: 5px;">
+											<label>Nome:</label>
+											<input type="text" name="title" size="26" tal:attributes="value python: request.get('title', '')"/>	
+										</div>
+								    	
+										<div style="float:left;"> 
+											<input type="submit" name="SearchSubmit" value="Buscar" class="context" i18n:attributes="value"/>
+											<!--input type="submit" name="all" value="Listar Tudos os usuários" class="context" i18n:attributes="value"/-->
+										</div>
+						     	 	</form>	
+								<!--/tal:cont-->
+							</fieldset>
+		        		</div>
+						<div class="visualClear"></div>
+						<div tal:condition="form_data" class="all-users">						
+			          		<div tal:define="batch python:Batch(form_data, b_size, int(b_start));" 
+									 class="user" 
+									 tal:repeat="item batch">
+					            
+								<a tal:attributes="href python: here.portal_url() + '/myvindulaprefs?user=' + view.encodeUser(item.username)">
+					              <img  tal:attributes="src string: ${context/portal_url|nothing}/user-image?username=${item/username|nothing}">
+					              <br />
+					              <span tal:content="item/name|nothing"></span>
+					            </a>
+								
+			          		</div>
+						</div>
+						
+						<tal:cond tal:condition="form_data">
+							<div class="navigation-users" tal:define="batch python:Batch(form_data, b_size, int(b_start));">
+								<div metal:use-macro="here/batch_macros/macros/navigation" />
+							</div>
+						</tal:cond>
+						
+						<div tal:condition="not: form_data">
+							<br>
+							<h3 tal:content="view_listall/check_no_result">N&atilde;o h&aacute; resultados.</h3>
+						</div>
+						
+						
+						
+		        	</div>
+				</div>
+	  	</div>    
+  </body>
+</html>

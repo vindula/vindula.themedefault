@@ -1,7 +1,11 @@
 Changelog
 =========
 
+<<<<<<< HEAD
 1.0dev (unreleased)
+=======
+0.1dev (unreleased)
+>>>>>>> b6f654b7ba9cf143fff1bd235b03f9c240db5826
 -------------------
 
 - Initial release

@@ -1,0 +1,86 @@
+<html>
+    <body metal:use-macro="here/main_template/macros/master">
+    	
+		<metal:js fill-slot="javascript_head_slot">
+            <script type="text/javascript" tal:attributes="src string:${view/static}/js/import_export_user.js"></script>
+        </metal:js>
+		
+        <div metal:fill-slot="content">
+            <div id="internal" tal:define="campos_vin view/load_fields_vindula | nothing;
+			                               arquivo view/load_archive;
+										   campos_csv view/load_fields_csv | nothing;
+										   importa view/importar_valores">
+					
+				<div class="import-user">
+					
+					<div class="multi-steps">
+                        <div class="pageNumber">
+                            <span>1</span>
+                        </div>
+                        <div class="pageNumber">
+                            <span class="active">2</span>
+                        </div>
+                        <div class="pageNumber">
+                            <span>3</span>
+                        </div>
+                    </div>
+					
+					<h2 tal:content="string: Arquivo ${arquivo} carregado."></h2>
+                    <form method="post" enctype="multipart/form-data">
+                    	<h2 class="h2title">Selecionar campos</h2>
+                    	<p>Selecione os campos do arquivo CSV que corresponde aos campos do Vindula</p>
+						<table>
+							<tr>
+								<td><input type="checkbox" name="cria-username" value="True">
+									Criar username em caso de arquivo csv com coluna username vazia</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" name="atualiza-dados" value="True">
+									Realiza merge de dados já existente no vindula</td>
+							</tr>	
+						</table>
+						<br /><br />
+	                    <table class="tableImport" border=0>
+	                        <tbody>
+	                            <tr><th>Campos do Vindula</th>
+	                                <th></th>
+	                                <th>Campos do CSV</th>
+	                            </tr>
+								<tr>
+									<td>User Name</td>
+									<td class="middleColumn">=</td>
+									<td>
+	                                    <select name="username">
+	                                        <option value="">-- Selecione --</option>
+	                                        <tal:repeat repeat="campo_csv campos_csv">
+	                                            <option tal:attributes="value repeat/campo_csv/number"
+												        tal:content="campo_csv"></option>
+	                                        </tal:repeat>
+	                                    </select>
+	                                </td>
+								</tr>
+	                            <tr tal:repeat="campo_vin campos_vin">
+	                                <td tal:content="campo_vin/label"></td>
+	                                <td class="middleColumn">=</td>
+	                                <td>
+	                                    <select tal:attributes="name campo_vin/name" name="">
+	                                        <option value="">-- Selecione --</option>
+	                                        <tal:repeat repeat="campo_csv campos_csv">
+	                                            <option tal:attributes="value repeat/campo_csv/number"
+												        tal:content="campo_csv"></option>
+	                                        </tal:repeat>
+	                                    </select>
+	                                </td>
+	                            </tr>
+	                        </tbody>
+	                    </table>
+						<div>
+							<div class="imgLoader"><img tal:attributes="src string:${view/static}/images/loader.gif"></div>
+	                        <input id="import-button" type="submit" name="import" value="Importar">
+						</div>
+                    </form>
+                </div>
+			</div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,50 @@
+<html metal:use-macro="here/main_template/macros/master">
+	<head>
+		  <metal:js fill-slot="javascript_head_slot">
+			<script type="text/javascript" src="" tal:attributes="src string:${view/static}/js/popup.js"></script>
+		
+        </metal:js>
+		
+	</head>
+	
+	<body >
+	    <div metal:fill-slot="content-core">
+			<div class="resultado" tal:define="results view/load_list|nothing;
+												status request/status|nothing;
+												user request/user|nothing;">
+	
+				<tal:cond condition="results">
+					<h2 tal:define="prefs_user python: view.get_prefs_user(user)" 
+						tal:content="string: Funcionario: ${prefs_user/name|nothing}"></h2>
+					<table class="documentos" width="100%">
+						<tr>
+							<th width="50%">Documento</th>
+							<th width="25%">Status</th>
+						</tr>	
+						<tal:rep repeat="item results">
+							<tal:def define="doc item/doc|nothing;
+											 doc_user item/doc_user|nothing">
+								<tal:cond condition="python: doc.flag_ativo and view.checaFiltro(doc_user)">
+									<tr tal:define="classe repeat/item/odd" 
+										tal:attributes="class python:classe and 'odd' or 'even'">
+										
+										<td tal:content="doc/name_document|nothing"></td>
+										<tal:cond condition="doc_user">
+												<td>Sim <a tal:attributes="href string:${context/portal_url|nothing}/download-document?id=${doc_user/id|nothing}">Baixar documento</a></td>
+											</tal:cond>
+											<tal:cond condition="python:not doc_user">
+												<td>Não enviado</td>
+											</tal:cond>	
+									</tr>
+								</tal:cond>	
+							</tal:def>
+						</tal:rep>
+					</table>
+				</tal:cond>
+				<tal:cond condition="not: results">
+					<h4>N&atilde;o h&aacute; resultados.</h4>	
+				</tal:cond>
+			</div>
+	    </div>    
+	</body>
+</html>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 vindula.themedefault Installation
 ---------------------------------
 
@@ -29,11 +30,21 @@ Alternatively, if you are using zc.buildout and the plone.recipe.zope2instance
 recipe to manage your project, you can do this:
 
 * Add ``vindula.themedefault`` to the list of eggs to install, e.g.:
+=======
+vindula.myvindula Installation
+------------------------------
+
+To install vindula.myvindula using zc.buildout and the plone.recipe.zope2instance
+recipe to manage your project, you can do this:
+
+* Add ``vindula.myvindula`` to the list of eggs to install, e.g.:
+>>>>>>> b6f654b7ba9cf143fff1bd235b03f9c240db5826
 
     [buildout]
     ...
     eggs =
         ...
+<<<<<<< HEAD
         vindula.themedefault
        
 * Tell the plone.recipe.zope2instance recipe to install a ZCML slug:
@@ -50,3 +61,10 @@ recipe to manage your project, you can do this:
         
 You can skip the ZCML slug if you are going to explicitly include the package
 from another package's configure.zcml file.
+=======
+        vindula.myvindula
+       
+* Re-run buildout, e.g. with:
+
+    $ ./bin/buildout
+>>>>>>> b6f654b7ba9cf143fff1bd235b03f9c240db5826
