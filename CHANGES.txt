@@ -112,5 +112,8 @@ Changelog
 -----------------------
 - Criação do objeto de coleção para a aba meus conteúdos do usuário 
 
+1.1.19	-	2012-06-20
+-----------------------
+- Alteração do nome do link do portlet Aniversariantes de Mais... para Todos.
 
  
