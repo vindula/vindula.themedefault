@@ -37,3 +37,7 @@ Changelog
 ---------------------
 - Correção do js no ie7 
 - Ajustes do css da aba de links pessoais
+
+1.1.7	-	2012-06-20
+---------------------
+- Remoção das abas padrões do Plone Configurações, Datas, Categorização e Propriedade na edição da Homepage.

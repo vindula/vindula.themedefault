@@ -310,6 +310,20 @@ invisivel = {'view':'invisible','edit':'invisible',}
 HomePage_schema['description'].widget.visible = invisivel
 HomePage_schema['text'].widget.visible = invisivel
 
+
+# Dates
+L = ['effectiveDate','expirationDate','creation_date','modification_date']   
+# Categorization
+L += ['subject','relatedItems','location','language']
+# Ownership
+L += ['creators','contributors','rights']
+# Settings
+L += ['allowDiscussion','excludeFromNav', 'presentation','tableContents']
+
+for i in L:
+    HomePage_schema[i].widget.visible = invisivel 
+    
+    
 class HomePage(ATDocumentBase):
     """ HomePage """
     security = ClassSecurityInfo()
