@@ -5,7 +5,7 @@
 	<tal:cond condition="use_dropdown">
 		<ul id="portal-globalnav-drop" class="nivel1" tal:condition="menus">
 			<li tal:repeat="menu menus" tal:attributes="class python: viewlet.isSelected(menu)">
-				<a tal:content="menu/title" tal:attributes="href menu/absolute_url; alt menu/title" class="padding-bottom padding-bottom-FF"> Menu</a>
+				<a tal:content="menu/title" tal:attributes="href menu/absolute_url; alt menu/title" class="padding-bottom padding-bottom-FF cor-hover"> Menu</a>
 				<tal:def define="subTabs python: viewlet.getSubMenuDrop(menu)">
 					<ul class="nivel2" tal:condition="subTabs">
 						<tal:rep repeat="subTab subTabs">
@@ -14,7 +14,7 @@
 													   			   subSubTabs python: viewlet.getSubMenuDrop(subTab, 2)">
 								<a class="hide" href="" tal:attributes="href subTab/url|nothing; title subTab/description|nothing;">
 														<tal:cont content="subTab/name|nothing">SubTab Name</tal:cont>
-														<img tal:condition="subSubTabs"
+														<img tal:condition="python: subSubTabs and sub_nivel"
 															 tal:attributes="src string:${context/portal_url|nothing}/++resource++vindula.themedefault/images/icons/seta_menu.gif">						
 								</a>
 								
@@ -37,7 +37,7 @@
 	</tal:cond>
 	
 	<tal:cond condition="not: use_dropdown" define="submenu viewlet/getSubMenu">
-		<ul class="nivel1" tal:condition="menus">
+		<ul class="nivel1 menu-normal" tal:condition="menus">
 			<li tal:repeat="menu menus" tal:attributes="class python: viewlet.isSelected(menu)">
 				<a tal:content="menu/title" tal:attributes="href menu/absolute_url; alt menu/title">Menu</a>	
 			</li>

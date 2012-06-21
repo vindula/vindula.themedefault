@@ -171,6 +171,10 @@
 #nav li a:hover { 
 	color:#F58220; 
 }
+
+#nav ul.menu-normal li:hover a { 
+	color:#F58220; 
+}
 /* ...Nivel 1 */
 
 
@@ -208,9 +212,12 @@
 /* 
  * * * NAV DROP DOWN * * *
  */
-#portal-globalnav-drop{
-    height: 34px;    
-    
+
+#portal-globalnav-drop {
+	padding:0; 
+	margin: 0 0 12px;
+	list-style: none;
+	height: 30px;
 }
 
 #portal-globalnav-drop .nivel2{
@@ -220,7 +227,7 @@
 
 #portal-globalnav-drop .nivel2,
 #portal-globalnav-drop .nivel3 {
-	top: 30px;
+	top: 26px;
     width: 166px;
     background: url("++resource++vindula.themedefault/images/bkgs/bg_menu.jpg") repeat scroll 0 0 #525254;
 }
@@ -250,6 +257,11 @@
 #portal-globalnav-drop li:hover a {
     background-color: #525254;
     color:#e4e4e4; 
+	padding-bottom: 11px;
+}
+
+#portal-globalnav-drop li a:hover.cor-hover{
+    color:#e4e4e4; 
 }
 
 #portal-globalnav-drop li ul.nivel2 li a{
@@ -257,45 +269,23 @@
 }
 
 #portal-globalnav-drop.nivel1 li.selected a:hover{
-	color:#F58220 !important; 
+	color:#F58220 !important;
 }
-/*
-#portal-globalnav-drop.nivel1 li{
-	border-color: #FFFFFF !important;
-    border-style: solid;
-    border-width: 0 1px 0 0;
-}
-*/
+
 #portal-globalnav-drop.nivel1 li.selected{
 	margin: 0;
 }
+
 #portal-globalnav-drop .padding-bottom{
-    padding-bottom: 14px
+    padding-bottom: 7px;
 }
-
-@-moz-document url-prefix(){
-    #portal-globalnav-drop .padding-bottom-FF{
-        padding-bottom: 11px
-        
-    }
-}
-
-
 
 #portal-globalnav-drop li { text-align: center; padding: 0 !important;}
-#portal-globalnav-drop li a{ padding: 8px 15px 11px; display: inline-block;}
+#portal-globalnav-drop li a{ padding: 8px 15px 0; display: inline-block;}
 #portal-globalnav-drop li ul {display: none; width:166px; z-index: 1000; position: relative;}
 #portal-globalnav-drop li ul li a{ padding: 9px 12px 8px;}
 
 #portal-globalnav-drop {z-index: 1; position: relative;}
-
-	
-#portal-globalnav-drop {
-	padding:0; 
-	margin: 0 0 12px;
-	list-style: none;
-	min-height: 30px;
-}
 	
 #portal-globalnav-drop li {
 	float:left; 

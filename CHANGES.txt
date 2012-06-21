@@ -120,39 +120,40 @@ Changelog
 - Correção da busca de aniversariantes para o filtro do tipo 'Proximos Aniversariantes'
 
 
-1.1.13 -2012-06-13 
+1.1.14 -2012-06-13 
 ---------------------
 - Correção no nos campos do perfil do usuário
 
 
-1.1.14 - 2012-06-13
+1.1.15 - 2012-06-13
 ---------------------
 - Criação do metodo de criação do usuario no openfire ao logar na intranet
 
-1.1.15 - 2012-06-13 
+1.1.16 - 2012-06-13 
 ----------------------
 - Criação de metodo de compatibilidade da foto do usuário, para busca a foto tanto da imagem com crop quando da imagem antiga
 - Correção do botão responder no IE
 
 
-1.1.16 - 2012-06-14
+1.1.17 - 2012-06-14
 ---------------------
 - Aperfeiçoamento do método de importação de holerites 
 
 
-1.1.17 - 2012-06-15
+1.1.18 - 2012-06-15
 ----------------------
 - Ajustes na gravação do pensamentos e recados.
 - Correção do layout dos portlets para o IE
 - Corrição do erro de CSS no menu de links pessoais
 
-1.1.18 - 2012-06-18
+1.1.19 - 2012-06-18
 -----------------------
 - Criação do objeto de coleção para a aba meus conteúdos do usuário 
 
-1.1.19	-	2012-06-20
+1.1.20	-	2012-06-20
 -----------------------
 - Alteração do nome do link do portlet Aniversariantes de Mais... para Todos.
 
- 
->>>>>>> b6f654b7ba9cf143fff1bd235b03f9c240db5826
+1.1.21	-	2012-06-21
+-----------------------
+Correcoes no menu
