@@ -257,7 +257,12 @@
 #portal-globalnav-drop li:hover a {
     background-color: #525254;
     color:#e4e4e4; 
-	padding-bottom: 11px;
+}
+
+
+
+#portal-globalnav-drop li:hover a.contains-subtab {
+    padding-bottom: 11px; 
 }
 
 #portal-globalnav-drop li a:hover.cor-hover{
