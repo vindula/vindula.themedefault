@@ -359,8 +359,6 @@ div#informacao a.theme-edit{margin-top:-30px;}
 /* My Vindula User Views... */
 .userpage div.department { background-color: #FAA61A; }
 .userpage #personal { width: 662px; }
-.userpage #personal #photo { width: 165px; }
-.userpage #personal #data { width: 497px; }
 .userpage table { max-width: 486px; }
 .userpage table td.field { background-image: url("++resource++vindula.themedefault/images/bkgs/back_td.jpg"); }
 .userpage table td.value { background-image: url("++resource++vindula.themedefault/images/bkgs/back_td2.jpg"); }
