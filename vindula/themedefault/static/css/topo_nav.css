@@ -228,7 +228,7 @@
 #portal-globalnav-drop .nivel2,
 #portal-globalnav-drop .nivel3 {
 	top: 26px;
-    width: 166px;
+    width: 200px;
     background: url("++resource++vindula.themedefault/images/bkgs/bg_menu.jpg") repeat scroll 0 0 #525254;
 }
 
@@ -319,7 +319,7 @@
 #portal-globalnav-drop li:hover ul li:hover ul li a.hide {background: url("++resource++vindula.themedefault/images/bkgs/bg_menu.jpg") repeat scroll 0 0 #525254;
                                                           color:#e4e4e4 !important;text-decoration: none;}
 
-#portal-globalnav-drop li:hover ul li:hover ul {display:block; position:absolute; left:166px; top: 0;/* border-left: 1px #FFFFFF solid*/}
+#portal-globalnav-drop li:hover ul li:hover ul {display:block; position:absolute; left:200px; top: 0;/* border-left: 1px #FFFFFF solid*/}
 #portal-globalnav-drop li:hover ul li ul li:hover a.hide {background:#000; color:#F58220 !important;text-decoration: underline}
 
 
