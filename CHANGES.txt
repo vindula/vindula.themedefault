@@ -9,22 +9,22 @@ Changelog
 1.1 - 2012-04-25
 --------------------
 
-- altera‹o do metodo de filtragem de conteudos para o menu do portal   
-- altera‹o do metodo de busca dos itens do menu
+- alteraï¿½ï¿½o do metodo de filtragem de conteudos para o menu do portal   
+- alteraï¿½ï¿½o do metodo de busca dos itens do menu
 
 1.1.1 - 2012-05-23
 --------------------
-- Corre›es de ortografia no porduto
+- Correï¿½ï¿½es de ortografia no porduto
 - Ajustes na listagem de outras noticias da homePage
 
 1.1.2 - 2012-05-24
 --------------------
-- remo‹o da tag 'xmlns' da template do diazo 
+- remoï¿½ï¿½o da tag 'xmlns' da template do diazo 
 
 1.1.3 - 2012-05-25
 --------------------
 - criada a classe quebraLinha para ser usada nos portlets
-- adicionado a mudana dinamica da cor das barras da pagina de Meu Perfil 
+- adicionado a mudanï¿½a dinamica da cor das barras da pagina de Meu Perfil 
 
 1.1.4 - 2012-05-28
 --------------------
@@ -32,8 +32,12 @@ Changelog
 
 1.1.5 - 2012-06-05
 ---------------------
-- Implanta‹o do novo layout do menu dropdown
+- Implantaï¿½ï¿½o do novo layout do menu dropdown
 
 1.1.6	-	2012-06-21
 -----------------------
-Correcoes no menu
+- Correcoes no menu
+
+1.1.7 - 2012-06-25
+----------------------
+- EdiÃ§Ã£o do js para carregar fancebox na ediÃ§Ã£o dos portlet 

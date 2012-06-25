@@ -71,9 +71,8 @@ $j(document).ready(function(){
 	/* CORRECTING PROBLEMS WITH FLOAT LEFT */ 
 	//$j('div.userlist').height($j('div#geral_colunas').height());
 	//$j('div.food-control-panel').height($j('div#geral_colunas').height());
-	
-	
-	var common_content_filter = '#content>*:not(div.configlet),dl.portalMessage.error,dl.portalMessage.info';
+
+	var common_content_filter = '#content=*,dl.portalMessage.error,dl.portalMessage.info';
     var common_jqt_config = {fixed:false,speed:'fast',mask:{color:'#000',opacity: 0.4,loadSpeed:0,closeSpeed:0}};
 
     // Exemplo dialog
@@ -84,5 +83,37 @@ $j(document).ready(function(){
         width: '25%',
         config: common_jqt_config
         });
+        
+    // Modal do album de fotos 
+    $j('a.albunphoto').prepOverlay({
+        subtype: 'ajax',
+        filter: common_content_filter,
+        closeselector: '[name=form.cancelar]',
+        formselector: '[name=save-coment]',
+        width: '50%',
+        config: common_jqt_config
+        });
+        
+    var common_config_portlet = {fixed:false,speed:'fast',mask:{color:'#000',opacity: 0.4,loadSpeed:0,closeSpeed:0},
+                                //onLoad : function (e) {$j('form#save-coment').append('<input type="hidden" id="modal" value="True" name="form.modal:boolean">');}
+                                 onLoad: function(e){ $j.each($j('.mce_editable'), function (index, value){
+                                    carregaTiny(value);
+                                 });},
+                                 onBeforeClose: function(e){ $j.each($j('.mce_editable'), function (index, value){
+                                    removeTinyMCE(value);
+                                 });} 
+                                };    
+        
+    // Modal editra portlet 
+    $j('a.portlet-ajax').prepOverlay({
+        subtype: 'ajax',
+        filter: common_content_filter,
+        closeselector: '[name=form.button.cancel],[name=form.actions.cancel]',
+        formselector: '[id=zc.page.browser_form],[name=edit_form]',
+        noform:'reload',
+        width: '50%',
+        config: common_config_portlet
+        });        
+                
 
 });
