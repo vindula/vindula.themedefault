@@ -122,8 +122,7 @@ div#data dd.actionMenuContent li a {
 
 
 /* Portlets ... */
-
-.hiddenStructure {
+dl.portlet dt.hiddenStructure {
 	margin-left: 0;
     margin-top: 0;
 }
