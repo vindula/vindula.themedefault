@@ -65,7 +65,7 @@
 							
 							<tal:highlight-news repeat="new view/getHighlightedNews">
 
-								<div class="info"> 
+								<div class="info zindex-min"> 
 									<input id="cycle-timeout" type="hidden" tal:attributes="value context/time_transitionsnews">
 									<div class="titulo_info">
 										<h2>
