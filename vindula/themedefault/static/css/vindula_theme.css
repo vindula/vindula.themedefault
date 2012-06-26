@@ -176,11 +176,9 @@ div#data dd.actionMenuContent li a {
 	background-image: url("++resource++vindula.themedefault/images/bkgs/rodapePortlet.png");
 	background-position: left bottom;
     background-repeat: no-repeat;
-	/*margin-top: -33px;
-	margin-top: -18px;*/
 	*margin-top: -38px;
   	margin-top: -25px;
-    padding: 15px !important;
+    padding: 14px 12px 15px !important;
     width: 202px;
 	height:17px;
 }
