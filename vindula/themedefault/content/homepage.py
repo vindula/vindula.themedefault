@@ -67,6 +67,21 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         required=True,
     ),
     
+    StringField(
+        name='type_navigation',
+        widget=SelectionWidget(
+            label=_(u"Tipo da paginação dos banners"),
+            description=_(u"Selecione o tipo de paginação dos banners rototivos da pagina inicial."),
+            label_msgid='vindula_themedefault_label_type_navigation',
+            description_msgid='vindula_themedefault_help_type_navigation',
+            i18n_domain='vindula_themedefault',
+            format='radio',
+        ),
+        vocabulary=[("number","Número"),("image","Imagem")],
+        default="image",
+        required=True,
+    ),
+    
 #Fim Configurar Banner  -------------------------------------
 
     TextField(

@@ -41,3 +41,7 @@ Changelog
 1.1.7 - 2012-06-25
 ----------------------
 - Edição do js para carregar fancebox na edição dos portlet 
+
+1.1.8 - 2012-06-26
+----------------------
+Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da homepage

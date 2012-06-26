@@ -30,48 +30,6 @@
 	margin: 0 29px 10px 0;
 }
 
-.paginacao img{
-	vertical-align:middle;
-}
-
-.pag_anterior{
-    margin: 0 0.4em 0 0;
-}
-
-.pag_anterior img{
-    padding-right: 2px;
-}
-
-.pag_all{
-	background: none repeat scroll 0 0 #F8991D;
-    float: left;
-	padding: 0.4em 0.1em;
-    text-align: center;
-    width: 1.125em;
-	*height: 1.125em;
-    *padding: 0.1em;
-	cursor:pointer;
-	border-radius: 50%;
-}
-
-.pag_proximo{
-    margin: 0 0 0 0.4em;
-}
-
-.pag_proximo img{
-    padding-left: 2px;
-}
-
-.paginacao p{
-    color: #B7B7B7;
-    float: left;
-    font-size: 75%;
-    font-weight: bold;
-    padding: 0.4em 0 0;
-}
-
-.cycle-nav-banner a { display:none; }
-.cycle-nav-banner a.activeSlide{ display:inline; }
-.paginacao p a{
-  	color: #636363 !important;
+div#cycle-nav-banner {
+	display: inline;
 }
