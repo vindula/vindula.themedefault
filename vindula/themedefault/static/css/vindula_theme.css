@@ -122,6 +122,12 @@ div#data dd.actionMenuContent li a {
 
 
 /* Portlets ... */
+
+.hiddenStructure {
+	margin-left: 0;
+    margin-top: 0;
+}
+
 .portletWrapper a { 
 	color:#000000 !important; 
 }
