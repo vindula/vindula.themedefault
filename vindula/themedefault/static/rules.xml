@@ -41,8 +41,12 @@
 	<copy css:content-children="#alert_display" css:theme="#alert-display" />
 	
 	<copy css:content-children="#links-adcionais" css:theme="#links-adcionais" />
-		
-	<copy css:content-children="#portal-breadcrumbs" css:theme="#geral_breadcrumb" />
+
+    <!-- Opção de Habilitar e Desabilitar o breadcrumbs do plone -->	
+	<xsl:variable name="disable_breadcrumbs" css:select="body .disable_breadcrumbs"/>
+	<rules if-content="not($disable_breadcrumbs)">
+	   <copy css:content-children="#portal-breadcrumbs" css:theme="#geral_breadcrumb"/>    
+	</rules>
 	
 	<copy css:content-children="#banner_homepage" css:theme="#banner_homepage" css:if-content="#vindula-home-page"/>
 

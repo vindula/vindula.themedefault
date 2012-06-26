@@ -24,7 +24,6 @@ from vindula.themedefault.config import *
 HomePage_schema =  ATDocumentSchema.copy() + Schema((
                                                      
 #Configurar Banner  -------------------------------------
-                                                     
     BooleanField(
         name='active_banner',
         widget=BooleanWidget(
@@ -82,8 +81,19 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         required=True,
     ),
     
+    BooleanField(
+        name='disable_breadcrumbs',
+        widget=BooleanWidget(
+            label=_(u"Desativa o breadcrumbs na homepage"),
+            description=_(u"Selecione para desativar o breadcrumbs na visualização do objeto homepage"),
+            label_msgid='vindula_themedefault_label_disable_breadcrumbs',
+            description_msgid='vindula_themedefault_help_disable_breadcrumbs',
+            i18n_domain='vindula_themedefault',
+        ),
+        default=False         
+    ),
+    
 #Fim Configurar Banner  -------------------------------------
-
     TextField(
             name='content_top',
             default_content_type = 'text/restructured',
