@@ -9,7 +9,7 @@
 					<!-- start: Conteudo do banner -->
 					<div id="box_banner">
 						<div id="cont_banner">
-							<div tal:repeat="banner banners">
+							<div tal:repeat="banner banners" class="zindex-min">
 								<tal:cond condition="not: banner/url_image">
 									<img tal:attributes="src banner/image; alt banner/title;">	
 								</tal:cond>
@@ -18,29 +18,30 @@
 								</tal:cond>
 							</div>
 						</div>
+						
+						<!-- start: Paginacao -->
+						<input id="cycle-timeout-banner" type="hidden" tal:attributes="value homepage_view/context/getTime_transition_banner">
+						<div class="paginacao paginacao-banner pag_homepage" tal:condition="python: len(homepage_view.context.getRef_banner()) > 1">
+							<div id="cycle-prev-banner" class="circle float-left c-pointer">
+								<img class="left" src="/++theme++vindula.themedefault/images/buttons/seta_left.png" title="Anterior"/>
+							</div>
+							<tal:cond condition="python: homepage_view.context.getType_navigation() == 'image'">
+								<div id="cycle-nav-banner"></div>
+							</tal:cond>
+							<tal:cond condition="python: homepage_view.context.getType_navigation() == 'number'">
+								<div class="pag_number">
+									<p class="cycle-nav-banner" id="cycle-nav-banner"></p>
+									<p tal:content="python: '/' + str(len(homepage_view.context.getRef_banner()))"></p>
+								</div>
+							</tal:cond>
+							<div id="cycle-next-banner" class="circle float-left c-pointer">
+								<img class="right" src="/++theme++vindula.themedefault/images/buttons/seta_right.png" title="Pr&oacute;ximo"/>
+							</div>
+						</div>
+						<!-- end: Paginacao -->
+						
 					</div>
 					<!-- end: Conteudo do banner -->
-					
-					<!-- start: Paginacao -->
-					<input id="cycle-timeout-banner" type="hidden" tal:attributes="value homepage_view/context/getTime_transition_banner">
-					<div class="paginacao pag_homepage" tal:condition="python: len(homepage_view.context.getRef_banner()) > 1">
-						<div id="cycle-prev-banner" class="circle float-left c-pointer">
-							<img class="left" src="/++theme++vindula.themedefault/images/buttons/seta_left.png" title="Anterior"/>
-						</div>
-						<tal:cond condition="python: homepage_view.context.getType_navigation() == 'image'">
-							<div id="cycle-nav-banner"></div>
-						</tal:cond>
-						<tal:cond condition="python: homepage_view.context.getType_navigation() == 'number'">
-							<div class="pag_number">
-								<p class="cycle-nav-banner" id="cycle-nav-banner"></p>
-								<p tal:content="python: '/' + str(len(homepage_view.context.getRef_banner()))"></p>
-							</div>
-						</tal:cond>
-						<div id="cycle-next-banner" class="circle float-left c-pointer">
-							<img class="right" src="/++theme++vindula.themedefault/images/buttons/seta_right.png" title="Pr&oacute;ximo"/>
-						</div>
-					</div>
-					<!-- end: Paginacao -->
 					
 				</tal:def>
 			</div>

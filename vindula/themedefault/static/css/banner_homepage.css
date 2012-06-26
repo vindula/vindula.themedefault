@@ -26,10 +26,27 @@
 
 .paginacao{
 	float: right;
-	display: table;
-	margin: 0 29px 10px 0;
 }
 
 div#cycle-nav-banner {
 	display: inline;
+}
+
+.paginacao-banner{
+	height: 0;
+	position: relative;
+	bottom: 23px;
+    right: 2px;
+}
+
+div#cycle-nav-banner {
+	display: inline;
+}
+
+div#cycle-next-banner img {
+	margin-left: 5px;
+}
+
+div#cycle-prev-banner img {
+	margin-left: -3px;
 }
