@@ -270,6 +270,7 @@
 
 #portal-globalnav-drop li ul.nivel2 li a{
     background: none;
+	padding: 8px 12px;
 }
 
 #portal-globalnav-drop.nivel1 li.selected a:hover{
