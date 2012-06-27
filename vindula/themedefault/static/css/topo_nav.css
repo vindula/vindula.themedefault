@@ -194,7 +194,7 @@
 #nav .nivel2 li a { 
 	color: #FFFFFF;
 	display: inline-block;
-    padding: 6px 12px 4px;
+    padding: 3px 12px;
 }
 #nav .nivel2 li,
 #nav .nivel2 li.selected {
