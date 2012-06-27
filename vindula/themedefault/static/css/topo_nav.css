@@ -191,16 +191,15 @@
 	display:block;
 }
 
-#nav .nivel2 li a { color: #FFFFFF; }
+#nav .nivel2 li a { 
+	color: #FFFFFF;
+	display: inline-block;
+    padding: 6px 12px 4px;
+}
 #nav .nivel2 li,
 #nav .nivel2 li.selected {
     float: left;
-	padding: 2px 12px;
     margin: 4px;
-}
-
-#nav .nivel2 li.selected { 
-	background-color: #FFFFFF; 
 }
 
 #nav .nivel2 li.selected a { 
