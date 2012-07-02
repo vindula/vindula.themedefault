@@ -1,15 +1,14 @@
 /* 
  * * * CONTEUDO PAGINA * * *
  */
-
-
 #geral_colunas {
     margin: 5px 0 0 10px;
     width: 980px;
 	padding-bottom: 1px;
 }
 
-#geral_colunas p{
+#geral_colunas p,
+#portal-columns p{
 	color: #6D6D6D;
     font-size: 12px;
     line-height: 16px;
@@ -39,10 +38,6 @@
 	padding-right: 16px;
 }
 
-/*div.colunaTipo3 div.managePortletsLink {
-	margin-right: 16px;
-}*/
-
 /* As duas regras abaixo sao usadas 
  * no manage-portlets do conteudo 
  * Home Page... */
@@ -52,12 +47,13 @@
 	margin-left: 20px;
 }
 
+
 #geral_colunas .colunaManagePortlets {
  	float: left;
     width: 460px;	
 }
 
-#geral_colunas .quebraLinha {
+.quebraLinha {
 	word-wrap: break-word;
 }
 /* ... */
@@ -151,26 +147,7 @@
 .gallery-cycle .img_info img {
 	max-height: 165px;
 }
-/*
-.bk_cont_imgDestaque{
-    background: url("../images/bkgs/bk_cont_imgDestaque.png") repeat-y scroll 0 0 transparent;
-    width: 167px;
-	*margin:-9px 0 0 0;
-}
 
-.bk_topo_imgDestaque {
-	background: url("../images/bkgs/bk_topo_imgDestaque.png") no-repeat scroll 0 0 transparent;
-}
-.bk_rodape_imgDestaque {
-	background: url("../images/bkgs/bk_rodape_imgDestaque.png") no-repeat scroll 0 0 transparent;
-}
-
-.bk_topo_imgDestaque,
-.bk_rodape_imgDestaque {
-	width: 167px;
-	height: 9px;
-}
-*/
 .descricao_destaque h4{
     color: #F58220;
     font-weight: normal;
@@ -199,7 +176,6 @@
 
 .boxTipo2{
  	margin: 0 0 10px 0;
-
 }
 
 .topoBoxTipo2 {
@@ -315,9 +291,10 @@
 #vindula-home-page .topoBoxTipo{
 	margin-top: -10px;
 }
+
 .contBoxTipo{
 	float: left;
-    background: url("++resource++vindula.themedefault/images/bkgs/conBoxTipo.png") repeat-y scroll 0 0 transparent;
+	background: url("++resource++vindula.themedefault/images/bkgs/conBoxTipo.png") repeat-y scroll 0 0 transparent;
     padding: 15px 20px;
     width: 668px;
 }
@@ -415,7 +392,6 @@
 }
 
 .lista_comentarios{
-    /*background: none repeat scroll 0 0 #F8F8F8;*/
     border: 1px solid #D1D3D4;
     padding: 15px 20px 0 20px;
 	margin:20px 0 0 0;
@@ -474,6 +450,56 @@
 	padding: 0 !important;
 }
 
+/* BEGIN - NEW CONTENT*/
+
+/* BEGIN -  SOMBRA DO TOPO E DO RODAPE DO CONTEUDO DO MEIO */
+#portal-columns .shadowTpBt {
+	height: 4px;
+	position: relative;
+	margin: 0 4px;
+}
+
+#portal-columns .topContCol {
+	background: url("++resource++vindula.themedefault/images/bkgs/1px_images/topoBoxTipo_1px.png") repeat-x scroll 0 0 transparent;
+	bottom: 1px;
+}
+
+#portal-columns .bottonContCol {
+	background: url("++resource++vindula.themedefault/images/bkgs/1px_images/bottonBoxTipo_1px.png") repeat-x scroll 0 0 transparent;
+	top: 2px;
+}
+/* END -  SOMBRA DO TOPO E DO RODAPE DO CONTEUDO DO MEIO */
+
+/* BEGIN -  SOMBRA LATERAL E FUNDO DO CONTEUDO DO MEIO */
+#portal-columns .columnMid {
+	margin: 15px;
+}
+
+#portal-columns .columnContRight {
+	background: url("++resource++vindula.themedefault/images/bkgs/1px_images/conBoxTipo_1px_Right.png") repeat-y scroll 100% 0 transparent;
+}
+
+#portal-columns {
+	padding: 5px 0 20px 15px;
+    width: 96%;
+}
+
+#portal-column-content {
+	margin-top: 2px;
+	background:#FFF;
+	background: url("++resource++vindula.themedefault/images/bkgs/1px_images/conBoxTipo_1px_Left.png") repeat-y scroll 0 0 #FFFFFF;
+}
+/* END -  SOMBRA LATERAL E FUNDO DO CONTEUDO DO MEIO */
+
+/* BEGIN -  EDICAO DE CLASSES DO DECO PARA DEIXAR A O ESPACO ENTRE AS COLUNAS IGUAL A HOME PAGE */
+div.width-1\3a 2 { width:    48.75%; } /* .width-1:2 */
+div.width-3\3a 4 { width:    73.75%; } /* .width-3:4 */
+div.width-full   { width:    98.75%  }
+/* END -  EDICAO DE CLASSES DO DECO PARA DEIXAR A O ESPACO ENTRE AS COLUNAS IGUAL A HOME PAGE */
+
+/* END - NEW CONTENT */
+
+
 /* Altera��es para p�gina Not�cias... */
 .width1{
 	width:96%;
@@ -490,13 +516,11 @@
 
 .bk_sombraTopo{
     background: url("++resource++vindula.themedefault/images/bkgs/sombra_cont_topo.png") repeat-x scroll center top #FFFFFF;
-	/*float:left;*/
 }
 
 .bk_sombraEsquerda{
     background: url("++resource++vindula.themedefault/images/bkgs/sombra_cont_esquerda.png") repeat-y scroll left center transparent;
     margin: 0 0 0 -3px;
-	/*float:left;*/
 }
 
 .bk_sombraDireita{
@@ -505,7 +529,6 @@
     padding: 3px 0 0;
 	*position:relative;
 	*margin:0;
-	/*float:left;*/
 }
 
 .contBox_colunaTotal{

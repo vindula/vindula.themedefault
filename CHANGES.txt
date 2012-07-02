@@ -49,3 +49,7 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 1.1.9 - 2012-06-26
 -------------------------
 - Adicionado opção de remover o breadcrumbs do objeto HomePage
+
+1.1.10 - 2012-07-02
+-------------------------
+- Adicionada a coluna de portlets do lado esquerdo do portal 

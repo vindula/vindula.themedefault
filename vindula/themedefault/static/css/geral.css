@@ -48,6 +48,7 @@ body{
 
 #bk_cont{
 	background: url("++resource++vindula.themedefault/images/bkgs/bk_conteudo.png") repeat scroll 0 0 transparent;
+	overflow: hidden;
 }
 
 /*START Batch navigation*/

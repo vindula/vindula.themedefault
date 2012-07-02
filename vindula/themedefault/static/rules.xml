@@ -10,21 +10,20 @@
 	<copy css:content="#icone-favico" theme="/html/head" />
 	<drop css:content="link[type='image/x-icon']" />
     
+	
+	<!-- Variables -->
+	<xsl:variable name="home_page_context" css:select="#vindula-home-page"/>
+	
+	
 	<!-- Prevent theme usage in zmi -->
     <rules css:if-content="#visual-portal-wrapper">
-
 		<!-- Content with Home Page object -->
-    	<rules css:if-content="#vindula-home-page">
+    	<rules if-content="$home_page_context">
         	<theme href="theme_home.html" />
 		</rules>
-		<!-- Content with two columns -->
-		<rules css:if-content="#portal-column-two">
-        	<theme href="theme_two.html" />
-		</rules>
-		<!-- Content with one column -->
-		<theme href="theme_one.html" />		
-		
+    	<theme href="theme.html" />	
     </rules>
+	
 	
 	<!-- Portal Top -->
 	<copy css:content-children="#usefullinks_viewlet" css:theme="#barra_superior" />
@@ -42,56 +41,51 @@
 	
 	<copy css:content-children="#links-adcionais" css:theme="#links-adcionais" />
 
+
     <!-- Opção de Habilitar e Desabilitar o breadcrumbs do plone -->	
 	<xsl:variable name="disable_breadcrumbs" css:select="body .disable_breadcrumbs"/>
 	<rules if-content="not($disable_breadcrumbs)">
 	   <copy css:content-children="#portal-breadcrumbs" css:theme="#geral_breadcrumb"/>    
 	</rules>
 	
-	<copy css:content-children="#banner_homepage" css:theme="#banner_homepage" css:if-content="#vindula-home-page"/>
+	<copy css:content-children="#banner_homepage" css:theme="#banner_homepage" if-content="$home_page_context"/>
 
-	<!-- Portal Column Content -->
-	<copy css:content-children="#portal-column-content" css:theme=".contBoxTipo" />
-	<copy css:content-children="#portal-column-content" css:theme=".contBox_colunaTotal" />
+
+	<!-- Portal Columns Not Home Page -->
+	<rules if-content="not($home_page_context)">
+	   <replace css:content="#portal-columns" css:theme="#geral_colunas" /> 
+	</rules>
+	
 	<drop css:content="#portal-column-content #viewlet-above-content" />
 	<!--drop attributes="class" css:content="#viewlet-below-content div" /-->
 	
-	<!-- Portal Column Content Home Page-->
-	<rules css:if-content="#vindula-home-page">
+	
+	<!-- Portal Columns Home Page-->
+	<rules if-content="$home_page_context">
 		<copy css:content-children="#portal-column-content" css:theme="#contentHome" />
 		<drop css:content=".documentFirstHeading" />
 		<drop css:content="#viewlet-below-content-title" />
-	</rules>
-	
-	<!-- Portal Column Two -->
-	<copy css:content-children="#portal-column-two" css:theme=".colunaTipo3" />
-	
-	<!-- Portal Column One and Two Home Page -->
-	<rules css:if-content="#vindula-home-page">
+		
+		<!-- Portlets Home Page-->
 		<copy css:content-children="#portal-column-one" css:theme="#portletsRight" />
 		<copy css:content-children="#portal-column-two" css:theme="#portletsLeft" />
 	</rules>
 	
-	<!-- Manage portlets Home Page -->
-	<!--rules css:if-content="body.portaltype-homepage"-->
-		<rules css:if-content="body.template-manage-portlets">
-			<copy css:content-children="#portal-column-one" css:theme=".colunaTipo4" />
-			<drop css:theme=".colunaTipo1" />
-			<copy css:content-children="#portal-column-content" css:theme=".colunaManagePortlets" />
-		</rules>
-	<!--/rules-->
 	
 	<!-- Vindula News Content Type -->
 	<rules css:if-content="body.portaltype-vindulanews">
 		<drop css:content=".documentFirstHeading" />
 	</rules>
 	
-	 <!-- Vidula Chat -->
-     <after css:content-children="#online-contacts_viewlet" css:theme="#pagina" css:if-content="#online-contacts_viewlet" />
+	
+	<!-- Vidula Chat -->
+	<after css:content-children="#online-contacts_viewlet" css:theme="#pagina" css:if-content="#online-contacts_viewlet" />
+
 
 	<!-- Portal Footer -->
 	<copy css:content-children="#macro_logofooter" css:theme="#rodape .logo" />
 	<copy css:content-children="#macro_textfooter" css:theme="#informacao" />
+	
 	
 	<!-- Add in any inline scripts, like Google Analytics --> 
     <after theme-children="/html/body" content="/html/body/div[@id='visual-portal-wrapper']/div/script" /> 
