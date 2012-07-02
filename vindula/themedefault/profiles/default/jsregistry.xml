@@ -5,6 +5,10 @@
     		 cacheable="True" compression="safe" cookable="False" enabled="True"
 			 authenticated = "True" expression="" inline="False" />
 			 
+	<javascript id="++resource++vindula.themedefault.js/vindula_portlets.js"
+    		 cacheable="True" compression="safe" cookable="False" enabled="True"
+			 expression="" inline="False" />
+			 
 	<javascript id="++resource++vindula.themedefault.js/vindula_homepage.js"
     		 cacheable="True" compression="none" cookable="False" enabled="True" 
 			 expression="python: context.portal_type == 'HomePage'"  inline="False" />			 

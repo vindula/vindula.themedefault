@@ -22,12 +22,6 @@ $j(document).ready(function(){
 	 	if ($j(this).text() == 'no value') $j(this).text('--');
 	});
 	
-	/* Modificar portlet Navegação */ 
-	var html = '<dd class="portletFooter"></dd>';
-	$j('div.portletWrapper .portletNavigationTree').each(function(){
-		$j(this).append(html);	
-	});
-	
 	/* Modificar links adicionais dos usuarios */ 
 	var links = $j('div#links-adcionais').html();
 	$j('div#links-adcionais').insertBefore('dl#portal-personaltools #personaltools-logout');
