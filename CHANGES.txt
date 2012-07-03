@@ -54,3 +54,7 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 -------------------------
 - Adicionada a coluna de portlets do lado esquerdo do portal
 - Correcao do footer do portlet navegacao para usu‡rios anonimos
+
+1.1.11 - 2012-07-03
+-------------------------
+- Portlet de configuracao do plone control panel igual o do vindula
