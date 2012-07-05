@@ -128,11 +128,11 @@ dl.portlet dt.hiddenStructure {
 	height: auto;
 }
 
-.portlet a { 
+dl.portlet a { 
 	color:#000000 !important; 
 }
 
-.portlet .portletHeader {
+dl.portlet .portletHeader {
     background:none;
     padding: 0 !important;
     text-align: center;
@@ -141,45 +141,45 @@ dl.portlet dt.hiddenStructure {
 	font-size: 18px;
 }
 
-.portlet .portletHeader span.portletTopLeft {
+dl.portlet .portletHeader span.portletTopLeft {
     background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2-top.png") no-repeat scroll 0 0 #FAA61A !important;
 	height:15px;
 	display: block;
 }
 
-.portlet .portletHeader a,
-.portlet .portletHeader span {
+dl.portlet .portletHeader a,
+dl.portlet .portletHeader span {
     background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2-meio.png") repeat-y scroll 0 0 #FAA61A !important;
 	display:block;
 }
 
-.portlet .portletHeader span.portletTopRight{
+dl.portlet .portletHeader span.portletTopRight{
     background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2-botton.png") no-repeat scroll 0 0 #FAA61A !important;
 	height:23px;
 	display: block;
 }
 
-.portlet .portletHeader a{
+dl.portlet .portletHeader a{
 	color: #FFFFFF !important;
 }
 
-.portlet .portletHeader a:hover {
+dl.portlet .portletHeader a:hover {
 	color: #000000 !important;
 }
 
-.portlet .portletItem {
+dl.portlet .portletItem {
     background: url("++resource++vindula.themedefault/images/bkgs/conBoxTipo2.png") repeat-y scroll 0 0 transparent;
     padding: 15px !important;
     width: 202px;
 }
-.portlet div.portletStaticText {
+dl.portlet div.portletStaticText {
 	background-color: #FFFFFF;
  	border: 2px solid #E0E0E0;
     padding: 10px;
 	margin-bottom: 15px;
 	margin-top: 3px;
 }
-.portlet .portletFooter {
+dl.portlet .portletFooter {
 	background-image: url("++resource++vindula.themedefault/images/bkgs/rodapePortlet.png");
 	background-position: left bottom;
     background-repeat: no-repeat;
@@ -189,7 +189,7 @@ dl.portlet dt.hiddenStructure {
     width: 202px;
 	height:17px;
 }
-.portlet .portletNavigationTree .portletHeader{
+dl.portlet .portletNavigationTree .portletHeader{
 	height: auto;
 }
 

@@ -58,3 +58,7 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 1.1.11 - 2012-07-03
 -------------------------
 - Portlet de configuracao do plone control panel igual o do vindula
+
+1.1.12 - 2012-07-05
+-------------------------
+- Correcao das cores dinamicas dos portlets, nao aparecer as cores dinamicas do manage portlets
