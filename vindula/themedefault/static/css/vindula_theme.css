@@ -377,3 +377,11 @@ div#informacao a.theme-edit{margin-top:-30px;}
 }
 
 /* ...My Vindula User Views */
+
+
+/* Area de conteudo do ckeditor */
+#content-ckeditor{
+    background: none;
+    width: auto;
+}
+
