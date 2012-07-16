@@ -233,7 +233,8 @@ div.portlet-birthday div#boxPortlet div.row {
 }
 div.portlet-user-image {
 	float:left;
-    width: 28%;
+    /*width: 28%;*/
+    margin-right:5px;
 	height: 100%;
 }
 div.portlet-user-info {

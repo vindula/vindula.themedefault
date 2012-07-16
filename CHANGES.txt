@@ -67,3 +67,9 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 1.1.13 - 2012-07-11
 -------------------------
 - Ajustes para funcionar o ckeditor
+
+
+1.1.14 - 2012-07-16
+------------------------
+- Ajustes para a integração do gravatar
+
