@@ -13,7 +13,8 @@ $j(document).ready(function(){
 	    next:   '#cycle-next-banner',
 	    prev:   '#cycle-prev-banner',
 		pager:  '#cycle-nav-banner',
-		height:	395
+		height:	441,
+		width: 940
 	});
 	
 
