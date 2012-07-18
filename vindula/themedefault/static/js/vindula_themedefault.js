@@ -87,19 +87,26 @@ $j(document).ready(function(){
         width: '50%',
         config: common_jqt_config
         });
+
+    function teste(){
+        $j('#fieldset-global-settings').parent().attr('id','content');
+    }
+    
+
+    common_jqt_config['onLoad'] = function (e) {launchCKInstances();
+                                                $j('#fieldset-global-settings').parent().attr('id','content');
+                                                };
+    common_jqt_config['onBeforeClose'] = function(e){removeEditor()};
         
-    var common_config_portlet = {fixed:false,speed:'fast',mask:{color:'#000',opacity: 0.4,loadSpeed:0,closeSpeed:0},
-                                //onLoad : function (e) {$j('form#save-coment').append('<input type="hidden" id="modal" value="True" name="form.modal:boolean">');}
-                                 /*onLoad: function(e){ $j.each($j('.mce_editable'), function (index, value){
-                                    carregaTiny(value);
-                                 });}*/
-                                 onLoad: function (e) {launchCKInstances()},
-                                 onBeforeClose: function(e){removeEditor()},
-                                 
-                                 /*onBeforeClose: function(e){ $j.each($j('.mce_editable'), function (index, value){
-                                    removeTinyMCE(value);
-                                 });}*/ 
-                                };    
+    // Howareyou no mural
+    $j('a.new-howareu').prepOverlay({
+        subtype: 'ajax',
+        filter: '#fieldset-global-settings=*',
+        formselector: '[name=myvindula-form]',
+        noform:'reload',
+        width: '50%',
+        config: common_jqt_config,
+        });        
         
     // Modal editra portlet 
     $j('a.portlet-ajax').prepOverlay({
@@ -109,7 +116,7 @@ $j(document).ready(function(){
         formselector: '[id=zc.page.browser_form],[name=edit_form]',
         noform:'reload',
         width: '50%',
-        config: common_config_portlet
+        config: common_jqt_config
         });        
                 
 
