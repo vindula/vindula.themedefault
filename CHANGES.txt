@@ -77,3 +77,6 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 ------------------------
 - Correção das viewlets para a remoção os portlets
 
+1.1.16 - 2012-07-24
+------------------------
+- Alteração do widget de referenceBrowser
