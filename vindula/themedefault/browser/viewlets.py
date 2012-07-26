@@ -3,8 +3,7 @@ from five import grok
 from zope.interface import Interface
 from plone.app.layout.viewlets.interfaces import IPortalHeader, IAboveContent, IPortalFooter
 from Products.CMFCore.utils import getToolByName
-from zope.app.component.hooks import getSite
-
+from zope.app.component.hooks import getSite, setSite
 
 from Products.CMFPlone import utils
 from Products.CMFPlone.browser.navigation import get_view_url
@@ -18,7 +17,15 @@ class LogoTopViewlet(grok.Viewlet):
     grok.name('vindula.themedefault.logotop') 
     grok.require('zope2.View')
     grok.viewletmanager(IPortalHeader) 
-
+    
+    def update(self):
+        site = getSite()
+        try:
+            if site.portal_type != 'Plone Site':
+                print " **** Alteração do GetSite ******** " + str(site) 
+                setSite(site=self.context.portal_url.getPortalObject())
+        except:
+            setSite(site=self.context.portal_url.getPortalObject())
 
 class FaviconTopViewlet(grok.Viewlet): 
     grok.name('vindula.themedefault.favicon') 
