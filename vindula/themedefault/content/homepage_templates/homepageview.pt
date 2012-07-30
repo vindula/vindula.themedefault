@@ -30,7 +30,7 @@
 					<div tal:content="structure context/content_top|nothing">Text</div>
 					
 					<!-- START: Highlight News Cycle-->
-					<div class="contBoxDestaque" tal:condition="view/getHighlightedNews">
+					<div class="contBoxDestaque" tal:define="highlighted_news view/getHighlightedNews" tal:condition="highlighted_news">
 						<div class="cont_superior">
 	
 							<div class="titulo marginDif1">
@@ -39,7 +39,7 @@
 							
 							<!-- Cycle Controls -->
 							<div class="opcoes_destaque marginDif1 gallery-cycle-controls" 
-								 tal:condition="python: len(view.getHighlightedNews()) > 1">
+								 tal:condition="python: len(highlighted_news) > 1">
 								<div class="float-right">
 									<div id="cycle-prev" class="circle float-left c-pointer">
 										<img class="left" src="/++theme++vindula.themedefault/images/buttons/seta_left.png" title="Anterior"/>
@@ -50,7 +50,7 @@
 									<tal:cond condition="python: view.context.getType_navigation() == 'number'">
 										<div class="pag_number paginacao cycle-nav-banner">
 											<p class="cycle-nav" id="cycle-nav"></p>
-											<p tal:content="python: '/' + str(len(view.getHighlightedNews()))"></p>
+											<p tal:content="python: '/' + str(len(highlighted_news))"></p>
 										</div>
 									</tal:cond>
 									<div id="cycle-next" class="circle float-left c-pointer">
@@ -64,7 +64,7 @@
 						<!-- Cycle News -->
 						<div class="gallery-cycle">
 							
-							<tal:highlight-news repeat="new view/getHighlightedNews">
+							<tal:highlight-news repeat="new highlighted_news">
 
 								<div class="info zindex-min"> 
 									<input id="cycle-timeout" type="hidden" tal:attributes="value context/time_transitionsnews">
@@ -104,21 +104,21 @@
 					<div tal:content="structure context/content_middle_top|nothing">Text</div>
 										
 					<!-- START: Other News -->
-					<div class="contBoxDestaque" tal:condition="view/getOtherNews">
+					<div class="contBoxDestaque" tal:define="other_news view/getOtherNews" tal:condition="other_news">
 						<div class="cont_superior">
 							
 							<div class="titulo marginDif">
 								<h2 tal:content="context/title_othernews">Title Others News</h2>
 							</div>
 							
-							<div class="opcoes_destaque marginDif" tal:condition="python: view.getOtherNews()['url'] != ''">
+							<div class="opcoes_destaque marginDif" tal:condition="other_news/url">
 								<a class="leia-mais" title="Ver todas as not&iacute;cias" 
-								   tal:attributes="href python: view.getOtherNews()['url']">todas as not&iacute;cias</a>
+								   tal:attributes="href other_news/url">todas as not&iacute;cias</a>
 							</div>
 							<div class="visualClear"></div>
 						</div>
-						
-						<tal:other-news repeat="new python: view.getOtherNews()['news']">
+
+						<tal:other-news repeat="new other_news/news">
 							
 							<tal:line condition="repeat/new/end"><tal:false define="global line string:info"/></tal:line>
 							<tal:line condition="not: repeat/new/end"><tal:true define="global line string:info borderDif"/></tal:line>
@@ -152,7 +152,7 @@
 					<div tal:content="structure context/content_middle_bottom|nothing">Text</div>
 					
 					<!-- START: Media News -->
-					<div class="contBoxDestaque" tal:condition="view/getMediaNews">
+					<div class="contBoxDestaque" tal:define="media_news view/getMediaNews" tal:condition="media_news">
 						<div class="cont_superior">
 							<div class="titulo marginDif">
 								<h2 tal:content="context/title_medianews">Title Media News</h2>
@@ -160,7 +160,7 @@
 							<div class="visualClear"></div>
 						</div>
 						
-						<tal:media-news repeat="new view/getMediaNews">
+						<tal:media-news repeat="new media_news">
 							
 							<tal:line condition="repeat/new/end"><tal:false define="global line string:info"/></tal:line>
 							<tal:line condition="not: repeat/new/end"><tal:true define="global line string:info borderDif"/></tal:line>

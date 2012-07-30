@@ -63,11 +63,9 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 -------------------------
 - Correcao das cores dinamicas dos portlets, nao aparecer as cores dinamicas do manage portlets
 
-
 1.1.13 - 2012-07-11
 -------------------------
 - Ajustes para funcionar o ckeditor
-
 
 1.1.14 - 2012-07-16
 ------------------------
@@ -85,4 +83,7 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 -----------------------
 - Ajuste no menu para pegar os tipos de conteudos setados localmente
 
+1.1.18 - 2012-07-30
+------------------------
+- Opcao de listar as noticias de "outras noticias" por tags 
 

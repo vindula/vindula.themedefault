@@ -274,6 +274,16 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         required=True,
     ),
     
+    StringField(
+        name='tags_othernews',
+        widget=InAndOutWidget(
+            label=_(u"Filtro de Exibição (por Tags)"),
+            description=_(u"Somente serão exibidos na listagem as notícias que tiverem as Tags selecionadas na coluna da direita."),
+        ),
+        vocabulary='voc_keywords',
+        required=False,
+    ),
+    
 #*********Noticias secundarias*****************   
     TextField(
             name='title_medianews',
@@ -320,6 +330,16 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         default=3,
         required=True,
     ),
+    
+    StringField(
+        name='tags_medianews',
+        widget=InAndOutWidget(
+            label=_(u"Filtro de Exibição (por Tags)"),
+            description=_(u"Somente serão exibidos na listagem as notícias que tiverem as Tags selecionadas na coluna da direita."),
+        ),
+        vocabulary='voc_keywords',
+        required=False,
+    ),
                                                       
 
 ))
@@ -331,9 +351,12 @@ HomePage_schema.changeSchemataForField('time_transitionsnews', 'Notícias')
 HomePage_schema.changeSchemataForField('title_othernews', 'Notícias')
 HomePage_schema.changeSchemataForField('local_othernews', 'Notícias')
 HomePage_schema.changeSchemataForField('number_othernews', 'Notícias')
+HomePage_schema.changeSchemataForField('tags_othernews', 'Notícias')
 HomePage_schema.changeSchemataForField('title_medianews', 'Notícias')
 HomePage_schema.changeSchemataForField('local_medianews', 'Notícias')
 HomePage_schema.changeSchemataForField('number_medianews', 'Notícias')
+HomePage_schema.changeSchemataForField('tags_medianews', 'Notícias')
+
 
 invisivel = {'view':'invisible','edit':'invisible',}
 HomePage_schema['description'].widget.visible = invisivel
@@ -361,6 +384,11 @@ class HomePage(ATDocumentBase):
     portal_type = 'HomePage'
     _at_rename_after_creation = True
     schema = HomePage_schema
+    
+    def voc_keywords(self):
+        #keywords = self.collectKeywords('NewsVindula', 'Subject')
+        keywords = self.portal_catalog.uniqueValuesFor('Subject')
+        return keywords
 
 registerType(HomePage, PROJECTNAME) 
 
@@ -371,126 +399,111 @@ class HomePageView(grok.View):
     grok.require('zope2.View')
     grok.name('view')
     
+    UIDS_NEWS = []
+    
     # Methods for News
     def getHighlightedNews(self):
         news = self.context.getRef_newsitem()
         if news:
             L = []
             for obj in news[:24]:
-                #obj = new.to_object
                 if obj is None:
                     news.remove(new)
                     continue
                 D = {}
+                D['UID'] = obj.UID()
                 D['title'] = obj.Title()
                 D['author'] = obj.getOwner().getUserName()
                 try:D['date'] = obj.effective_date.strftime('%d/%m/%Y / %H:%m')
                 except:D['date'] = ''
                 D['link'] = obj.absolute_url()
                 D['summary'] = ''
+                if obj.Description() != '' or obj.Description() is not None:
+                    D['summary'] = self.limitTextSize(350, obj.Description())
                 D['image'] = ''
-                
+
                 if obj.portal_type == 'News Item':
-                    if obj.Description() != '' or obj.Description() is not None:
-                        D['summary'] = obj.Description()[:350]
-    
                     if obj.getImage():
-                        
                         try:
                             D['image'] = obj.getImage().absolute_url() + '_mini'
                         except:
                             D['image'] = ''
                     
                 else:
-                    if obj.Description() != '' and obj.Description() is not None:
-                        D['summary'] = obj.Description()[:350]
-                    
-                    
                     if obj.getImageRelac():
                         try:
                             D['image'] = obj.getImageRelac().absolute_url() + '/image_mini'
                         except:
                             D['image'] = ''
-                    
-                if len(D['summary']) == 350:
-                    D['summary'] += '...'
 
                 L.append(D)
+            self.UIDS_NEWS = [i['UID'] for i in L]
             return L
         
     def getOtherNews(self):
-        news = self.searchNews(self.context.getLocal_othernews())
-        if self.context.getLocal_othernews() is None:
-                url = ''
+        ctx = self.context
+        news = self.searchNews(ctx.getLocal_othernews(), ctx.getNumber_othernews(), ctx.getTags_othernews())
+        if ctx.getLocal_othernews() is None:
+            url = ''
         else:
-            url = self.context.getLocal_othernews().absolute_url()
-        
-        if news and self.context.getNumber_othernews():
+            url = ctx.getLocal_othernews().absolute_url()
+        if news and ctx.getNumber_othernews():
             L = []
-            for new in news[:self.context.getNumber_othernews()]:
-                obj = new.getObject()
+            for obj in news:
                 D = {}
                 D['title'] = obj.Title()
                 D['author'] = obj.getOwner().getUserName()
                 try:D['date'] = obj.effective_date.strftime('%d/%m/%Y / %H:%m')
                 except:D['date'] = ''
                 D['link'] = obj.absolute_url()
-                
-                if obj.portal_type == 'News Item':
-                    D['summary'] = obj.Description()
-                else:
-                    D['summary'] = obj.Description()
+                D['summary'] = obj.Description()
                      
                 L.append(D)
-                
             return {'news' : L, 'url': url }
         else:
             return {'news' : [], 'url': url }
+
     def getMediaNews(self):
-        news = self.searchNews(self.context.getLocal_medianews())
-#        if self.context.getLocal_othernews():
-#            path_otherNew = self.context.getLocal_othernews().absolute_url()
-#        else:
-#            path_otherNew = getSite().absolute_url()
-
-        if news and self.context.getNumber_medianews():
-            L = []
-            path_otherNew = self.getOtherNews()
-            if path_otherNew:
-                items = path_otherNew.get('news')
-                for i in items:
-                    path_otherNew = i.get('link','')
-                
-            
-            for new in news:  
-                obj = new.getObject()
-
-                if not obj.absolute_url() in path_otherNew : 
+        L=[]
+        ctx = self.context
+        news = self.searchNews(ctx.getLocal_medianews(), ctx.getNumber_medianews(), ctx.getTags_medianews())
+        if news and ctx.getNumber_medianews():
+            for obj in news:  
                     D = {}
                     D['title'] = obj.Title()
                     D['link'] = obj.absolute_url()
                     L.append(D)
-                
-                if len(L) == self.context.getNumber_medianews():
-                    break
-                
-            
-            return L
-        else:
-            return []
+        return L
         
-    def searchNews(self, local=None):
+    def searchNews(self, local=None, limit=5, keywords=[]):
+        L = []
+        query = {}
+        keywords = [i for i in keywords if i != '']
+        
         if local is None:
             local = self.context.portal_url.getPortalObject().getPhysicalPath()
         else:
             local = local.getPhysicalPath()
+
         self.pc = getToolByName(self.context, 'portal_catalog')
-        news = self.pc(portal_type=('VindulaNews', 'News Item'),
-                       #review_state='published',
-                       path={'query':'/'.join(local)},
-                       sort_on='effective',
-                       sort_order='descending',)
-        return news
+        query['portal_type'] = ('VindulaNews', 'News Item')
+        query['review_state'] = ['published', 'internally_published', 'external']
+        query['path'] = {'query':'/'.join(local)}
+        query['sort_on'] = 'effective'
+        query['sort_order'] = 'descending'
+        if keywords:
+            query['Subject'] = keywords
+
+        news = self.pc(**query)
+        if news:
+            for new in news:
+                try: new = new.getObject()
+                except: continue
+                if new.UID() not in self.UIDS_NEWS:
+                    L.append(new)
+                    self.UIDS_NEWS.append(new.UID())
+                    if len(L) == limit: break
+        return L
     
     def getBanner(self):
         L = []
@@ -519,3 +532,12 @@ class HomePageView(grok.View):
                                 D['url_image'] = 'http://%s' % link
                 L.append(D)
         return L
+    
+    def limitTextSize(self, size, text):
+        if len(text) > size:
+            i = size
+            while text[i] != " ":
+                i += 1              
+            return text[:i]+'...'
+        else:
+            return text  
