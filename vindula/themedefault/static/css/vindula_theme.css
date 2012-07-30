@@ -147,8 +147,8 @@ dl.portlet .portletHeader span.portletTopLeft {
 	display: block;
 }
 
-dl.portlet .portletHeader a,
-dl.portlet .portletHeader span {
+dl.portlet .portletHeader > a,
+dl.portlet .portletHeader > span {
     background: url("++resource++vindula.themedefault/images/bkgs/topoBoxTipo2-meio.png") repeat-y scroll 0 0 #FAA61A !important;
 	display:block;
 }
