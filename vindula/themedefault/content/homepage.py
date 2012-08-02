@@ -400,6 +400,7 @@ class HomePageView(grok.View):
     # Methods for News
     def getHighlightedNews(self):
         news = self.context.getRef_newsitem()
+        self.UIDS_NEWS = []
         if news:
             L = []
             for obj in news[:24]:
@@ -443,7 +444,7 @@ class HomePageView(grok.View):
             url = ''
         else:
             url = ctx.getLocal_othernews().absolute_url()
-        if news and ctx.getNumber_othernews():
+        if news:
             L = []
             for obj in news:
                 D = {}
@@ -463,7 +464,7 @@ class HomePageView(grok.View):
         L=[]
         ctx = self.context
         news = self.searchNews(ctx.getLocal_medianews(), ctx.getNumber_medianews(), ctx.getTags_medianews())
-        if news and ctx.getNumber_medianews():
+        if news:
             for obj in news:  
                     D = {}
                     D['title'] = obj.Title()
@@ -473,32 +474,33 @@ class HomePageView(grok.View):
         
     def searchNews(self, local=None, limit=5, keywords=[]):
         L = []
-        query = {}
-        keywords = [i for i in keywords if i != '']
-        
-        if local is None:
-            local = self.context.portal_url.getPortalObject().getPhysicalPath()
-        else:
-            local = local.getPhysicalPath()
-
-        self.pc = getToolByName(self.context, 'portal_catalog')
-        query['portal_type'] = ('VindulaNews', 'News Item')
-        query['review_state'] = ['published', 'internally_published', 'external']
-        query['path'] = {'query':'/'.join(local)}
-        query['sort_on'] = 'effective'
-        query['sort_order'] = 'descending'
-        if keywords:
-            query['Subject'] = keywords
-
-        news = self.pc(**query)
-        if news:
-            for new in news:
-                try: new = new.getObject()
-                except: continue
-                if new.UID() not in self.UIDS_NEWS:
-                    L.append(new)
-                    self.UIDS_NEWS.append(new.UID())
-                    if len(L) == limit: break
+        if limit:
+            query = {}
+            keywords = [i for i in keywords if i != '']
+            
+            if local is None:
+                local = self.context.portal_url.getPortalObject().getPhysicalPath()
+            else:
+                local = local.getPhysicalPath()
+    
+            self.pc = getToolByName(self.context, 'portal_catalog')
+            query['portal_type'] = ('VindulaNews', 'News Item')
+            query['review_state'] = ['published', 'internally_published', 'external']
+            query['path'] = {'query':'/'.join(local)}
+            query['sort_on'] = 'effective'
+            query['sort_order'] = 'descending'
+            if keywords:
+                query['Subject'] = keywords
+    
+            news = self.pc(**query)
+            if news:
+                for new in news:
+                    try: new = new.getObject()
+                    except: continue
+                    if new.UID() not in self.UIDS_NEWS:
+                        L.append(new)
+                        self.UIDS_NEWS.append(new.UID())
+                        if len(L) == limit: break
         return L
     
     def getBanner(self):
