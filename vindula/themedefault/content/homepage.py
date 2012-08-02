@@ -20,6 +20,7 @@ from archetypes.referencebrowserwidget.widget import ReferenceBrowserWidget
 from Products.ATContentTypes.content.schemata import finalizeATCTSchema
 from vindula.themedefault.config import *
 
+from vindula.controlpanel.browser.at.widget import VindulaReferenceSelectionWidget
 
 HomePage_schema =  ATDocumentSchema.copy() + Schema((
                                                      
@@ -39,7 +40,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         multiValued=1,
         allowed_types=('Image', 'Banner'),
         relationship='ref_banner',
-        widget=ReferenceBrowserWidget(
+        widget=VindulaReferenceSelectionWidget(
             default_search_index='SearchableText',
             label=_(u"Seleção do objeto de seleção do banner"),
             description=_(u"Selecione o objeto que será mostrado no banner."),
@@ -163,7 +164,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         multiValued=0,
         allowed_types=('Folder', 'Link'),
         relationship='ref_itemMenu',
-        widget=ReferenceBrowserWidget(
+        widget=VindulaReferenceSelectionWidget(
             default_search_index='SearchableText',
             label=_(u"Seleção do objeto de seleção do menu"),
             description=_(u"Selecione o objeto que será mostrado no menu."),
@@ -196,11 +197,12 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         multiValued=1,
         allowed_types=('VindulaNews', 'News Item'),
         relationship='ref_newsitem',
-        widget=ReferenceBrowserWidget(
+        widget=VindulaReferenceSelectionWidget(
             default_search_index='SearchableText',
             label=_(u"Notícias da área de destaque"),
             description=_(u"Selecione as notícias que deverão rotacionar na área de destaque."),
-            base_query={'review_state':'published'},
+            typeview='list',
+            review_state = 'published',
             
             label_msgid='vindula_themedefault_label_ref_itemMenu',
             description_msgid='vindula_themedefault_help_ref_itemMenu',
@@ -243,12 +245,13 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         multiValued=0,
         allowed_types=('Folder'),
         relationship='news_othernews',
-        widget=ReferenceBrowserWidget(
+        widget=VindulaReferenceSelectionWidget(
             default_search_index='SearchableText',
             label=_(u"Local das outras notícias"),
             description=_(u"Selecione o local das notícias. \
                             Se nada for selecionado, o sistema irá buscar notícias em todo o portal."),
-            base_query={'review_state':'published'},
+            review_state = 'published',
+            typeview='list',
             
             label_msgid='vindula_themedefault_label_local_othernews',
             description_msgid='vindula_themedefault_help_local_othernews',
@@ -299,12 +302,13 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         multiValued=0,
         allowed_types=('Folder'),
         relationship='news_medianews',
-        widget=ReferenceBrowserWidget(
-            default_search_index='SearchableText',
+        widget=VindulaReferenceSelectionWidget(
+            #default_search_index='SearchableText',
+            typeview='list',
             label=_(u"Local das noticias mídia"),
             description=_(u"Selecione o local das notícias. \
                            Se nada for selecionado, o sistema irá buscar notícias em todo o portal."),   
-            base_query={'review_state':'published'},
+            review_state = 'published',
             
             label_msgid='vindula_themedefault_label_local_medianews',
             description_msgid='vindula_themedefault_help_local_medianews',

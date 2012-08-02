@@ -75,6 +75,15 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 ------------------------
 - Correção das viewlets para a remoção os portlets
 
-1.1.16 - 2012-07-30
+1.1.16 - 2012-07-24
+------------------------
+- Alteração do widget de referenceBrowser
+
+1.1.17 - 2012-07-24
+-----------------------
+- Ajuste no menu para pegar os tipos de conteudos setados localmente
+
+1.1.18 - 2012-07-30
 ------------------------
 - Opcao de listar as noticias de "outras noticias" por tags 
+
