@@ -35,8 +35,8 @@ class FaviconTopViewlet(grok.Viewlet):
     def getConfigurador(self):
         if 'control-panel-objects' in  getSite().keys():
             control = getSite()['control-panel-objects']
-            if 'vindula_themeconfig' in control.keys():
-                confg = control['vindula_themeconfig']
+            if 'ThemeConfig' in control.keys():
+                confg = control['ThemeConfig']
                 try:
                     return confg.getFavicon().absolute_url()
                 except:
@@ -106,8 +106,8 @@ class MenuViewlet(grok.Viewlet):
         if 'control-panel-objects' in portal.keys():
             control = portal['control-panel-objects']
             
-            if 'vindula_themeconfig' in control.keys():
-                thema = control['vindula_themeconfig']    
+            if 'ThemeConfig' in control.keys():
+                thema = control['ThemeConfig']    
                 
                 try:result = thema.getAtiva_menudropdown()
                 except:result = False
@@ -122,8 +122,8 @@ class MenuViewlet(grok.Viewlet):
         if 'control-panel-objects' in portal.keys():
             control = portal['control-panel-objects']
             
-            if 'vindula_themeconfig' in control.keys():
-                thema = control['vindula_themeconfig']    
+            if 'ThemeConfig' in control.keys():
+                thema = control['ThemeConfig']    
                 
                 try:result = thema.getAtiva_menudropdown_nivel2()
                 except:result = False
@@ -172,8 +172,8 @@ class MenuViewlet(grok.Viewlet):
        
         if 'control-panel-objects' in portal.keys() and not itens:
             control = portal['control-panel-objects']
-            if 'vindula_themeconfig' in control.keys():
-                thema = control['vindula_themeconfig']    
+            if 'ThemeConfig' in control.keys():
+                thema = control['ThemeConfig']    
                 
                 try:itens = thema.getItens_menu()
                 except:itens = None            
