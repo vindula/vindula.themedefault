@@ -87,3 +87,6 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 ------------------------
 - Opcao de listar as noticias de "outras noticias" por tags 
 
+1.1.19 - 2012-08-21
+------------------------
+- Modificado a busca das configuracoes de teme do conteudo vindula_themeconfig para o ThemeConfig (archetype)
