@@ -93,4 +93,9 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 
 1.1.19 - 2012-08-31
 ------------------------
-- Retirado a sombra do rodapŽ do portlet do painel de controle
+- Retirado a sombra do rodapï¿½ do portlet do painel de controle
+
+1.1.20 - 2012-09-04
+-------------------------
+- Ajustes na template da homepage para mostar o campo 'conteÃºdo inferior'
+

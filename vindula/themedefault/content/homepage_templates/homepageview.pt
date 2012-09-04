@@ -178,7 +178,7 @@
 					<!-- END: Media News -->
 					
 					<!-- Content Bottom -->
-					<div tal:content="structure context/content_bottom/output|nothing">Text</div>
+					<div tal:content="structure context/content_bottom|nothing">Text</div>
 					
 				</div>
 				<div class="bottomBoxTipo">
