@@ -1,7 +1,16 @@
 $j = jQuery.noConflict();
 
+function onAfter(curr, next, opts, fwd) {
+    var index = opts.currSlide;
+    $j('#prev')[index == 0 ? 'hide' : 'show']();
+    $j('#next')[index == opts.slideCount - 1 ? 'hide' : 'show']();
+    //get the height of the current slide
+    var $ht = $j(this).height();
+    //set the container's height to that of the current slide
+    $j(this).parent().css("height", $ht);
+}
+
 $j(document).ready(function(){
-	
 	
 	/* GALLERY CYCLE BANNER */
 	var cycle_timeout_banner = $j('input#cycle-timeout-banner').attr('value');
@@ -13,10 +22,11 @@ $j(document).ready(function(){
 	    next:   '#cycle-next-banner',
 	    prev:   '#cycle-prev-banner',
 		pager:  '#cycle-nav-banner',
-		height:	441,
+		//height:	441,
+		after: onAfter,
 		width: 940
 	});
-	
+	 
 
 	/* GALLERY CYCLE NEWS */
 	var cycle_timeout = $j('input#cycle-timeout').attr('value');
