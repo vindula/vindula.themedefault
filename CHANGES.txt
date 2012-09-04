@@ -99,3 +99,4 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 -------------------------
 - Ajustes na template da homepage para mostar o campo 'conteúdo inferior'
 - Ajustes no baner da homepage para ter altura dinamica
+- Ajustes no popup do album de fotos para caregar o editor de comentarios

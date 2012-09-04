@@ -78,6 +78,15 @@ $j(document).ready(function(){
         config: common_jqt_config
         });
         
+    function teste(){
+        $j('#fieldset-global-settings').parent().attr('id','content');
+    }
+
+    common_jqt_config['onLoad'] = function (e) {launchCKInstances();
+                                                $j('#fieldset-global-settings').parent().attr('id','content');
+                                                };
+    common_jqt_config['onBeforeClose'] = function(e){removeEditor()};
+    
     // Modal do album de fotos 
     $j('a.albunphoto').prepOverlay({
         subtype: 'ajax',
@@ -87,16 +96,6 @@ $j(document).ready(function(){
         width: '50%',
         config: common_jqt_config
         });
-
-    function teste(){
-        $j('#fieldset-global-settings').parent().attr('id','content');
-    }
-    
-
-    common_jqt_config['onLoad'] = function (e) {launchCKInstances();
-                                                $j('#fieldset-global-settings').parent().attr('id','content');
-                                                };
-    common_jqt_config['onBeforeClose'] = function(e){removeEditor()};
         
     // Howareyou no mural
     $j('a.new-howareu').prepOverlay({
