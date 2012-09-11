@@ -340,6 +340,16 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         vocabulary='voc_keywords',
         required=False,
     ),
+    
+    TextField(
+        name='banner_html',
+        widget=TextAreaWidget(
+            label=_(u"Banner da homepage HTML"),
+            description=_(u"Insira um código em HTML para ser inserido no cabeçalho da homepage."),
+            rows=10,
+        ),
+        required=False,
+    ),
                                                       
 
 ))
@@ -356,6 +366,8 @@ HomePage_schema.changeSchemataForField('title_medianews', 'Notícias')
 HomePage_schema.changeSchemataForField('local_medianews', 'Notícias')
 HomePage_schema.changeSchemataForField('number_medianews', 'Notícias')
 HomePage_schema.changeSchemataForField('tags_medianews', 'Notícias')
+
+HomePage_schema.changeSchemataForField('banner_html', 'Banner')
 
 
 invisivel = {'view':'invisible','edit':'invisible',}

@@ -100,3 +100,8 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 - Ajustes na template da homepage para mostar o campo 'conte√∫do inferior'
 - Ajustes no baner da homepage para ter altura dinamica
 - Ajustes no popup do album de fotos para caregar o editor de comentarios
+
+1.1.21 - 2012-09-11
+-------------------------
+- Adicionado o banner estatico na homepage, para ele funcionar é preciso que o banner rotativa da homepage esteja desativado.
+- Bug fix

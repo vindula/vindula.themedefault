@@ -1,10 +1,11 @@
 <div id="banner_homepage">
-	<tal:cond tal:condition="python: context.portal_type == 'HomePage'">
-		<tal:def tal:condition="homepage_view/context/getActive_banner | nothing" tal:define="homepage_view python: context.restrictedTraverse('@@view');">
+	<tal:cond tal:define="plone_context_state context/plone_context_state" tal:condition="python: plone_context_state.is_view_template() and context.portal_type == 'HomePage'">
+		
+		<tal:cond tal:condition="context/getActive_banner|nothing">
 			<link rel="stylesheet" type="text/css" href="/++resource++vindula.themedefault/css/banner_homepage.css">
 			<!-- start: BANNER -->
-			<div id="banner_home" tal:condition="homepage_view/context/getRef_banner">
-				<tal:def define="banners homepage_view/getBanner">
+			<div id="banner_home" tal:condition="context/getRef_banner">
+				<tal:def define="banners view/getBanner">
 					
 					<!-- start: Conteudo do banner -->
 					<div id="box_banner">
@@ -20,18 +21,18 @@
 						</div>
 						
 						<!-- start: Paginacao -->
-						<input id="cycle-timeout-banner" type="hidden" tal:attributes="value homepage_view/context/getTime_transition_banner">
-						<div class="paginacao paginacao-banner pag_homepage" tal:condition="python: len(homepage_view.context.getRef_banner()) > 1">
+						<input id="cycle-timeout-banner" type="hidden" tal:attributes="value context/getTime_transition_banner">
+						<div class="paginacao paginacao-banner pag_homepage" tal:condition="python: len(context.getRef_banner()) > 1">
 							<div id="cycle-prev-banner" class="circle float-left c-pointer">
 								<img class="left" src="/++theme++vindula.themedefault/images/buttons/seta_left.png" title="Anterior"/>
 							</div>
-							<tal:cond condition="python: homepage_view.context.getType_navigation() == 'image'">
+							<tal:cond condition="python: context.getType_navigation() == 'image'">
 								<div id="cycle-nav-banner"></div>
 							</tal:cond>
-							<tal:cond condition="python: homepage_view.context.getType_navigation() == 'number'">
+							<tal:cond condition="python: context.getType_navigation() == 'number'">
 								<div class="pag_number">
 									<p class="cycle-nav-banner" id="cycle-nav-banner"></p>
-									<p tal:content="python: '/' + str(len(homepage_view.context.getRef_banner()))"></p>
+									<p tal:content="python: '/' + str(len(context.getRef_banner()))"></p>
 								</div>
 							</tal:cond>
 							<div id="cycle-next-banner" class="circle float-left c-pointer">
@@ -46,6 +47,65 @@
 				</tal:def>
 			</div>
 			<!-- end: BANNER -->
-		</tal:def>
+		</tal:cond>
+		
+		<tal:cond tal:condition="python: context.getBanner_html() and not context.getActive_banner()">
+			<div tal:replace="structure context/getBanner_html">
+			</div>
+			
+			<!-- BANNER DO VINDULA COM CAMPO PARA EMAIL -->
+			<!--style>
+				#banner_html{
+					background: url('http://vindula.intranet/banco-de-imagens/banner-070812-bg.jpg') no-repeat;
+					width: 940px;
+					height: 89px;
+					margin: 0 0 0 30px;
+					padding: 352px 0 0 0;
+				}
+				
+				#banner_html .fieldEmail{
+					font-family: Arial;
+					font-size: 16px;
+					width: 266px;
+					margin: 0 20px 0 0;
+					border: none;
+    				padding: 7px 7px 5px;
+					color: #636363;
+				}
+				
+				#banner_html .createIntranet{
+					float: left;
+    				padding: 0 40px 0 44px;
+				}
+				
+				#banner_html .buttonIncrever{
+					background: url('http://vindula.intranet/banco-de-imagens/bt-inscrever.png') no-repeat;
+					width: 110px;
+					height: 34px;
+					border: none;
+				}
+				
+				#banner_html .versaoCompleta{
+					background: url('http://vindula.intranet/banco-de-imagens/bt-download.png') no-repeat;
+					width: 289px;
+					height: 58px;
+					display: block;
+					float: left;
+					margin-left: 39px;
+				}
+					
+			</style>
+			
+			<div id="banner_html">
+				<form method="post" action="" class="createIntranet">
+					<input type="text" class="fieldEmail" value='Digite seu email de trabalho...' onfocus="if(!this._haschanged){this.value=''};this._haschanged=true;" />
+					<input type="submit" class='buttonIncrever' value="" />
+				</form>
+				
+				<a href="#" class="versaoCompleta"></a>
+			</div-->
+			
+			
+		</tal:cond>
 	</tal:cond>
 </div>
