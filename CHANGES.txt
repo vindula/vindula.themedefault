@@ -105,3 +105,10 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 -------------------------
 - Adicionado o banner estatico na homepage, para ele funcionar Ž preciso que o banner rotativa da homepage esteja desativado.
 - Bug fix
+
+1.1.22 - 2012-09-12
+-------------------------
+- Adicionado um espaco para colocar imagens do lado do logo do portal
+- As imagens do topo rotacionam
+- A imagen o fundo do menu dropdown esta pasicionada no fim no menu, indente do tamanho do imagem
+- Bug fix

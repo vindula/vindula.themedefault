@@ -116,7 +116,21 @@ $j(document).ready(function(){
         noform:'reload',
         width: '50%',
         config: common_jqt_config
-        });        
+        });
+		
+		
+	//CRIA UM CYCLE PARA AS IMAGENS DO CABE‚ALHO DO PORTAL
+	$j('#cycle-logo').cycle({
+		/*
+		after: function(currSlideElement, nextSlideElement, options, forwardFlag)  {
+					$j(this.parentElement).height(currSlideElement.height);
+					$j(this.parentElement).width(currSlideElement.width);
+				},
+		*/
+		width: '200px',
+		fit: 1,
+		fx: 'fade',
+	});
                 
 
 });

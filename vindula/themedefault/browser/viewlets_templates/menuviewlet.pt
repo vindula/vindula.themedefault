@@ -20,7 +20,7 @@
                                             subSubTabs python: viewlet.getSubMenuDrop(obj, 2);" 
 							    
 							    tal:attributes="id string:portalsubtab-${subtid};
-							                    class python: viewlet.isSelected(subTab)">
+							                    class python: viewlet.isSelected(obj)">
 								
 								<a class="hide" href="" tal:attributes="href obj/absolute_url|nothing;
 								                                        title obj/Description|nothing;">
@@ -37,7 +37,7 @@
 											    tal:define="obj subSubTab/getObject;
 											                subtid obj/getId|nothing"
 											    tal:attributes="id string:portalsubtab-${subtid};
-											                    class python: viewlet.isSelected(subSubTab)">
+											                    class python: viewlet.isSelected(obj)">
 												
 												<a class="hide" href="" tal:content="obj/Title|nothing"
 												                        tal:attributes="href obj/absolute_url|nothing;
