@@ -110,5 +110,5 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 -------------------------
 - Adicionado um espaco para colocar imagens do lado do logo do portal
 - As imagens do topo rotacionam
-- A imagen o fundo do menu dropdown esta pasicionada no fim no menu, indente do tamanho do imagem
+- A imagen o fundo do menu dropdown esta pasicionada no fim no menu, independente do tamanho do imagem
 - Bug fix

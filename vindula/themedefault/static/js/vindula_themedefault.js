@@ -121,13 +121,10 @@ $j(document).ready(function(){
 		
 	//CRIA UM CYCLE PARA AS IMAGENS DO CABE‚ALHO DO PORTAL
 	$j('#cycle-logo').cycle({
-		/*
-		after: function(currSlideElement, nextSlideElement, options, forwardFlag)  {
-					$j(this.parentElement).height(currSlideElement.height);
-					$j(this.parentElement).width(currSlideElement.width);
-				},
-		*/
-		width: '200px',
+		cssBefore: {  
+	        zIndex: 1
+	    }, 
+		height: '93px',
 		fit: 1,
 		fx: 'fade',
 	});

@@ -4,7 +4,10 @@
 
 #topo{
     background: url("++resource++vindula.themedefault/images/bkgs/bk_topo.png") no-repeat scroll 0 0 transparent;
-    height: 96px;
+    /*
+	height: 96px;
+	*/
+	height: 126px;
     width: 1000px;
 }
 
@@ -25,13 +28,22 @@
 
 #topo .logo{
     float: left;
+	/*
 	margin: 18px 43px 8px 40px;
+	*/
+	margin: 25px 43px 8px 40px;
 	width: 430px;
-	height:70px;
+	/*
+	max-height: 70px;
+	*/
+	max-height: 93px;
 }
 
 #topo .logo img {
+	/*
 	max-height: 70px;
+	*/
+	max-height: 93px;
 	max-width: 430px;
 } 
 
