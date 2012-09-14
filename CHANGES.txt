@@ -112,3 +112,12 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 - As imagens do topo rotacionam
 - A imagen o fundo do menu dropdown esta pasicionada no fim no menu, independente do tamanho do imagem
 - Bug fix
+
+1.1.23 - 2012-09-13
+-------------------------
+- Alterado o tamanho do header do Vindula
+- O logo pode ser maior, até 93px de altura
+
+1.1.24 - 2012-09-14
+-------------------------
+- Modificado o tamanho do campo (input) de busca do header do portal

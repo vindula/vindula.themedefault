@@ -48,6 +48,8 @@
 } 
 
 /* Campo busca... */
+.LSBox { float: right; }
+
 #topo .geral_busca {
     float: right;
     font-size: 12px;
@@ -70,7 +72,7 @@
     height: 18px;
     padding: 5px;
     text-align: right;
-    width: 370px;
+    width: 270px;
 }
 
 .geral_busca .searchButton {
@@ -78,7 +80,7 @@
     border: 1px solid #FFFFFF;
     color: #FFFFFF;
     cursor: pointer;
-    float: left;
+    float: right;
     font-size: 12px;
     font-weight: bold;
     height: 30px;

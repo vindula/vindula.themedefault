@@ -104,7 +104,7 @@ $j(document).ready(function(){
         formselector: '[name=myvindula-form]',
         noform:'reload',
         width: '50%',
-        config: common_jqt_config,
+        config: common_jqt_config
         });        
         
     // Modal editra portlet 
@@ -126,7 +126,7 @@ $j(document).ready(function(){
 	    }, 
 		height: '93px',
 		fit: 1,
-		fx: 'fade',
+		fx: 'fade'
 	});
                 
 
