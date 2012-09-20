@@ -83,8 +83,9 @@
 
 
 	<!-- Portal Footer -->
-	<copy css:content-children="#macro_logofooter" css:theme="#rodape .logo" />
-	<copy css:content-children="#macro_textfooter" css:theme="#informacao" />
+	<copy css:content-children="#macro_logofooter"     css:theme="#rodape .logo" />
+	<copy css:content-children="#macro_textfooter"     css:theme="#informacao" />
+	<copy css:content-children="#macro_socialnetworks" css:theme="#rodape .socialNetwork" />
 	
 	
 	<!-- Add in any inline scripts, like Google Analytics --> 
