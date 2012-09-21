@@ -97,13 +97,15 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
 #Fim Configurar Banner  -------------------------------------
     TextField(
             name='content_top',
-            default_content_type = 'text/restructured',
+            default_content_type = 'text/html',
             default_output_type = 'text/x-html-safe',
+            
+            searchable = True,
             widget=RichWidget(
                 label=_(u"Conteúdo do Topo"),
                 description=_(u"Campo de preenchimento livre, seu conteúdo ficará posicionado no topo da página \
                              acima das notícias em destaque."),
-                rows="10",
+                rows=10,
                 label_msgid='vindula_themedefault_label_content_top',
                 description_msgid='vindula_themedefault_help_content_top',
                 i18n_domain='vindula_themedefault',
@@ -111,11 +113,13 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
             ),
             required=False,
     ),
-
+                                                     
     TextField(
             name='content_middle_top',
-            default_content_type = 'text/restructured',
+            default_content_type = 'text/html',
             default_output_type = 'text/x-html-safe',
+            
+            searchable = True,
             widget=RichWidget(
                 label=_(u"Conteúdo do Meio (ACIMA da listagem de notícias)"),
                 description=_(u"Campo de preenchimento livre, seu conteúdo ficará posicionado entre as notícias \
@@ -130,8 +134,10 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
     
     TextField(
             name='content_middle_bottom',
-            default_content_type = 'text/restructured',
+            default_content_type = 'text/html',
             default_output_type = 'text/x-html-safe',
+            
+            searchable = True,
             widget=RichWidget(
                 label=_(u"Conteúdo do Meio (ABAIXO da listagem de notícias)"),
                 description=_(u"Campo de preenchimento livre, seu conteúdo ficará posicionado entre a listagem \
@@ -146,8 +152,10 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
     
     TextField(
             name='content_bottom',
-            default_content_type = 'text/restructured',
+            default_content_type = 'text/html',
             default_output_type = 'text/x-html-safe',
+            
+            searchable = True,
             widget=RichWidget(
                 label=_(u"Conteúdo Inferior"),
                 description=_(u"Campo de preenchimento livre, seu conteúdo ficará posicionado no final da página \

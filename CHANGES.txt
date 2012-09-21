@@ -125,3 +125,4 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 1.1.25 - 2012-09-21
 -------------------------
 - Correção Ticket #228
+- Correção Ticket #187
