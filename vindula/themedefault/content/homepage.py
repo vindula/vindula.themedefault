@@ -42,7 +42,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         relationship='ref_banner',
         widget=VindulaReferenceSelectionWidget(
             default_search_index='SearchableText',
-            label=_(u"Seleção do objeto de seleção do banner"),
+            label=_(u"Seleção de banner(s)"),
             description=_(u"Selecione o objeto que será mostrado no banner."),
             
             label_msgid='vindula_themedefault_label_ref_banner',

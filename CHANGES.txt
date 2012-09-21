@@ -103,7 +103,7 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 
 1.1.21 - 2012-09-11
 -------------------------
-- Adicionado o banner estatico na homepage, para ele funcionar Ž preciso que o banner rotativa da homepage esteja desativado.
+- Adicionado o banner estatico na homepage, para ele funcionar ï¿½ preciso que o banner rotativa da homepage esteja desativado.
 - Bug fix
 
 1.1.22 - 2012-09-12
@@ -116,8 +116,12 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 1.1.23 - 2012-09-13
 -------------------------
 - Alterado o tamanho do header do Vindula
-- O logo pode ser maior, atŽ 93px de altura
+- O logo pode ser maior, atï¿½ 93px de altura
 
 1.1.24 - 2012-09-14
 -------------------------
 - Modificado o tamanho do campo (input) de busca do header do portal
+
+1.1.25 - 2012-09-21
+-------------------------
+- CorreÃ§Ã£o Ticket #228
