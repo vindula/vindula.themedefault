@@ -122,7 +122,12 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 -------------------------
 - Modificado o tamanho do campo (input) de busca do header do portal
 
-1.1.25 - 2012-09-21
+1.1.25 - 2012-09-20
+-------------------------
+- Adicionado redes socias no rodape do Vindula
+
+1.1.26 - 2012-09-21
 -------------------------
 - Correção Ticket #228
 - Correção Ticket #187
+
