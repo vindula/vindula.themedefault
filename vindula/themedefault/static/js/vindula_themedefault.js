@@ -125,7 +125,6 @@ $j(document).ready(function(){
 	        zIndex: 1
 	    }, 
 		height: '93px',
-		fit: 1,
 		fx: 'fade'
 	});
                 

@@ -386,3 +386,11 @@ div#informacao a.theme-edit{margin-top:-30px;}
     width: auto;
 }
 
+/* Edit Login Layout */
+body.template-logged_out h1.documentFirstHeading { font-size: 20px; }
+body.template-logged_out .documentDescription { 
+	font-size: 14px !important;
+	margin-bottom: 15px;
+	color: 6E6D71;
+	font-weight: normal !important;
+}
