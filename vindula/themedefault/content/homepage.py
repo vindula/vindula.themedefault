@@ -351,6 +351,8 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
     
     TextField(
         name='banner_html',
+        allowable_content_types=('text/plain',),
+        default_content_type='text/plain',
         widget=TextAreaWidget(
             label=_(u"Banner da homepage HTML"),
             description=_(u"Insira um código em HTML para ser inserido no cabeçalho da homepage."),
