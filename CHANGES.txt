@@ -132,3 +132,8 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 - Correção Ticket #187
 - Editado o layout da tela de login
 - Ajustes nas imagens randomicas do cabecalho
+
+1.1.27 - 2012-09-24
+--------------------------
+- Correção Ticket #236 - manage portlet
+

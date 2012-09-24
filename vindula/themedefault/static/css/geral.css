@@ -227,7 +227,7 @@ div.boxSelecao {
     height: 150px;
     overflow: auto;
     padding: 5px;
-    width: 200px;
+    width: 95%;
 }
 
 /* ...Control Panel View */
@@ -250,3 +250,9 @@ div#data #portal-personaltools-custom {
     top: 0;
     z-index: 3;
 }
+/* Manage Portlet  */
+#portletmanager-plone-leftcolumn select,
+#portletmanager-plone-rightcolumn select{
+    width: 218px;
+}    
+
