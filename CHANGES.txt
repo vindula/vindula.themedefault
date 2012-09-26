@@ -140,4 +140,6 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 1.1.28 - 2012-09-26
 --------------------------
 - Ajustes solicitados no Ticket #190, modificado as imagens da paginação dos banners
+- Ajustes solicitados no Ticket #188, a imagem do banner se "ajeita" dentro da pagina do vindula nao ficando mais larga
+- porém a altura dela é dinâmica
 

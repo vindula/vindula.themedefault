@@ -21,6 +21,11 @@
    text-align: left;
 }
 
+#cont_banner div img {
+	max-width: 990px;
+	*width: 990px;
+}
+
 .paginacao{
 	float: right;
 }
