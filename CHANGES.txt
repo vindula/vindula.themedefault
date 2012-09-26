@@ -137,3 +137,7 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 --------------------------
 - Corre√ß√£o Ticket #236 - manage portlet
 
+1.1.28 - 2012-09-26
+--------------------------
+- Ajustes solicitados no Ticket #190, modificado as imagens da paginação dos banners
+

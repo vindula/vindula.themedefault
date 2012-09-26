@@ -284,10 +284,13 @@ div.zindex-min {
 	float:left;
 	width:16px;
 	height:16px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-image:url('/++theme++vindula.themedefault/images/buttons/cyclenav-white.png');
 }
 .gallery-cycle-controls div#cycle-nav a.activeSlide, 
 .pag_homepage div#cycle-nav-banner a.activeSlide{
-	background-color: #999999;
+	background-image:url('/++theme++vindula.themedefault/images/buttons/cyclenav-gray.png');
 }
 
 .p-relative {

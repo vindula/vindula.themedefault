@@ -41,7 +41,7 @@ $j(document).ready(function(){
 		height:	240
 	});
 	
-	$j('div#cycle-nav-banner a').html('<img src="/++theme++vindula.themedefault/images/buttons/cyclenav-cinza.png" />');
-	$j('div#cycle-nav a').html('<img src="/++theme++vindula.themedefault/images/buttons/cyclenav.png" />');
+	$j('div#cycle-nav-banner a').html('');
+	$j('div#cycle-nav a').html('');
 	
 });
