@@ -160,17 +160,23 @@ dl.portlet a:hover,
 .geral_lista_comentarios .name-user{
 	line-height:32px; 	
  }
- .bt_comments{
+.bt_comments{
     background: url("++resource++vindula.themedefault/images/buttons/bt_comentar.png") no-repeat scroll 0 0 #F58220;
     border: medium none;
     color: #FFFFFF;
     cursor: pointer;
     font-weight: bold;
-    height: 37px;
-    padding: 0 0 2px;
     text-transform: uppercase;
     width: 97px;
+	height: 37px;
 }
+
+.bt_comments_div{
+	text-align: center;
+	height: 27px;
+	padding: 10px 0 0;
+}
+
 #comentar #form-buttons-comment, 
 #comentar #form-buttons-cancel{
 	background: url("++resource++vindula.themedefault/images/buttons/bt_comentar.png") no-repeat scroll 0 0 #F58220;
