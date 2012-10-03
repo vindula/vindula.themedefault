@@ -70,12 +70,12 @@
 									<input id="cycle-timeout" type="hidden" tal:attributes="value context/time_transitionsnews">
 									<div class="titulo_info">
 										<h2>
-											<a tal:content="new/title" tal:attributes="href new/link; alt new/title">New title</a>
+											<a tal:content="new/title|nothing" tal:attributes="href new/link|nothing; alt new/title|nothing">New title</a>
 										</h2>
 									</div>
 									<div class="img_descricao">
-										<div class="img_info" tal:condition="new/image">
-											<img tal:attributes="src new/image" />
+										<div class="img_info" tal:condition="new/image|nothing">
+											<img tal:attributes="src new/image|nothing" />
 										</div>
 										<div class="descricao_destaque">
 											<!--tal:def define="pas_member context/@@pas_member|nothing;
@@ -85,10 +85,10 @@
 												<h4 tal:content="author/name_or_id|nothing">Author</h4>
 											</tal:def-->
 											
-											<h4 tal:content="new/date">Date</h4>
-											<p tal:content="new/summary">Summary</p>
+											<h4 tal:content="new/date|nothing">Date</h4>
+											<p tal:content="new/summary|nothing">Summary</p>
 											<a class="leia-mais" title="Ver a not&iacute;cia completa"
-											   tal:attributes="href new/link; alt new/title">leia mais</a>
+											   tal:attributes="href new/link|nothing; alt new/title|nothing">leia mais</a>
 										</div>
 										<div class="visualClear"></div>
 									</div>

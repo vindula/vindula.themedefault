@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from five import grok
 
+from datetime import datetime, timedelta
+
 from vindula.themedefault import MessageFactory as _
 from Products.CMFCore.utils import getToolByName
 from zope.app.component.hooks import getSite
@@ -218,6 +220,44 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
             ),
         required=False
     ),
+    
+    BooleanField(
+        name='active_autonews',
+        widget=BooleanWidget(
+            label=_(u"Ativar destaques de notícias automáticas"),
+            description=_(u"Mostrar automáticamente as novas notícias adicionadas no portal."),
+            label_msgid='vindula_themedefault_label_active_autonews',
+            description_msgid='vindula_themedefault_help_active_autonews',
+            i18n_domain='vindula_themedefault',
+        ),
+        required=False
+    ),
+    
+    IntegerField(
+        name='amount_autonews',
+        widget=IntegerWidget(
+            label=_(u"Quantidade máxima de notícias automáticas"),
+            description=_(u"Indique a quantidade máxima de novas notícias automáticas a ser exibido no destaque."),
+            label_msgid='vindula_themedefault_label_amount_autonews',
+            description_msgid='vindula_themedefault_help_amount_autonews',
+            i18n_domain='vindula_themedefault',
+        ),
+        default=3,
+        required=True,
+    ),
+    
+    IntegerField(
+        name='period_autonews',
+        widget=IntegerWidget(
+            label=_(u"Quantidade de dias para a notícia ser nova"),
+            description=_(u"Indique a quantidade máxima de dias para a notícia vai ser considerada uma nova notícia."),
+            label_msgid='vindula_themedefault_label_amount_autonews',
+            description_msgid='vindula_themedefault_help_amount_autonews',
+            i18n_domain='vindula_themedefault',
+        ),
+        default=3,
+        required=True,
+    ),
 
     IntegerField(
         name='time_transitionsnews',
@@ -367,6 +407,9 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
 finalizeATCTSchema(HomePage_schema, folderish=False)
 HomePage_schema.changeSchemataForField('title_highlightednews', 'Notícias')
 HomePage_schema.changeSchemataForField('ref_newsitem', 'Notícias')
+HomePage_schema.changeSchemataForField('active_autonews', 'Notícias')
+HomePage_schema.changeSchemataForField('period_autonews', 'Notícias')
+HomePage_schema.changeSchemataForField('amount_autonews', 'Notícias')
 HomePage_schema.changeSchemataForField('time_transitionsnews', 'Notícias')
 HomePage_schema.changeSchemataForField('title_othernews', 'Notícias')
 HomePage_schema.changeSchemataForField('local_othernews', 'Notícias')
@@ -412,8 +455,7 @@ class HomePage(ATDocumentBase):
         keywords = self.portal_catalog.uniqueValuesFor('Subject')
         return keywords
 
-registerType(HomePage, PROJECTNAME) 
-
+registerType(HomePage, PROJECTNAME)
     
 # View
 class HomePageView(grok.View):
@@ -427,9 +469,19 @@ class HomePageView(grok.View):
     def getHighlightedNews(self):
         news = self.context.getRef_newsitem()
         self.UIDS_NEWS = []
+        
+        if self.context.getActive_autonews():
+            auto_news = self.searchNews(local=None, limit=self.context.getAmount_autonews())
+            if auto_news:
+                period_min = datetime.now() - timedelta(days=self.context.getPeriod_autonews())
+                if not news: news = []
+                for new in auto_news:
+                    if new.effective().asdatetime().date() >= period_min.date():
+                        news.append(new)
+        
         if news:
             L = []
-            for obj in news[:24]:
+            for obj in news:
                 if obj is None:
                     news.remove(new)
                     continue
@@ -462,6 +514,7 @@ class HomePageView(grok.View):
                 L.append(D)
             self.UIDS_NEWS = [i['UID'] for i in L]
             return L
+                
         
     def getOtherNews(self):
         ctx = self.context

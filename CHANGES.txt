@@ -143,3 +143,6 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 - Ajustes solicitados no Ticket #188, a imagem do banner se "ajeita" dentro da pagina do vindula nao ficando mais larga
 - porém a altura dela é dinâmica
 
+1.1.29 - 2012-10-03
+--------------------------
+- Ticket #249 - Criada uma opção na home page de aparecer notícias "novas" na área de destaque da homepage
