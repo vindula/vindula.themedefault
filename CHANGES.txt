@@ -139,10 +139,15 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 
 1.1.28 - 2012-09-26
 --------------------------
-- Ajustes solicitados no Ticket #190, modificado as imagens da pagina‹o dos banners
+- Ajustes solicitados no Ticket #190, modificado as imagens da paginaï¿½ï¿½o dos banners
 - Ajustes solicitados no Ticket #188, a imagem do banner se "ajeita" dentro da pagina do vindula nao ficando mais larga
-- porm a altura dela  din‰mica
+- porï¿½m a altura dela ï¿½ dinï¿½mica
 
 1.1.29 - 2012-10-03
 --------------------------
-- Ticket #249 - Criada uma op‹o na home page de aparecer not’cias "novas" na ‡rea de destaque da homepage
+- Ticket #249 - Criada uma opï¿½ï¿½o na home page de aparecer notï¿½cias "novas" na ï¿½rea de destaque da homepage
+
+1.1.29 - 2012-10-24
+--------------------------
+- ReformulaÃ§Ã£o de textos no Home
+- CorreÃ§Ãµes ortogrÃ¡ficas
