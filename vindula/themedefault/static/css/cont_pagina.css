@@ -452,11 +452,40 @@
 
 /* BEGIN - NEW CONTENT*/
 
+#portal-columns .lineHeight16 {
+	line-height: 16px;
+    margin-left: 5px;
+}
+
+
+
 /* BEGIN -  SOMBRA DO TOPO E DO RODAPE DO CONTEUDO DO MEIO */
 #portal-columns .shadowTpBt {
 	height: 4px;
 	position: relative;
 	margin: 0 4px;
+}
+#portal-columns .newSaibaMais {
+	border-bottom: 1px dashed #A4A4A4;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+#portal-columns .labelOrange { 
+	padding: 5px 0 0 !important;
+}
+
+#portal-columns .imgRelateNews { 
+	padding: 10px 20px 10px 0;
+}
+
+#portal-columns .read_more { 
+	margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+#portal-columns .newSaibaMais:last-child {
+	border-bottom: none;
 }
 
 #portal-columns .topContCol {
