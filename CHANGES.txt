@@ -151,3 +151,8 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 1.1.30 - 2012-10-25
 --------------------------
 - Alteracoes do layout para as novas funcionalidades da Noticia
+
+1.1.31 - 2012-10-29
+--------------------------
+- Adição do vindulaFolder ao referenciamento da Home Page  
+

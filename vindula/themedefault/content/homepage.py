@@ -172,7 +172,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
     
     ReferenceField('ref_itemMenu',
         multiValued=0,
-        allowed_types=('Folder', 'Link'),
+        allowed_types=('Folder', 'Link', 'VindulaFolder'),
         relationship='ref_itemMenu',
         widget=VindulaReferenceSelectionWidget(
             default_search_index='SearchableText',
@@ -291,7 +291,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
 
     ReferenceField('local_othernews',
         multiValued=0,
-        allowed_types=('Folder'),
+        allowed_types=('Folder', 'VindulaFolder'),
         relationship='news_othernews',
         widget=VindulaReferenceSelectionWidget(
             default_search_index='SearchableText',
@@ -348,7 +348,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
 
     ReferenceField('local_medianews',
         multiValued=0,
-        allowed_types=('Folder'),
+        allowed_types=('Folder', 'VindulaFolder'),
         relationship='news_medianews',
         widget=VindulaReferenceSelectionWidget(
             #default_search_index='SearchableText',
