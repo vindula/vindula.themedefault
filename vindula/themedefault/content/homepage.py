@@ -389,6 +389,19 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         required=False,
     ),
     
+    
+    BooleanField(
+        name='active_banner_html',
+        widget=BooleanWidget(
+            label=_(u"Ativar o banner HTML na homepage"),
+            description=_(u"Mostrar o banner HTML no cabeçalho da homepage"),
+            label_msgid='vindula_themedefault_label_active_banner_html',
+            description_msgid='vindula_themedefault_help_active_banner_html',
+            i18n_domain='vindula_themedefault',
+        ),
+        required=False
+    ),
+    
     TextField(
         name='banner_html',
         allowable_content_types=('text/plain',),
@@ -400,7 +413,6 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         ),
         required=False,
     ),
-                                                      
 
 ))
 
@@ -421,6 +433,7 @@ HomePage_schema.changeSchemataForField('number_medianews', 'Notícias')
 HomePage_schema.changeSchemataForField('tags_medianews', 'Notícias')
 
 HomePage_schema.changeSchemataForField('banner_html', 'Banner')
+HomePage_schema.changeSchemataForField('active_banner_html', 'Banner')
 
 
 invisivel = {'view':'invisible','edit':'invisible',}

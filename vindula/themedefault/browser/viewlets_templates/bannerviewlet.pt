@@ -49,7 +49,7 @@
 			<!-- end: BANNER -->
 		</tal:cond>
 		
-		<tal:cond tal:condition="python: context.getBanner_html() and not context.getActive_banner()">
+		<tal:cond tal:condition="python: context.getBanner_html() and context.getActive_banner_html()">
 			<div tal:replace="structure context/getBanner_html">
 			</div>
 			
