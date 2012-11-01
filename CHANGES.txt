@@ -156,3 +156,7 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 --------------------------
 - Adição do vindulaFolder ao referenciamento da Home Page  
 
+1.1.32 - 2012-11-01
+------------------------
+- Correção do layout do formulario do content-core
+
