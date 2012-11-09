@@ -22,8 +22,12 @@
         	<theme href="theme_home.html" />
 		</rules>
     	<theme href="theme.html" />	
+		<notheme css:if-content="#no-diazo" />
     </rules>
 	
+	<rules css:if-content="#no-diazo">
+	   <drop  attributes="class" css:content="#portal-column-content" />
+	</rules>
 	
 	<!-- Portal Top -->
 	<copy css:content-children="#usefullinks_viewlet" css:theme="#barra_superior" />
