@@ -15,7 +15,7 @@
 
 #contentActionMenus dl.actionMenu a, 
 #content-views  {
-	background-color: #A6A6A6;
+	background-color: #A6A6A6 !important;
 }
 
 #contentActionMenus dl.actionMenu.activated dd {
