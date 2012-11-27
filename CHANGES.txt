@@ -160,3 +160,6 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 ------------------------
 - Correção do layout do formulario do content-core
 
+1.1.33 - 2012-11-27
+------------------------
+- Correção do content type Home Page não gerar o objeto [...]
