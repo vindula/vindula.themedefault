@@ -374,6 +374,9 @@
 	margin:5px 0 0 0;
 }
 
+.bt_reservas{
+	margin:5px 0 0 0;
+}
 .bt_comentar input{
     background: url("++resource++vindula.themedefault/images/buttons/bt_comentar.png") no-repeat scroll 0 0 #F58220;
     color: #FFFFFF;
@@ -385,6 +388,18 @@
     width: 97px;
 	*padding: 0;
 	border: none;
+}
+.bt_reservas input{
+    background: url("++resource++vindula.themedefault/images/buttons/bt_reservas.png") no-repeat scroll 0 0 #F58220;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-weight: bold;
+    height: 110px;
+    padding: 0 0 2px;
+    text-transform: uppercase;
+    width: 38px;
+        *padding: 0;
+        border: none;
 }
 
 .geral_lista_comentarios{

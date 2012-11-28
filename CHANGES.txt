@@ -167,3 +167,4 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 1.1.34 - 2012-11-28
 ------------------------
 - Corrigindo botões anteriores e próximas na área Minhas Reservas
+- Corrigindo botão Validar CPF na área Meus Holerites
