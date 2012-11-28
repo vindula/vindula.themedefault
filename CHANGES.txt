@@ -163,3 +163,7 @@ Adicionada a funcionalidade de escolher o modelo da paginacao dos banners da hom
 1.1.33 - 2012-11-27
 ------------------------
 - Correção do content type Home Page não gerar o objeto [...]
+
+1.1.34 - 2012-11-28
+------------------------
+- Corrigindo botões anteriores e próximas na área Minhas Reservas

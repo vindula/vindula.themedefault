@@ -170,6 +170,17 @@ dl.portlet a:hover,
     width: 97px;
 	height: 37px;
 }
+.bt_reservas{
+    background: url("++resource++vindula.themedefault/images/buttons/bt_reservas.png") no-repeat scroll 0 0 #F58220;
+    border: medium none;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 110px;
+    margin-left:5px;
+    height: 38px;
+}
 
 .bt_comments_div{
 	text-align: center;
