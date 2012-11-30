@@ -46,6 +46,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
             default_search_index='SearchableText',
             label=_(u"Seleção de banner(s)"),
             description=_(u"Selecione o objeto que será mostrado no banner."),
+            review_state = ('published', 'external'),
             
             label_msgid='vindula_themedefault_label_ref_banner',
             description_msgid='vindula_themedefault_help_ref_banner',
@@ -178,6 +179,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
             default_search_index='SearchableText',
             label=_(u"Selecionar menu"),
             description=_(u"Selecione o objeto que será mostrado no menu."),
+            review_state = ('published', 'external'),
             
             label_msgid='vindula_themedefault_label_ref_itemMenu',
             description_msgid='vindula_themedefault_help_ref_itemMenu',
@@ -212,7 +214,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
             label=_(u"Notícias da área de destaque"),
             description=_(u"Selecione as notícias que deverão rotacionar na área de destaque."),
             typeview='list',
-            review_state = 'published',
+            review_state = ('published', 'external'),
             
             label_msgid='vindula_themedefault_label_ref_itemMenu',
             description_msgid='vindula_themedefault_help_ref_itemMenu',
@@ -298,7 +300,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
             label=_(u"Local das outras notícias"),
             description=_(u"Selecione o local das notícias. \
                             Se nada for selecionado, o sistema irá buscar notícias em todo o portal."),
-            review_state = 'published',
+            review_state = ('published', 'external'),
             typeview='list',
             
             label_msgid='vindula_themedefault_label_local_othernews',
@@ -356,7 +358,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
             label=_(u"Local das noticias mídia"),
             description=_(u"Selecione o local das notícias. \
                            Se nada for selecionado, o sistema irá buscar notícias em todo o portal."),   
-            review_state = 'published',
+            review_state = ('published', 'external'),
             
             label_msgid='vindula_themedefault_label_local_medianews',
             description_msgid='vindula_themedefault_help_local_medianews',
