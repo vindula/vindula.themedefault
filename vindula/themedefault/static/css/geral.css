@@ -273,3 +273,8 @@ div#data #portal-personaltools-custom {
     width: 218px;
 }    
 
+/*potal-register */
+body.portal_registry #content{
+    overflow-x: auto;
+    width: 670px;
+}
