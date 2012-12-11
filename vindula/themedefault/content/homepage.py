@@ -442,7 +442,6 @@ invisivel = {'view':'invisible','edit':'invisible',}
 HomePage_schema['description'].widget.visible = invisivel
 HomePage_schema['text'].widget.visible = invisivel
 
-
 # Dates
 L = ['effectiveDate','expirationDate','creation_date','modification_date']   
 # Categorization

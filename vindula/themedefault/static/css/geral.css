@@ -278,3 +278,15 @@ body.portal_registry #content{
     overflow-x: auto;
     width: 670px;
 }
+
+#archetypes-fieldname-time_transitionsnews,
+#archetypes-fieldname-tags_othernews{
+    border-bottom: medium solid #000000;
+    padding-bottom: 10px;
+}
+
+
+
+
+
+
