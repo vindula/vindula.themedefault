@@ -14,6 +14,19 @@ $j = jQuery.noConflict();
 		$j('a#user-name').text(msg + $j('a#user-name').text());
 	};
 
+	function CheckPost(resp, elem){
+		var post = resp.find("textarea"), text = post.val();
+		if (text.length > 0) {
+			return true;
+		}
+		else {
+			alert('Seu pensamento nÃ£o pode ficar em branco.');
+			launchCKInstances
+			return false;
+		};
+	}
+
+
 $j(document).ready(function(){
 	setTextPortalPersonaltools();
 
@@ -104,7 +117,10 @@ $j(document).ready(function(){
         formselector: '[name=myvindula-form]',
         noform:'reload',
         width: '50%',
-        config: common_jqt_config
+        config: common_jqt_config,
+		beforepost: function(resp, elem){
+            return CheckPost(resp, elem);
+        }
         });        
         
     // Modal editra portlet 
@@ -119,7 +135,7 @@ $j(document).ready(function(){
         });
 		
 		
-	//CRIA UM CYCLE PARA AS IMAGENS DO CABE‚ALHO DO PORTAL
+	//CRIA UM CYCLE PARA AS IMAGENS DO CABEï¿½ALHO DO PORTAL
 	$j('#cycle-logo').cycle({
 		cssBefore: {  
 	        zIndex: 1
