@@ -627,7 +627,7 @@ class HomePageView(grok.View):
     def limitTextSize(self, size, text):
         if len(text) > size:
             i = size
-            while text[i] != " ":
+            while text[i] != " " and (text[i] < len(text)):
                 i += 1              
             return text[:i]+'...'
         else:
