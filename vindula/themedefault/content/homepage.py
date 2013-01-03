@@ -260,6 +260,25 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         default=3,
         required=True,
     ),
+                                                     
+    ReferenceField('local_autonews',
+        multiValued=0,
+        allowed_types=('Folder', 'VindulaFolder'),
+        relationship='local_autonews',
+        widget=VindulaReferenceSelectionWidget(
+            default_search_index='SearchableText',
+            label=_(u"Local das notícias automaticas"),
+            description=_(u"Selecione o local das notícias. \
+                            Se nada for selecionado, o sistema irá buscar notícias em todo o portal."),
+            review_state = ('published', 'external'),
+            typeview='list',
+            
+            label_msgid='vindula_themedefault_label_local_autonews',
+            description_msgid='vindula_themedefault_help_local_autonews',
+            i18n_domain='vindula_themedefault'),                   
+        required=False
+    ),                                                     
+                                                     
 
     IntegerField(
         name='time_transitionsnews',
@@ -424,6 +443,7 @@ HomePage_schema.changeSchemataForField('ref_newsitem', 'Notícias')
 HomePage_schema.changeSchemataForField('active_autonews', 'Notícias')
 HomePage_schema.changeSchemataForField('period_autonews', 'Notícias')
 HomePage_schema.changeSchemataForField('amount_autonews', 'Notícias')
+HomePage_schema.changeSchemataForField('local_autonews', 'Notícias')
 HomePage_schema.changeSchemataForField('time_transitionsnews', 'Notícias')
 HomePage_schema.changeSchemataForField('title_othernews', 'Notícias')
 HomePage_schema.changeSchemataForField('local_othernews', 'Notícias')
@@ -485,7 +505,7 @@ class HomePageView(grok.View):
         self.UIDS_NEWS = []
         
         if self.context.getActive_autonews():
-            auto_news = self.searchNews(local=None, limit=self.context.getAmount_autonews())
+            auto_news = self.searchNews(local=self.context.getLocal_autonews(), limit=self.context.getAmount_autonews())
             if auto_news:
                 period_min = datetime.now() - timedelta(days=self.context.getPeriod_autonews())
                 if not news: news = []
