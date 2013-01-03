@@ -377,6 +377,14 @@
 .bt_reservas{
 	margin:5px 0 0 0;
 }
+
+#submitted_cpf{
+	height: auto;
+	width: auto;
+	padding-left: 1px;
+    padding-top: 8px;
+}
+
 .bt_comentar input{
     background: url("++resource++vindula.themedefault/images/buttons/bt_comentar.png") no-repeat scroll 0 0 #F58220;
     color: #FFFFFF;
