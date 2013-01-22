@@ -5,7 +5,7 @@
 			<link rel="stylesheet" type="text/css" href="/++resource++vindula.themedefault/css/banner_homepage.css">
 			<!-- start: BANNER -->
 			<div id="banner_home" tal:condition="context/getRef_banner">
-				<tal:def define="banners view/getBanner">
+				<tal:def define="banners view/getBanner|nothing">
 					
 					<!-- start: Conteudo do banner -->
 					<div id="box_banner">
