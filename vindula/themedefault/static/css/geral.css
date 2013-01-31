@@ -285,7 +285,14 @@ body.portal_registry #content{
     padding-bottom: 10px;
 }
 
-
+/*Barra fixa no rodape */
+#vindula-network-staticbar-viewlet-manager {
+	bottom: 0;
+    position: fixed;
+    right: 5px;
+    width: 190px;
+    z-index: 300;
+}
 
 
 

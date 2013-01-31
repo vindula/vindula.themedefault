@@ -82,9 +82,9 @@
 	</rules>
 	
 	
-	<!-- Vidula Chat -->
-	<after css:content-children="#online-contacts_viewlet" css:theme="#pagina" css:if-content="#online-contacts_viewlet" />
-
+	<!-- Vidula Chat 
+	<after css:content-children="#online-contacts_viewlet" css:theme="#vindula-network-staticbar-viewlet-manager" css:if-content="#online-contacts_viewlet" />
+	-->
 
 	<!-- Portal Footer -->
 	<copy css:content-children="#macro_logofooter"     css:theme="#rodape .logo" />
