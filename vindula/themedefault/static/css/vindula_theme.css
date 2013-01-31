@@ -397,3 +397,9 @@ body.template-logged_out .documentDescription {
 	color: 6E6D71;
 	font-weight: normal !important;
 }
+
+/* Layout do portlet navegacao */
+dl.portlet ul.navTree .navTreeCurrentItem {
+	font-weight: bold;
+    margin-left: 0;
+}
