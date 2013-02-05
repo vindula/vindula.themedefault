@@ -293,7 +293,7 @@ body.portal_registry #content{
     width: 190px;
     z-index: 300;
 }
-.minHeight520{ min-height: 520px; }
+.minHeight520{ min-height: 450px; }
 .textCenter { text-align: center; }
 
 
