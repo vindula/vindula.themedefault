@@ -567,6 +567,8 @@ class HomePageView(grok.View):
                 except:D['date'] = ''
                 D['link'] = obj.absolute_url()
                 D['summary'] = obj.Description()
+                D['uid'] = obj.UID()
+                D['cotent_type'] = obj.portal_type
                      
                 L.append(D)
             return {'news' : L, 'url': url }

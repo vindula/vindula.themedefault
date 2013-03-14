@@ -142,6 +142,11 @@
 									</div>
 									<div class="visualClear"></div>
 								</div>
+								<div class="vd-like" tal:attributes="data-uid new/uid;
+																 	 data-type new/cotent_type"></div>
+								
+								<div class="vd-comment" tal:attributes="data-uid new/uid;
+																 	 data-type new/cotent_type"></div>																 	 
 							</div>	
 							
 						</tal:other-news>						
