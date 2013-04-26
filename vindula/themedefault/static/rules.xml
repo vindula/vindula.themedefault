@@ -3,96 +3,79 @@
 	   xmlns:css="http://namespaces.plone.org/diazo/css" 
 	   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-    <!-- Pull in Plone CSS -->
+    <!-- Pull in Theme Head -->
     <prepend theme="/html/head" 
-	         content="/html/head/link | /html/head/style | /html/head/script | /html/head/title | /html/head/base | /html/head/meta" />
-	
-	<copy css:content="#icone-favico" theme="/html/head" />
-	<drop css:content="link[type='image/x-icon']" />
-    
-	
-	<!-- Variables -->
-	<xsl:variable name="home_page_context" css:select="#vindula-home-page"/>
-	
+	         content="/html/head/script | /html/head/title | /html/head/base | /html/head/meta" />
+			 
+	<!--Remove Plone Favicon-->
+	<drop css:content="link[rel='shortcut icon']" />	
 	
 	<!-- Prevent theme usage in zmi -->
-    <rules css:if-content="#visual-portal-wrapper">
-		<!-- Content with Home Page object -->
-    	<rules if-content="$home_page_context">
-        	<theme href="theme_home.html" />
-		</rules>
-    	<theme href="theme.html" />	
-		<notheme css:if-content="#no-diazo" />
-    </rules>
-	
-	<rules css:if-content="#no-diazo">
-	   <drop  attributes="class" css:content="#portal-column-content" />
+	<rules css:if-content="#visual-portal-wrapper">
+		<theme href="new_theme.html" />
 	</rules>
+	
 	
 	<!-- Portal Top -->
-	<copy css:content-children="#usefullinks_viewlet" css:theme="#barra_superior" />
-	<merge attributes="class" css:theme="body" css:content="body" />
-	
-	<copy css:content-children="#macro_logotop" css:theme="#topo .logo" />
-	
-	<replace css:content="#portal-personaltools" css:theme="#data h4" />
-	
-	<replace css:content="#portal-searchbox" css:theme="#portal-searchbox" />
-	<drop attributes="class" css:content="#searchGadget" />
-	<drop attributes="placeholder" css:content="#searchGadget" />
-	<copy css:content-children="#menu_viewlet" css:theme="#nav" />
-	<copy css:content-children="#alert_display" css:theme="#alert-display" />
-	
-	<copy css:content-children="#links-adcionais" css:theme="#links-adcionais" />
-
-
-    <!-- Opção de Habilitar e Desabilitar o breadcrumbs do plone -->	
-	<xsl:variable name="disable_breadcrumbs" css:select="body .disable_breadcrumbs"/>
-	<rules if-content="not($disable_breadcrumbs)">
-	   <copy css:content-children="#portal-breadcrumbs" css:theme="#geral_breadcrumb"/>    
-	</rules>
-	
-	<copy css:content-children="#banner_homepage" css:theme="#banner_homepage" if-content="$home_page_context"/>
-
-
-	<!-- Portal Columns Not Home Page -->
-	<rules if-content="not($home_page_context)">
-	   <replace css:content="#portal-columns" css:theme="#geral_colunas" /> 
-	</rules>
-	
-	<drop css:content="#portal-column-content #viewlet-above-content" />
-	<!--drop attributes="class" css:content="#viewlet-below-content div" /-->
+        <!-- Opcoes do usuario -->
+    	<copy css:content="#portal-personaltools li" 
+              css:theme="#portal-personaltools" />
+        <!-- Logo portal -->
+        <replace css:content="#portal-logo" 
+                 css:theme="#portal-logo" />
+        <!-- Busca do portal -->
+        <replace css:content="#portal-searchbox #LSResult" 
+              css:theme="#portal-searchbox #LSResult" />
+    	<replace css:content="#portal-searchbox #searchGadget" 
+                 css:theme="#portal-searchbox #searchGadget" />
+        <!-- Portal Global Navigation -->
+        <replace css:content="#portal-globalnav" 
+                 css:theme="#portal-globalnav" />
+        
+        
+    	<copy css:content="a#user-name" css:theme="p#hello" />
+    	<replace css:content="#macro_logotop a" css:theme="#portal-header #portal-logo" />
+    	<drop css:content="a.theme-edit" />
+    	<copy css:content-children="#navigation-viewlet" css:theme="#portal-globalnav" />
+    	<replace css:content="#portal-breadcrumbs" css:theme="#portal-breadcrumbs" />
+    	<drop css:content="div.searchSection" />
+    	<drop css:content="#portal-breadcrumbs" css:if-content="#vindula-home-page" />
 	
 	
-	<!-- Portal Columns Home Page-->
-	<rules if-content="$home_page_context">
-		<copy css:content-children="#portal-column-content" css:theme="#contentHome" />
-		<drop css:content=".documentFirstHeading" />
-		<drop css:content="#viewlet-below-content-title" />
-		
-		<!-- Portlets Home Page-->
-		<copy css:content-children="#portal-column-one" css:theme="#portletsRight" />
-		<copy css:content-children="#portal-column-two" css:theme="#portletsLeft" />
-	</rules>
+	
+	<!-- Pega o texto do nivel 1 do breadcrumbs e coloca no titulo da pagina -->
+	<replace css:theme=".titulo_principal h1">
+		<h1>
+	        <xsl:for-each css:select="#breadcrumbs-1">
+	           <xsl:copy-of select="a/text()"/>
+			   <xsl:copy-of select="span[@id='breadcrumbs-current']/text()"/>
+	        </xsl:for-each>
+		</h1>
+	</replace>
+	
+	<!-- Portal Column Content -->
+	<copy css:content-children="#portal-columns" css:theme="#portal-columns" /> 
+	<drop css:content="#viewlet-above-content" />
+	`
+	
+	<!-- Portal Footer -->
+	<replace css:content="#macro_logofooter a" css:theme="#portal-footer #portal-logo" />
+	<copy css:content-children="#navigation-viewlet" css:theme="#nav_rodape" />
+	<replace css:content="#portal-siteactions" css:theme="#portal-siteactions" />
+	<copy css:content-children="#macro_textfooter" css:theme="#kss-spinner" />
 	
 	
 	<!-- Vindula News Content Type -->
-	<rules css:if-content="body.portaltype-vindulanews">
+	<rules css:if-content="body.portaltype-vindula-content-content-vindulanews">
+		<drop css:content="#parent-fieldname-title" />
+	</rules>
+	
+	<!-- Home Page Content Type -->
+	<rules css:if-content="body.portaltype-vindula-liberiuntheme-content-homepage">
 		<drop css:content=".documentFirstHeading" />
 	</rules>
 	
-	
-	<!-- Vidula Chat 
-	<after css:content-children="#online-contacts_viewlet" css:theme="#vindula-network-staticbar-viewlet-manager" css:if-content="#online-contacts_viewlet" />
-	-->
-
-	<!-- Portal Footer -->
-	<copy css:content-children="#macro_logofooter"     css:theme="#rodape .logo" />
-	<copy css:content-children="#macro_textfooter"     css:theme="#informacao" />
-	<copy css:content-children="#macro_socialnetworks" css:theme="#rodape .socialNetwork" />
-	
-	
 	<!-- Add in any inline scripts, like Google Analytics --> 
     <after theme-children="/html/body" content="/html/body/div[@id='visual-portal-wrapper']/div/script" /> 
-
+	
 </rules>
