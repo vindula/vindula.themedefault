@@ -7,7 +7,7 @@
 	xmlns:grok="http://namespaces.zope.org/grok"
 	xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="vindula.themedefault">
-  
+
   <genericsetup:registerProfile
       name="default"
       title="Vindula Theme Default"
@@ -16,24 +16,25 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
   <!-- -*- extra stuff goes here -*- -->
-   
-   
+
+  <include package=".browser" />
+
   <includeDependencies package="." />
   <plone:static directory="static" type="theme" />
-  
+
   <five:registerPackage package="." initialize=".initialize" />
-  
+
   <!-- Grok the package to initialise schema interfaces and content classes -->
   <grok:grok package="." />
-  
- 
+
+
   <!-- Include the sub-packages that use their own configure.zcml files. -->
   <!--include package=".browser" /-->
-  
-  
+
+
   <browser:resourceDirectory
       name="vindula.themedefault.js"
       directory="./static/js"
-      />	
-  
+      />
+
 </configure>

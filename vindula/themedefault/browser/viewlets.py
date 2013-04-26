@@ -9,29 +9,15 @@ from Products.CMFPlone import utils
 from Products.CMFPlone.browser.navigation import get_view_url
 from plone.app.layout.navigation.root import getNavigationRoot
 
-grok.context(Interface) 
+grok.context(Interface)
 
 # Viewlet for portal logo top
 
-class LogoTopViewlet(grok.Viewlet): 
-    grok.name('vindula.themedefault.logotop') 
+class FaviconTopViewlet(grok.Viewlet):
+    grok.name('vindula.themedefault.favicon')
     grok.require('zope2.View')
-    grok.viewletmanager(IPortalHeader) 
-    
-    def update(self):
-        site = getSite()
-        try:
-            if site.portal_type != 'Plone Site':
-                print " **** Alteração do GetSite ******** " + str(site) 
-                setSite(site=self.context.portal_url.getPortalObject())
-        except:
-            setSite(site=self.context.portal_url.getPortalObject())
+    grok.viewletmanager(IPortalHeader)
 
-class FaviconTopViewlet(grok.Viewlet): 
-    grok.name('vindula.themedefault.favicon') 
-    grok.require('zope2.View')
-    grok.viewletmanager(IPortalHeader)     
-    
     def getConfigurador(self):
         if 'control-panel-objects' in  getSite().keys():
             control = getSite()['control-panel-objects']
@@ -53,25 +39,17 @@ class FaviconTopViewlet(grok.Viewlet):
             img = conf
         else:
             img =  getSite().absolute_url() + '/++resource++vindula.themedefault/images/icons/favicon.ico'
-        
+
         return img
-    
 
-# Viewlet for portal footer
 
-class FooterViewlet(grok.Viewlet): 
-    grok.name('vindula.themedefault.footer') 
-    grok.require('zope2.View')
-    grok.viewletmanager(IPortalFooter) 
-
-            
 
 # Viewlet for useful links
 
-class UsefulLinksViewlet(grok.Viewlet): 
-    grok.name('vindula.themedefault.usefullinks') 
+class UsefulLinksViewlet(grok.Viewlet):
+    grok.name('vindula.themedefault.usefullinks')
     grok.require('zope2.View')
-    grok.viewletmanager(IPortalHeader) 
+    grok.viewletmanager(IPortalHeader)
 
     def getLinks(self):
         portal = self.context.portal_url.getPortalObject()
@@ -82,22 +60,22 @@ class UsefulLinksViewlet(grok.Viewlet):
                             portal_type='Link',
                             #review_state=('published','internal','external'),
                             sort_on="getObjPositionInParent")
-            
+
             if links:
                 L = []
                 for link in links:
                     L.append(link.getObject())
                 return L
-        
+
         else:
             return []
 
 # Viewlet for menu and sub menu
 
-class MenuViewlet(grok.Viewlet): 
-    grok.name('vindula.themedefault.menu') 
+class MenuViewlet(grok.Viewlet):
+    grok.name('vindula.themedefault.menu')
     grok.require('zope2.View')
-    grok.viewletmanager(IAboveContent) 
+    grok.viewletmanager(IAboveContent)
 
     # Metodos de configuração
     def check_UseDropDown(self):
@@ -105,26 +83,26 @@ class MenuViewlet(grok.Viewlet):
         portal = self.context.portal_url.getPortalObject()
         if 'control-panel-objects' in portal.keys():
             control = portal['control-panel-objects']
-            
+
             if 'ThemeConfig' in control.keys():
-                thema = control['ThemeConfig']    
-                
+                thema = control['ThemeConfig']
+
                 try:result = thema.getAtiva_menudropdown()
                 except:result = False
 
             return result
         else:
             return result
-    
+
     def check_SubMenuNivel2(self):
         result = False
         portal = self.context.portal_url.getPortalObject()
         if 'control-panel-objects' in portal.keys():
             control = portal['control-panel-objects']
-            
+
             if 'ThemeConfig' in control.keys():
-                thema = control['ThemeConfig']    
-                
+                thema = control['ThemeConfig']
+
                 try:result = thema.getAtiva_menudropdown_nivel2()
                 except:result = False
 
@@ -150,7 +128,7 @@ class MenuViewlet(grok.Viewlet):
         except:
             if obj['url'] == self.context.REQUEST.get('ACTUAL_URL'):
                 return'selected'
-    
+
     def isSelectedSubmenu(self, obj):
         obj_url = obj.absolute_url().split('/')
         url = self.context.REQUEST.get('ACTUAL_URL').split('/')
@@ -163,55 +141,55 @@ class MenuViewlet(grok.Viewlet):
     def getContentTypes(self, obj=None):
         portal = self.context.portal_url.getPortalObject()
         itens = None
-        
+
         if obj:
             if obj.meta_type == 'VindulaFolder' or\
                obj.meta_type == 'OrganizationalStructure':
                 try:itens = [i for i in obj.getItens_menu() if i]
                 except:itens = None
-       
+
         if 'control-panel-objects' in portal.keys() and not itens:
             control = portal['control-panel-objects']
             if 'ThemeConfig' in control.keys():
-                thema = control['ThemeConfig']    
-                
+                thema = control['ThemeConfig']
+
                 try:itens = thema.getItens_menu()
-                except:itens = None            
-    
+                except:itens = None
+
         if itens:
             return itens
         else:
             return ['Folder', 'Link', 'VindulaFolder']
-        
-    
+
+
     def getQueryMenu(self, path, obj=None):
         portal_properties = getToolByName(self.context, 'portal_properties')
         navtree_properties = getattr(portal_properties, 'navtree_properties')
-        
+
         if navtree_properties.getProperty('enable_wf_state_filtering', False):
             state = navtree_properties.getProperty('wf_states_to_show', ['published','internal'])
         else:
-            state = ['published','internal']        
+            state = ['published','internal']
 
         ctool = getSite().portal_catalog
-        itens = ctool(portal_type = self.getContentTypes(obj), 
+        itens = ctool(portal_type = self.getContentTypes(obj),
                      review_state = state,
                      path={'query': path, 'depth': 1},
                      sort_on = 'getObjPositionInParent')
-        
+
         return itens
 
     def getMenu(self):
         portal = self.context.portal_url.getPortalObject()
         menus = self.getQueryMenu('/'.join(portal.getPhysicalPath()))
-        
+
         if menus:
             L = []
             for obj in menus:
                 if self.checkObj(obj.getObject()):
                     L.append(obj.getObject())
             return L
-        
+
     def getSubMenu(self):
         portal = self.context.portal_url.getPortalObject()
         if self.context.portal_type == 'HomePage':
@@ -221,32 +199,32 @@ class MenuViewlet(grok.Viewlet):
                 context = self.context
         else:
             context = self.context
-        
+
         if context != portal:
             while context.aq_parent != portal:
                 context = context.aq_parent
-            
+
             submenus = self.getQueryMenu('/'.join(context.getPhysicalPath()))
-            
+
             if submenus:
                 L = []
                 for obj in submenus:
                     if self.checkObj(obj.getObject()):
                         L.append(obj.getObject())
                 return L
-    
+
     def getSubMenuDrop(self, tab, nivel = 1):
         result=[]
         portal_properties = getToolByName(self.context, 'portal_properties')
         navtree_properties = getattr(portal_properties, 'navtree_properties')
-        
+
         # Get ids not to list and make a dict to make the search fast
         idsNotToList = navtree_properties.getProperty('idsNotToList', ())
         excludedIds = {}
         for id in idsNotToList:
             excludedIds[id]=1
 
-#        try:  
+#        try:
 #            rootPath = getNavigationRoot(self.context)
 #            dpath='/'.join([rootPath,tab.id])
 #        except:
@@ -255,7 +233,7 @@ class MenuViewlet(grok.Viewlet):
 #            dpath = '/'
 #            if url[3] != plone_site.id:
 #                dpath += plone_site.id+'/'
-#            
+#
 #            dpath += '/'.join(url[3:])
 
         dpath = '/'.join(tab.getPhysicalPath())
@@ -287,12 +265,12 @@ class MenuViewlet(grok.Viewlet):
                     return False
             except:
                 return False
-        
+
         if 'Anonymous' in roles and state == 'private':
             return False
         return True
-        
-class BannerViewlet(grok.Viewlet): 
-    grok.name('vindula.themedefault.banner') 
+
+class BannerViewlet(grok.Viewlet):
+    grok.name('vindula.themedefault.banner')
     grok.require('zope2.View')
-    grok.viewletmanager(IAboveContent) 
+    grok.viewletmanager(IAboveContent)
