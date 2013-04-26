@@ -32,14 +32,13 @@
     	<replace css:content="#portal-searchbox #searchGadget"
                  css:theme="#portal-searchbox #searchGadget" />
         <!-- Portal Global Navigation -->
-        <replace css:content="#portal-globalnav"
-                 css:theme="#portal-globalnav" />
+        <copy css:content-children="#portal-globalnav" 
+              css:theme="#portal-globalnav" />
 
 
     	<copy css:content="a#user-name" css:theme="p#hello" />
     	<replace css:content="#macro_logotop a" css:theme="#portal-header #portal-logo" />
     	<drop css:content="a.theme-edit" />
-    	<copy css:content-children="#navigation-viewlet" css:theme="#portal-globalnav" />
     	<replace css:content="#portal-breadcrumbs" css:theme="#portal-breadcrumbs" />
     	<drop css:content="div.searchSection" />
     	<drop css:content="#portal-breadcrumbs" css:if-content="#vindula-home-page" />
