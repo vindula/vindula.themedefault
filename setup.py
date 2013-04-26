@@ -26,6 +26,7 @@ setup(name='vindula.themedefault',
       install_requires=[
           'setuptools',
           'plone.app.theming',
+          'requests',
           # -*- Extra requirements: -*-
       ],
       entry_points="""

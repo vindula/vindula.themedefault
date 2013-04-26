@@ -1,38 +1,41 @@
-<?xml version="1.0" encoding="UTF-8"?> 
-<rules xmlns="http://namespaces.plone.org/diazo" 
-	   xmlns:css="http://namespaces.plone.org/diazo/css" 
+<?xml version="1.0" encoding="UTF-8"?>
+<rules xmlns="http://namespaces.plone.org/diazo"
+	   xmlns:css="http://namespaces.plone.org/diazo/css"
 	   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
     <!-- Pull in Theme Head -->
-    <prepend theme="/html/head" 
+    <prepend theme="/html/head"
 	         content="/html/head/script | /html/head/title | /html/head/base | /html/head/meta" />
-			 
+
+    <prepend theme="/html/head"
+             css:content="#new-theme" />
+
 	<!--Remove Plone Favicon-->
-	<drop css:content="link[rel='shortcut icon']" />	
-	
+	<drop css:content="link[rel='shortcut icon']" />
+
 	<!-- Prevent theme usage in zmi -->
 	<rules css:if-content="#visual-portal-wrapper">
 		<theme href="new_theme.html" />
 	</rules>
-	
-	
+
+
 	<!-- Portal Top -->
         <!-- Opcoes do usuario -->
-    	<copy css:content="#portal-personaltools li" 
+    	<copy css:content="#portal-personaltools li"
               css:theme="#portal-personaltools" />
         <!-- Logo portal -->
-        <replace css:content="#portal-logo" 
+        <replace css:content="#portal-logo"
                  css:theme="#portal-logo" />
         <!-- Busca do portal -->
-        <replace css:content="#portal-searchbox #LSResult" 
+        <replace css:content="#portal-searchbox #LSResult"
               css:theme="#portal-searchbox #LSResult" />
-    	<replace css:content="#portal-searchbox #searchGadget" 
+    	<replace css:content="#portal-searchbox #searchGadget"
                  css:theme="#portal-searchbox #searchGadget" />
         <!-- Portal Global Navigation -->
-        <replace css:content="#portal-globalnav" 
+        <replace css:content="#portal-globalnav"
                  css:theme="#portal-globalnav" />
-        
-        
+
+
     	<copy css:content="a#user-name" css:theme="p#hello" />
     	<replace css:content="#macro_logotop a" css:theme="#portal-header #portal-logo" />
     	<drop css:content="a.theme-edit" />
@@ -40,9 +43,9 @@
     	<replace css:content="#portal-breadcrumbs" css:theme="#portal-breadcrumbs" />
     	<drop css:content="div.searchSection" />
     	<drop css:content="#portal-breadcrumbs" css:if-content="#vindula-home-page" />
-	
-	
-	
+
+
+
 	<!-- Pega o texto do nivel 1 do breadcrumbs e coloca no titulo da pagina -->
 	<replace css:theme=".titulo_principal h1">
 		<h1>
@@ -52,30 +55,30 @@
 	        </xsl:for-each>
 		</h1>
 	</replace>
-	
+
 	<!-- Portal Column Content -->
-	<copy css:content-children="#portal-columns" css:theme="#portal-columns" /> 
+	<copy css:content-children="#portal-columns" css:theme="#portal-columns" />
 	<drop css:content="#viewlet-above-content" />
 	`
-	
+
 	<!-- Portal Footer -->
 	<replace css:content="#macro_logofooter a" css:theme="#portal-footer #portal-logo" />
 	<copy css:content-children="#navigation-viewlet" css:theme="#nav_rodape" />
 	<replace css:content="#portal-siteactions" css:theme="#portal-siteactions" />
 	<copy css:content-children="#macro_textfooter" css:theme="#kss-spinner" />
-	
-	
+
+
 	<!-- Vindula News Content Type -->
 	<rules css:if-content="body.portaltype-vindula-content-content-vindulanews">
 		<drop css:content="#parent-fieldname-title" />
 	</rules>
-	
+
 	<!-- Home Page Content Type -->
 	<rules css:if-content="body.portaltype-vindula-liberiuntheme-content-homepage">
 		<drop css:content=".documentFirstHeading" />
 	</rules>
-	
-	<!-- Add in any inline scripts, like Google Analytics --> 
-    <after theme-children="/html/body" content="/html/body/div[@id='visual-portal-wrapper']/div/script" /> 
-	
+
+	<!-- Add in any inline scripts, like Google Analytics -->
+    <after theme-children="/html/body" content="/html/body/div[@id='visual-portal-wrapper']/div/script" />
+
 </rules>
