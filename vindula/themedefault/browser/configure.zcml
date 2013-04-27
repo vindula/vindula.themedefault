@@ -9,6 +9,13 @@
 
     <browser:jbot
           directory="templates" />
-
-
+          
+    <!-- Theme Vindula special view -->
+    <browser:page
+        for="*"
+        name="themevindulaview"
+        class=".views.ThemeVindulaView"
+        permission="zope.Public"
+        allowed_interface=".interfaces.IThemeVindulaView"
+        />
 </configure>

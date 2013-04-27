@@ -1,8 +1,35 @@
 # -*- coding: utf-8 -*-
 from five import grok
+from Acquisition import aq_inner
+from zope.component import getMultiAdapter
 from zope.interface import Interface
+from zope.interface import implements
+from Products.Five import BrowserView
+
+from vindula.themedefault.browser.interfaces import IThemeVindulaView
 
 import requests
+
+class ThemeVindulaView(BrowserView):
+    implements(IThemeVindulaView)
+
+    # Utility methods
+    def getColumnsClass(self, view=None):
+        context = aq_inner(self.context)
+        plone_view = getMultiAdapter((context, self.request), name=u'plone')
+        sl = plone_view.have_portlets('plone.leftcolumn', view=view);
+        sr = plone_view.have_portlets('plone.rightcolumn', view=view);
+        portal_state = getMultiAdapter((context, self.request), name=u'plone_portal_state')
+
+        if not sl and not sr:
+            # we don't have columns, thus conten takes the whole width
+            return "columns large-12"
+        elif sl and sr:
+            # In case we have both columns, content takes 50% of the whole
+            # width and the rest 50% is spread between the columns
+            return "columns large-6"
+        else:
+            return "columns large-9"
 
 class LoadScssView(grok.View):
     grok.context(Interface)
