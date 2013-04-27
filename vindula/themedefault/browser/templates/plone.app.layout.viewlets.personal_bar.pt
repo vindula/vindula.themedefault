@@ -17,29 +17,15 @@
 
   <ul class="actionMenu deactivated" id="portal-personaltools"
       tal:condition="not: view/anonymous">
-      <!-- Barra Usuario Logado -->
-
-      <!--tal:actions repeat="action view/user_actions">
-        <li>
-          <a href=""
-             tal:attributes="href action/url;
-                             id string:personaltools-${action/id};
-                             target action/link_target|nothing;"
-              tal:content="action/title"
-              i18n:translate="">
-                action title
-          </a>
-        </li>
-      </tal:actions-->
-
       <li>
-        <!-- Dados para utilização da macro -->
-        <tal:def define="size_img string:30px;
-                         user_profiles member/getUserName|nothing;
-                         item prefs_user;">
-            <metal:use use-macro="context/myvindula-imageprofiles-macro/macros/userimage"/>
-        </tal:def>
-
+        <!-- Dados para utilizacao da macro -->
+        <div class="my-profile left">
+            <tal:def define="size_img string:30px;
+                             user_profiles member/getUserName|nothing;
+                             item prefs_user;">
+                <metal:use use-macro="context/myvindula-imageprofiles-macro/macros/userimage"/>
+            </tal:def>
+        </div>
         <a tal:attributes="href string:${context/portal_url}/myvindulalistuser;"
            tal:content="prefs_user/name"
            id="personaltools-myvindula"

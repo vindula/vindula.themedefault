@@ -21,7 +21,7 @@
 
 	<!-- Portal Top -->
         <!-- Opcoes do usuario -->
-    	<copy css:content="#portal-personaltools li"
+    	<copy css:content-children="#portal-personaltools"
               css:theme="#portal-personaltools" />
         <!-- Logo portal -->
         <replace css:content="#portal-logo"
@@ -37,7 +37,6 @@
 
 
     	<copy css:content="a#user-name" css:theme="p#hello" />
-    	<replace css:content="#macro_logotop a" css:theme="#portal-header #portal-logo" />
     	<drop css:content="a.theme-edit" />
     	<replace css:content="#portal-breadcrumbs" css:theme="#portal-breadcrumbs" />
     	<drop css:content="div.searchSection" />
