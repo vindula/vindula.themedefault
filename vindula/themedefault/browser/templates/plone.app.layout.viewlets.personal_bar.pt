@@ -7,7 +7,9 @@
                  view_myvindula python:context.restrictedTraverse('@@myvindula');
 
                  prefs_user python: view_myvindula.get_prefs_user(member.getUserName());
-                 departamentos python: view_myvindula.get_department();
+                 departamentos python: view_myvindula.get_department(member.getUserName());
+                 cont_recados  python: view_myvindula.count_recados_new(member.getUserName());
+                 cont_notificacao python: view_myvindula.count_notificacao_new(member.getUserName());
 
                  links view_user/update|nothing">
 
@@ -58,12 +60,12 @@
 
       <li>
         <a tal:attributes="href string:${context/portal_url}/@@myvindulalistrecados;"
-           tal:content="string:MEN(0)${nothing}"
+           tal:content="string:MEN(${cont_recados})"
            id="personaltools-recados">Mensagens</a>
       </li>
       <li>
         <a tal:attributes="href string:${context/portal_url}/"
-           tal:content="string:Notf(0)${nothing}"
+           tal:content="string:Notf(${cont_notificacao})"
            id="personaltools-recados">Notificações</a>
       </li>
 
