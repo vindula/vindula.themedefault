@@ -1,49 +1,111 @@
 <div id="portal-personaltools-wrapper"
-     i18n:domain="plone">
+     i18n:domain="plone"
+     tal:define="checkPermission nocall: context/portal_membership/checkPermission;
+                 member context/@@plone_portal_state/member;
 
-<h5 class="hiddenStructure" i18n:translate="heading_personal_tools">Personal tools</h5>
+                 view_user python:context.restrictedTraverse('@@vindula-linkuser');
+                 view_myvindula python:context.restrictedTraverse('@@myvindula');
 
-<dl class="actionMenu deactivated" id="portal-personaltools"
-    tal:condition="python:view.user_actions and not view.anonymous">
-  <tal:block condition="not: view/anonymous">
-  <dt class="actionMenuHeader">
-    <a id="user-name"
-       tal:attributes="href view/homelink_url"
-       tal:content="view/user_name">
-        John
-    </a>
-  </dt>
-  <dd class="actionMenuContent">
-    <ul>
-        <li tal:repeat="action view/user_actions"
-            tal:attributes="id string:personaltools-${action/id}">
-            <a href=""
-               tal:attributes="href action/url;
-                               target action/link_target|nothing"
-               tal:content="action/title"
-               i18n:translate="">
+                 prefs_user python: view_myvindula.get_prefs_user(member.getUserName());
+                 departamentos python: view_myvindula.get_department();
+
+                 links view_user/update|nothing">
+
+  <h5 class="hiddenStructure" i18n:translate="heading_personal_tools">Personal tools</h5>
+
+  <ul class="actionMenu deactivated" id="portal-personaltools"
+      tal:condition="not: view/anonymous">
+      <!-- Barra Usuario Logado -->
+
+      <!--tal:actions repeat="action view/user_actions">
+        <li>
+          <a href=""
+             tal:attributes="href action/url;
+                             id string:personaltools-${action/id};
+                             target action/link_target|nothing;"
+              tal:content="action/title"
+              i18n:translate="">
                 action title
-            </a>
+          </a>
         </li>
-    </ul>
-  </dd>
-  </tal:block>
-</dl>
+      </tal:actions-->
 
-<ul class="actionMenu deactivated" id="portal-personaltools"
-    tal:condition="python:view.user_actions and view.anonymous">
-  <li id="anon-personalbar">
-    <tal:actions repeat="action view/user_actions">
+      <li>
+        <!-- Dados para utilização da macro -->
+        <tal:def define="size_img string:30px;
+                         user_profiles member/getUserName|nothing;
+                         item prefs_user;">
+            <metal:use use-macro="context/myvindula-imageprofiles-macro/macros/userimage"/>
+        </tal:def>
+
+        <a tal:attributes="href string:${context/portal_url}/myvindulalistuser;"
+           tal:content="prefs_user/name"
+           id="personaltools-myvindula"
+           href="">Meu Perfil</a>
+      </li>
+
+      <tal:rep repeat="departamento departamentos">
+        <li>
+          <a tal:define="obj departamento/getObject"
+             tal:attributes="href obj/absolute_url;
+                             id string:personaltools-${obj/id}"
+             tal:content="obj/Title"
+
+             href="">Departamendo</a>
+        </li>
+      </tal:rep>
+
+
+      <li>
+        <a tal:attributes="href string:${context/portal_url}/@@myvindulalistrecados;"
+           tal:content="string:MEN(0)${nothing}"
+           id="personaltools-recados">Mensagens</a>
+      </li>
+      <li>
+        <a tal:attributes="href string:${context/portal_url}/"
+           tal:content="string:Notf(0)${nothing}"
+           id="personaltools-recados">Notificações</a>
+      </li>
+
+
+      <tal:rep repeat="link links">
+        <li>
+          <a tal:attributes="href link/url|nothing;
+                             id string:personaltools-${link/id};"
+             tal:content="link/title|nothing"></a>
+        </li>
+      </tal:rep>
+      <li tal:condition="python:checkPermission('Plone Site Setup: Overview', context)">
+        <a tal:attributes="href string:${context/portal_url}/@@overview-controlpanel;"
+           href="">Painel de Controle</a>
+      </li>
+
+      <li>
+        <a tal:attributes="href string:${context/portal_url}/logout;"
+           href="">SAIR</a>
+      </li>
+
+  </ul>
+
+
+  <ul class="actionMenu deactivated" id="portal-personaltools"
+      tal:condition="view/anonymous">
+    <!-- Barra Usuario Anonimo -->
+    <li id="anon-personalbar">
+      <tal:actions repeat="action view/user_actions">
         <a href=""
            tal:attributes="href action/url;
                            id string:personaltools-${action/id};
                            target action/link_target|nothing;"
-           tal:content="action/title"
-           i18n:translate="">
-            action title
+            tal:content="action/title"
+            i18n:translate="">
+              action title
         </a>
-    </tal:actions>
-  </li>
-</ul>
+      </tal:actions>
+    </li>
+  </ul>
+
+
+
 
 </div>

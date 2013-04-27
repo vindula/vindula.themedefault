@@ -63,3 +63,58 @@ class MacroFooterView(MacroLogoTopView):
 
     url = "/++resource++vindula.controlpanel/imagens/logo_rodape.png"
 
+
+class ManageLinksUserView(grok.View):
+    grok.name('vindula-linkuser')
+    grok.require('zope2.View')
+    grok.context(Interface)
+
+    def render(self):
+        return "OK"
+
+    def update(self):
+        portal = self.context.portal_url.getPortalObject()
+        workflow = portal['portal_workflow']
+
+        membership = self.context.portal_membership
+        groups = self.context.portal_groups
+
+        user_login = membership.getAuthenticatedMember()
+        user_groups = [i.id for i in groups.getGroupsByUserId(user_login.id) if i]
+
+        L = []
+        if 'control-panel-objects' in portal.keys():
+            control = portal['control-panel-objects']
+            if 'link-user-folder' in control.keys():
+                folder_links = control['link-user-folder']
+                links = folder_links.objectValues()
+                for link in links:
+                    checa = False
+                    if workflow.getInfoFor(link, 'review_state') == 'published':
+                       checa = True
+                    else:
+                        if 'Manager' in user_login.getRoles():
+                            checa = True
+                        else:
+                            for roles in link.get_local_roles():
+                                if user_login.id in roles:
+                                    checa = True
+                                else:
+                                    for group in user_groups:
+                                        if group in roles:
+                                            checa = True
+                                            break
+
+                    if checa:
+                        D ={}
+                        D['url'] = link.getRemoteUrl()
+                        D['id'] = link.id
+                        try:
+                            if link.getInternal_link():
+                                D['url'] = link.getInternal_link().absolute_url()
+                        except:
+                            pass
+                        D['title'] = link.Title()
+                        L.append(D)
+
+        return L
