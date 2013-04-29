@@ -60,15 +60,6 @@
 		<drop css:content=".documentFirstHeading" />
 	</rules>
 
-
-    <!-- Portal Footer -->
-    <copy css:content="#footer_tags"     css:theme="#footer_tags" />
-
-
-
-    <!-- copy css:content-children="#macro_socialnetworks" css:theme="#rodape .socialNetwork" /-->
-
-
 	<!-- Add in any inline scripts, like Google Analytics -->
     <after theme-children="/html/body" content="/html/body/div[@id='visual-portal-wrapper']/div/script" />
 
