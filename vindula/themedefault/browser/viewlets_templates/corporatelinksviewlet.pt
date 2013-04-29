@@ -1,0 +1,11 @@
+<div id="corporatelinks_viewlet" tal:define="links viewlet/getLinks | nothing">
+	<div id="links_corporativos" tal:condition="links">
+		<ul>
+			<li tal:repeat="link links">
+				<a tal:attributes="title link/Description; alt link/title; href link/remote_url"
+				   tal:content="link/title"
+				   target="_blank"></a>
+			</li>
+		</ul>
+	</div>
+</div>

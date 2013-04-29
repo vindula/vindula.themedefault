@@ -12,7 +12,6 @@ from plone.app.layout.navigation.root import getNavigationRoot
 grok.context(Interface)
 
 # Viewlet for portal logo top
-
 class FaviconTopViewlet(grok.Viewlet):
     grok.name('vindula.themedefault.favicon')
     grok.require('zope2.View')
@@ -44,34 +43,47 @@ class FaviconTopViewlet(grok.Viewlet):
 
 
 
-# Viewlet for useful links
-
-class UsefulLinksViewlet(grok.Viewlet):
-    grok.name('vindula.themedefault.usefullinks')
+# Viewlet for corporate links
+class CorporateLinksViewlet(grok.Viewlet):
+    grok.name('vindula.themedefault.corporatelinks')
     grok.require('zope2.View')
     grok.viewletmanager(IPortalHeader)
 
     def getLinks(self):
         portal = self.context.portal_url.getPortalObject()
-        if 'links' in portal.objectIds():
-            pasta = portal['links']
-            self.pc = getToolByName(self.context, 'portal_catalog')
-            links = self.pc(path={'query':'/'.join(pasta.getPhysicalPath())},
-                            portal_type='Link',
-                            #review_state=('published','internal','external'),
-                            sort_on="getObjPositionInParent")
+        if 'control-panel-objects' in portal.keys():
+            control = portal['control-panel-objects']
+            if 'links' in control.objectIds():
+                pasta = control['links']
+                self.pc = getToolByName(self.context, 'portal_catalog')
+                links = self.pc(path={'query':'/'.join(pasta.getPhysicalPath())},
+                                portal_type=('Link','InternalLink'),
+                                #review_state=('published','internal','external'),
+                                sort_on="getObjPositionInParent")
 
-            if links:
-                L = []
-                for link in links:
-                    L.append(link.getObject())
-                return L
+                if links:
+                    L = []
+                    for link in links:
+                        L.append(link.getObject())
+                    return L
 
-        else:
-            return []
+
+        return []
+
+
+# # Viewlet for footer tag cloud
+# class FooterTagCloudViewlet(grok.Viewlet):
+#     grok.name('vindula.themedefault.footertagcloud')
+#     grok.require('zope2.View')
+#     grok.viewletmanager(IPortalFooter)
+
+
+#     def
+
+
+
 
 # Viewlet for menu and sub menu
-
 class MenuViewlet(grok.Viewlet):
     grok.name('vindula.themedefault.menu')
     grok.require('zope2.View')

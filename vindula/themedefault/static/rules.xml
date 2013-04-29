@@ -20,6 +20,9 @@
 
 
 	<!-- Portal Top -->
+        <!-- Links Corporativos -->
+        <copy css:content="#links_corporativos"
+              css:theme="#links_corporativos" />
         <!-- Opcoes do usuario -->
     	<copy css:content="#portal-personaltools li"
               css:theme="#portal-personaltools" />
@@ -32,7 +35,7 @@
     	<replace css:content="#portal-searchbox #searchGadget"
                  css:theme="#portal-searchbox #searchGadget" />
         <!-- Portal Global Navigation -->
-        <copy css:content-children="#portal-globalnav" 
+        <copy css:content-children="#portal-globalnav"
               css:theme="#portal-globalnav" />
 
 
