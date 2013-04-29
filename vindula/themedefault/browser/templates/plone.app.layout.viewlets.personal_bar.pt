@@ -28,6 +28,7 @@
         </div>
         <a tal:attributes="href string:${context/portal_url}/myvindulalistuser;"
            tal:content="prefs_user/name"
+           class="left"
            id="personaltools-myvindula"
            href="">Meu Perfil</a>
       </li>
@@ -46,35 +47,43 @@
 
       <li>
         <a tal:attributes="href string:${context/portal_url}/@@myvindulalistrecados;"
-           tal:content="string:MEN(${cont_recados})"
-           id="personaltools-recados">Mensagens</a>
+           id="personaltools-recados">
+           <i class="foundicon-mail"></i>
+           <span tal:content="string:(${cont_recados})"></span>
+        </a>
       </li>
       <li>
         <a tal:attributes="href string:${context/portal_url}/"
-           tal:content="string:Notf(${cont_notificacao})"
-           id="personaltools-recados">Notificações</a>
+           id="personaltools-recados">
+           <i class="foundicon-globe"></i>
+           <span tal:content="string:(${cont_notificacao})"></span>
+        </a>
       </li>
-
-
-      <tal:rep repeat="link links">
-        <li>
-          <a tal:attributes="href link/url|nothing;
-                             id string:personaltools-${link/id};"
-             tal:content="link/title|nothing"></a>
-        </li>
-      </tal:rep>
-      <li tal:condition="python:checkPermission('Plone Site Setup: Overview', context)">
-        <a tal:attributes="href string:${context/portal_url}/@@overview-controlpanel;"
-           href="">Painel de Controle</a>
-      </li>
-
       <li>
-        <a tal:attributes="href string:${context/portal_url}/logout;"
-           href="">SAIR</a>
+        <a tal:attributes="href string:${context/portal_url}/logout;">
+            <i class="foundicon-error"></i>
+            <span>Sair</span>
+        </a>
       </li>
-
+      <li>
+          <a data-dropdown="dropoptions" class="dropdown">
+            <i class="foundicon-settings"></i>
+          </a>
+      </li>
+      <ul id="dropoptions" class="f-dropdown">
+        <tal:rep repeat="link links">
+            <li>
+                <a tal:attributes="href link/url|nothing;
+                id string:personaltools-${link/id};"
+                tal:content="link/title|nothing"></a>
+            </li>
+        </tal:rep>
+        <li tal:condition="python:checkPermission('Plone Site Setup: Overview', context)">
+            <a tal:attributes="href string:${context/portal_url}/@@overview-controlpanel;"
+            href="">Painel de Controle</a>
+        </li>
+      </ul>
   </ul>
-
 
   <ul class="actionMenu deactivated" id="portal-personaltools"
       tal:condition="view/anonymous">

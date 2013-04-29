@@ -23,7 +23,7 @@
             </tal:cond>
         </a>
 
-        <a class="theme-edit"
+        <a class="theme-edit hide"
            title="Clique aqui para editar o logo"
            tal:define="paper python:context.portal_membership.getAuthenticatedMember().getRoles()"
            tal:condition="python:'Manager' in paper"
