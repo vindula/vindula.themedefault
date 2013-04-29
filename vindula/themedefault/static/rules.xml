@@ -80,10 +80,10 @@
 	</rules>
 
 
-    <!-- Portal Footer
-    <copy css:content-children="#macro_logofooter"     css:theme="#footer" />
-    <copy css:content-children="#macro_textfooter"     css:theme="#footer" />
-    -->
+    <!-- Portal Footer -->
+    <copy css:content="#footer_tags"     css:theme="#footer_tags" />
+
+
 
     <!-- copy css:content-children="#macro_socialnetworks" css:theme="#rodape .socialNetwork" /-->
 

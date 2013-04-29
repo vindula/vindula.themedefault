@@ -13,4 +13,5 @@
         <viewlet name="vindula.themedefault.banner" insert-after="plone.path_bar"/>
     </order-->
 
+
 </object>

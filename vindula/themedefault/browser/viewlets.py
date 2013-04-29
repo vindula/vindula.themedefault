@@ -71,18 +71,6 @@ class CorporateLinksViewlet(grok.Viewlet):
         return []
 
 
-# # Viewlet for footer tag cloud
-# class FooterTagCloudViewlet(grok.Viewlet):
-#     grok.name('vindula.themedefault.footertagcloud')
-#     grok.require('zope2.View')
-#     grok.viewletmanager(IPortalFooter)
-
-
-#     def
-
-
-
-
 # Viewlet for menu and sub menu
 class MenuViewlet(grok.Viewlet):
     grok.name('vindula.themedefault.menu')

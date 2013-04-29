@@ -1,0 +1,18 @@
+<metal:macro metal:define-macro="tagCloud"
+             tal:define="view_tag python:context.restrictedTraverse('@@vindula_macro_TagCloud')">
+
+    <div class="TagCloud">
+        <tal:block repeat="item python:view_tag.getTags()">
+            <tal:block define="subject python:item[0];
+                               size python:item[1];
+                               link python:item[2]">
+                <a href="#" class="TagCloudItem" style="#"
+                   tal:attributes="style string: font-size:${size}em;
+                                   href link;"
+                   tal:content="subject">
+                      TAGCLOUD
+                </a>
+            </tal:block>
+        </tal:block>
+    </div>
+</metal:macro>
