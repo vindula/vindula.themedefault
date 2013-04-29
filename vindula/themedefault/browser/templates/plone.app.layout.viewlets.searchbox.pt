@@ -1,0 +1,77 @@
+<div id="portal-searchbox"
+     i18n:domain="plone"
+
+     tal:condition="context/@@vindula-confg-busca/checkSearch|nothing"
+     tal:define="navigation_root_url view/navigation_root_url;
+                 search_input_id view/search_input_id;">
+
+    <form name="searchform" id="searchGadget_form"
+          action="@@search"
+          tal:attributes="action string:${navigation_root_url}/@@search;
+                          id string:${search_input_id}_form;">
+
+
+
+          <div class="row">
+              <div class="large-12 columns">
+                  <input type="radio" name="tipo" checked />
+                  <span class="radio">Intranet</span>
+                  <input type="radio" name="tipo" />
+                  <span class="radio">Pessoas</span>
+                  <input type="radio" name="tipo" />
+                  <span class="radio">Servico</span>
+                  <input type="radio" name="tipo" />
+                  <span class="radio">Biblioteca</span>
+              </div>
+          </div>
+          <div class="row">
+              <div class="large-12 columns">
+                  <div class="row collapse LSBox">
+                      <div class="small-10 columns">
+
+                        <input name="SearchableText"
+                               type="text"
+                               size="18"
+                               value=""
+                               title="Search Site"
+                               placeholder="Search Site"
+                               accesskey="4"
+                               i18n:attributes="title title_search_site;
+                                                placeholder title_search_site"
+                               tal:attributes="value request/form/SearchableText|nothing;
+                                               id search_input_id"
+                               placeholder="O que voce procura?"
+                               class="searchField" />
+
+
+
+                      </div>
+                      <div class="small-2 columns">
+                        <a href="#" class="button prefix">
+                            <i class="vindula-icon-search-4"></i>
+                        </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="large-12 columns">
+                  <div id="LSResult">
+                    <div class="LSShadow" id="LSShadow"></div>
+                  </div>
+              </div>
+          </div>
+
+    </form>
+
+    <!-- div id="portal-advanced-search"
+         class="hiddenStructure">
+        <a href="#"
+           tal:attributes="href string:${navigation_root_url}/@@search"
+           i18n:translate="label_advanced_search"
+           accesskey="5">
+            Advanced Search&hellip;
+        </a>
+    </div -->
+
+</div>

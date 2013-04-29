@@ -10,43 +10,50 @@
     <prepend theme="/html/head"
              css:content="#new-theme" />
 
-	<!--Remove Plone Favicon-->
-	<drop css:content="link[rel='shortcut icon']" />
+    <!--Remove Plone Favicon-->
+    <drop css:content="link[rel='shortcut icon']" />
 
-	<!-- Prevent theme usage in zmi -->
-	<rules css:if-content="#visual-portal-wrapper">
-		<theme href="new_theme.html" />
-	</rules>
+    <!-- Prevent theme usage in zmi -->
+    <rules css:if-content="#visual-portal-wrapper">
+        <theme href="new_theme.html" />
+    </rules>
 
 
 	<!-- Portal Top -->
-        <!-- Links Corporativos -->
-        <replace css:content="#links_corporativos"
-                 css:theme="#links_corporativos" />
-        <!-- Opcoes do usuario -->
-    	<copy css:content-children="#portal-personaltools"
-              css:theme="#portal-personaltools" />
-        <!-- Logo portal -->
-        <replace css:content="#portal-logo"
-                 css:theme="#portal-logo" />
-        <!-- Busca do portal -->
-        <replace css:content="#portal-searchbox #LSResult"
-                 css:theme="#portal-searchbox #LSResult" />
-    	<replace css:content="#portal-searchbox #searchGadget"
-                 css:theme="#portal-searchbox #searchGadget" />
-        <!-- Portal Global Navigation -->
-        <copy css:content-children="#portal-globalnav"
-              css:theme="#portal-globalnav" />
+    <!-- Links Corporativos -->
+    <replace css:content="#links_corporativos"
+             css:theme="#links_corporativos" />
 
-	<!-- Portal Content -->
-    	<copy css:content-children="#portal-columns"
-              css:theme="#portal-columns" />
+    <!-- Opcoes do usuario -->
+    <copy css:content-children="#portal-personaltools"
+          css:theme="#portal-personaltools" />
+
+    <!-- Logo portal -->
+    <replace css:content="#portal-logo"
+             css:theme="#portal-logo" />
+
+    <!-- Busca do portal -->
+    <copy css:content="#portal-searchbox"
+          css:theme="#portal-searchbox" />
+
+    <!--
+    <replace css:content="#portal-searchbox #searchGadget"
+             css:theme="#portal-searchbox #searchGadget" />
+    -->
+
+    <!-- Portal Global Navigation -->
+    <copy css:content-children="#portal-globalnav"
+          css:theme="#portal-globalnav" />
+
+  <!-- Portal Content -->
+  <copy css:content-children="#portal-columns"
+        css:theme="#portal-columns" />
 
 
 	<!-- Portal Footer -->
-    <copy css:content="#footer_tags" css:theme="#footer_tags" />
+  <copy css:content="#footer_tags" css:theme="#footer_tags" />
 	<copy css:content-children="#navigation-viewlet" css:theme="#nav_rodape" />
-    <copy css:content="#portal-siteactions"     css:theme="#sitemap" />
+  <copy css:content="#portal-siteactions"     css:theme="#sitemap" />
 
 
 	<!-- Vindula News Content Type -->
@@ -60,6 +67,6 @@
 	</rules>
 
 	<!-- Add in any inline scripts, like Google Analytics -->
-    <after theme-children="/html/body" content="/html/body/div[@id='visual-portal-wrapper']/div/script" />
+  <after theme-children="/html/body" content="/html/body/div[@id='visual-portal-wrapper']/div/script" />
 
 </rules>

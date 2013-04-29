@@ -32,17 +32,17 @@
         </a>
     </div>
 
-    <div tal:define="images_cycle python: config_obj.getImagesCycleLogo()"
+    <!-- div tal:define="images_cycle python: config_obj.getImagesCycleLogo()"
          tal:condition="images_cycle" id="cycle-logo"
          style="margin-left: 40px; position: relative; height: 93px; float: left; width: 54.6%;">
 
-        <tal:define define="display python: len(images_cycle) == 1 and 'display: block;; position: absolute;; top: 0;; left: 0;;' or 'display: none'">
+        <tal:define define="display python: len(images_cycle) == 1 and 'display: block;; position: absolute;; top: 0;; left: 0;; heigth: 100%;;' or 'display: none'">
             <tal:rep repeat="image images_cycle">
                 <img tal:attributes="src image/absolute_url;
                      style display;" />
             </tal:rep>
         </tal:define>
 
-    </div>
+    </div -->
 
 </div>
