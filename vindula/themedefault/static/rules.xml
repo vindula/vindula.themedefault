@@ -44,10 +44,10 @@
 
 
 	<!-- Portal Footer -->
-	<replace css:content="#macro_logofooter a" css:theme="#portal-footer #portal-logo" />
+    	<copy css:content="#footer_tags" 
+              css:theme="#footer_tags" />
 	<copy css:content-children="#navigation-viewlet" css:theme="#nav_rodape" />
 	<replace css:content="#portal-siteactions" css:theme="#portal-siteactions" />
-	<copy css:content-children="#macro_textfooter" css:theme="#kss-spinner" />
 
 
 	<!-- Vindula News Content Type -->
