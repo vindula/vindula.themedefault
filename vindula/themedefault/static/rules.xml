@@ -21,8 +21,8 @@
 
 	<!-- Portal Top -->
         <!-- Links Corporativos -->
-        <copy css:content="#links_corporativos"
-              css:theme="#links_corporativos" />
+        <replace css:content="#links_corporativos"
+                 css:theme="#links_corporativos" />
         <!-- Opcoes do usuario -->
     	<copy css:content-children="#portal-personaltools"
               css:theme="#portal-personaltools" />
@@ -31,27 +31,17 @@
                  css:theme="#portal-logo" />
         <!-- Busca do portal -->
         <replace css:content="#portal-searchbox #LSResult"
-              css:theme="#portal-searchbox #LSResult" />
+                 css:theme="#portal-searchbox #LSResult" />
     	<replace css:content="#portal-searchbox #searchGadget"
                  css:theme="#portal-searchbox #searchGadget" />
         <!-- Portal Global Navigation -->
         <copy css:content-children="#portal-globalnav"
               css:theme="#portal-globalnav" />
 
-	<!-- Pega o texto do nivel 1 do breadcrumbs e coloca no titulo da pagina -->
-	<replace css:theme=".titulo_principal h1">
-		<h1>
-	        <xsl:for-each css:select="#breadcrumbs-1">
-	           <xsl:copy-of select="a/text()"/>
-			   <xsl:copy-of select="span[@id='breadcrumbs-current']/text()"/>
-	        </xsl:for-each>
-		</h1>
-	</replace>
+	<!-- Portal Content -->
+    	<copy css:content-children="#portal-columns" 
+              css:theme="#portal-columns" />
 
-	<!-- Portal Column Content -->
-	<copy css:content-children="#portal-columns" css:theme="#portal-columns" />
-	<drop css:content="#viewlet-above-content" />
-	`
 
 	<!-- Portal Footer -->
 	<replace css:content="#macro_logofooter a" css:theme="#portal-footer #portal-logo" />
