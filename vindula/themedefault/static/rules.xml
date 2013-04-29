@@ -73,7 +73,7 @@
 
     <!-- Portal Footer -->
     <copy css:content="#footer_tags"     css:theme="#footer_tags" />
-
+    <copy css:content="#portal-siteactions"     css:theme="#sitemap" />
 
 
     <!-- copy css:content-children="#macro_socialnetworks" css:theme="#rodape .socialNetwork" /-->

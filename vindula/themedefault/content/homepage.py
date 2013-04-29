@@ -8,7 +8,7 @@ from Products.CMFCore.utils import getToolByName
 from zope.app.component.hooks import getSite
 
 from AccessControl import ClassSecurityInfo
-from vindula.themedefault.browser.viewlets import MenuViewlet 
+# from vindula.themedefault.browser.viewlets import MenuViewlet
 
 from zope.interface import Interface
 
@@ -25,7 +25,7 @@ from vindula.themedefault.config import *
 from vindula.controlpanel.browser.at.widget import VindulaReferenceSelectionWidget
 
 HomePage_schema =  ATDocumentSchema.copy() + Schema((
-                                                     
+
 #Configurar Banner  -------------------------------------
     BooleanField(
         name='active_banner',
@@ -47,21 +47,21 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
             label=_(u"Seleção de banner(s)"),
             description=_(u"Selecione o objeto que será mostrado no banner."),
             review_state = ('published', 'external'),
-            
+
             label_msgid='vindula_themedefault_label_ref_banner',
             description_msgid='vindula_themedefault_help_ref_banner',
             i18n_domain='vindula_themedefault',
             ),
         required=False
     ),
-    
+
     IntegerField(
         name='time_transition_banner',
         widget=IntegerWidget(
             label=_(u"Velocidade da rotação do banner"),
             description=_(u"Tempo em milissegundos que a imagem do banner leva para rotacionar, \
                           insira apenas números inteiros."),
-            
+
             label_msgid='vindula_themedefault_label_time_transition_banner',
             description_msgid='vindula_themedefault_help_time_transition_banner',
             i18n_domain='vindula_themedefault',
@@ -69,7 +69,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         default=8000,
         required=True,
     ),
-    
+
     StringField(
         name='type_navigation',
         widget=SelectionWidget(
@@ -84,7 +84,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         default="image",
         required=True,
     ),
-    
+
     BooleanField(
         name='disable_breadcrumbs',
         widget=BooleanWidget(
@@ -94,15 +94,15 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
             description_msgid='vindula_themedefault_help_disable_breadcrumbs',
             i18n_domain='vindula_themedefault',
         ),
-        default=False         
+        default=False
     ),
-    
+
 #Fim Configurar Banner  -------------------------------------
     TextField(
             name='content_top',
             default_content_type = 'text/html',
             default_output_type = 'text/x-html-safe',
-            
+
             searchable = True,
             widget=RichWidget(
                 label=_(u"Conteúdo do Topo"),
@@ -116,12 +116,12 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
             ),
             required=False,
     ),
-                                                     
+
     TextField(
             name='content_middle_top',
             default_content_type = 'text/html',
             default_output_type = 'text/x-html-safe',
-            
+
             searchable = True,
             widget=RichWidget(
                 label=_(u"Conteúdo do Meio (ACIMA da listagem de notícias)"),
@@ -130,16 +130,16 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
                 rows="10",
                 label_msgid='vindula_themedefault_label_content_middle_top',
                 description_msgid='vindula_themedefault_help_content_middle_top',
-                i18n_domain='vindula_themedefault',                            
+                i18n_domain='vindula_themedefault',
             ),
             required=False,
     ),
-    
+
     TextField(
             name='content_middle_bottom',
             default_content_type = 'text/html',
             default_output_type = 'text/x-html-safe',
-            
+
             searchable = True,
             widget=RichWidget(
                 label=_(u"Conteúdo do Meio (ABAIXO da listagem de notícias)"),
@@ -148,16 +148,16 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
                 rows="10",
                 label_msgid='vindula_themedefault_label_content_middle_bottom',
                 description_msgid='vindula_themedefault_help_content_middle_bottom',
-                i18n_domain='vindula_themedefault',                              
+                i18n_domain='vindula_themedefault',
             ),
             required=False,
     ),
-    
+
     TextField(
             name='content_bottom',
             default_content_type = 'text/html',
             default_output_type = 'text/x-html-safe',
-            
+
             searchable = True,
             widget=RichWidget(
                 label=_(u"Conteúdo Inferior"),
@@ -166,11 +166,11 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
                 rows="10",
                 label_msgid='vindula_themedefault_label_content_bottom',
                 description_msgid='vindula_themedefault_help_content_bottom',
-                i18n_domain='vindula_themedefault',                              
+                i18n_domain='vindula_themedefault',
             ),
             required=False,
     ),
-    
+
     ReferenceField('ref_itemMenu',
         multiValued=0,
         allowed_types=('Folder', 'Link', 'VindulaFolder'),
@@ -180,7 +180,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
             label=_(u"Selecionar menu"),
             description=_(u"Selecione o objeto que será mostrado no menu."),
             review_state = ('published', 'external'),
-            
+
             label_msgid='vindula_themedefault_label_ref_itemMenu',
             description_msgid='vindula_themedefault_help_ref_itemMenu',
             i18n_domain='vindula_themedefault',
@@ -196,7 +196,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
             widget=StringWidget(
                 label=_(u"Título da área de destaques"),
                 description=_(u"Título para a área das notícias em destaque."),
-                
+
                 label_msgid='vindula_themedefault_label_title_highlightednews',
                 description_msgid='vindula_themedefault_help_title_highlightednews',
                 i18n_domain='vindula_themedefault',
@@ -215,14 +215,14 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
             description=_(u"Selecione as notícias que deverão rotacionar na área de destaque."),
             typeview='list',
             review_state = ('published', 'external'),
-            
+
             label_msgid='vindula_themedefault_label_ref_itemMenu',
             description_msgid='vindula_themedefault_help_ref_itemMenu',
             i18n_domain='vindula_themedefault',
             ),
         required=False
     ),
-    
+
     BooleanField(
         name='active_autonews',
         widget=BooleanWidget(
@@ -234,7 +234,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         ),
         required=False
     ),
-    
+
     IntegerField(
         name='amount_autonews',
         widget=IntegerWidget(
@@ -247,7 +247,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         default=3,
         required=True,
     ),
-    
+
     IntegerField(
         name='period_autonews',
         widget=IntegerWidget(
@@ -260,7 +260,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         default=3,
         required=True,
     ),
-                                                     
+
     ReferenceField('local_autonews',
         multiValued=0,
         allowed_types=('Folder', 'VindulaFolder'),
@@ -272,13 +272,13 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
                             Se nada for selecionado, o sistema irá buscar notícias em todo o portal."),
             review_state = ('published', 'external'),
             typeview='list',
-            
+
             label_msgid='vindula_themedefault_label_local_autonews',
             description_msgid='vindula_themedefault_help_local_autonews',
-            i18n_domain='vindula_themedefault'),                   
+            i18n_domain='vindula_themedefault'),
         required=False
-    ),                                                     
-                                                     
+    ),
+
 
     IntegerField(
         name='time_transitionsnews',
@@ -286,7 +286,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
             label=_(u"Velocidade da rotação"),
             description=_(u"Tempo em milissegundos que a notícia destaque leva para rotacionar, \
                           insira apenas números inteiros."),
-            
+
             label_msgid='vindula_themedefault_label_time_transitionsnews',
             description_msgid='vindula_themedefault_help_time_transitionsnews',
             i18n_domain='vindula_themedefault',
@@ -301,10 +301,10 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
             widget=StringWidget(
                 label=_(u"Título da área de sub destaque"),
                 description=_(u"Título para a área das notícias em sub destaque."),
-            
+
                 label_msgid='vindula_themedefault_label_title_othernews',
                 description_msgid='vindula_themedefault_help_title_othernews',
-                i18n_domain='vindula_themedefault',                                                  
+                i18n_domain='vindula_themedefault',
             ),
             default=u"Mais Notícias",
             required=True,
@@ -321,28 +321,28 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
                             Se nada for selecionado, o sistema irá buscar notícias em todo o portal."),
             review_state = ('published', 'external'),
             typeview='list',
-            
+
             label_msgid='vindula_themedefault_label_local_othernews',
             description_msgid='vindula_themedefault_help_local_othernews',
-            i18n_domain='vindula_themedefault'),                   
+            i18n_domain='vindula_themedefault'),
         required=False
     ),
-    
+
     IntegerField(
         name='number_othernews',
         widget=IntegerWidget(
             label=_(u"Quantidade de notícias da área de sub destaque"),
             description=_(u"Quantidade de notícias que deverão aparecer na área de sub destaques, \
                       insira apenas números inteiros."),
-            
+
             label_msgid='vindula_themedefault_label_number_othernews',
             description_msgid='vindula_themedefault_help_number_othernews',
-            i18n_domain='vindula_themedefault',                             
+            i18n_domain='vindula_themedefault',
         ),
         default=3,
         required=True,
     ),
-    
+
     StringField(
         name='tags_othernews',
         widget=InAndOutWidget(
@@ -352,14 +352,14 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         vocabulary='voc_keywords',
         required=False,
     ),
-    
-#*********Noticias secundarias*****************   
+
+#*********Noticias secundarias*****************
     TextField(
             name='title_medianews',
             widget=StringWidget(
                 label=_(u"Título da área das outras notícias"),
                 description=_(u"Título para a área das notícias sem destaque."),
-            
+
                 label_msgid='vindula_themedefault_label_title_medianews',
                 description_msgid='vindula_themedefault_help_title_medianews',
                 i18n_domain='vindula_themedefault'),
@@ -376,30 +376,30 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
             typeview='list',
             label=_(u"Local das noticias mídia"),
             description=_(u"Selecione o local das notícias. \
-                           Se nada for selecionado, o sistema irá buscar notícias em todo o portal."),   
+                           Se nada for selecionado, o sistema irá buscar notícias em todo o portal."),
             review_state = ('published', 'external'),
-            
+
             label_msgid='vindula_themedefault_label_local_medianews',
             description_msgid='vindula_themedefault_help_local_medianews',
             i18n_domain='vindula_themedefault'),
         required=False
     ),
-    
+
     IntegerField(
         name='number_medianews',
         widget=IntegerWidget(
             label=_(u"Quantidade de itens na área das outras notícias"),
             description=_(u"Quantidade de notícias sem destaque que deverão aparecer, \
                           insira apenas números inteiros."),
-            
+
             label_msgid='vindula_themedefault_label_number_medianews',
             description_msgid='vindula_themedefault_help_number_medianews',
-            i18n_domain='vindula_themedefault',                             
+            i18n_domain='vindula_themedefault',
         ),
         default=3,
         required=True,
     ),
-    
+
     StringField(
         name='tags_medianews',
         widget=InAndOutWidget(
@@ -409,8 +409,8 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         vocabulary='voc_keywords',
         required=False,
     ),
-    
-    
+
+
     BooleanField(
         name='active_banner_html',
         widget=BooleanWidget(
@@ -422,7 +422,7 @@ HomePage_schema =  ATDocumentSchema.copy() + Schema((
         ),
         required=False
     ),
-    
+
     TextField(
         name='banner_html',
         allowable_content_types=('text/plain',),
@@ -463,7 +463,7 @@ HomePage_schema['description'].widget.visible = invisivel
 HomePage_schema['text'].widget.visible = invisivel
 
 # Dates
-L = ['effectiveDate','expirationDate','creation_date','modification_date']   
+L = ['effectiveDate','expirationDate','creation_date','modification_date']
 # Categorization
 L += ['subject','relatedItems','location','language']
 # Ownership
@@ -472,38 +472,38 @@ L += ['creators','contributors','rights']
 L += ['allowDiscussion','excludeFromNav', 'presentation','tableContents']
 
 for i in L:
-    HomePage_schema[i].widget.visible = invisivel 
-    
-    
+    HomePage_schema[i].widget.visible = invisivel
+
+
 class HomePage(ATDocumentBase):
     """ HomePage """
     security = ClassSecurityInfo()
-    
-    implements(IHomePage)    
+
+    implements(IHomePage)
     portal_type = 'HomePage'
     _at_rename_after_creation = True
     schema = HomePage_schema
-    
+
     def voc_keywords(self):
         #keywords = self.collectKeywords('NewsVindula', 'Subject')
         keywords = self.portal_catalog.uniqueValuesFor('Subject')
         return keywords
 
 registerType(HomePage, PROJECTNAME)
-    
+
 # View
 class HomePageView(grok.View):
     grok.context(IHomePage)
     grok.require('zope2.View')
     grok.name('view')
-    
+
     UIDS_NEWS = []
-    
+
     # Methods for News
     def getHighlightedNews(self):
         news = self.context.getRef_newsitem()
         self.UIDS_NEWS = []
-        
+
         if self.context.getActive_autonews():
             auto_news = self.searchNews(local=self.context.getLocal_autonews(), limit=self.context.getAmount_autonews())
             if auto_news:
@@ -512,7 +512,7 @@ class HomePageView(grok.View):
                 for new in auto_news:
                     if new.effective().asdatetime().date() >= period_min.date():
                         news.append(new)
-        
+
         if news:
             L = []
             for obj in news:
@@ -537,7 +537,7 @@ class HomePageView(grok.View):
                             D['image'] = obj.getImage().absolute_url() + '_mini'
                         except:
                             D['image'] = ''
-                    
+
                 else:
                     if obj.getImageRelac():
                         try:
@@ -548,8 +548,8 @@ class HomePageView(grok.View):
                 L.append(D)
             self.UIDS_NEWS = [i['UID'] for i in L]
             return L
-                
-        
+
+
     def getOtherNews(self):
         ctx = self.context
         news = self.searchNews(ctx.getLocal_othernews(), ctx.getNumber_othernews(), ctx.getTags_othernews())
@@ -569,7 +569,7 @@ class HomePageView(grok.View):
                 D['summary'] = obj.Description()
                 D['uid'] = obj.UID()
                 D['cotent_type'] = obj.portal_type
-                     
+
                 L.append(D)
             return {'news' : L, 'url': url }
         else:
@@ -580,24 +580,24 @@ class HomePageView(grok.View):
         ctx = self.context
         news = self.searchNews(ctx.getLocal_medianews(), ctx.getNumber_medianews(), ctx.getTags_medianews())
         if news:
-            for obj in news:  
+            for obj in news:
                     D = {}
                     D['title'] = obj.Title()
                     D['link'] = obj.absolute_url()
                     L.append(D)
         return L
-        
+
     def searchNews(self, local=None, limit=5, keywords=[]):
         L = []
         if limit:
             query = {}
             keywords = [i for i in keywords if i != '']
-            
+
             if local is None:
                 local = self.context.portal_url.getPortalObject().getPhysicalPath()
             else:
                 local = local.getPhysicalPath()
-    
+
             self.pc = getToolByName(self.context, 'portal_catalog')
             query['portal_type'] = ('VindulaNews', 'News Item')
             query['review_state'] = ['published', 'internally_published', 'external']
@@ -606,7 +606,7 @@ class HomePageView(grok.View):
             query['sort_order'] = 'descending'
             if keywords:
                 query['Subject'] = keywords
-    
+
             news = self.pc(**query)
             if news:
                 for new in news:
@@ -617,7 +617,7 @@ class HomePageView(grok.View):
                         self.UIDS_NEWS.append(new.UID())
                         if len(L) == limit: break
         return L
-    
+
     def getBanner(self):
         L = []
         if self.context.getRef_banner():
@@ -638,19 +638,19 @@ class HomePageView(grok.View):
                         if banner.getRawImagem_banner():
                             D['image'] = banner.getRawImagem_banner().absolute_url()
                         link = banner.getLink()
-                        if link: 
+                        if link:
                             if link[:4] == 'http':
                                 D['url_image'] = link
                             else:
                                 D['url_image'] = 'http://%s' % link
                 L.append(D)
         return L
-    
+
     def limitTextSize(self, size, text):
         if len(text) > size:
             i = size
             while text[i] != " " and (text[i] < len(text)):
-                i += 1              
+                i += 1
             return text[:i]+'...'
         else:
-            return text  
+            return text

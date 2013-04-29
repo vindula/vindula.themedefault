@@ -145,3 +145,36 @@ class ManageLinksUserView(grok.View):
                         L.append(D)
 
         return L
+
+class ManageTopicFooterView(grok.View):
+    grok.name('vindula_topicfooter_view')
+    grok.require('zope2.View')
+    grok.context(Interface)
+
+    def render(self):
+        return "OK"
+
+    def update(self):
+        portal = self.context.portal_url.getPortalObject()
+        p_catalog = portal.portal_catalog
+        context = self.context
+        L = []
+
+        query = {}
+        query['portal_type'] = ['FooterTopic']
+        query['sort_order'] = 'descending'
+        query['sort_on'] = 'getObjPositionInParent'
+        # query['review_state'] = ['published', 'external','internal']
+
+        result = p_catalog(**query)
+        if result:
+            # import pdb; pdb.set_trace()
+            for item in result:
+                D = {}
+                obj = item.getObject()
+                D['obj'] = obj
+                D['subitens'] = obj.values()
+
+                L.append(D)
+
+        return L
