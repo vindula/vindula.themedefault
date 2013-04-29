@@ -48,26 +48,26 @@
       <li>
         <a tal:attributes="href string:${context/portal_url}/@@myvindulalistrecados;"
            id="personaltools-recados">
-           <i class="foundicon-mail"></i>
+           <i class="vindula-icon-envelop"></i>
            <span tal:content="string:(${cont_recados})"></span>
         </a>
       </li>
       <li>
         <a tal:attributes="href string:${context/portal_url}/"
            id="personaltools-recados">
-           <i class="foundicon-globe"></i>
+           <i class="vindula-icon-earth"></i>
            <span tal:content="string:(${cont_notificacao})"></span>
         </a>
       </li>
       <li>
         <a tal:attributes="href string:${context/portal_url}/logout;">
-            <i class="foundicon-error"></i>
+            <i class="vindula-icon-switch"></i>
             <span>Sair</span>
         </a>
       </li>
       <li>
           <a data-dropdown="dropoptions" class="dropdown">
-            <i class="foundicon-settings"></i>
+            <i class="vindula-icon-cog"></i>
           </a>
       </li>
       <ul id="dropoptions" class="f-dropdown">
