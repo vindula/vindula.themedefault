@@ -1,14 +1,15 @@
 <div id="portal-siteactions"
-     tal:define="view python:context.restrictedTraverse('@@vindula_topicfooter_view');">
+     tal:define="view python:context.restrictedTraverse('@@vindula_topicfooter_view');
+                 topics view/update|nothing">
+    
+    <tal:rep repeat="topic topics">
 
-    <tal:rep repeat="topics view/update">
-
-        <div class="large-2 columns">
+        <div tal:attributes="class python:'large-%s columns' % (int(12/len(topics)))">
             <h5 class="subheader"
-                tal:content="topics/obj/Title|nothing">Topico 1</h5>
+                tal:content="topic/obj/Title|nothing">Topico 1</h5>
 
             <ul class="no-bullet">
-                <tal:rep repeat="subitens topics/subitens|python:[]">
+                <tal:rep repeat="subitens topic/subitens|python:[]">
 
                     <li>
                         <a tal:attributes="href subitens/getRemoteUrl|nothing;
