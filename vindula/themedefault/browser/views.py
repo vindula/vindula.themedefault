@@ -178,3 +178,9 @@ class ManageTopicFooterView(grok.View):
                 L.append(D)
 
         return L
+    
+    
+class NewHomePageView(grok.View):
+    grok.context(Interface)
+    grok.require('zope2.View')
+    grok.name('new-home')

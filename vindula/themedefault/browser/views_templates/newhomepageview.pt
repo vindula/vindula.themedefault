@@ -1,0 +1,341 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xml:lang="pt-br" 
+      xmlns:tal="http://xml.zope.org/namespaces/tal" 
+      xmlns:metal="http://xml.zope.org/namespaces/metal" 
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n" 
+      lang="pt-br" 
+      metal:use-macro="context/main_template/macros/master" 
+      i18n:domain="vindula.themedefault">
+
+<head>
+    <metal:js fill-slot="javascript_head_slot">
+    </metal:js>
+</head>
+
+<body>
+    <metal:main fill-slot="content-core">
+        <metal:content-core define-macro="content-core">
+            <div class="columns large-12">
+                <div class="has-space">
+                    <ul data-orbit id="tile-banner" 
+                        data-options="bullets:true;">
+                        <li>
+                            <img src="++theme++vindula.themedefault/images/demos/demo1.jpg" />
+                            <div class="orbit-caption">
+                                Lorem ipsum dolor sit amet
+                            </div>
+                        </li>
+                        <li>
+                            <img src="++theme++vindula.themedefault/images/demos/demo2.jpg" />
+                            <div class="orbit-caption">
+                                In qui reprimique complectitur, at mei aliquip scaevo
+                            </div>
+                        </li>
+                        <li>
+                            <img src="++theme++vindula.themedefault/images/demos/demo3.jpg" />
+                            <div class="orbit-caption">
+                                Ut pro postea iriure deleniti
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="columns large-12">
+                <div class="row">
+                    <div class="columns large-12">
+                        <h4>
+                            Notícias
+                            <hr/>
+                        </h4>
+                    </div>
+                    <div class="columns large-12">
+                        <ul data-orbit id="tile-news"
+                            data-options="bullets:true;">
+                            <li>
+                                <div class="row">
+                                <div class="columns small-4">
+                                    <img src="++theme++vindula.themedefault/images/demos/demo2-th.gif" />
+                                </div>
+                                <div class="columns small-8">
+                                    <small>ASCOM / 27/03/2013 14:30</small>
+                                    <h5><a href="#">Nova diretoria da Opas visita Bio</a></h5>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ornare placerat leo, 
+                                    non scelerisque sem mollis ut.</p>
+                                </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="row">
+                                <div class="columns small-4">
+                                    <img src="++theme++vindula.themedefault/images/demos/demo1-th.png" />
+                                </div>
+                                <div class="columns small-8">
+                                    <small>LORORO / 27/03/2013 14:30</small>
+                                    <h5><a href="#">Nova diretoria da Opas visita Bio</a></h5>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ornare placerat leo, 
+                                    non scelerisque sem mollis ut.</p>
+                                </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="columns large-12">
+                <div class="row">
+                    <div class="columns large-12">
+                        <small>ASCOM / 27/03/2013 14:30</small>
+                        <h5><a href="#">Nova diretoria da Opas visita Bio</a></h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ornare placerat leo, 
+                        non scelerisque sem mollis ut.</p>
+                    </div>
+                    
+                    <div class="columns large-12">
+                        <small>ASCOM / 27/03/2013 14:30</small>
+                        <h5><a href="#">Nova diretoria da Opas visita Bio</a></h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ornare placerat leo, 
+                        non scelerisque sem mollis ut.</p>
+                    </div>
+                    
+                    <div class="columns large-12">
+                        <div class="more-news">
+                            <a href="#">
+                                <h1 class="subheader vindula-icon-plus-sign left"></h1>
+                                <p class="left">Notícias</p>
+                            </a>        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="columns large-6">
+                <div class="row">
+                    <div class="columns large-12">
+                        <h4>
+                            Mais Populares
+                            <hr/>
+                        </h4>
+                    </div>
+                    <div class="columns large-12">
+                        <div class="row">
+                            <div class="columns small-4">
+                                <img src="++theme++vindula.themedefault/images/demos/demo1-th.png" />
+                            </div>
+                            <div class="columns small-8">
+                                <small>LORORO / 27/03/2013 14:30</small>
+                                <strong><a href="#">Nova diretoria da Opas visita Bio</a></strong>
+                            </div>
+                            <div class="columns small-12">
+                                <p class="discrete">Compartilhamento</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns large-12">
+                        <div class="row">
+                            <div class="columns small-4">
+                                <img src="++theme++vindula.themedefault/images/demos/demo3-th.png" />
+                            </div>
+                            <div class="columns small-8">
+                                <small>LORORO / 27/03/2013 14:30</small>
+                                <strong><a href="#">Nova diretoria da Opas visita Bio</a></strong>
+                            </div>
+                            <div class="columns small-12">
+                                <p class="discrete">Compartilhamento</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns large-12">
+                        <div class="row">
+                            <div class="columns small-4">
+                                <img src="++theme++vindula.themedefault/images/demos/demo2-th.gif" />
+                            </div>
+                            <div class="columns small-8">
+                                <small>LORORO / 27/03/2013 14:30</small>
+                                <strong><a href="#">Nova diretoria da Opas visita Bio</a></strong>
+                            </div>
+                            <div class="columns small-12">
+                                <p class="discrete">Compartilhamento</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="columns large-12">
+                        <h4>
+                            Aniversariantes da semana
+                            <hr/>
+                        </h4>
+                    </div>
+                    <div class="columns large-12">
+                        <div class="row">
+                            <div class="columns small-4">
+                                <img src="++theme++vindula.themedefault/images/demos/demo2-th.gif" />
+                            </div>
+                            <div class="columns small-8">
+                                <small>LORORO / 27/03/2013 14:30</small>
+                                <h5><a href="#">Nova diretoria da Opas visita Bio</a></h5>
+                            </div>
+                            <div class="columns small-12">
+                                <p class="discrete">Compartilhamento</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="columns large-6">
+                <div class="row" id="tile-featured">
+                    <div class="columns large-12">
+                        <h4>
+                            Destaques
+                        </h4>
+                    </div>
+                    <div class="columns large-12">
+                        <ul data-orbit id="tile-news"
+                            data-options="bullets:true;">
+                            <li>
+                                <div class="row">
+                                <div class="columns small-12">
+                                    <img src="++theme++vindula.themedefault/images/demos/demo2-dest.gif" />
+                                </div>
+                                <div class="columns small-12">
+                                    <strong><a href="#">Nova diretoria da Opas visita Bio</a></strong>
+                                </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="row">
+                                <div class="columns small-12">
+                                    <img src="++theme++vindula.themedefault/images/demos/demo-dest.png" />
+                                </div>
+                                <div class="columns small-12">
+                                    <strong><a href="#">Nova diretoria da Opas visita Bio</a></strong>
+                                </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="row" id="tile-next-events">
+                    <div class="columns large-12">
+                        <h4>
+                            Proximos eventos
+                            <hr/>
+                        </h4>
+                    </div>
+                    <div class="columns large-12">
+                        <div class="row">
+                            <div class="event">
+                                <div class="columns small-3 box-date">
+                                    <h2>21</h2>
+                                    <h6>MAR</h6>
+                                </div>
+                                <div class="columns small-9 box-title">
+                                    <strong><a href="#">Nova diretoria da Opas visita Bio</a></strong>
+                                </div>
+                                <div class="columns small-12 box-description">
+                                    <p class="discrete">
+                                        <strong>Local: </strong><span>campus FioCruz Mata Atlantica</span>
+                                    </p>
+                                    <p class="discrete">
+                                        <strong>Horário: </strong><span>13:00 pm</span>
+                                    </p>
+                                </div>
+                                <div class="columns small-12">
+                                    <p class="discrete">Compartilhamento</p>
+                                </div>
+                            <div>
+                            
+                            <div class="event">
+                                <div class="columns small-3 box-date">
+                                    <h2>24</h2>
+                                    <h6>MAR</h6>
+                                </div>
+                                <div class="columns small-9 box-title">
+                                    <strong><a href="#">Nova diretoria da Opas visita Bio</a></strong>
+                                </div>
+                                <div class="columns small-12 box-description">
+                                    <p class="discrete">
+                                        <strong>Local: </strong><span>campus FioCruz Mata Atlantica</span>
+                                    </p>
+                                    <p class="discrete">
+                                        <strong>Horário: </strong><span>13:00 pm</span>
+                                    </p>
+                                </div>
+                                <div class="columns small-12">
+                                    <p class="discrete">Compartilhamento</p>
+                                </div>
+                            <div>    
+                            
+                            <div class="columns large-12">
+                                <div class="more-news">
+                                    <a href="#">
+                                        <h1 class="subheader vindula-icon-plus-sign left"></h1>
+                                        <p class="left">Eventos</p>
+                                    </a>        
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="columns large-12">
+                        <h4>
+                            Enquete
+                            <hr/>
+                        </h4>
+                    </div>
+                    <div class="columns large-12">
+                        <div class="row">
+                            <div class="columns small-4">
+                                <img src="++theme++vindula.themedefault/images/demos/demo1-th.png" />
+                            </div>
+                            <div class="columns small-8">
+                                <small>LORORO / 27/03/2013 14:30</small>
+                                <h5><a href="#">Nova diretoria da Opas visita Bio</a></h5>
+                            </div>
+                            <div class="columns small-12">
+                                <p class="discrete">Compartilhamento</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns large-12">
+                        <div class="row">
+                            <div class="columns small-4">
+                                <img src="++theme++vindula.themedefault/images/demos/demo3-th.png" />
+                            </div>
+                            <div class="columns small-8">
+                                <small>LORORO / 27/03/2013 14:30</small>
+                                <h5><a href="#">Nova diretoria da Opas visita Bio</a></h5>
+                            </div>
+                            <div class="columns small-12">
+                                <p class="discrete">Compartilhamento</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns large-12">
+                        <div class="row">
+                            <div class="columns small-4">
+                                <img src="++theme++vindula.themedefault/images/demos/demo2-th.gif" />
+                            </div>
+                            <div class="columns small-8">
+                                <small>LORORO / 27/03/2013 14:30</small>
+                                <h5><a href="#">Nova diretoria da Opas visita Bio</a></h5>
+                            </div>
+                            <div class="columns small-12">
+                                <p class="discrete">Compartilhamento</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </metal:content-core>
+    </metal:main>
+</body>
+</html>
