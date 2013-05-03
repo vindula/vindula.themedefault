@@ -32,7 +32,8 @@
            href="">Meu Perfil</a>
       </li>
 
-      <tal:rep define="unidadeprincipal python:view_myvindula.getUnidadePrincipalSigla(member.getUserName(),1);">
+      <tal:rep define="unidadeprincipal python:view_myvindula.getUnidadePrincipalSigla(member.getUserName(),1);"
+               condition="unidadeprincipal">
         <li>
           <a href="" tal:content="unidadeprincipal">Unidade</a>
         </li>
