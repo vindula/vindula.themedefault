@@ -162,7 +162,7 @@
                     </div>
                 </div>
                 
-                <div class="row">
+                <div class="row" id="tile-birthday">
                     <div class="columns large-12">
                         <h4>
                             Aniversariantes da semana
@@ -170,53 +170,108 @@
                         </h4>
                     </div>
                     <div class="columns large-12">
-                        <div class="row">
-                            <div class="columns small-4">
-                                <img src="++theme++vindula.themedefault/images/demos/demo2-th.gif" />
-                            </div>
-                            <div class="columns small-8">
-                                <small>LORORO / 27/03/2013 14:30</small>
-                                <h5><a href="#">Nova diretoria da Opas visita Bio</a></h5>
-                            </div>
-                            <div class="columns small-12">
-                                <p class="discrete">Compartilhamento</p>
-                            </div>
-                        </div>
+                        <ul data-orbit id="birthdays"
+                            data-options="bullets:true;">
+                            <li>
+                                <div class="row">
+                                    <div class="columns small-12">
+                                        <div class="left box-date">
+                                            <h2>17</h2>
+                                            <h6>MAR</h6>
+                                        </div>
+                                        <div class="left box-image">
+                                            <img src="++theme++vindula.themedefault/images/demos/demo-photo.png" />
+                                        </div>
+                                        <div class="left box-data">
+                                            <a href="#">Paulo Sobral</a>
+                                            <p class="discrete">DITIN</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="columns small-12">
+                                        <div class="left box-date">
+                                            <h2>20</h2>
+                                            <h6>MAR</h6>
+                                        </div>
+                                        <div class="left box-image">
+                                            <img src="++theme++vindula.themedefault/images/demos/demo2-photo.png" />
+                                        </div>
+                                        <div class="left box-data">
+                                            <a href="#">Ana Almeida</a>
+                                            <p class="discrete">DEVIR</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="columns small-12">
+                                        <div class="left box-date">
+                                            <h2>30</h2>
+                                            <h6>MAR</h6>
+                                        </div>
+                                        <div class="left box-image">
+                                            <img src="++theme++vindula.themedefault/images/demos/demo3-photo.png" />
+                                        </div>
+                                        <div class="left box-data">
+                                            <a href="#">Renata Almeida Gomes Alegre</a>
+                                            <p class="discrete">DIDOC</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="columns small-12">
+                                        <div class="left box-date">
+                                            <h2>05</h2>
+                                            <h6>ABR</h6>
+                                        </div>
+                                        <div class="left box-image">
+                                            <img src="++theme++vindula.themedefault/images/demos/demo4-photo.png" />
+                                        </div>
+                                        <div class="left box-data">
+                                            <a href="#">Núbia Sellen Hilrerman</a>
+                                            <p class="discrete">DITIN</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
             
             <div class="columns large-6">
-                <div class="row" id="tile-featured">
-                    <div class="columns large-12">
-                        <h4>
-                            Destaques
-                        </h4>
-                    </div>
-                    <div class="columns large-12">
-                        <ul data-orbit id="tile-news"
-                            data-options="bullets:true;">
-                            <li>
-                                <div class="row">
-                                <div class="columns small-12">
-                                    <img src="++theme++vindula.themedefault/images/demos/demo2-dest.gif" />
-                                </div>
-                                <div class="columns small-12">
-                                    <strong><a href="#">Nova diretoria da Opas visita Bio</a></strong>
-                                </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="row">
-                                <div class="columns small-12">
-                                    <img src="++theme++vindula.themedefault/images/demos/demo-dest.png" />
-                                </div>
-                                <div class="columns small-12">
-                                    <strong><a href="#">Nova diretoria da Opas visita Bio</a></strong>
-                                </div>
-                                </div>
-                            </li>
-                        </ul>
+                <div class="columns small-12" id="tile-featured">
+                    <div class="row">
+                        <div class="columns large-12">
+                            <h4>
+                                Destaques
+                            </h4>
+                        </div>
+                        <div class="columns large-12">
+                            <ul data-orbit id="tile-news"
+                                data-options="bullets:true;">
+                                <li>
+                                    <div class="row">
+                                    <div class="columns small-12">
+                                        <img src="++theme++vindula.themedefault/images/demos/demo2-dest.gif" />
+                                    </div>
+                                    <div class="columns small-12">
+                                        <strong><a href="#">Nova diretoria da Opas visita Bio</a></strong>
+                                    </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="row">
+                                    <div class="columns small-12">
+                                        <img src="++theme++vindula.themedefault/images/demos/demo-dest.png" />
+                                    </div>
+                                    <div class="columns small-12">
+                                        <strong><a href="#">Nova diretoria da Opas visita Bio</a></strong>
+                                    </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 
@@ -230,9 +285,11 @@
                     <div class="columns large-12">
                         <div class="row">
                             <div class="event">
-                                <div class="columns small-3 box-date">
-                                    <h2>21</h2>
-                                    <h6>MAR</h6>
+                                <div class="columns small-3">
+                                    <div class="box-date">
+                                        <h2>21</h2>
+                                        <h6>MAR</h6>
+                                    </div>
                                 </div>
                                 <div class="columns small-9 box-title">
                                     <strong><a href="#">Nova diretoria da Opas visita Bio</a></strong>
@@ -248,12 +305,14 @@
                                 <div class="columns small-12">
                                     <p class="discrete">Compartilhamento</p>
                                 </div>
-                            <div>
+                            </div>
                             
                             <div class="event">
-                                <div class="columns small-3 box-date">
-                                    <h2>24</h2>
-                                    <h6>MAR</h6>
+                                <div class="columns small-3">
+                                    <div class="box-date">
+                                        <h2>24</h2>
+                                        <h6>MAR</h6>
+                                    </div>
                                 </div>
                                 <div class="columns small-9 box-title">
                                     <strong><a href="#">Nova diretoria da Opas visita Bio</a></strong>
@@ -269,8 +328,7 @@
                                 <div class="columns small-12">
                                     <p class="discrete">Compartilhamento</p>
                                 </div>
-                            <div>    
-                            
+                            </div>
                             <div class="columns large-12">
                                 <div class="more-news">
                                     <a href="#">
@@ -292,46 +350,23 @@
                         </h4>
                     </div>
                     <div class="columns large-12">
-                        <div class="row">
-                            <div class="columns small-4">
-                                <img src="++theme++vindula.themedefault/images/demos/demo1-th.png" />
-                            </div>
-                            <div class="columns small-8">
-                                <small>LORORO / 27/03/2013 14:30</small>
-                                <h5><a href="#">Nova diretoria da Opas visita Bio</a></h5>
-                            </div>
-                            <div class="columns small-12">
-                                <p class="discrete">Compartilhamento</p>
-                            </div>
-                        </div>
+                        <p class="discrete">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit?
+                        </p>
                     </div>
                     <div class="columns large-12">
-                        <div class="row">
-                            <div class="columns small-4">
-                                <img src="++theme++vindula.themedefault/images/demos/demo3-th.png" />
+                        <form action="">
+                            <div class="row">
+                                <div class="columns large-12">
+                                    <label for="radio1"><input name="radio1" type="radio" id="radio1" CHECKED><span class="custom radio checked"></span> Lorem Ipsum</label>
+                                    <label for="radio1"><input name="radio1" type="radio" id="radio1"><span class="custom radio"></span> Aquiqum tells</label>
+                                    <label for="radio1"><input name="radio1" type="radio" id="radio1"><span class="custom radio"></span> Massa erat rhonos</label>
+                                </div>
+                                <div class="columns large-4 left">
+                                    <a href="#" class="button postfix">Votar</a>
+                                </div>
                             </div>
-                            <div class="columns small-8">
-                                <small>LORORO / 27/03/2013 14:30</small>
-                                <h5><a href="#">Nova diretoria da Opas visita Bio</a></h5>
-                            </div>
-                            <div class="columns small-12">
-                                <p class="discrete">Compartilhamento</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="columns large-12">
-                        <div class="row">
-                            <div class="columns small-4">
-                                <img src="++theme++vindula.themedefault/images/demos/demo2-th.gif" />
-                            </div>
-                            <div class="columns small-8">
-                                <small>LORORO / 27/03/2013 14:30</small>
-                                <h5><a href="#">Nova diretoria da Opas visita Bio</a></h5>
-                            </div>
-                            <div class="columns small-12">
-                                <p class="discrete">Compartilhamento</p>
-                            </div>
-                        </div>
+                        </form>                        
                     </div>
                 </div>
             </div>
