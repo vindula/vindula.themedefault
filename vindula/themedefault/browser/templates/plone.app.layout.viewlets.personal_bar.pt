@@ -7,7 +7,6 @@
                  view_myvindula python:context.restrictedTraverse('@@myvindula');
 
                  prefs_user python: view_myvindula.get_prefs_user(member.getUserName());
-                 departamentos python: view_myvindula.get_department(member.getUserName());
                  cont_recados  python: view_myvindula.count_recados_new(member.getUserName());
                  cont_notificacao python: view_myvindula.count_notificacao_new(member.getUserName());
 
@@ -33,14 +32,9 @@
            href="">Meu Perfil</a>
       </li>
 
-      <tal:rep repeat="departamento departamentos">
+      <tal:rep define="unidadeprincipal python:view_myvindula.getUnidadePrincipalSigla(member.getUserName(),1);">
         <li>
-          <a tal:define="obj departamento/getObject"
-             tal:attributes="href obj/absolute_url;
-                             id string:personaltools-${obj/id}"
-             tal:content="obj/Title"
-
-             href="">Departamendo</a>
+          <a href="" tal:content="unidadeprincipal">Unidade</a>
         </li>
       </tal:rep>
 
