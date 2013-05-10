@@ -38,15 +38,13 @@
                         <input name="SearchableText"
                                type="text"
                                size="18"
-                               value=""
+                               value="O que você procura"
                                title="Search Site"
-                               placeholder="Search Site"
+                               placeholder="O que você procura?"
                                accesskey="4"
-                               i18n:attributes="title title_search_site;
-                                                placeholder title_search_site"
+                               i18n:attributes="title title_search_site"
                                tal:attributes="value request/form/SearchableText|nothing;
                                                id search_input_id"
-                               placeholder="O que voce procura?"
                                class="searchField" />
 
 
