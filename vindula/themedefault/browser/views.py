@@ -45,7 +45,7 @@ class LoadScssView(grok.View):
 
         # import pdb;pdb.set_trace()
         url = self.context.portal_url() + uri
-        scss = requests.get(url)
+        scss = requests.get(url, timeout=1.0)
         result = scss.text.replace('/>',' id="new-theme" />')
 
 
@@ -178,8 +178,8 @@ class ManageTopicFooterView(grok.View):
                 L.append(D)
 
         return L
-    
-    
+
+
 class NewHomePageView(grok.View):
     grok.context(Interface)
     grok.require('zope2.View')
