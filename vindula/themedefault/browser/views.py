@@ -45,10 +45,8 @@ class LoadScssView(grok.View):
 
         # import pdb;pdb.set_trace()
         url = self.context.portal_url() + uri
-        scss = requests.get(url, timeout=1.0)
+        scss = requests.get(url)
         result = scss.text.replace('/>',' id="new-theme" />')
-
-
 
         return result
 
