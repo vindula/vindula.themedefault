@@ -469,7 +469,7 @@ L += ['subject','relatedItems','location','language']
 # Ownership
 L += ['creators','contributors','rights']
 # Settings
-L += ['allowDiscussion','excludeFromNav', 'presentation','tableContents']
+# L += ['allowDiscussion','excludeFromNav', 'presentation','tableContents']
 
 for i in L:
     HomePage_schema[i].widget.visible = invisivel
