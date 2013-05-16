@@ -44,14 +44,14 @@
         <a tal:attributes="href string:${context/portal_url}/@@myvindulalistrecados;"
            id="personaltools-recados">
            <i class="vindula-icon-envelop"></i>
-           <span tal:content="string:(${cont_recados})"></span>
+           (<span tal:content="string:${cont_recados}" id="numero_recados"></span>)
         </a>
       </li>
       <li>
         <a tal:attributes="href string:${context/portal_url}/"
            id="personaltools-recados">
            <i class="vindula-icon-earth"></i>
-           <span tal:content="string:(${cont_notificacao})"></span>
+           (<span tal:content="string:${cont_notificacao}" id="numero_notificacoes"></span>)
         </a>
       </li>
       <li>
