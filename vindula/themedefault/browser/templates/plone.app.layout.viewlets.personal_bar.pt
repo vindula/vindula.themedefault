@@ -26,7 +26,7 @@
             </tal:def>
         </div>
         <a tal:attributes="href string:${context/portal_url}/myvindulalistuser;"
-           tal:content="prefs_user/name"
+           tal:content="python: view_myvindula.name_user_top(prefs_user.get('name'))"
            class="left"
            id="personaltools-myvindula"
            href="">Meu Perfil</a>
