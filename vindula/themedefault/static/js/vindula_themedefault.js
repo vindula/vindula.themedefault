@@ -26,16 +26,20 @@ $j = jQuery.noConflict();
 		};
 	}
 
+    function enviar_formulario(id_element){
+        $j(id_element).submit();
+    }
+
 
 $j(document).ready(function(){
 	setTextPortalPersonaltools();
 
-	/* ADJUSTMENTS */ 
+	/* ADJUSTMENTS */
 	$j('select option').text(function(index, text){
 	 	if ($j(this).text() == 'no value') $j(this).text('--');
 	});
-	
-	/* Modificar links adicionais dos usuarios */ 
+
+	/* Modificar links adicionais dos usuarios */
 	var links = $j('div#links-adcionais').html();
 	$j('div#links-adcionais').insertBefore('dl#portal-personaltools #personaltools-logout');
 
@@ -43,39 +47,39 @@ $j(document).ready(function(){
 	$j('div.autocompleteInputWidget span.option label span').text(function(index, text){
 	 	if ($j(this).text() == '(nothing)') $j(this).text('Nenhum');
 	});
-	
+
 	$j('dd.actionMenuContent a.contenttype-collection').attr("class", "contenttype-topic");
-	
+
 	$j('dd.actionMenuContent a.contenttype-link img').hide();
     */
-	
+
 	/* LINK THEME EDIT */
 	$j('div.logo').hover(function(){
 		$j('div.logo a.theme-edit').css("display", "inline");
 	},function() {
 		$j('div.logo a.theme-edit').css("display", "none");
 	});
-	
+
 	$j('div#informacao').hover(function(){
 		$j('div#informacao a.theme-edit').css("display", "inline");
 	},function() {
 		$j('div#informacao a.theme-edit').css("display", "none");
 	});
-	
-	/* COMMENT BUTTON 
+
+	/* COMMENT BUTTON
 	var flag = 0;
 	$j('div#comentar').hide();
 	$j('input#comentar').click(function(){
 		if (flag == 0){
 			$j('div#comentar').slideDown('slow');
-			flag = 1;	
+			flag = 1;
 		}else{
 			$j('div#comentar').slideUp('slow');
 			flag = 0;
 		};
-	});*/ 
-	
-	/* CORRECTING PROBLEMS WITH FLOAT LEFT */ 
+	});*/
+
+	/* CORRECTING PROBLEMS WITH FLOAT LEFT */
 	//$j('div.userlist').height($j('div#geral_colunas').height());
 	//$j('div.food-control-panel').height($j('div#geral_colunas').height());
 
@@ -90,7 +94,7 @@ $j(document).ready(function(){
         width: '25%',
         config: common_jqt_config
         });
-        
+
     function teste(){
         $j('#fieldset-global-settings').parent().attr('id','content');
     }
@@ -99,8 +103,8 @@ $j(document).ready(function(){
                                                 $j('#fieldset-global-settings').parent().attr('id','content');
                                                 };
     common_jqt_config['onBeforeClose'] = function(e){removeEditor()};
-    
-    // Modal do album de fotos 
+
+    // Modal do album de fotos
     $j('a.albunphoto').prepOverlay({
         subtype: 'ajax',
         filter: common_content_filter,
@@ -109,7 +113,7 @@ $j(document).ready(function(){
         width: '50%',
         config: common_jqt_config
         });
-        
+
     // Howareyou no mural
     $j('a.new-howareu').prepOverlay({
         subtype: 'ajax',
@@ -121,9 +125,9 @@ $j(document).ready(function(){
 		beforepost: function(resp, elem){
             return CheckPost(resp, elem);
         }
-        });        
-        
-    // Modal editra portlet 
+        });
+
+    // Modal editra portlet
     $j('a.portlet-ajax').prepOverlay({
         subtype: 'ajax',
         filter: common_content_filter,
@@ -133,16 +137,16 @@ $j(document).ready(function(){
         width: '50%',
         config: common_jqt_config
         });
-		
-		
+
+
 	//CRIA UM CYCLE PARA AS IMAGENS DO CABE�ALHO DO PORTAL
 	$j('#cycle-logo').cycle({
-		cssBefore: {  
+		cssBefore: {
 	        zIndex: 1
-	    }, 
+	    },
 		height: '93px',
 		fx: 'fade'
 	});
-                
+
 
 });
