@@ -17,7 +17,7 @@
 <metal:main fill-slot="content-core">
  	<metal:content-core define-macro="content-core">
  		<div id="vindula-home-page" tal:define="breadcrumbs context/disable_breadcrumbs|python:False" 
- 		                            tal:attributes="class python: breadcrumbs and 'disable_breadcrumbs'">
+ 		                            tal:attributes="class python: breadcrumbs and 'columns large-12 disable_breadcrumbs' or 'columns large-12'">
 		
 			<!-- start: NEWS -->
 			<div class="boxTipo1">
