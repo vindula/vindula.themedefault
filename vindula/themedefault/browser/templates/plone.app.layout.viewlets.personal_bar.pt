@@ -40,19 +40,34 @@
       </tal:rep>
 
 
-      <li>
+      <li class="show-box-hidden">
         <a tal:attributes="href string:${context/portal_url}/@@myvindulalistrecados;"
            id="personaltools-recados">
            <i class="vindula-icon-envelop"></i>
            <span tal:content="string:(${cont_recados})"></span>
         </a>
+        <div class="box-message box-hidden">
+          <div class="seta-box">
+            <img tal:attributes="src string:${context/portal_url}/++resource++vindula.tile/images/seta-box.png" />
+          </div>
+          <ul class="letters no-bullet">
+          </ul>
+        </div>
       </li>
-      <li>
+      <li class="show-box-hidden">
         <a tal:attributes="href string:${context/portal_url}/"
            id="personaltools-recados">
            <i class="vindula-icon-earth"></i>
            <span tal:content="string:(${cont_notificacao})"></span>
         </a>
+        
+        <div class="box-notify box-hidden">
+          <div class="seta-box">
+            <img tal:attributes="src string:${context/portal_url}/++resource++vindula.tile/images/seta-box.png" />
+          </div>
+          <ul class="letters no-bullet">
+          </ul>
+        </div>
       </li>
       <li>
         <a tal:attributes="href string:${context/portal_url}/logout;">
