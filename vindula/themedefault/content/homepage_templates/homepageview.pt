@@ -15,7 +15,7 @@
 </tal:comment>
 
 <metal:main fill-slot="content-core">
- 	<metal:content-core define-macro="content-core">
+ 	<div metal:define-macro="content-core" class="row">
  		<div id="vindula-home-page" tal:define="breadcrumbs context/disable_breadcrumbs|python:False" 
  		                            tal:attributes="class python: breadcrumbs and 'columns large-12 disable_breadcrumbs' or 'columns large-12'">
 		
@@ -197,7 +197,7 @@
 			<!-- end: NEWS -->
 	
 		</div>
-	</metal:content-core>
+	</div>
 </metal:main>
 
 </body>
