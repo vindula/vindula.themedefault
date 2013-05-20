@@ -40,44 +40,67 @@
       </tal:rep>
 
 
-      <li>
+      <li class="show-box-hidden">
         <a tal:attributes="href string:${context/portal_url}/@@myvindulalistrecados;"
            id="personaltools-recados">
            <i class="vindula-icon-envelop"></i>
            (<span tal:content="string:${cont_recados}" id="numero_recados"></span>)
         </a>
+        <div class="box-message box-hidden">
+          <div class="seta-box">
+            <img tal:attributes="src string:${context/portal_url}/++resource++vindula.tile/images/seta-box.png" />
+          </div>
+          <ul class="letters no-bullet">
+          </ul>
+        </div>
       </li>
-      <li>
+      
+      <li class="show-box-hidden">
         <a tal:attributes="href string:${context/portal_url}/"
            id="personaltools-recados">
            <i class="vindula-icon-earth"></i>
            (<span tal:content="string:${cont_notificacao}" id="numero_notificacoes"></span>)
         </a>
+        
+        <div class="box-notify box-hidden">
+          <div class="seta-box">
+            <img tal:attributes="src string:${context/portal_url}/++resource++vindula.tile/images/seta-box.png" />
+          </div>
+          <ul class="letters no-bullet">
+          </ul>
+        </div>
       </li>
+      
       <li>
         <a tal:attributes="href string:${context/portal_url}/logout;">
             <i class="vindula-icon-switch"></i>
             <span>Sair</span>
         </a>
       </li>
-      <li>
-          <a data-dropdown="dropoptions" class="dropdown">
+      <li class="show-box-hidden">
+          <a href="#">
             <i class="vindula-icon-cog"></i>
           </a>
+          
+          <div class="box-settings box-hidden">
+            <div class="seta-box">
+                <img tal:attributes="src string:${context/portal_url}/++resource++vindula.tile/images/seta-box.png" />
+            </div>
+            <ul>
+                <tal:rep repeat="link links">
+                    <li>
+                        <a tal:attributes="href link/url|nothing;
+                        id string:personaltools-${link/id};"
+                        tal:content="link/title|nothing"></a>
+                    </li>
+                </tal:rep>
+                <li tal:condition="python:checkPermission('Plone Site Setup: Overview', context)">
+                    <a tal:attributes="href string:${context/portal_url}/@@overview-controlpanel;"
+                    href="">Painel de Controle</a>
+                </li>
+            </ul>
+          </div>
       </li>
-      <ul id="dropoptions" class="f-dropdown">
-        <tal:rep repeat="link links">
-            <li>
-                <a tal:attributes="href link/url|nothing;
-                id string:personaltools-${link/id};"
-                tal:content="link/title|nothing"></a>
-            </li>
-        </tal:rep>
-        <li tal:condition="python:checkPermission('Plone Site Setup: Overview', context)">
-            <a tal:attributes="href string:${context/portal_url}/@@overview-controlpanel;"
-            href="">Painel de Controle</a>
-        </li>
-      </ul>
   </ul>
 
   <ul class="actionMenu deactivated" id="portal-personaltools"
