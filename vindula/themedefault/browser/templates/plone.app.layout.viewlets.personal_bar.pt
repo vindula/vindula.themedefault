@@ -7,8 +7,8 @@
                  view_myvindula python:context.restrictedTraverse('@@myvindula');
 
                  prefs_user python: view_myvindula.get_prefs_user(member.getUserName());
-                 cont_recados  python: view_myvindula.count_recados_new(member.getUserName());
-                 cont_notificacao python: view_myvindula.count_notificacao_new(member.getUserName());
+                 recados  python: view_myvindula.get_recados(member.getUserName());
+                 notificacoes python: view_myvindula.get_notificacoes(member.getUserName());
 
                  links view_user/update|nothing">
 
@@ -41,32 +41,40 @@
 
 
       <li class="show-box-hidden">
-        <a tal:attributes="href string:${context/portal_url}/@@myvindulalistrecados;"
-           id="personaltools-recados">
+        <a tal:attributes="href string:${context/portal_url}/@@myvindulalistrecados;" id="personaltools-recados">
            <i class="vindula-icon-envelop"></i>
-           (<span tal:content="string:${cont_recados}" id="numero_recados"></span>)
+           (<span tal:content="python:recados.count()" id="numero_recados"></span>)
         </a>
         <div class="box-message box-hidden">
           <div class="seta-box">
             <img tal:attributes="src string:${context/portal_url}/++resource++vindula.tile/images/seta-box.png" />
           </div>
-          <ul class="letters no-bullet">
+          <ul class="letters no-bullet" id="list-message">
+              <tal:recados repeat="recado python:recados[:5]">
+                  <li>
+                    <img tal:attributes="src string:${here/portal_url}vindula-api/myvindula/user-picture/photograph/${recado/username}/True">
+                  </li>
+              </tal:recados>
           </ul>
         </div>
       </li>
       
       <li class="show-box-hidden">
-        <a tal:attributes="href string:${context/portal_url}/"
-           id="personaltools-recados">
+        <a tal:attributes="href string:${context/portal_url}/" id="personaltools-recados">
            <i class="vindula-icon-earth"></i>
-           (<span tal:content="string:${cont_notificacao}" id="numero_notificacoes"></span>)
+           (<span tal:content="python:notificacoes.count()" id="numero_notificacoes"></span>)
         </a>
         
         <div class="box-notify box-hidden">
           <div class="seta-box">
             <img tal:attributes="src string:${context/portal_url}/++resource++vindula.tile/images/seta-box.png" />
           </div>
-          <ul class="letters no-bullet">
+          <ul class="letters no-bullet" id="list-notify">
+              <tal:notificacoes repeat="notificacao python:notificacoes[:5]">
+                  <li>
+                    <img tal:attributes="src string:${here/portal_url}vindula-api/myvindula/user-picture/photograph/${notificacao/username}/True">
+                  </li>
+              </tal:notificacoes>
           </ul>
         </div>
       </li>
