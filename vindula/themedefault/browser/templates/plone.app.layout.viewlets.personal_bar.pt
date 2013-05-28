@@ -40,42 +40,94 @@
       </tal:rep>
 
 
-      <li class="show-box-hidden">
+      <li class="show-box-hidden has-count has-new vd-message">
         <a tal:attributes="href string:${context/portal_url}/@@myvindulalistrecados;" id="personaltools-recados">
            <i class="vindula-icon-envelop"></i>
-           (<span tal:content="python:recados.count()" id="numero_recados"></span>)
+           <span class="jewel-count" id="numero_recados">
+               <span tal:content="python:recados.count()"></span>
+           </span>
         </a>
-        <div class="box-message box-hidden">
-          <div class="seta-box">
-            <img tal:attributes="src string:${context/portal_url}/++resource++vindula.tile/images/seta-box.png" />
-          </div>
-          <ul class="letters no-bullet" id="list-message">
-              <tal:recados repeat="recado python:recados[:5]">
-                  <li>
-                    <img tal:attributes="src string:${here/portal_url}vindula-api/myvindula/user-picture/photograph/${recado/username}/True">
-                  </li>
-              </tal:recados>
-          </ul>
+        <div class="box-updates box-message box-hidden">
+            <div class="seta-box">
+                <img tal:attributes="src string:${context/portal_url}/++resource++vindula.tile/images/seta-box.png" />
+            </div>
+            <div class="updates-header clear">
+              <div class="left"><strong>Entrada</strong></div>
+              <div class="right"><a href="#">Nova Mensagem</a></div>
+            </div>
+            <div class="scrollable-area updates-content" id="list-notify">
+              <ul class="letters no-bullet">
+                  <tal:recados repeat="recado python:recados[:5]">
+                      <li tal:attributes="class python:recado.viewed and 'container-item' or 'container-item unread'">
+                        <a href="#">
+                            <div class="clear">
+                                <div class="circle-mark">
+                                </div>
+                                <img class="left" width="50" height="50" 
+                                     tal:attributes="src string:${here/portal_url}vindula-api/myvindula/user-picture/photograph/${recado/username}/True">
+                                <div class="left info-updates">
+                                    <div>
+                                        <strong tal:content="recado/username"></strong>
+                                    </div>
+                                    <div>
+                                        <span tal:content="recado/date_created"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                      </li>
+                  </tal:recados>
+              </ul>
+            </div>
+            <div class="updates-footer clear">
+              <strong><a href="#">Ver todas</a></strong>
+            </div>
         </div>
       </li>
       
-      <li class="show-box-hidden">
+      <li class="show-box-hidden has-count has-new vd-notify">
         <a tal:attributes="href string:${context/portal_url}/" id="personaltools-recados">
            <i class="vindula-icon-earth"></i>
-           (<span tal:content="python:notificacoes.count()" id="numero_notificacoes"></span>)
+           <span class="jewel-count" id="numero_recados">
+               <span tal:content="python:notificacoes.count()"></span>
+           </span>
         </a>
         
-        <div class="box-notify box-hidden">
-          <div class="seta-box">
-            <img tal:attributes="src string:${context/portal_url}/++resource++vindula.tile/images/seta-box.png" />
-          </div>
-          <ul class="letters no-bullet" id="list-notify">
-              <tal:notificacoes repeat="notificacao python:notificacoes[:5]">
-                  <li>
-                    <img tal:attributes="src string:${here/portal_url}vindula-api/myvindula/user-picture/photograph/${notificacao/username}/True">
-                  </li>
-              </tal:notificacoes>
-          </ul>
+        <div class="box-updates box-notify box-hidden">
+            <div class="seta-box">
+                <img tal:attributes="src string:${context/portal_url}/++resource++vindula.tile/images/seta-box.png" />
+            </div>
+            <div class="updates-header clear">
+              <div class="left"><strong>Notificações</strong></div>
+              <div class="right"><a href="#">Configurações</a></div>
+            </div>
+            <div class="scrollable-area updates-content" id="list-notify">
+              <ul class="letters no-bullet">
+                  <tal:notificacoes repeat="notificacao python:notificacoes[:5]">
+                      <li tal:attributes="class python:notificacao.viewed and 'container-item' or 'container-item unread'">
+                        <a href="#">
+                            <div class="clear">
+                                <div class="circle-mark">
+                                </div>
+                                <img class="left" width="50" height="50" 
+                                     tal:attributes="src string:${here/portal_url}vindula-api/myvindula/user-picture/photograph/${notificacao/username}/True">
+                                <div class="left info-updates">
+                                    <div>
+                                        <strong tal:content="notificacao/actor"></strong><span tal:content="notificacao/action"></span>
+                                    </div>
+                                    <div>
+                                        <span tal:content="notificacao/date_created"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                      </li>
+                  </tal:notificacoes>
+              </ul>
+            </div>
+            <div class="updates-footer clear">
+              <strong><a href="#">Ver todas</a></strong>
+            </div>
         </div>
       </li>
       
