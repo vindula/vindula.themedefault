@@ -40,7 +40,7 @@ $j(document).ready(function(){
         var url = '/vindula-api/social/personal/message/',
         url = url.concat(window.token,'?iframe_id=new_menssage');
 
-        $(window.parent.document).vindula('add_menssage_box', {'id': 'new_menssage', 'src': url, 'iframe_class': 'menssage_box', 'left': '128px'});
+        $(window.parent.document).vindula('add_menssage_box', {'id': 'new_menssage', 'src': url, 'iframe_class': 'menssage_box', 'left': '200px'});
     });
 
 	setTextPortalPersonaltools();
