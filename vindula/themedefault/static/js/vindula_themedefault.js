@@ -34,13 +34,13 @@ $j = jQuery.noConflict();
 $j(document).ready(function(){
 
 
-    $('#new_menssage').click(function(event){
+    $j('#new_menssage').click(function(event){
         event.preventDefault();
         event.stopPropagation();
         var url = '/vindula-api/social/personal/message/',
         url = url.concat(window.token,'?iframe_id=new_menssage');
 
-        $(window.parent.document).vindula('add_menssage_box', {'id': 'new_menssage', 'src': url, 'iframe_class': 'menssage_box', 'left': '200px'});
+        $j(window.parent.document).vindula('add_menssage_box', {'id': 'new_menssage', 'src': url, 'iframe_class': 'menssage_box', 'left': '200px'});
     });
 
 	setTextPortalPersonaltools();
