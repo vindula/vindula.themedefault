@@ -146,7 +146,7 @@
             <div class="seta-box">
                 <img tal:attributes="src string:${context/portal_url}/++resource++vindula.tile/images/seta-box.png" />
             </div>
-            <ul>
+            <ul class="no-bullet">
                 <tal:rep repeat="link links">
                     <li>
                         <a tal:attributes="href link/url|nothing;
