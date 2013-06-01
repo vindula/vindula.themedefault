@@ -32,8 +32,6 @@ $j = jQuery.noConflict();
 
 
 $j(document).ready(function(){
-
-
     $j('#new_menssage').click(function(event){
         event.preventDefault();
         event.stopPropagation();
@@ -54,16 +52,6 @@ $j(document).ready(function(){
 	var links = $j('div#links-adcionais').html();
 	$j('div#links-adcionais').insertBefore('dl#portal-personaltools #personaltools-logout');
 
-	/*
-	$j('div.autocompleteInputWidget span.option label span').text(function(index, text){
-	 	if ($j(this).text() == '(nothing)') $j(this).text('Nenhum');
-	});
-
-	$j('dd.actionMenuContent a.contenttype-collection').attr("class", "contenttype-topic");
-
-	$j('dd.actionMenuContent a.contenttype-link img').hide();
-    */
-
 	/* LINK THEME EDIT */
 	$j('div.logo').hover(function(){
 		$j('div.logo a.theme-edit').css("display", "inline");
@@ -76,23 +64,6 @@ $j(document).ready(function(){
 	},function() {
 		$j('div#informacao a.theme-edit').css("display", "none");
 	});
-
-	/* COMMENT BUTTON
-	var flag = 0;
-	$j('div#comentar').hide();
-	$j('input#comentar').click(function(){
-		if (flag == 0){
-			$j('div#comentar').slideDown('slow');
-			flag = 1;
-		}else{
-			$j('div#comentar').slideUp('slow');
-			flag = 0;
-		};
-	});*/
-
-	/* CORRECTING PROBLEMS WITH FLOAT LEFT */
-	//$j('div.userlist').height($j('div#geral_colunas').height());
-	//$j('div.food-control-panel').height($j('div#geral_colunas').height());
 
 	var common_content_filter = '#content=*,dl.portalMessage.error,dl.portalMessage.info';
     var common_jqt_config = {fixed:false,speed:'fast',mask:{color:'#000',opacity: 0.4,loadSpeed:0,closeSpeed:0}};
