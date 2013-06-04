@@ -20,8 +20,8 @@
         <!-- Dados para utilizacao da macro -->
         <div class="my-profile left">
             <tal:def define="size_img string:30px;
-                             user_profiles member/getUserName|nothing;
-                             item prefs_user;">
+                             item prefs_user;
+                             username prefs_user/username">
                 <metal:use use-macro="context/myvindula-imageprofiles-macro/macros/userimage"/>
             </tal:def>
         </div>
