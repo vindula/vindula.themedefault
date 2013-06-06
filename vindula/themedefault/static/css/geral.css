@@ -10,7 +10,7 @@
 }
 
 body{
-    background: url("++resource++vindula.themedefault/images/bkgs/bk_body.jpg") no-repeat scroll 50% 0 #F7F5EA;
+    background: url("/vindula-api/static/img/header/bg.jpg?37cffcfb9852") no-repeat scroll 50% 0 #F7F5EA;
     margin: 0;
     width: 100%;
 }
