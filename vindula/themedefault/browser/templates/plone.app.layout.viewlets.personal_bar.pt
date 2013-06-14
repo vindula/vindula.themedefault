@@ -6,9 +6,13 @@
                  view_user python:context.restrictedTraverse('@@vindula-linkuser');
                  view_myvindula python:context.restrictedTraverse('@@myvindula');
 
-                 prefs_user python: view_myvindula.get_prefs_user(member.getUserName());
-                 recados  python: view_myvindula.get_recados(member.getUserName());
-                 notificacoes python: view_myvindula.get_notificacoes(member.getUserName());
+                 username python:member.getUserName();
+                 prefs_user python: view_myvindula.get_prefs_user(username);
+                 recados  python: view_myvindula.get_recados(username);
+                 notificacoes python: view_myvindula.get_notificacoes(username);
+
+                 recados_new python: view_myvindula.count_recados_new(username);
+                 notificacoes_new python: view_myvindula.count_notificacao_new(username);
 
                  links view_user/update|nothing">
 
@@ -40,11 +44,13 @@
       </tal:rep>
 
 
-      <li class="show-box-hidden has-count has-new vd-message">
+      <li class="show-box-hidden has-count has-new vd-message"
+          tal:attributes="class python: recados_new and 'show-box-hidden has-count has-new vd-message' or 'show-box-hidden has-new vd-message' "
+        >
         <a tal:attributes="href string:${context/portal_url}/@@myvindulalistrecados;" id="personaltools-recados">
            <i class="vindula-icon-envelop"></i>
            <span class="jewel-count" id="numero_recados">
-               <span tal:content="python:recados.count()"></span>
+               <span tal:content="recados_new"></span>
            </span>
         </a>
         <div class="box-updates box-message box-hidden">
@@ -59,7 +65,7 @@
               <ul class="letters no-bullet">
                   <tal:recados repeat="recado python:recados[:5]">
                       <li tal:attributes="class python:recado.viewed and 'container-item' or 'container-item unread'">
-                        <a href="#">
+                        <a href="#" tal:attributes="href string:${context/portal_url}/myvindulalistrecados" >
                             <div class="clear">
                                 <div class="circle-mark">
                                 </div>
@@ -85,11 +91,13 @@
         </div>
       </li>
 
-      <li class="show-box-hidden has-count has-new vd-notify">
+      <li class="show-box-hidden has-count has-new vd-notify"
+          tal:attributes="class python: notificacoes_new and 'show-box-hidden has-count has-new vd-notify' or 'show-box-hidden has-new vd-notify' "
+        >
         <a tal:attributes="href string:${context/portal_url}/" id="personaltools-recados">
            <i class="vindula-icon-earth"></i>
            <span class="jewel-count" id="numero_recados">
-               <span tal:content="python:notificacoes.count()"></span>
+               <span tal:content="notificacoes_new"></span>
            </span>
         </a>
 
@@ -105,22 +113,29 @@
               <ul class="letters no-bullet">
                   <tal:notificacoes repeat="notificacao python:notificacoes[:5]">
                       <li tal:attributes="class python:notificacao.viewed and 'container-item' or 'container-item unread'">
-                        <a href="#">
-                            <div class="clear">
-                                <div class="circle-mark">
-                                </div>
-                                <img class="left" width="50" height="50"
-                                     tal:attributes="src string:${here/portal_url}/vindula-api/myvindula/user-picture/photograph/${notificacao/actor}/True">
-                                <div class="left info-updates">
-                                    <div>
-                                        <strong tal:content="notificacao/actor"></strong><span tal:content="notificacao/action"></span>
-                                    </div>
-                                    <div>
-                                        <span tal:content="python:view_myvindula.getTimeAgo(notificacao.get_date_created,notificacao.action)"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+
+                        <tal:def define="user_actor python:view_myvindula.get_prefs_user(notificacao.actor);
+                                         obj_action python:view_myvindula.lookupObject(notificacao.content.uid);">
+
+                          <a href="#" tal:attributes="href obj_action/absolute_url|nothing">
+                              <div class="clear">
+                                  <div class="circle-mark">
+                                  </div>
+                                  <img class="left" width="50" height="50"
+                                       tal:attributes="src string:${here/portal_url}/vindula-api/myvindula/user-picture/photograph/${notificacao/actor}/True">
+
+                                  <div class="left info-updates">
+                                      <div>
+                                          <strong tal:content="user_actor/name|notificacao/acto"></strong>
+                                          <span tal:content="python:view_myvindula.action_social.get(notificacao.action,'')"></span>
+                                          o conteudo
+
+                                          <span tal:content="python:view_myvindula.getTimeAgo(notificacao.get_date_created,'')"></span>
+                                      </div>
+                                  </div>
+                              </div>
+                          </a>
+                        </tal:def>
                       </li>
                   </tal:notificacoes>
               </ul>

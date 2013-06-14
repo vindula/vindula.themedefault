@@ -41,6 +41,40 @@ $j(document).ready(function(){
         $j(window.parent.document).vindula('add_menssage_box', {'id': 'new_menssage', 'src': url, 'iframe_class': 'menssage_box', 'left': '200px'});
     });
 
+
+    $j('.vd-message.has-count > a').click(function(){
+        var $ctx = $j(this)
+
+        $.ajax({
+            url : url_notified_message,
+            type : 'POST',
+            data : {hash_obj:'all'},
+            success:function(result) {
+                if (result.status){
+                    $ctx.parent().removeClass('has-count');
+                }
+            }
+        });
+
+    });
+
+    $j('.vd-notify.has-count > a').click(function(){
+        var $ctx = $j(this)
+
+        $.ajax({
+            url : url_notified_notification,
+            type : 'POST',
+            data : {hash_obj:'all'},
+            success:function(result) {
+                if (result.status){
+                    $ctx.parent().removeClass('has-count');
+                }
+            }
+        });
+
+    });
+
+
 	setTextPortalPersonaltools();
 
 	/* ADJUSTMENTS */
