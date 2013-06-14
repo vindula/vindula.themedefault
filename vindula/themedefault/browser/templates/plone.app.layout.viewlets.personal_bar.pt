@@ -146,12 +146,7 @@
         </div>
       </li>
 
-      <li>
-        <a tal:attributes="href string:${context/portal_url}/logout;">
-            <i class="vindula-icon-switch"></i>
-            <span>Sair</span>
-        </a>
-      </li>
+  
       <li class="show-box-hidden">
           <a href="#">
             <i class="vindula-icon-cog"></i>
@@ -161,20 +156,40 @@
             <div class="seta-box">
                 <img tal:attributes="src string:${context/portal_url}/++resource++vindula.tile/images/seta-box.png" />
             </div>
+			<div class="left">
+				<strong>Configurações</strong>
+			</div>
             <ul class="no-bullet">
                 <tal:rep repeat="link links">
                     <li>
+						<div class="box-settings-img">
+							<img src="++resource++vindula.themedefault/images/icons/folder_icon.png"/>
+						</div>
                         <a tal:attributes="href link/url|nothing;
-                        id string:personaltools-${link/id};"
+                        id string:personaltools-${link/id};" 
                         tal:content="link/title|nothing"></a>
+
+
                     </li>
                 </tal:rep>
                 <li tal:condition="python:checkPermission('Plone Site Setup: Overview', context)">
+				<div class="box-settings-img">
+					<a href="#">
+						<i class="vindula-icon-cog"></i>
+					</a>
+				</div>
                     <a tal:attributes="href string:${context/portal_url}/@@overview-controlpanel;"
                     href="">Painel de Controle</a>
                 </li>
             </ul>
           </div>
+      </li>
+
+    <li>
+        <a tal:attributes="href string:${context/portal_url}/logout;">
+            <i class="vindula-icon-switch"></i>
+            <span>Sair</span>
+        </a>
       </li>
   </ul>
 
