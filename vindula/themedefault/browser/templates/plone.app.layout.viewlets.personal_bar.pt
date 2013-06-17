@@ -65,7 +65,7 @@
               <ul class="letters no-bullet">
                   <tal:recados repeat="recado python:recados[:5]">
                       <li tal:attributes="class python:recado.viewed and 'container-item' or 'container-item unread'">
-                        <a href="#" tal:attributes="href string:${context/portal_url}/myvindulalistrecados" >
+                        <a href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=messages" >
                             <div class="clear">
                                 <div class="circle-mark">
                                 </div>
@@ -86,7 +86,7 @@
               </ul>
             </div>
             <div class="updates-footer clear">
-              <strong><a href="#" tal:attributes="href string:${context/portal_url}/myvindulalistrecados">Ver todas</a></strong>
+              <strong><a href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=messages">Ver todas</a></strong>
             </div>
         </div>
       </li>
@@ -141,12 +141,12 @@
               </ul>
             </div>
             <div class="updates-footer clear">
-              <strong><a href="#" tal:attributes="href string:${context/portal_url}/myvindula-notifications">Ver todas</a></strong>
+              <strong><a href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=notification">Ver todas</a></strong>
             </div>
         </div>
       </li>
 
-  
+
       <li class="show-box-hidden">
           <a href="#">
             <i class="vindula-icon-cog"></i>
@@ -166,18 +166,18 @@
 							<img src="++resource++vindula.themedefault/images/icons/folder_icon.png"/>
 						</div>
                         <a tal:attributes="href link/url|nothing;
-                        id string:personaltools-${link/id};" 
+                        id string:personaltools-${link/id};"
                         tal:content="link/title|nothing"></a>
 
 
                     </li>
                 </tal:rep>
                 <li tal:condition="python:checkPermission('Plone Site Setup: Overview', context)">
-				<div class="box-settings-img">
-					<a href="#">
-						<i class="vindula-icon-cog"></i>
-					</a>
-				</div>
+            				<div class="box-settings-img">
+            					<a href="#">
+            						<i class="vindula-icon-cog"></i>
+            					</a>
+            				</div>
                     <a tal:attributes="href string:${context/portal_url}/@@overview-controlpanel;"
                     href="">Painel de Controle</a>
                 </li>
