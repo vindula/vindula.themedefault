@@ -83,7 +83,7 @@ var livesearch = (function () {
 
             // seleciona a are do portal
             var $type = $form.find('input:checked');
-            $$query['tipo'] = $type.val()
+            $$query['tipo'] = $type.val();
 
 
             // turn into a string for use as a cache key
