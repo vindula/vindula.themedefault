@@ -1,0 +1,27 @@
+<html>
+<body tal:define="b_start python:0;
+                  b_start request/b_start | b_start;
+                  b_size python:6;
+                  batch python:view.results(b_start=b_start,b_size=b_size);
+                  st python:request.get('q', '');
+                  here_url context/@@plone_context_state/object_url;
+                  batch_base_url string:${here_url}/@@vindula-search;
+                  ">
+
+    <div class="columns large-12 food">
+      Encontrados
+      <strong id="updated-search-results-number"
+          tal:content="batch/sequence_length|string:0">234</strong>
+      para o termo
+      "<span id="updated-search-term" tal:content="st">Search Term</span>"
+      <br/>
+    </div>
+
+    <!-- span id="updated-sorting-options">
+        <metal:results use-macro="context/@@vindula-search/sorting" />
+    </span-->
+
+    <metal:results use-macro="context/@@vindula-search/search_results" />
+
+</body>
+</html>
