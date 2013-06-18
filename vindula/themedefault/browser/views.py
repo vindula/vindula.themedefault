@@ -8,6 +8,8 @@ from Products.Five import BrowserView
 
 from vindula.themedefault.browser.interfaces import IThemeVindulaView
 
+from plone.memoize import ram
+from time import time
 import requests
 
 class ThemeVindulaView(BrowserView):
@@ -39,6 +41,7 @@ class LoadScssView(grok.View):
     def render(self):
         return 'OK'
 
+    @ram.cache(lambda *args: time() // (60 * 60))
     def load(self):
         uri = '/vindula-api/theme/load_scss/'
         result = ''
