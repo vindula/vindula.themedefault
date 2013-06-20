@@ -58,7 +58,7 @@
           </div>
           <div class="row">
               <div class="large-12 columns">
-                  <div id="LSResult">
+                  <div id="LSResult" class="LSResult">
                     <div class="LSShadow" id="LSShadow"></div>
                   </div>
               </div>
