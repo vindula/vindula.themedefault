@@ -30,7 +30,7 @@ class TagCloud(BrowserView):
                 for subject in subjects:
                     d[subject] = d.get(subject,0) + 1
 
-        search_path = '/@@vindula-search?tipo=intranet&Subject='
+        search_path = '/@@vindula-search?Subject='
 
         L = [ (tag_name,self.calcTagSize(d[tag_name],total, sizes),search_path + tag_name ) for tag_name in d.keys() ]
         L.sort()

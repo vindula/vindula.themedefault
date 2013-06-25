@@ -63,8 +63,7 @@ class SearchView(grok.View, Search):
         elif tipo_busca == 'biblioteca':
             query['portal_type'] = ['Image','File']
 
-        # import pdb;pdb.set_trace()
-        print query
+
 
         return super(SearchView,self).results(query=query,batch=batch,b_size=b_size, b_start=b_start)
 
