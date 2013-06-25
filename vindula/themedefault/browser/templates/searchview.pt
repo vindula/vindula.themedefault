@@ -437,7 +437,9 @@
 
                     </div>
                 </metal:searchresults>
-                <div metal:use-macro="context/batch_macros/macros/navigation" />
+                <tal:cond tal:condition="batch">
+                    <div metal:use-macro="context/batch_macros/macros/navigation" />
+                </tal:cond>
 
             </div>
         </div>

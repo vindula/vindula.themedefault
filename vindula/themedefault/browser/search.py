@@ -35,7 +35,8 @@ class SearchView(grok.View, Search):
         if not query:
             query = {}
 
-        query = {'SearchableText': quote_bad_chars(term) + '*' }
+        if term:
+            query = {'SearchableText': quote_bad_chars(term) + '*' }
 
         if tipo_busca == 'intranet':
 
