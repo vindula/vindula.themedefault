@@ -42,35 +42,41 @@ $j(document).ready(function(){
     });
 
 
-    $j('.vd-message.has-count > a').click(function(){
+    $j('.vd-message > a').click(function(){
         var $ctx = $j(this)
 
-        $.ajax({
-            url : url_notified_message,
-            type : 'POST',
-            data : {hash_obj:'all'},
-            success:function(result) {
-                if (result.status){
-                    $ctx.parent().removeClass('has-count');
+        if ($ctx.parent().hasClass('has-count')){
+            $.ajax({
+                url : url_notified_message,
+                type : 'POST',
+                data : {hash_obj:'all'},
+                success:function(result) {
+                    if (result.status){
+                        $ctx.parent().removeClass('has-count');
+                        $ctx.find('#numero_recados span').text('0');
+                    }
                 }
-            }
-        });
+            });
+        }
 
     });
 
-    $j('.vd-notify.has-count > a').click(function(){
+    $j('.vd-notify > a').click(function(){
         var $ctx = $j(this)
 
-        $.ajax({
-            url : url_notified_notification,
-            type : 'POST',
-            data : {hash_obj:'all'},
-            success:function(result) {
-                if (result.status){
-                    $ctx.parent().removeClass('has-count');
+        if ($ctx.parent().hasClass('has-count')){
+            $.ajax({
+                url : url_notified_notification,
+                type : 'POST',
+                data : {hash_obj:'all'},
+                success:function(result) {
+                    if (result.status){
+                        $ctx.parent().removeClass('has-count');
+                        $ctx.find('#numero_recados span').text('0');
+                    }
                 }
-            }
-        });
+            });
+        }
 
     });
 

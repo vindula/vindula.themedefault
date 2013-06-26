@@ -44,7 +44,7 @@
       </tal:rep>
 
 
-      <li class="show-box-hidden has-count has-new vd-message"
+      <li id="list-message" class="show-box-hidden has-count has-new vd-message"
           tal:attributes="class python: recados_new and 'show-box-hidden has-count has-new vd-message' or 'show-box-hidden has-new vd-message' "
         >
         <a tal:attributes="href string:${context/portal_url}/@@myvindulalistrecados;" id="personaltools-recados">
@@ -61,8 +61,25 @@
               <div class="left"><strong>Entrada</strong></div>
               <div class="right"><a href="#" id="new_menssage">Nova Mensagem</a></div>
             </div>
-            <div class="scrollable-area updates-content" id="list-notify">
-              <ul class="letters no-bullet">
+            <div class="scrollable-area updates-content" >
+              <ul class="letters no-bullet" id="itens">
+                  <!-- Boco de codigo para novas mensagens -->
+                  <li class='container-item unread hide' id="new-list-message">
+                    <a href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=messages" >
+                        <div class="clear">
+                            <div class="circle-mark">
+                            </div>
+                            <img class="left photo" width="50" height="50" src="">
+                            <div class="left info-updates">
+                                <div>
+                                  <strong class="name"> </strong> diz :
+                                  <span class='text'></span>
+                                </div>
+                                <div><span>Enviada agora</span></div>
+                            </div>
+                        </div>
+                    </a>
+                  </li>
                   <tal:recados repeat="recado python:recados[:5]">
                       <li tal:attributes="class python:recado.viewed and 'container-item' or 'container-item unread'">
                         <a href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=messages" >
@@ -73,7 +90,8 @@
                                      tal:attributes="src string:${here/portal_url}/vindula-api/myvindula/user-picture/photograph/${recado/username}/True">
                                 <div class="left info-updates">
                                     <div>
-                                        <strong tal:content="recado/username"></strong>
+                                        <strong tal:content="recado/username"></strong> diz:
+                                        <span tal:content="python: recado.text[:50]"></span>
                                     </div>
                                     <div>
                                         <span tal:content="python:view_myvindula.getTimeAgo(recado.get_date_created,'Enviada')"></span>
@@ -91,7 +109,7 @@
         </div>
       </li>
 
-      <li class="show-box-hidden has-count has-new vd-notify"
+      <li id="list-notify" class="show-box-hidden has-count has-new vd-notify"
           tal:attributes="class python: notificacoes_new and 'show-box-hidden has-count has-new vd-notify' or 'show-box-hidden has-new vd-notify' "
         >
         <a tal:attributes="href string:${context/portal_url}/" id="personaltools-recados">
@@ -109,8 +127,26 @@
               <div class="left"><strong>Notificações</strong></div>
               <!--div class="right"><a href="#">Configurações</a></div-->
             </div>
-            <div class="scrollable-area updates-content" id="list-notify">
-              <ul class="letters no-bullet">
+            <div class="scrollable-area updates-content" >
+
+              <ul class="letters no-bullet" id="itens">
+                  <!-- Boco de codigo para novas notificação -->
+                  <li class='container-item unread hide' id="new-list-notify" >
+                      <a href="#" href="">
+                          <div class="clear">
+                              <div class="circle-mark"> </div>
+                              <img class="left photo" width="50" height="50" src="">
+                              <div class="left info-updates">
+                                  <div>
+                                      <strong class="name" ></strong>
+                                      <span class="text" ></span>
+                                      <span >agora</span>
+                                  </div>
+                              </div>
+                          </div>
+                      </a>
+                  </li>
+
                   <tal:notificacoes repeat="notificacao python:notificacoes[:5]">
                       <li tal:attributes="class python:notificacao.viewed and 'container-item' or 'container-item unread'">
 

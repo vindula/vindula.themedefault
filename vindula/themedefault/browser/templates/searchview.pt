@@ -95,7 +95,7 @@
                 <h1 class="documentFirstHeading"
                     i18n:translate=""
                     tal:condition="not:st">
-                    Search results
+                    Resultados da pesquisa
                 </h1>
                 <h1 class="documentFirstHeading"
                     i18n:translate=""
@@ -324,7 +324,7 @@
                                                 <tal:block tal:condition="item/Creator"
                                                     tal:define="author python:context.portal_membership.getMemberInfo(item.Creator())">
                                                   <a href="#"
-                                                     tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/author/${item/Creator}"
+                                                     tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/myvindulalistuser?user=${item/Creator}"
                                                      tal:content="python:author and author['fullname'] or item.Creator()"
                                                      tal:omit-tag="not:item/Creator"
                                                      i18n:name="author">
@@ -367,7 +367,7 @@
                                                    class="link-category"
                                                    rel="tag"
                                                    tal:content="category"
-                                                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@search?SearchableText=${st}&amp;Subject%3Alist=${category}">
+                                                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@vindula-search?SearchableText=${st}&amp;Subject%3Alist=${category}">
                                                   Category
                                                 </a><tal:separator condition="not: repeat/category/end">,</tal:separator>
                                               </span>
