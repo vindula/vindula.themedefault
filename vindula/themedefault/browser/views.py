@@ -41,7 +41,7 @@ class LoadScssView(grok.View):
     def render(self):
         return 'OK'
 
-    @ram.cache(lambda *args: time() // (60 * 60))
+#    @ram.cache(lambda *args: time() // (60 * 60))
     def load(self):
         uri = '/vindula-api/theme/load_scss/'
         result = ''
