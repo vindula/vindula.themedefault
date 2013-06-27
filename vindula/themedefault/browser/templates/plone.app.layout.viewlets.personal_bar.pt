@@ -83,14 +83,14 @@
                   <tal:recados repeat="recado python:recados[:5]">
                       <li tal:attributes="class python:recado.viewed and 'container-item' or 'container-item unread'">
                         <a href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=messages" >
-                            <div class="clear">
+                            <div class="clear"  tal:define="user_recado python:view_myvindula.get_prefs_user(recado.username);">
                                 <div class="circle-mark">
                                 </div>
                                 <img class="left" width="50" height="50"
                                      tal:attributes="src string:${here/portal_url}/vindula-api/myvindula/user-picture/photograph/${recado/username}/True">
                                 <div class="left info-updates">
                                     <div>
-                                        <strong tal:content="recado/username"></strong> diz:
+                                        <strong tal:content="user_recado/name|recado/username"></strong> diz:
                                         <span tal:content="python: recado.text[:50]"></span>
                                     </div>
                                     <div>
@@ -132,7 +132,7 @@
               <ul class="letters no-bullet" id="itens">
                   <!-- Boco de codigo para novas notificação -->
                   <li class='container-item unread hide' id="new-list-notify" >
-                      <a href="#" href="">
+                      <a href="" class="link">
                           <div class="clear">
                               <div class="circle-mark"> </div>
                               <img class="left photo" width="50" height="50" src="">
