@@ -30,11 +30,11 @@
     <form name="searchform"
           action="@@vindula-search"
           id="vindulasearch"
-          class="searchPage enableAutoFocus"
+          class="vindulaSearchPage enableAutoFocus"
           tal:define="portal context/@@plone_portal_state/portal;
                       first_call not:request/advanced_search|nothing;
                       st python:request.get('SearchableText', '');
-                      tipo request/tipo|string:intranet;
+                      tipo request/facet.tipo|string:intranet;
                       DateTime python:modules['DateTime'].DateTime;">
 
         <input type="hidden" name="advanced_search" value="False" />
@@ -44,19 +44,19 @@
 
             <div class="row">
               <div class="large-12 columns">
-                  <input type="radio" name="tipo" value="intranet"
+                  <input type="radio" name="facet.tipo" value="intranet"
                          tal:attributes="checked python: tipo == 'intranet' and 'checked' or ''" />
                   <span class="radio">Intranet</span>
 
-                  <input type="radio" name="tipo" value="pessoas"
+                  <input type="radio" name="facet.tipo" value="pessoas"
                          tal:attributes="checked python: tipo == 'pessoas' and 'checked' or ''" />
                   <span class="radio">Pessoas</span>
 
-                  <input type="radio" name="tipo" value="servico"
+                  <input type="radio" name="facet.tipo" value="servico"
                          tal:attributes="checked python: tipo == 'servico' and 'checked' or ''"  />
                   <span class="radio">Serviço</span>
 
-                  <input type="radio" name="tipo" value="biblioteca"
+                  <input type="radio" name="facet.tipo" value="biblioteca"
                          tal:attributes="checked python: tipo == 'biblioteca' and 'checked' or ''" />
                   <span class="radio">Biblioteca</span>
               </div>

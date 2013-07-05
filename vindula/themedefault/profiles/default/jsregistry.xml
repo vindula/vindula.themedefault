@@ -1,30 +1,34 @@
-<?xml version="1.0"?> 
+<?xml version="1.0"?>
 <object name="portal_javascripts">
-	
+
  	<javascript id="++resource++vindula.themedefault.js/vindula_themedefault.js"
     		 cacheable="False" compression="safe" cookable="False" enabled="True"
 			 authenticated="True" expression="" inline="False" />
-			 
+
 	<javascript id="++resource++vindula.themedefault.js/vindula_portlets.js"
     		 cacheable="True" compression="safe" cookable="False" enabled="True"
 			 expression="" inline="False" />
-			 
+
 	<javascript id="++resource++vindula.themedefault.js/vindula_homepage.js"
-    		 cacheable="True" compression="none" cookable="False" enabled="True" 
-			 expression="python: context.portal_type == 'HomePage'"  inline="False" />			 
-			 
-			 
+    		 cacheable="True" compression="none" cookable="False" enabled="True"
+			 expression="python: context.portal_type == 'HomePage'"  inline="False" />
+
+
  	<javascript id="++resource++vindula.themedefault.js/cycle.js"
-    		 cacheable="True" compression="safe" cookable="False" enabled="True" 
+    		 cacheable="True" compression="safe" cookable="False" enabled="True"
 			 expression="" inline="False" />
 
 
  	<javascript cacheable="True" compression="none" cookable="True"
              enabled="True" expression="" id="++resource++vindula.themedefault.js/flowplayer-3.2.6.min.js"
              inline="False"/>
-	
+
 	<javascript cacheable="True" compression="none" cookable="True"
              enabled="True" expression="" id="++resource++vindula.themedefault.js/carregaPlayer.js"
+             inline="False"/>
+
+    <javascript cacheable="True" compression="none" cookable="True"
+             enabled="False" expression="" id="++resource++search.js"
              inline="False"/>
 
 </object>

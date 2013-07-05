@@ -10,6 +10,7 @@ from Products.CMFCore.utils import getToolByName
 
 from vindula.myvindula.models.funcdetails import FuncDetails
 
+
 grok.templatedir('templates')
 
 def quotestring(s):
@@ -29,8 +30,17 @@ class SearchView(grok.View, Search):
     grok.name('vindula-search')
 
     def results(self, query=None, batch=True, b_size=10, b_start=0):
-        tipo_busca = self.request.form.pop('tipo', '')
-        term = self.request.form.get('SearchableText', '')
+        term_session = self.request.SESSION.get('SearchableText')
+        tipo_busca_session = self.request.SESSION.get('facet.tipo')
+
+        tipo_busca = self.request.form.get('facet.tipo', term_session)
+        term = self.request.form.get('SearchableText', tipo_busca_session)
+
+        if (not term_session and term) or (term_session != term):
+            self.request.SESSION['SearchableText'] = term
+
+        if (not tipo_busca_session and tipo_busca) or (tipo_busca_session != tipo_busca):
+            self.request.SESSION['facet.tipo'] = tipo_busca
 
         if not query:
             query = {}
@@ -39,7 +49,6 @@ class SearchView(grok.View, Search):
             query = {'SearchableText': quote_bad_chars(term) + '*' }
 
         if tipo_busca == 'intranet':
-
             plone_utils = getToolByName(self.context, 'plone_utils')
             all_types = plone_utils.getUserFriendlyTypes([])
             for i in ['Image','File', 'Servico']:
@@ -47,15 +56,12 @@ class SearchView(grok.View, Search):
 
             query['portal_type'] = all_types
 
-
         elif tipo_busca == 'pessoas':
-
             results = FuncDetails.get_AllFuncDetails(unicode(term, 'utf-8'))
             if batch:
                 results = Batch(results, b_size, b_start)
 
             return results
-
 
         elif tipo_busca == 'servico':
             query['portal_type'] = ['Servico']
@@ -63,24 +69,26 @@ class SearchView(grok.View, Search):
         elif tipo_busca == 'biblioteca':
             query['portal_type'] = ['Image','File']
 
-
-
         return super(SearchView,self).results(query=query,batch=batch,b_size=b_size, b_start=b_start)
 
 
-
-
-
-class UpdatedSearchView(grok.View,  Search):
+class UpdatedSearchView(grok.View, Search):
     grok.context(Interface)
     grok.require('zope2.View')
     grok.name('vindula-livesearch_reply')
 
-
     def results(self, query=None, batch=True, b_size=10, b_start=0):
-        _q = self.request.form.get('q', '')
-        tipo_busca = self.request.form.get('tipo', '')
-        #
+        _q_session = self.request.SESSION.get('_q')
+        tipo_busca_session = self.request.SESSION.get('facet.tipo')
+
+        _q = self.request.form.get('q', _q_session)
+        tipo_busca = self.request.form.get('facet.tipo', tipo_busca_session)
+
+        if (not _q_session and _q) or (_q_session != _q):
+            self.request.SESSION['_q'] = _q
+
+        if (not tipo_busca_session and tipo_busca) or (tipo_busca_session != tipo_busca):
+            self.request.SESSION['facet.tipo'] = tipo_busca
 
         if not query:
             query = {}
@@ -93,18 +101,14 @@ class UpdatedSearchView(grok.View,  Search):
         r = quote_bad_chars(r) + '*'
         searchterms = url_quote_plus(r)
 
-
         params = {'SearchableText': r }
-
         if tipo_busca == 'intranet':
-
             plone_utils = getToolByName(self.context, 'plone_utils')
             all_types = plone_utils.getUserFriendlyTypes([])
             for i in ['Image','File', 'Servico']:
                 all_types.remove(i)
 
             params['portal_type'] = all_types
-
 
         elif tipo_busca == 'pessoas':
             results = FuncDetails.get_AllFuncDetails(unicode(_q, 'utf-8'))
@@ -113,17 +117,11 @@ class UpdatedSearchView(grok.View,  Search):
 
             return results
 
-
         elif tipo_busca == 'servico':
             params['portal_type'] = ['Servico']
 
         elif tipo_busca == 'biblioteca':
             params['portal_type'] = ['Image','File']
 
-
         params.update(query)
-
         return super(UpdatedSearchView,self).results(query=params,batch=batch,b_size=b_size, b_start=b_start)
-
-
-
