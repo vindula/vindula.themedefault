@@ -68,85 +68,29 @@
         </a>
     </div>
 </div></div>
-
-    <!-- PORTAL HEADER -->
-    <header id="portal-top">
-        <div class="top-vindula">
-            <div class="row">
-                <div class="large-6 columns">
-                    <div id="links_corporativos">
+    <div id="geral">
+        <!-- PORTAL HEADER -->
+        <header id="portal-top">
+            <div class="top-vindula">
+                <div class="row">
+                    <div class="large-6 columns">
+                        <div id="links_corporativos">
+                        </div>
+                    </div>
+    
+                    <div class="large-6 columns personal-bar">
+                        <ul id="portal-personaltools" class="inline-list clear">
+                        </ul>
                     </div>
                 </div>
-
-                <div class="large-6 columns personal-bar">
-                    <ul id="portal-personaltools" class="inline-list clear">
-                    </ul>
-                </div>
             </div>
-        </div>
-        <div class="row content">
-            <div class="large-8 columns">
-                <a id="portal-logo">
-                    <img src="{{ STATIC_URL }}/img/header/logo_bio_fiocruz.png">
-                </a>
-            </div>
-
-            <div id="portal-searchbox" class="large-4 columns">
-                <form action="@@search" id="livesearch0" name="searchform">
-                    <div class="row">
-                        <div class="large-12 columns">
-                            <input type="radio" name="tipo" checked />
-                            <span class="radio">Intranet</span>
-                            <input type="radio" name="tipo" />
-                            <span class="radio">Pessoas</span>
-                            <input type="radio" name="tipo" />
-                            <span class="radio">Servico</span>
-                            <input type="radio" name="tipo" />
-                            <span class="radio">Biblioteca</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="large-12 columns">
-                            <div class="row collapse LSBox">
-                                <div class="small-10 columns">
-                                  <input id="searchGadget" type="text" placeholder="O que voce procura?">
-                                </div>
-                                <div class="small-2 columns">
-                                  <a href="#" class="button prefix">
-                                      <i class="vindula-icon-search-4"></i>
-                                  </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="large-12 columns">
-                            <div id="LSResult">
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="row">
-            <div id="globalnav-vindula" class="large-12 columns">
-            </div>
-        </div>
-    </header>
-
-    <!-- MAIN CONTENT or BODY -->
-    <div id="body">
-        <div id="portal-columns" class="row"></div>
-    </div>
-
-    <!-- PORTAL FOOTER -->
-    <div id="footer">
-        <div class="container-blue-bar">
-            <div class="row blue-bar">
+            <div class="row content">
                 <div class="large-8 columns">
-                    <div id="footer_tags">
-                    </div>
+                    <a id="portal-logo">
+                        <img src="{{ STATIC_URL }}/img/header/logo_bio_fiocruz.png">
+                    </a>
                 </div>
+    
                 <div id="portal-searchbox" class="large-4 columns">
                     <form action="@@search" id="livesearch0" name="searchform">
                         <div class="row">
@@ -165,7 +109,7 @@
                             <div class="large-12 columns">
                                 <div class="row collapse LSBox">
                                     <div class="small-10 columns">
-                                      <input type="text" placeholder="O que voce procura?">
+                                      <input id="searchGadget" type="text" placeholder="O que voce procura?">
                                     </div>
                                     <div class="small-2 columns">
                                       <a href="#" class="button prefix">
@@ -175,29 +119,85 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="large-12 columns">
+                                <div id="LSResult">
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
-            <div id="sitemap" class="large-12 columns">
-
+            <div class="row">
+                <div id="globalnav-vindula" class="large-12 columns">
+                </div>
             </div>
+        </header>
+    
+        <!-- MAIN CONTENT or BODY -->
+        <div id="body">
+            <div id="portal-columns" class="row"></div>
         </div>
-
-        <div class="row">
-            <div class="large-12 columns">
-                <div id="footer_barra"><center style="height: 100px;">
-                    Bio-Manguinhos/Fiocruz 2010 Av. Brasil, 4365 - Manguinhos, RJ - CEP: 21040-360 | SAC 08000 210 310 - Fax: (21) 3882-7176 <br>
-                    copyright © Fundação Oswaldo Cruz - Ministério da Saúde - 2014
-                </center></div>
-
+    
+        <!-- PORTAL FOOTER -->
+        <div id="footer">
+            <div class="container-blue-bar">
+                <div class="row blue-bar">
+                    <div class="large-8 columns">
+                        <div id="footer_tags">
+                        </div>
+                    </div>
+                    <div id="portal-searchbox" class="large-4 columns">
+                        <form action="@@search" id="livesearch0" name="searchform">
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <input type="radio" name="tipo" checked />
+                                    <span class="radio">Intranet</span>
+                                    <input type="radio" name="tipo" />
+                                    <span class="radio">Pessoas</span>
+                                    <input type="radio" name="tipo" />
+                                    <span class="radio">Servico</span>
+                                    <input type="radio" name="tipo" />
+                                    <span class="radio">Biblioteca</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="large-12 columns">
+                                    <div class="row collapse LSBox">
+                                        <div class="small-10 columns">
+                                          <input type="text" placeholder="O que voce procura?">
+                                        </div>
+                                        <div class="small-2 columns">
+                                          <a href="#" class="button prefix">
+                                              <i class="vindula-icon-search-4"></i>
+                                          </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
+    
+            <div class="row">
+                <div id="sitemap" class="large-12 columns">
+    
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="large-12 columns">
+                    <div id="footer_barra"><center style="height: 100px;">
+                        Bio-Manguinhos/Fiocruz 2010 Av. Brasil, 4365 - Manguinhos, RJ - CEP: 21040-360 | SAC 08000 210 310 - Fax: (21) 3882-7176 <br>
+                        copyright © Fundação Oswaldo Cruz - Ministério da Saúde - 2014
+                    </center></div>
+    
+                </div>
+            </div>
+    
         </div>
-
     </div>
-
     <!--
     <script>
         document.write('<script src=' +
