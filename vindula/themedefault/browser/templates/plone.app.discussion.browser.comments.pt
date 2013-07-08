@@ -4,19 +4,8 @@
                        canReview view/can_review;
                        replies python:view.get_replies(canReview);
 
-                       has_replies python:view.has_replies(canReview);
-
-                       view_coments python:context.restrictedTraverse('@@myvindula-comments');
-
-                       activ_vindula context/activ_comment|context/isDiscussable|nothing;
-                       isDiscussionAllowed view_coments/is_discussion_allowed;
-                       enable python:view_coments.discussionAllowed(isDiscussionAllowed, has_replies, activ_vindula);"
-
-
-           tal:condition="enable">
-
+                       has_replies python:view.has_replies(canReview);">
 
     <div metal:use-macro="context/macro-comments-content/macros/view" />
-
 
 </tal:block>
