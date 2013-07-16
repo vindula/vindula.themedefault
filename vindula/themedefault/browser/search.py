@@ -30,6 +30,7 @@ class SearchView(grok.View, Search):
     grok.name('vindula-search')
 
     def results(self, query=None, batch=True, b_size=10, b_start=0):
+        results_pessoas = []
         term_session = self.request.SESSION.get('SearchableText')
         tipo_busca_session = self.request.SESSION.get('facet.tipo')
 
@@ -48,11 +49,15 @@ class SearchView(grok.View, Search):
         if term:
             query = {'SearchableText': quote_bad_chars(term) + '*' }
 
-        if tipo_busca == 'intranet':
+        if tipo_busca == 'intranet':            
+            #results_pessoas = FuncDetails.get_AllFuncDetails(unicode(term, 'utf-8'))[:2]
             plone_utils = getToolByName(self.context, 'plone_utils')
             all_types = plone_utils.getUserFriendlyTypes([])
-            for i in ['Image','File', 'Servico']:
-                all_types.remove(i)
+            
+            #Removendo filtro de busca
+            #Intranet deve buscar tudo
+            #for i in ['Image','File', 'Servico']:
+            #    all_types.remove(i)
 
             query['portal_type'] = all_types
 
@@ -61,7 +66,7 @@ class SearchView(grok.View, Search):
             if batch:
                 results = Batch(results, b_size, b_start)
 
-            return results
+            return results,[]
 
         elif tipo_busca == 'servico':
             query['portal_type'] = ['Servico']
@@ -69,7 +74,7 @@ class SearchView(grok.View, Search):
         elif tipo_busca == 'biblioteca':
             query['portal_type'] = ['Image','File']
 
-        return super(SearchView,self).results(query=query,batch=batch,b_size=b_size, b_start=b_start)
+        return super(SearchView,self).results(query=query,batch=batch,b_size=b_size, b_start=b_start),results_pessoas
 
 
 class UpdatedSearchView(grok.View, Search):
@@ -78,6 +83,7 @@ class UpdatedSearchView(grok.View, Search):
     grok.name('vindula-livesearch_reply')
 
     def results(self, query=None, batch=True, b_size=10, b_start=0):
+        results_pessoas = []
         _q_session = self.request.SESSION.get('_q')
         tipo_busca_session = self.request.SESSION.get('facet.tipo')
 
@@ -103,10 +109,14 @@ class UpdatedSearchView(grok.View, Search):
 
         params = {'SearchableText': r }
         if tipo_busca == 'intranet':
+            results_pessoas = FuncDetails.get_AllFuncDetails(unicode(_q, 'utf-8'))[:2]
             plone_utils = getToolByName(self.context, 'plone_utils')
             all_types = plone_utils.getUserFriendlyTypes([])
-            for i in ['Image','File', 'Servico']:
-                all_types.remove(i)
+            
+            #Removendo filtro de busca. 
+            #Intranet deve buscar tudo
+            #for i in ['Image','File', 'Servico']:
+            #    all_types.remove(i)
 
             params['portal_type'] = all_types
 
@@ -115,7 +125,7 @@ class UpdatedSearchView(grok.View, Search):
             if batch:
                 results = Batch(results, b_size, b_start)
 
-            return results
+            return results,[]
 
         elif tipo_busca == 'servico':
             params['portal_type'] = ['Servico']
@@ -124,4 +134,4 @@ class UpdatedSearchView(grok.View, Search):
             params['portal_type'] = ['Image','File']
 
         params.update(query)
-        return super(UpdatedSearchView,self).results(query=params,batch=batch,b_size=b_size, b_start=b_start)
+        return super(UpdatedSearchView,self).results(query=params,batch=batch,b_size=b_size, b_start=b_start),results_pessoas
