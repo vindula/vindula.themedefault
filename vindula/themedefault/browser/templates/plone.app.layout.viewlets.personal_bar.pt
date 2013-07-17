@@ -163,7 +163,7 @@
 
                                   <div class="left info-updates">
                                       <div>
-                                          <strong tal:content="user_actor/name|notificacao/acto"></strong>
+                                          <strong tal:content="user_actor/name|notificacao/actor"></strong>
                                           <span tal:content="python:view_myvindula.action_social.get(notificacao.action,'')"></span>
                                           o conteudo
 

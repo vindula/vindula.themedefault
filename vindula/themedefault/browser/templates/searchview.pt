@@ -132,7 +132,7 @@
                           <dl class="searchResults">
                               
                               <tal:cond-pessoas condition="pessoas">
-                                <tal:pessoas repeat="item pessoas">
+                                <tal:pessoas repeat="item pessoas" tal:condition="python:b_start == 0">
                                   <a href="#" tal:attributes="href item/getUrlPerfil|nothing">
                                         <div class="clear">
                                             <div class="left content_details">

@@ -50,7 +50,7 @@ class SearchView(grok.View, Search):
             query = {'SearchableText': quote_bad_chars(term) + '*' }
 
         if tipo_busca == 'intranet':            
-            #results_pessoas = FuncDetails.get_AllFuncDetails(unicode(term, 'utf-8'))[:2]
+            results_pessoas = FuncDetails.get_AllFuncDetails(unicode(term, 'utf-8'))[:2]
             plone_utils = getToolByName(self.context, 'plone_utils')
             all_types = plone_utils.getUserFriendlyTypes([])
             
