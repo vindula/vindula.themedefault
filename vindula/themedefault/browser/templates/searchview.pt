@@ -117,13 +117,14 @@
                 <div class="visualClear"><!-- --></div>
 
                 <metal:searchresults define-macro="search_results">
+
                     <div id="search-results" class="columns large-12">
 
-                        <metal:noresults tal:condition="not: batch">
+                        <metal:noresults tal:condition="python: not batch and not pessoas">
                           <p i18n:domain="plone"><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
                         </metal:noresults>
 
-                        <metal:results tal:condition="batch"
+                        <metal:results tal:condition="python:batch or pessoas"
                                        tal:define="isAnon context/@@plone_portal_state/anonymous;
                                                    toLocalizedTime nocall: context/@@plone/toLocalizedTime;
                                                    site_properties context/portal_properties/site_properties;
