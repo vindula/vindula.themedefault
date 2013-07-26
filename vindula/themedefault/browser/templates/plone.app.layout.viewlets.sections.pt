@@ -10,10 +10,10 @@
             </li>
         </ul>
         <section class="top-bar-section">
-            <ul class="lightness left" tal:define="selected_tab python:view.selected_portal_tab">
+            <ul class="lightness left" tal:define="selected_tab python:(custom_view.getIsProfile()) and custom_view.getIsProfile() or view.selected_portal_tab">
                 <tal:tabs tal:repeat="tab portal_tabs">
                     <li tal:define="tid tab/id" tal:attributes="id string:portaltab-${tid};
-                        class python:(selected_tab==tid or custom_view.getIsProfile()==tid) and 'selected' or 'plain'">
+                        class python:(selected_tab==tid) and 'selected' or 'plain'">
                         <a href="" tal:content="tab/name" tal:attributes="href tab/url;
                                                                           title tab/description|nothing;">
                             Tab Name
