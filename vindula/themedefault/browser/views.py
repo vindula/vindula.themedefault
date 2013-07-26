@@ -185,3 +185,18 @@ class NewHomePageView(grok.View):
     grok.context(Interface)
     grok.require('zope2.View')
     grok.name('new-home')
+    
+class SectionsMenuView(grok.View):
+    grok.context(Interface)
+    grok.require('zope2.View')
+    grok.name('sections-menu')
+    
+    def render(self):
+        pass
+    
+    def getIsProfile(self):
+        url_split = self.request.URL.split('/')
+        for part in url_split:
+            if 'myvindulalistuser' in part:
+                return 'pessoas'
+        return ''
