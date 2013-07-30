@@ -193,7 +193,7 @@
                                             by
                                                 <tal:block tal:condition="item/Creator"
                                                     tal:define="author python:context.portal_membership.getMemberInfo(item.Creator())">
-                                                  <a href="#"
+                                                  <a class="profile-link" href="#"
                                                      tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/myvindulalistuser?user=${item/Creator}"
                                                      tal:content="python:author and author['fullname'] or item.Creator()"
                                                      tal:omit-tag="not:item/Creator"

@@ -31,7 +31,7 @@
         </div>
         <a tal:attributes="href string:${context/portal_url}/myvindulalistuser;"
            tal:content="python: view_myvindula.name_user_top(prefs_user.get('name'))"
-           class="left"
+           class="left profile-link"
            id="personaltools-myvindula"
            href="">Meu Perfil</a>
       </li>
@@ -66,7 +66,7 @@
               <ul class="letters no-bullet" id="itens">
                   <!-- Boco de codigo para novas mensagens -->
                   <li class='container-item unread hide' id="new-list-message">
-                    <a href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=messages" >
+                    <a class="profile-link" href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=messages" >
                         <div class="clear">
                             <div class="circle-mark">
                             </div>
@@ -83,7 +83,7 @@
                   </li>
                   <tal:recados repeat="recado python:recados[:5]">
                       <li tal:attributes="class python:recado.viewed and 'container-item' or 'container-item unread'">
-                        <a href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=messages" >
+                        <a class="profile-link" href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=messages" >
                             <div class="clear"  tal:define="user_recado python:view_myvindula.get_prefs_user(recado.username);">
                                 <div class="circle-mark">
                                 </div>
@@ -105,7 +105,7 @@
               </ul>
             </div>
             <div class="updates-footer clear">
-              <strong><a href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=messages">Ver todas</a></strong>
+              <strong><a class="profile-link" href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=messages">Ver todas</a></strong>
             </div>
         </div>
       </li>
@@ -178,7 +178,7 @@
               </ul>
             </div>
             <div class="updates-footer clear">
-              <strong><a href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=notification">Ver todas</a></strong>
+              <strong><a class="profile-link" href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=notification">Ver todas</a></strong>
             </div>
         </div>
       </li>
