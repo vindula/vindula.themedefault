@@ -67,7 +67,7 @@
               <ul class="letters no-bullet" id="itens">
                   <!-- Boco de codigo para novas mensagens -->
                   <li class='container-item unread hide' id="new-list-message">
-                    <a class="profile-link" href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=messages" >
+                    <a href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=messages" >
                         <div class="clear">
                             <div class="circle-mark">
                             </div>
@@ -106,7 +106,7 @@
               </ul>
             </div>
             <div class="updates-footer clear">
-              <strong><a class="profile-link" href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=messages">Ver todas</a></strong>
+              <strong><a href="#" tal:attributes="href string:${context/portal_url}/myvindulalistuser?session=messages">Ver todas</a></strong>
             </div>
         </div>
       </li>
