@@ -29,7 +29,8 @@
                 <metal:use use-macro="context/myvindula-imageprofiles-macro/macros/userimage"/>
             </tal:def>
         </div>
-        <a tal:attributes="href string:${context/portal_url}/myvindulalistuser;"
+        <a tal:attributes="href string:${context/portal_url}/myvindulalistuser;
+                           data-username prefs_user/username;"
            tal:content="python: view_myvindula.name_user_top(prefs_user.get('name'))"
            class="left profile-link"
            id="personaltools-myvindula"
