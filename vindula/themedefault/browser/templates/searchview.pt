@@ -119,11 +119,11 @@
                 <metal:searchresults define-macro="search_results">
 
                     <div id="search-results" class="columns large-12">
-
+                        
                         <metal:noresults tal:condition="python: not batch and not pessoas">
                           <p i18n:domain="plone"><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
                         </metal:noresults>
-
+                        
                         <metal:results tal:condition="python:batch or pessoas"
                                        tal:define="isAnon context/@@plone_portal_state/anonymous;
                                                    toLocalizedTime nocall: context/@@plone/toLocalizedTime;
@@ -131,7 +131,6 @@
                                                    allowAnonymousViewAbout site_properties/allowAnonymousViewAbout;
                                                    show_about python:not isAnon or allowAnonymousViewAbout;">
                           <dl class="searchResults">
-                              
                               <tal:cond-pessoas condition="pessoas">
                                 <tal:pessoas repeat="item pessoas" tal:condition="python:b_start == 0">
                                   <a href="#" tal:attributes="href item/getUrlPerfil|nothing">
@@ -177,11 +176,11 @@
                                     </tal:cond>
 
                                     <tal:cond condition="python: item.__class__.__name__ != 'FuncDetails' ">
-
+                                        
                                         <dt tal:attributes="class item/ContentTypeClass">
                                           <img tal:replace="structure item/getIcon" />
                                           <a href="#"
-                                             tal:attributes="href item/getURL;
+                                             tal:attributes="href python:item.portal_type == 'File' and item.getURL()+'/file_view' or item.getURL();
                                                              class string:state-${item/review_state}"
                                              tal:content="item/Title" />
                                         </dt>
