@@ -5,6 +5,7 @@
 
                  view_user python:context.restrictedTraverse('@@vindula-linkuser');
                  view_myvindula python:context.restrictedTraverse('@@myvindula');
+                 view_prof_pictures nocall:context/@@myvindula-imageprofiles-macro;
 
                  username python:member.getUserName();
                  prefs_user python: view_myvindula.get_prefs_user(username);
@@ -23,11 +24,14 @@
       <li>
         <!-- Dados para utilizacao da macro -->
         <div class="my-profile left">
-            <tal:def define="size_img string:30px;
-                             item prefs_user;
-                             username prefs_user/username">
-                <metal:use use-macro="context/myvindula-imageprofiles-macro/macros/userimage"/>
-            </tal:def>
+            <a class="profile-link" 
+               tal:attributes="href string:${context/portal_url}/myvindulalistuser;
+                               data-username prefs_user/username;"> 
+                <img src="defaultUser.png" border="0" width="30px"
+                     tal:attributes="src python:view_prof_pictures.getURLFotoUser(prefs_user.get('username'));
+                                     alt prefs_user/name|nothing;
+                                     title prefs_user/name|nothing;"/>
+            </a>
         </div>
         <a tal:attributes="href string:${context/portal_url}/myvindulalistuser;
                            data-username prefs_user/username;"
