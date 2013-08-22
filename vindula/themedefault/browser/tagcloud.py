@@ -6,34 +6,57 @@ from Products.Five import BrowserView
 class TagCloud(BrowserView):
 
     def calcTagSize(self, number, total, font_sizes):
-        base_count = 100.0/len(font_sizes)
-        number = (number*100)/total
-        count = base_count
-        for size in font_sizes:
-            if number <= count:
-               return size
-            count += base_count
+#        base_count = 100.0/len(font_sizes)
+#        number = (number*100)/total
+#        count = base_count
+#        for size in font_sizes:
+#            if number <= count:
+#               return size
+#            count += base_count
 
-    def getTags(self):
+        #TODO: Refazer a logica disso, eu fiz isso pois a antiga sempre retonava none quando fosse muitos objetos
+        
+        if (number >= 48):
+            return 1.25
+        elif (number >= 24):
+            return 1
+        else:
+            return 0.75
+
+    def getTags(self, limit=30):
         portal_url = getToolByName(self.context, 'portal_url')()
         tagOccs = self.getTagOccurrences()
+        L = []
         # If count has been set sort by occurences and keep the "count" first
 
         total = 0
         #Range de tamanhos das tags
         sizes = [0.75,1,1.25]
-        d = {}
+        D = {}
+
         for result in tagOccs.get('result',[]):
             if result.Subject:
                 subjects = result.Subject
                 total = total + 1
                 for subject in subjects:
-                    d[subject] = d.get(subject,0) + 1
+                    D[subject] = D.get(subject,0) + 1
 
         search_path = '/@@vindula-search?Subject='
-
-        L = [ (tag_name,self.calcTagSize(d[tag_name],total, sizes),search_path + tag_name ) for tag_name in d.keys() ]
-        L.sort()
+        
+        if D:
+            D = sorted(D.items(), key=lambda t:t[1], reverse=1)[:limit]
+            if total > limit:
+                total = limit
+            
+            for tag_item in D:
+                tag_name = tag_item[0]
+                tag_qtd = tag_item[1]
+                
+                L.append((tag_name,self.calcTagSize(tag_qtd,total,sizes),search_path + tag_name))
+            
+            L.sort()
+                
+#        L = [ (tag_name,self.calcTagSize(D[tag_name],total, sizes),search_path + tag_name ) for tag_name in D.keys() ]
         return L
 
 
@@ -50,7 +73,7 @@ class TagCloud(BrowserView):
 
         return putils.getUserFriendlyTypes()
 
-    def getTagOccurrences(self,):
+    def getTagOccurrences(self):
         types = self.getSearchTypes()
         tags = self.getSearchSubjects()
         catalog = getToolByName(self.context, 'portal_catalog')
