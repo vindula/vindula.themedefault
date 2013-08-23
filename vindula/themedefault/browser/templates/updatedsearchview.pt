@@ -11,7 +11,7 @@
                   ">
     
     <script type="application/javascript" 
-            tal:attributes="src ${context/portal_url}/++resource++vindula.myvindula.views/js/myvindula_modal.js"></script>
+            tal:attributes="src string:${context/portal_url}/++resource++vindula.myvindula.views/js/myvindula_modal.js"></script>
     
     <div class="columns large-12 food">
       Encontrados
