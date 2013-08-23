@@ -9,7 +9,11 @@
                   batch_base_url string:${here_url}/@@vindula-search;
                   total python:batch.sequence_length+len(pessoas);
                   ">
-
+    
+    <script type="application/javascript">
+        defineLinkModal();
+    </script>
+    
     <div class="columns large-12 food">
       Encontrados
       <strong id="updated-search-results-number"
