@@ -57,6 +57,8 @@ jQuery(function ($) {
                     $('#rss-subscription a.link-feed').attr('href', function () {
                         return portal_url + '/search_rss?' + query;
                     });
+                    
+                    defineLinkModal();
                 });
         });
     };
