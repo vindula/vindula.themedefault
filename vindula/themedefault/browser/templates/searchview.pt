@@ -133,44 +133,29 @@
                           <dl class="searchResults">
                               <tal:cond-pessoas condition="pessoas">
                                 <tal:pessoas repeat="item pessoas" tal:condition="python:b_start == 0">
-                                  <a href="#" tal:attributes="href item/getUrlPerfil|nothing">
-                                        <div class="clear">
-                                            <div class="left content_details">
-                                                  <img class="left" width="50" height="50"
-                                                       tal:attributes="src item/getImageIcone">
-
-                                            </div>
-
-                                            <div class="left info-updates content_details">
-                                                <div>
-                                                    <strong tal:content="item/name|item/username"></strong> <br/>
-                                                    <span tal:content="structure item/getContato|string: "></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                      </a>
-                                      <br/>
+                                    <a class="profile-link" href="#" 
+                                       tal:attributes="href item/getUrlPerfil|nothing;
+                                                         data-username item/username;">
+                                        <img class="left" width="50" height="50"
+                                             style="margin-right: 10px;"
+                                             tal:attributes="src item/getImageIcone">
+                                        <strong tal:content="item/name|item/username"></strong> <br/>
+                                        <span tal:content="structure item/getContato|string: "></span>
+                                    </a>
+                                    <br/>
                                 </tal:pessoas>
                               </tal:cond-pessoas>
 
                               <tal:results repeat="item batch">
-
                                     <tal:cond condition="python: item.__class__.__name__ == 'FuncDetails' ">
-                                      <a href="#" tal:attributes="href item/getUrlPerfil|nothing">
-                                        <div class="clear">
-                                            <div class="left content_details">
-                                                  <img class="left" width="50" height="50"
-                                                       tal:attributes="src item/getImageIcone">
-
-                                            </div>
-
-                                            <div class="left info-updates content_details">
-                                                <div>
-                                                    <strong tal:content="item/name|item/username"></strong> <br/>
-                                                    <span tal:content="structure item/getContato|string: "></span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                      <a class="profile-link" href="#" 
+                                         tal:attributes="href item/getUrlPerfil|nothing;
+                                                         data-username item/username;">
+                                          <img class="left" width="50" height="50"
+                                               style="margin-right: 10px;"
+                                               tal:attributes="src item/getImageIcone">
+                                          <strong tal:content="item/name|item/username"></strong> <br/>
+                                          <span tal:content="structure item/getContato|string: "></span>
                                       </a>
                                       <br/>
                                     </tal:cond>
