@@ -11,7 +11,9 @@
                   ">
     
     <script type="application/javascript">
-        defineLinkModal();
+        $j(document).ready(function(){
+            defineLinkModal();
+        });
     </script>
     
     <div class="columns large-12 food">
