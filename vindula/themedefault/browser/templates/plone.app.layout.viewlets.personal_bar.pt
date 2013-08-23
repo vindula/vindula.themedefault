@@ -54,7 +54,8 @@
           tal:attributes="class python: recados_new and 'show-box-hidden has-count has-new vd-message' or 'show-box-hidden has-new vd-message' "
         >
         <a tal:attributes="href string:${context/portal_url}/@@myvindulalistrecados;" id="personaltools-recados">
-           <i class="vindula-icon-envelop"></i>
+           <span data-tooltip data-options="disable-for-touch: true"
+                 title="Mensagens"><i class="vindula-icon-envelop"></i></span>
            <span class="jewel-count" id="numero_recados">
                <span tal:content="recados_new"></span>
            </span>
@@ -119,7 +120,8 @@
           tal:attributes="class python: notificacoes_new and 'show-box-hidden has-count has-new vd-notify' or 'show-box-hidden has-new vd-notify' "
         >
         <a tal:attributes="href string:${context/portal_url}/" id="personaltools-recados">
-           <i class="vindula-icon-earth"></i>
+            <span data-tooltip data-options="disable-for-touch: true"
+                 title="Notificações"><i class="vindula-icon-earth"></i></span>
            <span class="jewel-count" id="numero_recados">
                <span tal:content="notificacoes_new"></span>
            </span>
@@ -191,7 +193,8 @@
 
       <li class="show-box-hidden">
           <a href="#">
-            <i class="vindula-icon-cog"></i>
+              <span data-tooltip data-options="disable-for-touch: true"
+                    title="Configurações"><i class="vindula-icon-cog"></i></span>
           </a>
 
           <div class="box-settings box-hidden">
