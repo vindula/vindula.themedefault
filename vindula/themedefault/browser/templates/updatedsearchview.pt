@@ -10,11 +10,8 @@
                   total python:batch.sequence_length+len(pessoas);
                   ">
     
-    <script type="application/javascript">
-        $j(document).ready(function(){
-            defineLinkModal();
-        });
-    </script>
+    <script type="application/javascript" 
+            tal:attributes="src ${context/portal_url}/++resource++vindula.myvindula.views/js/myvindula_modal.js"></script>
     
     <div class="columns large-12 food">
       Encontrados
