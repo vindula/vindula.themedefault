@@ -32,14 +32,14 @@ class TagCloud(BrowserView):
         total = 0
         #Range de tamanhos das tags
         sizes = [0.75,1,1.25]
-        D = {}
+        D = tagOccs
 
-        for result in tagOccs.get('result',[]):
-            if result.Subject:
-                subjects = result.Subject
-                total = total + 1
-                for subject in subjects:
-                    D[subject] = D.get(subject,0) + 1
+#        for result in tagOccs.get('result',[]):
+#            if result.Subject:
+#                subjects = result.Subject
+#                total = total + 1
+#                for subject in subjects:
+#                    D[subject] = D.get(subject,0) + 1
 
         search_path = '/@@vindula-search?Subject='
         
@@ -74,32 +74,45 @@ class TagCloud(BrowserView):
         return putils.getUserFriendlyTypes()
 
     def getTagOccurrences(self):
-        types = self.getSearchTypes()
-        tags = self.getSearchSubjects()
+        stats = {}
         catalog = getToolByName(self.context, 'portal_catalog')
+        index = catalog._catalog.indexes['Subject']
 
-        tagOccs = {}
-        query = {}
-        L = []
-
-        # query['portal_type'] = ['Post','Author']
-
-        query['path'] = getNavigationRoot(self.context)
-
-        for tag in tags:
-            result = []
-
-            query['Subject'] = tag
-
-            result = catalog.searchResults(**query)
-            if result:
-                tagOccs[tag] = len(result)
-                for i in result:
-                    L.append(i)
-
-        tagOccs['result'] = L
-        return tagOccs
-
+        for key in index.uniqueValues():
+            if key:
+                t = index._index.get(key)
+                if type(t) is not int:
+                    stats[str(key)] = len(t)
+                else:
+                    stats[str(key)] = 1
+        return stats
+        
+#        types = self.getSearchTypes()
+#        tags = self.getSearchSubjects()
+#        catalog = getToolByName(self.context, 'portal_catalog')
+#        
+#        tagOccs = {}
+#        query = {}
+#        L = []
+#
+#        # query['portal_type'] = ['Post','Author']
+#
+#        query['path'] = getNavigationRoot(self.context)
+#
+#        for tag in tags:
+#            result = []
+#
+#            query['Subject'] = tag
+#
+#            result = catalog.searchResults(**query)
+#            if result:
+#                tagOccs[tag] = len(result)
+#                for i in result:
+#                    L.append(i)
+#
+#        tagOccs['result'] = L
+#        return tagOccs
+    
     def getTagSize(self, tagWeight, thresholds):
         size = 0
         if tagWeight:
@@ -119,5 +132,3 @@ class TagCloud(BrowserView):
         maximum = max(sizes)
         return [pow(maximum - minimum + 1, float(i) / float(5))
             for i in range(0, 5)]
-
-
