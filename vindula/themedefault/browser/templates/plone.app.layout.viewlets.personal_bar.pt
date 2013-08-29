@@ -26,7 +26,8 @@
         <div class="my-profile left">
             <a class="profile-link" 
                tal:attributes="href string:${context/portal_url}/myvindulalistuser;
-                               data-username prefs_user/username;"> 
+                               data-type string:UserObject;
+                               data-value prefs_user/username;"> 
                 <img src="defaultUser.png" border="0" width="30px"
                      tal:attributes="src python:view_prof_pictures.getURLFotoUser(prefs_user.get('username'));
                                      alt prefs_user/name|nothing;
@@ -34,7 +35,8 @@
             </a>
         </div>
         <a tal:attributes="href string:${context/portal_url}/myvindulalistuser;
-                           data-username prefs_user/username;"
+                           data-type string:UserObject;
+                           data-value prefs_user/username;"
            tal:content="python: view_myvindula.name_user_top(prefs_user.get('name'))"
            class="left profile-link"
            id="personaltools-myvindula"
@@ -44,8 +46,13 @@
       <tal:rep define="unidadeprincipal python: prefs_user.get_unidadeprincipal()"
                condition="python: unidadeprincipal != None">
         <li>
-          <a href="" tal:content="unidadeprincipal/getSiglaOrTitle"
-                     tal:attributes="href unidadeprincipal/absolute_url" >Unidade</a>
+          <a href="" class="structure-link"
+             tal:attributes="href unidadeprincipal/absolute_url;
+                             data-type string:Structure;
+                             data-value unidadeprincipal/UID;" 
+             tal:content="unidadeprincipal/getSiglaOrTitle">
+              Unidade
+          </a>
         </li>
       </tal:rep>
 

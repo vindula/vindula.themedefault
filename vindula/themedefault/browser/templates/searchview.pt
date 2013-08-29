@@ -135,7 +135,8 @@
                                 <tal:pessoas repeat="item pessoas" tal:condition="python:b_start == 0">
                                     <a class="profile-link" href="#" 
                                        tal:attributes="href item/getUrlPerfil|nothing;
-                                                         data-username item/username;">
+                                                       data-type string:UserObject;
+                                                       data-value item/username;">
                                         <img class="left" width="50" height="50"
                                              style="margin-right: 10px;"
                                              tal:attributes="src item/getImageIcone">
@@ -150,7 +151,8 @@
                                     <tal:cond condition="python: item.__class__.__name__ == 'FuncDetails' ">
                                       <a class="profile-link" href="#" 
                                          tal:attributes="href item/getUrlPerfil|nothing;
-                                                         data-username item/username;">
+                                                         data-type string:UserObject;
+                                                         data-value item/username;">
                                           <img class="left" width="50" height="50"
                                                style="margin-right: 10px;"
                                                tal:attributes="src item/getImageIcone">
