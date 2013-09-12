@@ -36,6 +36,10 @@
         <copy css:content="#portal-globalnav"
               css:theme="#globalnav-vindula" />
 
+        <!-- TILE BANNER COMPOST -->
+        <copy css:content="#viewlet-header-portal"
+              css:theme="#viewlet-header-portal" />
+
 	<!-- Portal Content -->
     	<copy css:content-children="#portal-columns"
               css:theme="#portal-columns" />
