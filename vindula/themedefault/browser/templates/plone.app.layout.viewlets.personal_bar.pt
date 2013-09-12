@@ -105,7 +105,7 @@
                                 <div class="left info-updates">
                                     <div>
                                         <strong tal:content="user_recado/name|recado/username"></strong> diz:
-                                        <span tal:content="python: recado.text[:50]"></span>
+                                        <span tal:content="python: view_myvindula.getOnlySubjectMessag(recado.text[:50])"></span>
                                     </div>
                                     <div>
                                         <span tal:content="python:view_myvindula.getTimeAgo(recado.get_date_created,'Enviada')"></span>
