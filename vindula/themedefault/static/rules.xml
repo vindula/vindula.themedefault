@@ -30,8 +30,8 @@
         <replace css:content="#portal-logo"
                  css:theme="#portal-logo" />
         <!-- Busca do portal -->
-        <copy css:content="#portal-searchbox"
-              css:theme="#portal-searchbox" />
+        <replace css:content="#portal-searchbox"
+                 css:theme="#portal-searchbox" />
         <!-- Portal Global Navigation -->
         <copy css:content="#portal-globalnav"
               css:theme="#globalnav-vindula" />
