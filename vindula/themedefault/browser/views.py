@@ -12,6 +12,8 @@ from plone.memoize import ram
 from time import time
 import requests
 
+from vindula.myvindula.cache import *
+
 class ThemeVindulaView(BrowserView):
     implements(IThemeVindulaView)
 
@@ -40,20 +42,26 @@ class LoadScssView(grok.View):
 
     def render(self):
         return 'OK'
-
-    @ram.cache(lambda *args: time() // (60 * 60))
+    
     def load(self):
-        uri = '/vindula-api/theme/load_scss/'
-        result = ''
+        key = hashlib.md5('LoadScss').hexdigest()
+        key = 'LoadScssView:load:%s' % key
 
-        # import pdb;pdb.set_trace()
-        url = self.context.portal_url() + uri
-        scss = requests.get(url)
-        result = scss.text.replace('/>',' id="new-theme" />')
+        cached_data = get_redis_cache(key)
+        
+        if cached_data:
+            result = cached_data
+        else:
+            uri = '/vindula-api/theme/load_scss/'
+            result = ''
+    
+            url = self.context.portal_url() + uri
+            scss = requests.get(url)
+            result = scss.text.replace('/>',' id="new-theme" />')
+            
+            set_redis_cache(key, 'LoadScssView:load:keys', result)
 
         return result
-
-
 
 class MacroLogoTopView(grok.View):
     grok.context(Interface)
@@ -200,3 +208,47 @@ class SectionsMenuView(grok.View):
             if 'myvindulalistuser' in part:
                 return 'pessoas'
         return ''
+    
+class TextFooterView(grok.View):
+    grok.context(Interface)
+    grok.require('zope2.View')
+    grok.name('view_text_footer')
+    
+    
+    def getTextFooter(self):
+        portal = self.context.portal_url.getPortalObject()
+        text = ''
+        if 'control-panel-objects' in portal.keys():
+            control = portal.get('control-panel-objects')
+            if 'ThemeConfig' in control.keys():
+                theme_config = control.get('ThemeConfig')
+                text = theme_config.getText()
+        return text
+    
+class TopoBarraView(grok.View):
+    grok.context(Interface)
+    grok.require('zope2.View')
+    grok.name('topo_barra_view')
+    
+    def getTopoBarra(self):
+        portal = self.context.portal_url.getPortalObject()
+        html = ''
+        if 'control-panel-objects' in portal.keys():
+            control = portal.get('control-panel-objects')
+            if 'ThemeConfig' in control.keys():
+                theme_config = control.get('ThemeConfig')
+                html = theme_config.getHTML_header()
+        return html
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

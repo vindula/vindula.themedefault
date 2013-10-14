@@ -1,0 +1,7 @@
+<metal:macro metal:define-macro="text_footer"
+             tal:define="view_text nocall:context/view_text_footer;
+                         text view_text/getTextFooter;">
+    
+    <p tal:replace="structure text"></p>
+    
+</metal:macro>

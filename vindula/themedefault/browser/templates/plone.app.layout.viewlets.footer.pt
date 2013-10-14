@@ -1,3 +1,7 @@
 <div id="footer_tags">
     <div metal:use-macro="context/vindula_macro_TagCloud/macros/tagCloud"></div>
 </div>
+
+<div id="footer_barra">
+    <div metal:use-macro="context/view_text_footer/macros/text_footer"></div>
+</div>

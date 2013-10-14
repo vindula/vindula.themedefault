@@ -17,9 +17,15 @@
     <rules css:if-content="#visual-portal-wrapper">
         <theme href="new_theme.html" />
     </rules>
+    
+    <!-- Mescla as classes do body do diazo com as do plone -->
+    <merge attributes="class" css:content="body" css:theme="body"  />
 
 
 	<!-- Portal Top -->
+        <!-- HTML que será rendereizado caso o campo de HTML seja populado -->
+        <replace css:content="#topo_barra"
+                 css:theme="#topo_barra" />
         <!-- Links Corporativos -->
         <replace css:content="#links_corporativos"
                  css:theme="#links_corporativos" />
@@ -51,6 +57,8 @@
               css:theme="#nav_rodape" />
         <copy css:content="#portal-siteactions"
               css:theme="#sitemap" />
+        <replace css:content="#footer_barra"
+                 css:theme="#footer_barra" />
 
 
 	<!-- Vindula News Content Type -->

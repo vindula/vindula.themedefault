@@ -1,0 +1,7 @@
+<metal:macro metal:define-macro="topo_barra"
+             tal:define="view_topo nocall:context/topo_barra_view;
+                         html view_topo/getTopoBarra;">
+    
+    <p tal:replace="structure html"></p>
+    
+</metal:macro>

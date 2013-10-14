@@ -1,3 +1,7 @@
+<div id="topo_barra">
+    <div metal:use-macro="context/topo_barra_view/macros/topo_barra"></div>
+</div>
+
 <div id="portal-personaltools-wrapper"
      i18n:domain="plone"
      tal:define="checkPermission nocall: context/portal_membership/checkPermission;
