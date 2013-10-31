@@ -1,3 +1,12 @@
+<tal:def define="view_footer nocall:context/vindula-macro-footer;
+                 theme_config view_footer/getObjectThemeConfig|nothing;">
+
+    <tal:cond condition="theme_config/getAtiva_busca_footer|nothing">
+        <div class="use-footer-search"></div>
+    </tal:cond>
+
+</tal:def>
+
 <div id="footer_tags">
     <div metal:use-macro="context/vindula_macro_TagCloud/macros/tagCloud"></div>
 </div>

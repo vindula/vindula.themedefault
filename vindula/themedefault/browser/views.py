@@ -98,6 +98,15 @@ class MacroFooterView(MacroLogoTopView):
     grok.name('vindula-macro-footer')
 
     url = "/++resource++vindula.controlpanel/imagens/logo_rodape.png"
+    
+    def getObjectThemeConfig(self):
+        portal = self.context.portal_url.getPortalObject()
+        theme_config = None
+        if 'control-panel-objects' in portal.keys():
+            control = portal.get('control-panel-objects')
+            if 'ThemeConfig' in control.keys():
+                theme_config = control.get('ThemeConfig')
+        return theme_config
 
 
 class ManageLinksUserView(grok.View):
@@ -239,16 +248,3 @@ class TopoBarraView(grok.View):
                 theme_config = control.get('ThemeConfig')
                 html = theme_config.getHTML_header()
         return html
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
