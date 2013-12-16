@@ -1,15 +1,18 @@
-<tal:def define="view_footer nocall:context/vindula-macro-footer;
-                 theme_config view_footer/getObjectThemeConfig|nothing;">
 
-    <tal:cond condition="theme_config/getAtiva_busca_footer|nothing">
+<tal:def define="view_footer nocall:context/vindula-macro-footer;
+                 theme_config view_footer/getObjectThemeConfig|nothing;
+                 ativa_busca theme_config/getAtiva_busca_footer|nothing;">
+
+    <tal:cond condition="ativa_busca">
         <div class="use-footer-search"></div>
     </tal:cond>
 
-</tal:def>
+    <div class="large-8 columns" id="footer_tags"
+         tal:attributes="class python: 'large-%s columns' % (ativa_busca and '8' or '12')">
+        <div metal:use-macro="context/vindula_macro_TagCloud/macros/tagCloud"></div>
+    </div>
 
-<div id="footer_tags">
-    <div metal:use-macro="context/vindula_macro_TagCloud/macros/tagCloud"></div>
-</div>
+</tal:def>
 
 <div id="footer_barra">
     <div metal:use-macro="context/view_text_footer/macros/text_footer"></div>

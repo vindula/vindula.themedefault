@@ -50,8 +50,8 @@
               css:theme="#portal-columns" />
 
 	<!-- Portal Footer -->
-        <copy css:content="#footer_tags" 
-              css:theme="#footer_tags" />
+        <replace css:content="#footer_tags" 
+                 css:theme="#footer_tags" />
 	    <copy css:content-children="#navigation-viewlet" 
               css:theme="#nav_rodape" />
         <copy css:content="#portal-siteactions"
