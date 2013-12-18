@@ -40,11 +40,24 @@
         <input type="hidden" name="advanced_search" value="False" />
         <input type="hidden" name="sort_on" value="" />
 
-        <div id="search-field" i18n:domain="plone" style="margin: auto; width: 320px; ">
+        <div id="search-field" i18n:domain="plone" style="margin: auto; width: 320px;">
 
             <div class="row">
-              <div class="large-12 columns">
-                  <input type="radio" name="facet.tipo" value="intranet"
+              <div class="large-12 columns" style="padding:0;">
+                  <select name="facet.tipo" style="width:100%;">
+                      <option value="intranet"
+                              tal:attributes="selected python: tipo == 'intranet' and 'selected' or ''">Intranet</option>
+                      <option value="pessoas"
+                              tal:attributes="selected python: tipo == 'pessoas' and 'selected' or ''">Pessoas</option>
+                      <option value="servico"
+                              tal:attributes="selected python: tipo == 'servico' and 'selected' or ''">Serviço</option>
+                      <option value="biblioteca"
+                              tal:attributes="selected python: tipo == 'biblioteca' and 'selected' or ''">Biblioteca</option>
+                      <option value="structure"
+                              tal:attributes="selected python: tipo == 'structure' and 'selected' or ''">Unidade Organizacional</option>
+                  </select>
+                  
+                  <!--input type="radio" name="facet.tipo" value="intranet"
                          tal:attributes="checked python: tipo == 'intranet' and 'checked' or ''" />
                   <span class="radio">Intranet</span>
 
@@ -58,7 +71,7 @@
 
                   <input type="radio" name="facet.tipo" value="biblioteca"
                          tal:attributes="checked python: tipo == 'biblioteca' and 'checked' or ''" />
-                  <span class="radio">Biblioteca</span>
+                  <span class="radio">Biblioteca</span-->
               </div>
             </div>
             <div class="row">

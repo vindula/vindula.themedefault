@@ -82,7 +82,11 @@ var livesearch = (function () {
             }
 
             // seleciona a are do portal
-            var $type = $form.find('input:checked');
+//            var $type = $form.find('input:checked');
+//            $$query['facet.tipo'] = $type.val();
+            
+            // seleciona a are do portal
+            var $type = $form.find(':selected');
             $$query['facet.tipo'] = $type.val();
 
 

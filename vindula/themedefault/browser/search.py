@@ -35,6 +35,7 @@ class SearchView(grok.View, Search):
         tipo_busca_session = self.request.SESSION.get('facet.tipo')
 
         tipo_busca = self.request.form.get('facet.tipo', term_session)
+
         term = self.request.form.get('SearchableText', tipo_busca_session)
 
         if (not term_session and term) or (term_session != term):
@@ -73,6 +74,9 @@ class SearchView(grok.View, Search):
 
         elif tipo_busca == 'biblioteca':
             query['portal_type'] = ['Image','File']
+        
+        elif tipo_busca == 'structure':
+            query['portal_type'] = ['OrganizationalStructure']
 
         return super(SearchView,self).results(query=query,batch=batch,b_size=b_size, b_start=b_start),results_pessoas
 
@@ -132,6 +136,9 @@ class UpdatedSearchView(grok.View, Search):
 
         elif tipo_busca == 'biblioteca':
             params['portal_type'] = ['Image','File']
+            
+        elif tipo_busca == 'structure':
+            query['portal_type'] = ['OrganizationalStructure']
 
         params.update(query)
         return super(UpdatedSearchView,self).results(query=params,batch=batch,b_size=b_size, b_start=b_start),results_pessoas
