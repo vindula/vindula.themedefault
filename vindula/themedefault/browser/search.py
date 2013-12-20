@@ -2,6 +2,7 @@
 from five import grok
 from zope.interface import Interface
 
+from plone.app.contentlisting.interfaces import IContentListing
 from Products.CMFPlone.PloneBatch import Batch
 from Products.PythonScripts.standard import url_quote_plus
 from plone.app.search.browser import Search
@@ -9,6 +10,7 @@ from plone.app.search.browser import Search
 from Products.CMFCore.utils import getToolByName
 
 from vindula.myvindula.models.funcdetails import FuncDetails
+from vindula.content.models.content import ModelsContent
 
 
 grok.templatedir('templates')
@@ -75,10 +77,28 @@ class SearchView(grok.View, Search):
         elif tipo_busca == 'biblioteca':
             query['portal_type'] = ['Image','File']
         
-        elif tipo_busca == 'structure':
+        
+        if tipo_busca == 'structure':
+            p_catalog = getToolByName(self.context, 'portal_catalog')
             query['portal_type'] = ['OrganizationalStructure']
+            results_catalog = p_catalog(**query)
+            
+            UIDS=[]
+            for item in results_catalog:
+                UIDS.append(item.UID)
+                
+            data_structures = ModelsContent.getAllByContentType('OrganizationalStructure', True)
+            for structure in data_structures:
+                if structure.uid in UIDS:
+                    UIDS.remove(structure.uid)
+            
+            result = [i for i in results_catalog if i.UID in UIDS]
+            result = IContentListing(result)
+            result = Batch(result, b_size, b_start)
+        else:   
+            result = super(SearchView,self).results(query=query,batch=batch,b_size=b_size, b_start=b_start)
 
-        return super(SearchView,self).results(query=query,batch=batch,b_size=b_size, b_start=b_start),results_pessoas
+        return result, results_pessoas
 
 
 class UpdatedSearchView(grok.View, Search):
@@ -137,8 +157,26 @@ class UpdatedSearchView(grok.View, Search):
         elif tipo_busca == 'biblioteca':
             params['portal_type'] = ['Image','File']
             
-        elif tipo_busca == 'structure':
+        if tipo_busca == 'structure':
+            p_catalog = getToolByName(self.context, 'portal_catalog')
             query['portal_type'] = ['OrganizationalStructure']
+            results_catalog = p_catalog(**query)
+            
+            UIDS=[]
+            for item in results_catalog:
+                UIDS.append(item.UID)
+                
+            data_structures = ModelsContent.getAllByContentType('OrganizationalStructure', True)
+            for structure in data_structures:
+                if structure.uid in UIDS:
+                    UIDS.remove(structure.uid)
+            
+            result = [i for i in results_catalog if i.UID in UIDS]
+            result = IContentListing(result)
+            result = Batch(result, b_size, b_start)
+        else:   
+            result = super(SearchView,self).results(query=query,batch=batch,b_size=b_size, b_start=b_start)
 
         params.update(query)
-        return super(UpdatedSearchView,self).results(query=params,batch=batch,b_size=b_size, b_start=b_start),results_pessoas
+
+        return result, results_pessoas
