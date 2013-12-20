@@ -172,7 +172,9 @@
                         <tal:def define="user_actor python:view_myvindula.get_prefs_user(notificacao.actor);
                                          obj_action python:view_myvindula.lookupObject(notificacao.content.uid);">
 
-                          <a href="#" tal:attributes="href obj_action/absolute_url|nothing">
+                          <a href="#" tal:define="obj_type obj_action/portal_type|nothing;
+                                                  url_view python: obj_type=='File' and '/file_view' or ''"
+                                      tal:attributes="href string:${obj_action/absolute_url|nothing}${url_view}">
                               <div class="clear">
                                   <div class="circle-mark">
                                   </div>
