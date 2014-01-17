@@ -212,6 +212,10 @@ class MenuViewlet(grok.Viewlet):
                     L.append(obj.getObject())
             return L
         
+    def getTypeMenu (self, obj):
+        type = obj.portal_type
+        return type
+        
     def getSubMenu(self):
         portal = self.context.portal_url.getPortalObject()
         if self.context.portal_type == 'HomePage':

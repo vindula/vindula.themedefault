@@ -7,10 +7,19 @@
 			<li tal:repeat="menu menus" tal:attributes="class python: viewlet.isSelected(menu)">
 				
 				<tal:def define="subTabs python: viewlet.getSubMenuDrop(menu)">
+					<tal:link condition="python: viewlet.getTypeMenu(menu) != 'InternalLink'">
 					<a tal:content="menu/title" tal:attributes="href menu/absolute_url;
 					                                            alt menu/title;
 															    class python: 'padding-bottom padding-bottom-FF cor-hover ' + '%s' % 'contains-subtab' 
 																			  if subTabs else 'padding-bottom padding-bottom-FF cor-hover';">Menu</a>
+					</tal:link>
+					<tal:link condition="python: viewlet.getTypeMenu(menu) == 'InternalLink'">
+					<a tal:content="menu/title" tal:attributes="href menu/absolute_url;
+					                                            alt menu/title;
+															    class python: 'padding-bottom padding-bottom-FF cor-hover ' + '%s' % 'contains-subtab' 
+																			  if subTabs else 'padding-bottom padding-bottom-FF cor-hover';
+																			  target menu/get_NewTab">Menu</a>
+					</tal:link>
 					<ul class="nivel2" tal:condition="subTabs">
 						<tal:rep repeat="subTab subTabs">
 							<li tal:condition="subTab"
@@ -22,14 +31,25 @@
 							    tal:attributes="id string:portalsubtab-${subtid};
 							                    class python: viewlet.isSelected(obj)">
 								
-								<a class="hide" href="" tal:attributes="href obj/absolute_url|nothing;
-								                                        title obj/Description|nothing;">
-								                                        
-								        <tal:cont content="obj/Title|nothing">SubTab Name</tal:cont>
-										<img tal:condition="python: subSubTabs and sub_nivel"
-											 tal:attributes="src string:${context/portal_url|nothing}/++resource++vindula.themedefault/images/icons/seta_menu.gif">
-								</a>
-								
+								<tal:link condition="python: viewlet.getTypeMenu(obj) != 'InternalLink'">
+									<a class="hide" href="" tal:attributes="href obj/absolute_url|nothing;
+									                                        title obj/Description|nothing;">
+									                                        
+									        <tal:cont content="obj/Title|nothing">SubTab Name</tal:cont>
+											<img tal:condition="python: subSubTabs and sub_nivel"
+												 tal:attributes="src string:${context/portal_url|nothing}/++resource++vindula.themedefault/images/icons/seta_menu.gif">
+									</a>
+								</tal:link>
+								<tal:link condition="python: viewlet.getTypeMenu(obj) == 'InternalLink'">
+									<a class="hide" href="" tal:attributes="href obj/absolute_url|nothing;
+									                                        title obj/Description|nothing;
+																			target obj/get_NewTab">
+									                                        
+									        <tal:cont content="obj/Title|nothing">SubTab Name</tal:cont>
+											<img tal:condition="python: subSubTabs and sub_nivel"
+												 tal:attributes="src string:${context/portal_url|nothing}/++resource++vindula.themedefault/images/icons/seta_menu.gif">
+									</a>
+								</tal:link>
 								<tal:def tal:condition="sub_nivel|nothing" >
 									<ul class="nivel3" tal:condition="subSubTabs">
 										<tal:rep repeat="subSubTab subSubTabs">
@@ -38,10 +58,17 @@
 											                subtid obj/getId|nothing"
 											    tal:attributes="id string:portalsubtab-${subtid};
 											                    class python: viewlet.isSelected(obj)">
-												
-												<a class="hide" href="" tal:content="obj/Title|nothing"
-												                        tal:attributes="href obj/absolute_url|nothing;
-												                                        title obj/Description|nothing;">SubTab Name</a>
+												<tal:link condition="python: viewlet.getTypeMenu(obj) !='InternalLink'">
+													<a class="hide" href="" tal:content="obj/Title|nothing"
+													                        tal:attributes="href obj/absolute_url|nothing;
+													                                        title obj/Description|nothing;">SubTab Name</a>
+												</tal:link>
+												<tal:link condition="python: viewlet.getTypeMenu(obj) !='InternalLink'">
+													<a class="hide" href="" tal:content="obj/Title|nothing"
+													                        tal:attributes="href obj/absolute_url|nothing;
+													                                        title obj/Description|nothing;
+																							target obj/get_NewTab|nothing">SubTab Name</a>
+												</tal:link>
 											</li>
 										</tal:rep>
 									</ul>
