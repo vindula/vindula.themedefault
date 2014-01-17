@@ -10,6 +10,10 @@
     <prepend theme="/html/head"
              css:content="#new-theme" />
 
+    <!-- Adição dos links de kss -->
+    <prepend theme="/html/head"
+             css:content="link[data-rel='kinetic-stylesheet']" />             
+
     <!--Remove Plone Favicon-->
     <drop css:content="link[rel='shortcut icon']" />
 
