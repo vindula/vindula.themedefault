@@ -63,7 +63,7 @@
 													                        tal:attributes="href obj/absolute_url|nothing;
 													                                        title obj/Description|nothing;">SubTab Name</a>
 												</tal:link>
-												<tal:link condition="python: viewlet.getTypeMenu(obj) !='InternalLink'">
+												<tal:link condition="python: viewlet.getTypeMenu(obj) =='InternalLink'">
 													<a class="hide" href="" tal:content="obj/Title|nothing"
 													                        tal:attributes="href obj/absolute_url|nothing;
 													                                        title obj/Description|nothing;
