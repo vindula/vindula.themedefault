@@ -132,6 +132,7 @@ class UpdatedSearchView(grok.View, Search):
         searchterms = url_quote_plus(r)
 
         params = {'SearchableText': r }
+
         if tipo_busca == 'intranet':
             results_pessoas = FuncDetails.get_AllFuncDetails(unicode(_q, 'utf-8'))[:2]
             plone_utils = getToolByName(self.context, 'plone_utils')
@@ -142,7 +143,7 @@ class UpdatedSearchView(grok.View, Search):
             #for i in ['Image','File', 'Servico']:
             #    all_types.remove(i)
 
-            params['portal_type'] = all_types
+            query['portal_type'] = all_types
 
         elif tipo_busca == 'pessoas':
             results = FuncDetails.get_AllFuncDetails(unicode(_q, 'utf-8'))
@@ -152,10 +153,10 @@ class UpdatedSearchView(grok.View, Search):
             return results,[]
 
         elif tipo_busca == 'servico':
-            params['portal_type'] = ['Servico']
+            query['portal_type'] = ['Servico']
 
         elif tipo_busca == 'biblioteca':
-            params['portal_type'] = ['Image','File']
+            query['portal_type'] = ['Image','File']
             
         if tipo_busca == 'structure':
             p_catalog = getToolByName(self.context, 'portal_catalog')
@@ -175,7 +176,7 @@ class UpdatedSearchView(grok.View, Search):
             result = IContentListing(result)
             result = Batch(result, b_size, b_start)
         else:   
-            result = super(SearchView,self).results(query=query,batch=batch,b_size=b_size, b_start=b_start)
+            result = super(UpdatedSearchView,self).results(query=query,batch=batch,b_size=b_size, b_start=b_start)
 
         params.update(query)
 

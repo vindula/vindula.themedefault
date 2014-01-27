@@ -44,7 +44,7 @@
 
             <div class="row">
               <div class="large-12 columns" style="padding:0;">
-                  <select name="facet.tipo" style="width:100%;">
+                  <!--<select name="facet.tipo" style="width:100%;">
                       <option value="intranet"
                               tal:attributes="selected python: tipo == 'intranet' and 'selected' or ''">Intranet</option>
                       <option value="pessoas"
@@ -55,23 +55,27 @@
                               tal:attributes="selected python: tipo == 'biblioteca' and 'selected' or ''">Biblioteca</option>
                       <option value="structure"
                               tal:attributes="selected python: tipo == 'structure' and 'selected' or ''">Unidade Organizacional</option>
-                  </select>
+                  </select> -->
                   
-                  <!--input type="radio" name="facet.tipo" value="intranet"
+                 <input type="radio" name="facet.tipo" value="intranet"
                          tal:attributes="checked python: tipo == 'intranet' and 'checked' or ''" />
                   <span class="radio">Intranet</span>
+
+				  <input type="radio" name="facet.tipo" value="structure"
+                         tal:attributes="checked python: tipo == 'structure' and 'selected' or ''" />
+                  <span class="radio">UO</span>
 
                   <input type="radio" name="facet.tipo" value="pessoas"
                          tal:attributes="checked python: tipo == 'pessoas' and 'checked' or ''" />
                   <span class="radio">Pessoas</span>
 
                   <input type="radio" name="facet.tipo" value="servico"
-                         tal:attributes="checked python: tipo == 'servico' and 'checked' or ''"  />
+                         tal:attributes="checked python: tipo == 'servico' and 'checked' or ''" />
                   <span class="radio">Serviço</span>
 
                   <input type="radio" name="facet.tipo" value="biblioteca"
                          tal:attributes="checked python: tipo == 'biblioteca' and 'checked' or ''" />
-                  <span class="radio">Biblioteca</span-->
+                  <span class="radio">Biblioteca</span>
               </div>
             </div>
             <div class="row">
