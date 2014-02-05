@@ -27,13 +27,13 @@ class ThemeVindulaView(BrowserView):
 
         if not sl and not sr:
             # we don't have columns, thus conten takes the whole width
-            return "columns large-12"
+            return "columns large-12 medium-12"
         elif sl and sr:
             # In case we have both columns, content takes 50% of the whole
             # width and the rest 50% is spread between the columns
-            return "columns large-6"
+            return "columns large-6 medium-9"
         else:
-            return "columns large-9"
+            return "columns large-9 medium-9"
 
 class LoadScssView(grok.View):
     grok.context(Interface)
