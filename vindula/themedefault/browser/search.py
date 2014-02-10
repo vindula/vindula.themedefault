@@ -130,8 +130,8 @@ class UpdatedSearchView(grok.View, Search):
         r = " AND ".join(r)
         r = quote_bad_chars(r) + '*'
         searchterms = url_quote_plus(r)
-
-        params = {'SearchableText': r }
+        
+        query = {'SearchableText': r }
 
         if tipo_busca == 'intranet':
             results_pessoas = FuncDetails.get_AllFuncDetails(unicode(_q, 'utf-8'))[:2]
@@ -178,6 +178,6 @@ class UpdatedSearchView(grok.View, Search):
         else:   
             result = super(UpdatedSearchView,self).results(query=query,batch=batch,b_size=b_size, b_start=b_start)
 
-        params.update(query)
+#         query.update(query)
 
         return result, results_pessoas
