@@ -248,7 +248,6 @@ class CorporateLinksViewlet(grok.Viewlet):
 # #                        'url'        : item_url,
 # #                        'description': item.Description}
 #                 #result.append(data)
-#                 #import pdb;pdb.set_trace()
 #                 #obj = item.getObject()
 #                 result.append(item)
 #         return result

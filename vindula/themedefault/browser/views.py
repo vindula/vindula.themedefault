@@ -186,7 +186,6 @@ class ManageTopicFooterView(grok.View):
 
         result = p_catalog(**query)
         if result:
-            # import pdb; pdb.set_trace()
             for item in result:
                 D = {}
                 obj = item.getObject()
