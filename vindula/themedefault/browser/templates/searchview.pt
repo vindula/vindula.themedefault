@@ -157,7 +157,7 @@
                                         <img class="left" width="50" height="50"
                                              style="margin-right: 10px;"
                                              tal:attributes="src item/getImageIcone">
-                                        <strong tal:content="item/nickname|item/name|item/username"></strong> <br/>
+                                        <strong tal:content="python: item.get('nickname', item.get('name', item.get('username', '')))"></strong> <br/>
                                         <span tal:content="structure item/getContato|string: "></span>
                                     </a>
                                     <br/>
@@ -173,7 +173,7 @@
                                           <img class="left" width="50" height="50"
                                                style="margin-right: 10px;"
                                                tal:attributes="src item/getImageIcone">
-                                          <strong tal:content="item/nickname|item/name|item/username"></strong> <br/>
+                                          <strong tal:content="python: item.get('nickname', item.get('name', item.get('username', '')))"></strong> <br/>
                                           <span tal:content="structure item/getContato|string: "></span>
                                       </a>
                                       <br/>
