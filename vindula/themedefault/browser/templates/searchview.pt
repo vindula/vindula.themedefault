@@ -157,7 +157,7 @@
                                         <img class="left" width="50" height="50"
                                              style="margin-right: 10px;"
                                              tal:attributes="src item/getImageIcone">
-                                        <strong tal:content="item/nickname|item/name|item/username"></strong> <br/>
+                                        <strong tal:content="python: item.get('nickname', item.get('name', item.get('username', '')))"></strong> <br/>
                                         <span tal:content="structure item/getContato|string: "></span>
                                     </a>
                                     <br/>
@@ -173,7 +173,7 @@
                                           <img class="left" width="50" height="50"
                                                style="margin-right: 10px;"
                                                tal:attributes="src item/getImageIcone">
-                                          <strong tal:content="item/nickname|item/name|item/username"></strong> <br/>
+                                          <strong tal:content="python: item.get('nickname', item.get('name', item.get('username', '')))"></strong> <br/>
                                           <span tal:content="structure item/getContato|string: "></span>
                                       </a>
                                       <br/>
@@ -184,7 +184,7 @@
                                         <dt tal:attributes="class item/ContentTypeClass">
                                           <img tal:replace="structure item/getIcon" />
                                           <a href="#"
-                                             tal:attributes="href python:item.portal_type == 'File' and item.getURL()+'/file_view' or item.getURL();
+                                             tal:attributes="href python: item.getURL() + '/view';
                                                              class string:state-${item/review_state}"
                                              tal:content="item/Title" />
                                         </dt>
