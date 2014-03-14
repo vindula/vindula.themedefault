@@ -150,7 +150,6 @@
                           <dl class="searchResults">
                               <tal:cond-pessoas condition="pessoas">
                                 <tal:pessoas repeat="item pessoas" tal:condition="python:b_start == 0">
-                                    <dt class="clear">
                                     <a class="profile-link" href="#" 
                                        tal:attributes="href item/getUrlPerfil|nothing;
                                                        data-type string:UserObject;
@@ -158,29 +157,26 @@
                                         <img class="left" width="50" height="50"
                                              style="margin-right: 10px;"
                                              tal:attributes="src item/getImageIcone">
-                                        <strong tal:content="python: item.get('nickname', item.get('name', item.get('username', '')))"></strong> <br/>
+                                        <strong tal:content="item/nickname|item/name|item/username"></strong> <br/>
                                         <span tal:content="structure item/getContato|string: "></span>
                                     </a>
                                     <br/>
-                                    </dt>
                                 </tal:pessoas>
                               </tal:cond-pessoas>
 
                               <tal:results repeat="item batch">
                                     <tal:cond condition="python: item.__class__.__name__ == 'FuncDetails' ">
-                                      <dt class="clear">
-                                          <a class="profile-link" href="#" 
-                                             tal:attributes="href item/getUrlPerfil|nothing;
-                                                             data-type string:UserObject;
-                                                             data-value item/username;">
-                                              <img class="left" width="50" height="50"
-                                                   style="margin-right: 10px;"
-                                                   tal:attributes="src item/getImageIcone">
-                                              <strong tal:content="python: item.get('nickname', item.get('name', item.get('username', '')))"></strong> <br/>
-                                              <span tal:content="structure item/getContato|string: "></span>
-                                          </a>
-                                          <br/>
-                                      </dt>
+                                      <a class="profile-link" href="#" 
+                                         tal:attributes="href item/getUrlPerfil|nothing;
+                                                         data-type string:UserObject;
+                                                         data-value item/username;">
+                                          <img class="left" width="50" height="50"
+                                               style="margin-right: 10px;"
+                                               tal:attributes="src item/getImageIcone">
+                                          <strong tal:content="item/nickname|item/name|item/username"></strong> <br/>
+                                          <span tal:content="structure item/getContato|string: "></span>
+                                      </a>
+                                      <br/>
                                     </tal:cond>
 
                                     <tal:cond condition="python: item.__class__.__name__ != 'FuncDetails' ">
@@ -188,7 +184,7 @@
                                         <dt tal:attributes="class item/ContentTypeClass">
                                           <img tal:replace="structure item/getIcon" />
                                           <a href="#"
-                                             tal:attributes="href python: item.getURL() + '/view';
+                                             tal:attributes="href python:item.portal_type == 'File' and item.getURL()+'/file_view' or item.getURL();
                                                              class string:state-${item/review_state}"
                                              tal:content="item/Title" />
                                         </dt>

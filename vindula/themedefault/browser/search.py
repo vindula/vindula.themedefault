@@ -65,7 +65,7 @@ class SearchView(grok.View, Search):
             query['portal_type'] = all_types
 
         elif tipo_busca == 'pessoas':
-            results = FuncDetails.get_AllFuncDetails(unicode(term, 'utf-8'), search_all_fields=False)
+            results = FuncDetails.get_AllFuncDetails(unicode(term, 'utf-8'))
             if batch:
                 results = Batch(results, b_size, b_start)
 
@@ -146,7 +146,7 @@ class UpdatedSearchView(grok.View, Search):
             query['portal_type'] = all_types
 
         elif tipo_busca == 'pessoas':
-            results = FuncDetails.get_AllFuncDetails(unicode(_q, 'utf-8'), search_all_fields=False)
+            results = FuncDetails.get_AllFuncDetails(unicode(_q, 'utf-8'))
             if batch:
                 results = Batch(results, b_size, b_start)
 
