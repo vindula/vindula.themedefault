@@ -150,7 +150,6 @@
                           <dl class="searchResults">
                               <tal:cond-pessoas condition="pessoas">
                                 <tal:pessoas repeat="item pessoas" tal:condition="python:b_start == 0">
-                                    <dt class="clear">
                                     <a class="profile-link" href="#" 
                                        tal:attributes="href item/getUrlPerfil|nothing;
                                                        data-type string:UserObject;
@@ -162,13 +161,11 @@
                                         <span tal:content="structure item/getContato|string: "></span>
                                     </a>
                                     <br/>
-                                    </dt>
                                 </tal:pessoas>
                               </tal:cond-pessoas>
 
                               <tal:results repeat="item batch">
                                     <tal:cond condition="python: item.__class__.__name__ == 'FuncDetails' ">
-                                      <dt class="clear">
                                       <a class="profile-link" href="#" 
                                          tal:attributes="href item/getUrlPerfil|nothing;
                                                          data-type string:UserObject;
@@ -180,7 +177,6 @@
                                           <span tal:content="structure item/getContato|string: "></span>
                                       </a>
                                       <br/>
-                                      </dt>
                                     </tal:cond>
 
                                     <tal:cond condition="python: item.__class__.__name__ != 'FuncDetails' ">
