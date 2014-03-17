@@ -243,12 +243,11 @@
           </div>
       </li>
       
-      <li class="user-vision" tal:condition="python:checkPermission('Plone Site Setup: Overview', context)">
+      <li class="user-vision">
           <a href="#" class="change-vision">
               <span data-tooltip data-options="disable-for-touch: true"
                     title="Visão Administrador"><i class="vindula-icon-eye-4"></i></span>
           </a>
-        </li>
 
     <li>
         <a tal:attributes="href string:${context/portal_url}/logout;">
