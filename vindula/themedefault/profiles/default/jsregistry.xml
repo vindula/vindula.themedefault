@@ -4,24 +4,8 @@
  	<javascript id="++resource++vindula.themedefault.js/vindula_themedefault.js"
     		 cacheable="False" compression="safe" cookable="False" enabled="True"
 			 authenticated="True" expression="" inline="False" />
-			 
-  	<javascript id="++resource++vindula.themedefault.js/vindula_themedefault.js"
-    		 cacheable="False" compression="safe" cookable="False" enabled="True"
-			 authenticated="True" expression="" inline="False" />
-			 
-   	<javascript id="++resource++vindula.tile/js/tile-edit.js"
-    		 cacheable="False" compression="safe" cookable="False" enabled="True"
-			 authenticated="True" expression="" inline="False" />
-			 
-	<javascript id="++resource++vindula.tile/js/tile-sortable.js"
-    		 cacheable="False" compression="safe" cookable="False" enabled="True"
-			 authenticated="True" expression="" inline="False" />
 
-	<javascript id="++resource++vindula.themedefault.js/adm-vision.js"
-    		 cacheable="True" compression="safe" cookable="False" enabled="True"
-			 expression="" inline="False" />
-			 
- 	<javascript id="++resource++vindula.themedefault.js/vindula_portlets.js"
+	<javascript id="++resource++vindula.themedefault.js/vindula_portlets.js"
     		 cacheable="True" compression="safe" cookable="False" enabled="True"
 			 expression="" inline="False" />
 
