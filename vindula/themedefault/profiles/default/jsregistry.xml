@@ -17,6 +17,10 @@
     		 cacheable="False" compression="safe" cookable="False" enabled="True"
 			 authenticated="True" expression="" inline="False" />
 
+    <javascript id="++resource++vindula.themedefault.js/jquery.cookie.js"
+             cacheable="True" compression="safe" cookable="False" enabled="True"
+             expression="" inline="False" />
+
 	<javascript id="++resource++vindula.themedefault.js/adm-vision.js"
     		 cacheable="True" compression="safe" cookable="False" enabled="True"
 			 expression="" inline="False" />
