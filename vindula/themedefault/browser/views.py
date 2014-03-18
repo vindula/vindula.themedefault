@@ -35,6 +35,28 @@ class ThemeVindulaView(BrowserView):
         else:
             return "columns large-9 medium-9"
 
+
+
+class ToolsView(grok.View):
+    grok.context(Interface)
+    grok.require('zope2.View')
+    grok.name('tools_viewlet')
+
+
+    def render(self):
+        return 'ok'
+
+    def hasPermission(self, user, obj):
+        user_roles = user.getRolesInContext(obj)
+       
+        for i in ['editPortlet', 'Editor', 'Contributor', 'Reviewer','Manager']:
+            if i in user_roles:
+                return True
+
+        return False            
+
+
+
 class LoadScssView(grok.View):
     grok.context(Interface)
     grok.require('zope2.View')
