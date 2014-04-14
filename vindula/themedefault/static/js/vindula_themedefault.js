@@ -37,7 +37,7 @@ $j(document).ready(function(){
         event.stopPropagation();
         var url = $('#portal_url').val();
         url += '/vindula-api/social/personal/message/';
-        url = url.concat(window.token,'?iframe_id=new_menssage');
+        url = url.concat(window.token,'?iframe_id=new_menssage/');
 
         $j(window.parent.document).vindula('add_menssage_box', {'id': 'new_menssage', 'src': url, 'iframe_class': 'new_message', 'left': '200px'});
     });
