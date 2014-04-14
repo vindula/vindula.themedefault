@@ -22,9 +22,11 @@
                  links view_user/update|nothing">
 
   <h5 class="hiddenStructure" i18n:translate="heading_personal_tools">Personal tools</h5>
-
+  
   <ul class="actionMenu deactivated" id="portal-personaltools"
       tal:condition="not: view/anonymous">
+      <input type="hidden" name="portal_url" id="portal_url" 
+             tal:attributes="value context/portal_url" />
       <li>
         <!-- Dados para utilizacao da macro -->
         <div class="my-profile left">
