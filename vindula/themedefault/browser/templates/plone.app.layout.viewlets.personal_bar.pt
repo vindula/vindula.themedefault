@@ -114,7 +114,7 @@
                                         <span tal:content="python: view_myvindula.getOnlySubjectMessag(recado.text[:50])"></span>
                                     </div>
                                     <div>
-                                        <span tal:content="python:view_myvindula.getTimeAgo(recado.get_date_created,'Enviada')"></span>
+                                        <span tal:content="python:view_myvindula.getTimeAgo(recado.get_date_created, '')"></span>
                                     </div>
                                 </div>
                             </div>
@@ -169,11 +169,14 @@
                   </li>
 
                   <tal:notificacoes repeat="notificacao python:notificacoes[:5]">
-                      <li tal:attributes="class python:notificacao.viewed and 'container-item' or 'container-item unread'">
-
-                        <tal:def define="user_actor python:view_myvindula.get_prefs_user(notificacao.actor);
-                                         obj_action python:view_myvindula.lookupObject(notificacao.content.uid);">
-
+                      <li tal:attributes="class python:notificacao.viewed and 'container-item' or 'container-item unread'"
+                          tal:define="user_actor python:view_myvindula.get_prefs_user(notificacao.actor);
+                                      content_type python:notificacao.content.type;
+                                      uid_obj python:notificacao.content.uid;">
+                                      
+                        <tal:def define="obj_action python:view_myvindula.lookupObject(uid_obj);"
+                                 condition="obj_action/Title|nothing">
+                                 
                           <a href="#" tal:define="obj_type obj_action/portal_type|nothing;
                                                   url_view python: '/view'"
                                       tal:attributes="href string:${obj_action/absolute_url|nothing}${url_view}">
@@ -187,14 +190,37 @@
                                       <div>
                                           <strong tal:content="user_actor/name|notificacao/actor"></strong>
                                           <span tal:content="python:view_myvindula.action_social.get(notificacao.action,'')"></span>
-                                          o conteudo
-
+                                          <strong tal:content="obj_action/Title"></strong> <br/>
+                                            
                                           <span tal:content="python:view_myvindula.getTimeAgo(notificacao.get_date_created,'')"></span>
                                       </div>
                                   </div>
                               </div>
                           </a>
+                          
                         </tal:def>
+                        
+                        <tal:block condition="python: content_type == 'UserObject'">
+                            <a href="#" tal:attributes="href python:'%s/myvindulalistuser?user=%s' % (context.portal_url(), uid_obj)">
+                                <div class="clear">
+                                    <div class="circle-mark"></div>
+                                    <img class="left" width="50" height="50"
+                                        tal:attributes="src string:${here/portal_url}/vindula-api/myvindula/user-picture/photograph/${notificacao/actor}/True">
+
+                                    <div class="left info-updates"
+                                         tal:define="user_related python:view_myvindula.get_prefs_user(uid_obj);">
+                                        <div>
+                                            <strong tal:content="user_actor/name|notificacao/actor"></strong>
+                                            <span tal:content="python:view_myvindula.action_social.get(notificacao.action,'')"></span>
+                                            <strong tal:content="user_related/name|uid_obj"></strong> <br/>
+                                            
+                                            <span tal:content="python:view_myvindula.getTimeAgo(notificacao.get_date_created,'')"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </tal:block>
+                        
                       </li>
                   </tal:notificacoes>
               </ul>
