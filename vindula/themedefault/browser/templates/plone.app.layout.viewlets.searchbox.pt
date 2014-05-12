@@ -1,6 +1,6 @@
 <div id="portal-searchbox"
      i18n:domain="plone"
-     class="large-4 columns"
+     class="large-5 columns"
      tal:condition="context/@@vindula-confg-busca/checkSearch|nothing"
      tal:define="navigation_root_url view/navigation_root_url;
                  search_input_id view/search_input_id;
@@ -39,7 +39,7 @@
 
                   <input type="radio" name="facet.tipo" value="pessoas"
                          tal:attributes="checked python: tipo == 'pessoas' and 'checked' or ''" />
-                  <span class="radio">Pessoas</span>
+                  <span class="radio">Colaboradores</span>
 
                   <input type="radio" name="facet.tipo" value="servico"
                          tal:attributes="checked python: tipo == 'servico' and 'checked' or ''" />
