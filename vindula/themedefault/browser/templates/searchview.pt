@@ -63,19 +63,19 @@
 
 				  <input type="radio" name="facet.tipo" value="structure"
                          tal:attributes="checked python: tipo == 'structure' and 'selected' or ''" />
-                  <span class="radio">UO</span>
+                  <span class="radio">UOs</span>
 
                   <input type="radio" name="facet.tipo" value="pessoas"
                          tal:attributes="checked python: tipo == 'pessoas' and 'checked' or ''" />
-                  <span class="radio">Pessoas</span>
+                  <span class="radio">Colaboradores</span>
 
                   <input type="radio" name="facet.tipo" value="servico"
                          tal:attributes="checked python: tipo == 'servico' and 'checked' or ''" />
-                  <span class="radio">Serviço</span>
+                  <span class="radio">Serviços</span>
 
                   <input type="radio" name="facet.tipo" value="biblioteca"
                          tal:attributes="checked python: tipo == 'biblioteca' and 'checked' or ''" />
-                  <span class="radio">Biblioteca</span>
+                  <span class="radio">Arquivos</span>
               </div>
             </div>
             <div class="row">

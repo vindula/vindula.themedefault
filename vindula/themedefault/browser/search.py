@@ -75,7 +75,7 @@ class SearchView(grok.View, Search):
             query['portal_type'] = ['Servico']
 
         elif tipo_busca == 'biblioteca':
-            query['portal_type'] = ['Image','File']
+            query['portal_type'] = ['File','VindulaVideo', 'VindulaStreaming', 'VindulaPhotoAlbum']
         
         
         if tipo_busca == 'structure':
@@ -156,7 +156,7 @@ class UpdatedSearchView(grok.View, Search):
             query['portal_type'] = ['Servico']
 
         elif tipo_busca == 'biblioteca':
-            query['portal_type'] = ['Image','File']
+            query['portal_type'] = ['File','VindulaVideo', 'VindulaStreaming', 'VindulaPhotoAlbum']
             
         if tipo_busca == 'structure':
             p_catalog = getToolByName(self.context, 'portal_catalog')
