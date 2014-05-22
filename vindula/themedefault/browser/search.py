@@ -36,9 +36,9 @@ class SearchView(grok.View, Search):
         term_session = self.request.SESSION.get('SearchableText')
         tipo_busca_session = self.request.SESSION.get('facet.tipo')
 
-        tipo_busca = self.request.form.get('facet.tipo', term_session)
+        tipo_busca = self.request.form.get('facet.tipo', tipo_busca_session)
 
-        term = self.request.form.get('SearchableText', tipo_busca_session)
+        term = self.request.form.get('SearchableText', term_session)
 
         if (not term_session and term) or (term_session != term):
             self.request.SESSION['SearchableText'] = term
