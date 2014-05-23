@@ -151,15 +151,25 @@
                               <tal:cond-pessoas condition="pessoas">
                                 <tal:pessoas repeat="item pessoas" tal:condition="python:b_start == 0">
                                     <dt class="clear">
-                                    <a class="profile-link" href="#" 
+                                    <a class="profile-link clear" href="#" 
                                        tal:attributes="href item/getUrlPerfil|nothing;
                                                        data-type string:UserObject;
                                                        data-value item/username;">
-                                        <img class="left" width="50" height="50"
+                                        <img class="left clear" width="50" height="50"
                                              style="margin-right: 10px;"
                                              tal:attributes="src item/getImageIcone">
-                                        <strong tal:content="python: item.get('nickname', item.get('name', item.get('username', '')))"></strong> <br/>
-                                        <span tal:content="structure item/getContato|string: "></span>
+                                        <div class="left clear">
+                                          <strong tal:content="python: item.get('nickname', item.get('name', item.get('username', '')))"></strong> <br/>
+                                          
+                                          <tal:cond condition="item/getContato|nothing">
+                                                <span tal:content="structure item/getContato|string: "></span>
+                                          </tal:cond>
+                                            
+                                          <tal:def define="unidadeprincial nocall:item/get_unidadeprincipal;" 
+                                                   condition="unidadeprincial">
+                                              <span  tal:content="python:unidadeprincial().getSiglaOrTitle() or ''">ASCON</span>
+                                          </tal:def>
+                                      </div>
                                     </a>
                                     <br/>
                                     </dt>
@@ -169,15 +179,26 @@
                               <tal:results repeat="item batch">
                                     <tal:cond condition="python: item.__class__.__name__ == 'FuncDetails' ">
                                       <dt class="clear">
-                                          <a class="profile-link" href="#" 
+                                          <a class="profile-link clear" href="#" 
                                              tal:attributes="href item/getUrlPerfil|nothing;
                                                              data-type string:UserObject;
                                                              data-value item/username;">
-                                              <img class="left" width="50" height="50"
+                                              <img class="left clear" width="50" height="50"
                                                    style="margin-right: 10px;"
                                                    tal:attributes="src item/getImageIcone">
-                                              <strong tal:content="python: item.get('nickname', item.get('name', item.get('username', '')))"></strong> <br/>
-                                              <span tal:content="structure item/getContato|string: "></span>
+                                              
+                                              <div class="left clear">
+                                                  <strong tal:content="python: item.get('nickname', item.get('name', item.get('username', '')))"></strong> <br/>
+                                                  
+                                                  <tal:cond condition="item/getContato|nothing">
+                                                        <span tal:content="structure item/getContato|string: "></span>
+                                                  </tal:cond>
+                                                    
+                                                  <tal:def define="unidadeprincial nocall:item/get_unidadeprincipal;" 
+                                                           condition="unidadeprincial">
+                                                      <span  tal:content="python:unidadeprincial().getSiglaOrTitle() or ''">ASCON</span>
+                                                  </tal:def>
+                                              </div>
                                           </a>
                                           <br/>
                                       </dt>
