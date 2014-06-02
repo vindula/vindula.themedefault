@@ -4,7 +4,7 @@
     
     <tal:rep repeat="topic topics">
 
-        <div tal:attributes="class python:'large-%(value)s medium-%(value)s small-%(value)s columns' %  {'value': int(12/len(topics))}">
+        <div tal:attributes="class python:'large-%(value)s medium-%(value)s columns' %  {'value': int(12/len(topics))}">
             <h5 class="subheader"
                 tal:content="topic/obj/Title|nothing">Topico 1</h5>
 
