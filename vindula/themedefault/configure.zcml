@@ -30,6 +30,10 @@
   <!-- Include the sub-packages that use their own configure.zcml files. -->
   <!--include package=".browser" /-->
   
+
+  <class class="vindula.themedefault.content.homepage.HomePage">
+    <implements interface="plone.contentrules.engine.interfaces.IRuleAssignable" />
+  </class>
   
   <browser:resourceDirectory
       name="vindula.themedefault.js"
