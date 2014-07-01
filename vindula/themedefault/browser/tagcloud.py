@@ -41,7 +41,7 @@ class TagCloud(BrowserView):
 #                for subject in subjects:
 #                    D[subject] = D.get(subject,0) + 1
 
-        search_path = '/@@vindula-search?Subject='
+        search_path = '/@@vindula-search?facet.tipo=intranet&Subject='
         
         if D:
             D = sorted(D.items(), key=lambda t:t[1], reverse=1)[:limit]
