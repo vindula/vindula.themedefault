@@ -33,18 +33,9 @@ class SearchView(grok.View, Search):
 
     def results(self, query=None, batch=True, b_size=10, b_start=0):
         results_pessoas = []
-#         term_session = self.request.SESSION.get('SearchableText')
-#         tipo_busca_session = self.request.SESSION.get('facet.tipo')
 
         tipo_busca = self.request.form.get('facet.tipo', 'intranet')
         term = self.request.form.get('SearchableText', '')
-
-
-#         if (not term_session and term) or (term_session != term):
-#             self.request.SESSION['SearchableText'] = term
-# 
-#         if (not tipo_busca_session and tipo_busca) or (tipo_busca_session != tipo_busca):
-#             self.request.SESSION['facet.tipo'] = tipo_busca
 
         if not query:
             query = {}

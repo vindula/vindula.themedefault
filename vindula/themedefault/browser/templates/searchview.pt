@@ -213,12 +213,15 @@
                                                              class string:state-${item/review_state}"
                                              tal:content="item/Title" />
                                         </dt>
-                                        <dd>
-                                          <span class="discreet" i18n:domain="plone"
-                                            tal:condition="show_about">
-                                            <span class="documentAuthor"
+                                        
+                                        <dd tal:define="show_author item/active_author|python:True;
+                                                        show_date_created item/active_date|python:True;">
+                                          <span class="discreet" 
+                                                i18n:domain="plone" tal:condition="show_about">
+                                              
+                                            <span class="documentAuthor" tal:condition="show_author"
                                                 i18n:translate="label_by_author">
-                                            by
+                                                by
                                                 <tal:block tal:condition="item/Creator"
                                                     tal:define="author python:context.portal_membership.getMemberInfo(item.Creator())">
                                                   <a href="#"
@@ -232,8 +235,8 @@
                                             </span>
 
                                             <span tal:define="publication_date item/EffectiveDate;
-                                                              modification_date item/ModificationDate">
-
+                                                              modification_date item/ModificationDate"
+                                                  tal:condition="show_date_created">
                                                 <span class="documentPublished" tal:condition="python: publication_date != 'None'">
                                                   &mdash;
                                                   <span i18n:translate="box_published">
@@ -253,7 +256,6 @@
                                                     August 16, 2001 at 23:35:59
                                                   </span>
                                                 </span>
-
                                             </span>
 
                                             <span tal:define="categories item/Subject|nothing"
