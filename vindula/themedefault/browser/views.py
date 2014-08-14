@@ -46,15 +46,36 @@ class ToolsView(grok.View):
     def render(self):
         return 'ok'
 
+
     def hasPermission(self, user, obj):
-        user_roles = user.getRolesInContext(obj)
-       
+
+        def merge_permisson(user_roles,user,obj):
+            def merge(list1,list2):
+                for i in list2:
+                    if not i in list1:
+                        list1.append(i)
+                return list1
+
+            if obj:
+                user_roles = merge(user_roles, user.getRolesInContext(obj))
+                if obj.portal_type == "Layout":
+                    for item in obj.values():
+                        user_roles = merge_permisson(user_roles,user,item)
+            return user_roles
+
+        user_roles = merge_permisson([],user,obj)
+        
+        if obj.portal_type == 'LayoutLoad':
+            user_roles = merge_permisson(user_roles,user,obj.getObj_layout())
+            user_roles = merge_permisson(user_roles,user,obj.getObj_layout_B())
+            user_roles = merge_permisson(user_roles,user,obj.getObj_layout_C())
+            user_roles = merge_permisson(user_roles,user,obj.getObj_layout_topo())
+
         for i in ['editPortlet', 'Editor', 'Contributor', 'Reviewer','Manager']:
             if i in user_roles:
                 return True
 
-        return False            
-
+        return False     
 
 
 class LoadScssView(grok.View):
@@ -77,7 +98,9 @@ class LoadScssView(grok.View):
             uri = '/vindula-api/theme/load_scss/'
             result = ''
     
-            url = self.context.portal_url() + uri
+            # url = self.context.portal_url() + uri
+            url = 'http://172.17.42.1:9001' + uri
+
             scss = requests.get(url)
             result = scss.text.replace('/>',' id="new-theme" />')
             
