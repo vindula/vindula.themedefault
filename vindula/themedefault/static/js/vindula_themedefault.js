@@ -38,8 +38,17 @@ $j(document).ready(function(){
         var url = $('#portal_url').val();
         url += '/vindula-api/social/personal/message/';
         url = url.concat(window.token,'/?iframe_id=new_menssage');
-
-        $j(window.parent.document).vindula('add_menssage_box', {'id': 'new_menssage', 'src': url, 'iframe_class': 'new_message', 'left': '200px'});
+        
+        var window_wi = window.innerWidth,
+        	css_class = 'new_message';
+        if (window_wi < 1855) {
+        	left = '-130px';
+        	url += '&is_right=true';
+        } else {
+        	left = '200px'
+        }
+        
+        $j(window.parent.document).vindula('add_menssage_box', {'id': 'new_menssage', 'src': url, 'iframe_class': css_class, 'left': left});
     });
 
 

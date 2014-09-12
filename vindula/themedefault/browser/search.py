@@ -33,18 +33,9 @@ class SearchView(grok.View, Search):
 
     def results(self, query=None, batch=True, b_size=10, b_start=0):
         results_pessoas = []
-        term_session = self.request.SESSION.get('SearchableText')
-        tipo_busca_session = self.request.SESSION.get('facet.tipo')
 
-        tipo_busca = self.request.form.get('facet.tipo', tipo_busca_session)
-
-        term = self.request.form.get('SearchableText', term_session)
-
-        if (not term_session and term) or (term_session != term):
-            self.request.SESSION['SearchableText'] = term
-
-        if (not tipo_busca_session and tipo_busca) or (tipo_busca_session != tipo_busca):
-            self.request.SESSION['facet.tipo'] = tipo_busca
+        tipo_busca = self.request.form.get('facet.tipo', 'intranet')
+        term = self.request.form.get('SearchableText', '')
 
         if not query:
             query = {}
@@ -52,8 +43,10 @@ class SearchView(grok.View, Search):
         if term:
             query = {'SearchableText': quote_bad_chars(term) + '*' }
 
-        if tipo_busca == 'intranet':            
-            results_pessoas = FuncDetails.get_AllFuncDetails(unicode(term, 'utf-8'))[:2]
+        if tipo_busca == 'intranet':
+            if term:
+                results_pessoas = FuncDetails.get_AllFuncDetails(unicode(term, 'utf-8'))[:2]
+
             plone_utils = getToolByName(self.context, 'plone_utils')
             all_types = plone_utils.getUserFriendlyTypes([])
             
