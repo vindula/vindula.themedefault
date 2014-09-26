@@ -5,6 +5,7 @@ from zope.component import getMultiAdapter
 from zope.interface import Interface
 from zope.interface import implements
 from Products.Five import BrowserView
+from Products.CMFCore.utils import getToolByName
 
 from vindula.themedefault.browser.interfaces import IThemeVindulaView
 
@@ -64,7 +65,7 @@ class ToolsView(grok.View):
             return user_roles
 
         user_roles = merge_permisson([],user,obj)
-        
+
         if obj.portal_type == 'LayoutLoad':
             user_roles = merge_permisson(user_roles,user,obj.getObj_layout())
             user_roles = merge_permisson(user_roles,user,obj.getObj_layout_B())
@@ -75,7 +76,7 @@ class ToolsView(grok.View):
             if i in user_roles:
                 return True
 
-        return False     
+        return False
 
 
 class LoadScssView(grok.View):
@@ -85,24 +86,24 @@ class LoadScssView(grok.View):
 
     def render(self):
         return 'OK'
-    
+
     def load(self):
         key = hashlib.md5('LoadScss').hexdigest()
         key = 'LoadScssView:load:%s' % key
 
         cached_data = get_redis_cache(key)
-        
+
         if cached_data:
             result = cached_data
         else:
             uri = '/vindula-api/theme/load_scss/'
             result = ''
-    
+
             url = self.context.portal_url() + uri
 
             scss = requests.get(url)
             result = scss.text.replace('/>',' id="new-theme" />')
-            
+
             set_redis_cache(key, 'LoadScssView:load:keys', result)
 
         return result
@@ -142,7 +143,7 @@ class MacroFooterView(MacroLogoTopView):
     grok.name('vindula-macro-footer')
 
     url = "/++resource++vindula.controlpanel/imagens/logo_rodape.png"
-    
+
     def getObjectThemeConfig(self):
         portal = self.context.portal_url.getPortalObject()
         theme_config = None
@@ -245,43 +246,73 @@ class NewHomePageView(grok.View):
     grok.context(Interface)
     grok.require('zope2.View')
     grok.name('new-home')
-    
+
 class SectionsMenuView(grok.View):
     grok.context(Interface)
     grok.require('zope2.View')
     grok.name('sections-menu')
-    
+
     def render(self):
         pass
-    
+
     def getIsProfile(self):
         url_split = self.request.URL.split('/')
         for part in url_split:
             if 'myvindulalistuser' in part:
                 return 'pessoas'
         return ''
-    
+
 class TextFooterView(grok.View):
     grok.context(Interface)
     grok.require('zope2.View')
     grok.name('view_text_footer')
-    
-    
+
+
     def getTextFooter(self):
         portal = self.context.portal_url.getPortalObject()
+        context = self.context
         text = ''
-        if 'control-panel-objects' in portal.keys():
-            control = portal.get('control-panel-objects')
-            if 'ThemeConfig' in control.keys():
-                theme_config = control.get('ThemeConfig')
-                text = theme_config.getText()
+
+        obj_ou = self.getOrgStru(context)
+
+        if obj_ou.portal_type == 'OrganizationalStructure':
+            text = obj_ou.getText_subrodape()
+
+        else:
+            if 'control-panel-objects' in portal.keys():
+                control = portal.get('control-panel-objects')
+                if 'ThemeConfig' in control.keys():
+                    theme_config = control.get('ThemeConfig')
+                    text = theme_config.getText()
+
         return text
-    
+
+
+    def getOrgStru(self,ctx):
+        portal = getToolByName(ctx, 'portal_url').getPortalObject()
+
+        if ctx != portal and ctx.portal_type != 'OrganizationalStructure':
+            try:
+                return self.getOrgStru(ctx.aq_parent)
+            except:
+                pass
+
+        elif ctx.portal_type == 'OrganizationalStructure':
+            if ctx.activ_personalit:
+                return ctx
+            else:
+                try:return self.getOrgStru(ctx.aq_parent)
+                except:pass
+
+        return ctx
+
+
+
 class TopoBarraView(grok.View):
     grok.context(Interface)
     grok.require('zope2.View')
     grok.name('topo_barra_view')
-    
+
     def getTopoBarra(self):
         portal = self.context.portal_url.getPortalObject()
         html = ''
