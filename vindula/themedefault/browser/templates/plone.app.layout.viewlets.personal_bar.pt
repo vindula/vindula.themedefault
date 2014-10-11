@@ -6,6 +6,7 @@
      i18n:domain="plone"
      tal:define="checkPermission nocall: context/portal_membership/checkPermission;
                  member context/@@plone_portal_state/member;
+                 tools nocall: context/tools_viewlet;
 
                  view_user python:context.restrictedTraverse('@@vindula-linkuser');
                  view_myvindula python:context.restrictedTraverse('@@myvindula');
@@ -270,6 +271,13 @@
             </ul>
           </div>
       </li>
+      
+      <li class="user-vision" tal:condition="python:tools.hasPermission(member, context)">
+          <a href="#" class="change-vision">
+              <span data-tooltip data-options="disable-for-touch: true"
+                    title="Visão Administrador"><i class="vindula-icon-eye-4"></i></span>
+          </a>
+        </li>
 
     <li>
         <a tal:attributes="href string:${context/portal_url}/logout;">
