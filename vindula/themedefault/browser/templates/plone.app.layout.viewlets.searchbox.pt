@@ -47,7 +47,7 @@
 
                   <input class="search-biblioteca" type="radio" name="facet.tipo" value="biblioteca"
                          tal:attributes="checked python: tipo == 'biblioteca' and 'checked' or ''" />
-                  <span class="raio search-biblioteca" style="margin: 0 5px;">Arquivos</span>
+                  <span class="radio search-biblioteca" style="margin: 0 5px;">Arquivos</span>
 
               </div>
           </div>
