@@ -18,6 +18,7 @@ class FaviconTopViewlet(grok.Viewlet):
     grok.viewletmanager(IPortalHeader)
 
     def getConfigurador(self):
+
         if 'control-panel-objects' in  getSite().keys():
             control = getSite()['control-panel-objects']
             if 'ThemeConfig' in control.keys():

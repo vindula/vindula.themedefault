@@ -1,1 +1,1 @@
-<link id="icone-favico" tal:attributes="href viewlet/imagem|nothing"  rel="shortcut icon" xmlns="">
+<link id="icone-favico" tal:attributes="href viewlet/imagem"  rel="shortcut icon" xmlns="">
