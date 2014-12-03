@@ -3,7 +3,7 @@
 	
   <!--object name="vindula.themedefault.content.homepage" meta_type="Dexterity FTI" /-->
   
-      <object name="HomePage"	
-			meta_type="Factory-based Type Information with dynamic views"/> 
+      <!--object name="HomePage"	
+			meta_type="Factory-based Type Information with dynamic views"/--> 
   
 </object>
