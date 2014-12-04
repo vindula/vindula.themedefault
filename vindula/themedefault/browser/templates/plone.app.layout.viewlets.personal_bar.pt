@@ -23,18 +23,18 @@
                  links view_user/update|nothing">
 
   <h5 class="hiddenStructure" i18n:translate="heading_personal_tools">Personal tools</h5>
-  
+
   <ul class="actionMenu deactivated" id="portal-personaltools"
       tal:condition="not: view/anonymous">
-      <input type="hidden" name="portal_url" id="portal_url" 
+      <input type="hidden" name="portal_url" id="portal_url"
              tal:attributes="value context/portal_url" />
       <li>
         <!-- Dados para utilizacao da macro -->
         <div class="my-profile left">
-            <a class="profile-link" 
+            <a class="profile-link"
                tal:attributes="href string:${context/portal_url}/myvindulalistuser;
                                data-type string:UserObject;
-                               data-value prefs_user/username;"> 
+                               data-value prefs_user/username;">
                 <img src="defaultUser.png" border="0" width="30px"
                      tal:attributes="src python:view_prof_pictures.getURLFotoUser(prefs_user.get('username'));
                                      alt prefs_user/name|nothing;
@@ -56,7 +56,7 @@
           <a href="" class="structure-link"
              tal:attributes="href unidadeprincipal/absolute_url;
                              data-type string:Structure;
-                             data-value unidadeprincipal/UID;" 
+                             data-value unidadeprincipal/UID;"
              tal:content="unidadeprincipal/getSiglaOrTitle">
               Unidade
           </a>
@@ -108,7 +108,7 @@
                                 <div class="circle-mark">
                                 </div>
                                 <img class="left" width="50" height="50"
-                                     tal:attributes="src string:${here/portal_url}/vindula-api/myvindula/user-picture/photograph/${recado/username}/True">
+                                     tal:attributes="src string:${here/portal_url}/vindula-api/myvindula/user-picture/${session/user_token|nothing}/photograph/${recado/username}/True">
                                 <div class="left info-updates">
                                     <div>
                                         <strong tal:content="user_recado/name|recado/username"></strong> diz:
@@ -174,10 +174,10 @@
                           tal:define="user_actor python:view_myvindula.get_prefs_user(notificacao.actor);
                                       content_type python:notificacao.content.type;
                                       uid_obj python:notificacao.content.uid;">
-                                      
+
                         <tal:def define="obj_action python:view_myvindula.lookupObject(uid_obj);"
                                  condition="obj_action/Title|nothing">
-                                 
+
                           <a href="#" tal:define="obj_type obj_action/portal_type|nothing;
                                                   url_view python: '/view'"
                                       tal:attributes="href string:${obj_action/absolute_url|nothing}${url_view}">
@@ -185,28 +185,28 @@
                                   <div class="circle-mark">
                                   </div>
                                   <img class="left" width="50" height="50"
-                                       tal:attributes="src string:${here/portal_url}/vindula-api/myvindula/user-picture/photograph/${notificacao/actor}/True">
+                                       tal:attributes="src string:${here/portal_url}/vindula-api/myvindula/user-picture/${session/user_token|nothing}/photograph/${notificacao/actor}/True">
 
                                   <div class="left info-updates">
                                       <div>
                                           <strong tal:content="user_actor/name|notificacao/actor"></strong>
                                           <span tal:content="python:view_myvindula.action_social.get(notificacao.action,'')"></span>
                                           <strong tal:content="obj_action/Title"></strong> <br/>
-                                            
+
                                           <span tal:content="python:view_myvindula.getTimeAgo(notificacao.get_date_created,'')"></span>
                                       </div>
                                   </div>
                               </div>
                           </a>
-                          
+
                         </tal:def>
-                        
+
                         <tal:block condition="python: content_type == 'UserObject'">
                             <a href="#" tal:attributes="href python:'%s/myvindulalistuser?user=%s' % (context.portal_url(), uid_obj)">
                                 <div class="clear">
                                     <div class="circle-mark"></div>
                                     <img class="left" width="50" height="50"
-                                        tal:attributes="src string:${here/portal_url}/vindula-api/myvindula/user-picture/photograph/${notificacao/actor}/True">
+                                        tal:attributes="src string:${here/portal_url}/vindula-api/myvindula/user-picture/${session/user_token|nothing}/photograph/${notificacao/actor}/True">
 
                                     <div class="left info-updates"
                                          tal:define="user_related python:view_myvindula.get_prefs_user(uid_obj);">
@@ -214,14 +214,14 @@
                                             <strong tal:content="user_actor/name|notificacao/actor"></strong>
                                             <span tal:content="python:view_myvindula.action_social.get(notificacao.action,'')"></span>
                                             <strong tal:content="user_related/name|uid_obj"></strong> <br/>
-                                            
+
                                             <span tal:content="python:view_myvindula.getTimeAgo(notificacao.get_date_created,'')"></span>
                                         </div>
                                     </div>
                                 </div>
                             </a>
                         </tal:block>
-                        
+
                       </li>
                   </tal:notificacoes>
               </ul>
@@ -271,7 +271,7 @@
             </ul>
           </div>
       </li>
-      
+
       <li class="user-vision" tal:condition="python:tools.hasPermission(member, context)">
           <a href="#" class="change-vision">
               <span data-tooltip data-options="disable-for-touch: true"
