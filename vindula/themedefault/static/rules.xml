@@ -15,7 +15,8 @@
              css:content="link[data-rel='kinetic-stylesheet']" />             
 
     <!--Remove Plone Favicon-->
-    <drop css:content="link[rel='shortcut icon']" />
+    <copy css:content="#icone-favico" theme="/html/head" />
+    <drop css:content="link[type='image/x-icon']" />
 
     <!-- Prevent theme usage in zmi -->
     <rules css:if-content="#visual-portal-wrapper">

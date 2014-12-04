@@ -56,26 +56,26 @@
                       <option value="structure"
                               tal:attributes="selected python: tipo == 'structure' and 'selected' or ''">Unidade Organizacional</option>
                   </select> -->
-                  
-                 <input type="radio" name="facet.tipo" value="intranet"
+
+                  <input class="search-intranet" type="radio" name="facet.tipo" value="intranet"
                          tal:attributes="checked python: tipo == 'intranet' and 'checked' or ''" />
-                  <span class="radio" style="margin: 0 5px;">Intranet</span>
+                  <span class="radio search-intranet" style="margin: 0 5px;">Intranet</span>
 
-				  <input type="radio" name="facet.tipo" value="structure"
-                         tal:attributes="checked python: tipo == 'structure' and 'selected' or ''" />
-                  <span class="radio" style="margin: 0 5px;">UOs</span>
+        				  <input class="search-structure" type="radio" name="facet.tipo" value="structure"
+                                 tal:attributes="checked python: tipo == 'structure' and 'selected' or ''" />
+                  <span class="radio search-structure" style="margin: 0 5px;">UOs</span>
 
-                  <input type="radio" name="facet.tipo" value="pessoas"
+                  <input class="search-pessoas" type="radio" name="facet.tipo" value="pessoas"
                          tal:attributes="checked python: tipo == 'pessoas' and 'checked' or ''" />
-                  <span class="radio" style="margin: 0 5px;">Colaboradores</span>
+                  <span class="radio search-pessoas" style="margin: 0 5px;">Colaboradores</span>
 
-                  <input type="radio" name="facet.tipo" value="servico"
+                  <input class="search-servico" type="radio" name="facet.tipo" value="servico"
                          tal:attributes="checked python: tipo == 'servico' and 'checked' or ''" />
-                  <span class="radio" style="margin: 0 5px;">Serviços</span>
+                  <span class="radio search-servico" style="margin: 0 5px;">Serviços</span>
 
-                  <input type="radio" name="facet.tipo" value="biblioteca"
+                  <input class="search-biblioteca" type="radio" name="facet.tipo" value="biblioteca"
                          tal:attributes="checked python: tipo == 'biblioteca' and 'checked' or ''" />
-                  <span class="radio" style="margin: 0 5px;">Arquivos</span>
+                  <span class="radio search-biblioteca" style="margin: 0 5px;">Arquivos</span>
               </div>
             </div>
             <div class="row">
