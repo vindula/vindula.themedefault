@@ -99,7 +99,7 @@ class LoadScssView(grok.View):
             uri = '/vindula-api/theme/load_scss/'
             result = ''
 
-            url = 'http://ha.vindulapp.vindula.infra:9001' + uri
+            url = self.context.portal_url() + uri
 
             scss = requests.get(url)
             result = scss.text.replace('/>',' id="new-theme" />')
