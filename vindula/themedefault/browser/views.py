@@ -1,19 +1,15 @@
 # -*- coding: utf-8 -*-
-from five import grok
+import requests
 from Acquisition import aq_inner
-from zope.component import getMultiAdapter
-from zope.interface import Interface
-from zope.interface import implements
-from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
+from Products.Five import BrowserView
+from five import grok
+from vindula.myvindula.cache import *
+from zope.component import getMultiAdapter
+from zope.interface import Interface, implements
 
 from vindula.themedefault.browser.interfaces import IThemeVindulaView
 
-from plone.memoize import ram
-from time import time
-import requests
-
-from vindula.myvindula.cache import *
 
 class ThemeVindulaView(BrowserView):
     implements(IThemeVindulaView)
@@ -119,22 +115,24 @@ class MacroLogoTopView(grok.View):
         return 'OK'
 
     def getOrgStrucContent(self):
-        ctx = self.context.restrictedTraverse('OrgStruct_view')()
-        portal = self.context.portal_url.getPortalObject();
-        config_obj = portal['control-panel-objects']['ThemeConfig'];
+        return {}
 
-        D = {}
-        if ctx.portal_type != 'Plone Site':
-            if ctx.activ_personalit:
-                D['id'] = ctx.id
-                if ctx.getLogoPortal():
-                    D['url'] = ctx.getLogoPortal().absolute_url()
-                else:
-                    if config_obj.getLogoCabecalho():
-                        D['url']  =  config_obj.getLogoCabecalho().absolute_url()
-                    else:
-                        D['url']  = self.url
-        return D
+        # ctx = self.context.restrictedTraverse('OrgStruct_view')()
+        # portal = self.context.portal_url.getPortalObject();
+        # config_obj = portal['control-panel-objects']['ThemeConfig'];
+
+        # D = {}
+        # if ctx.portal_type != 'Plone Site':
+        #     if ctx.activ_personalit:
+        #         D['id'] = ctx.id
+        #         if ctx.getLogoPortal():
+        #             D['url'] = ctx.getLogoPortal().absolute_url()
+        #         else:
+        #             if config_obj.getLogoCabecalho():
+        #                 D['url']  =  config_obj.getLogoCabecalho().absolute_url()
+        #             else:
+        #                 D['url']  = self.url
+        # return D
 
 
 class MacroFooterView(MacroLogoTopView):
@@ -270,20 +268,13 @@ class TextFooterView(grok.View):
 
     def getTextFooter(self):
         portal = self.context.portal_url.getPortalObject()
-        context = self.context
         text = ''
 
-        obj_ou = self.getOrgStru(context)
-
-        if obj_ou.portal_type == 'OrganizationalStructure':
-            text = obj_ou.getText_subrodape()
-
-        else:
-            if 'control-panel-objects' in portal.keys():
-                control = portal.get('control-panel-objects')
-                if 'ThemeConfig' in control.keys():
-                    theme_config = control.get('ThemeConfig')
-                    text = theme_config.getText()
+        if 'control-panel-objects' in portal.keys():
+            control = portal.get('control-panel-objects')
+            if 'ThemeConfig' in control.keys():
+                theme_config = control.get('ThemeConfig')
+                text = theme_config.getText()
 
         return text
 
@@ -298,11 +289,12 @@ class TextFooterView(grok.View):
                 pass
 
         elif ctx.portal_type == 'OrganizationalStructure':
-            if ctx.activ_personalit:
-                return ctx
-            else:
-                try:return self.getOrgStru(ctx.aq_parent)
-                except:pass
+            return ctx
+            # if ctx.activ_personalit:
+            #     return ctx
+            # else:
+            # try:return self.getOrgStru(ctx.aq_parent)
+            # except:pass
 
         return ctx
 
