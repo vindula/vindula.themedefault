@@ -7,6 +7,7 @@ from five import grok
 from vindula.myvindula.cache import *
 from zope.component import getMultiAdapter
 from zope.interface import Interface, implements
+from Products.CMFCore.WorkflowCore import WorkflowException
 
 from vindula.themedefault.browser.interfaces import IThemeVindulaView
 from vindula.myvindula.config import HA_VINDULAPP_HOST,HA_VINDULAPP_PORT
