@@ -19,6 +19,7 @@
 
                  recados_new python: view_myvindula.count_recados_new(username);
                  notificacoes_new python: view_myvindula.count_notificacao_new(username);
+                 session request/SESSION | nothing;
 
                  links view_user/update|nothing">
 
