@@ -7,8 +7,10 @@ from five import grok
 from vindula.myvindula.cache import *
 from zope.component import getMultiAdapter
 from zope.interface import Interface, implements
+from Products.CMFCore.WorkflowCore import WorkflowException
 
 from vindula.themedefault.browser.interfaces import IThemeVindulaView
+from vindula.myvindula.config import HA_VINDULAPP_HOST,HA_VINDULAPP_PORT
 
 
 class ThemeVindulaView(BrowserView):
@@ -92,10 +94,10 @@ class LoadScssView(grok.View):
         if cached_data:
             result = cached_data
         else:
-            uri = '/vindula-api/theme/load_scss/'
+            uri = 'vindula-api/theme/load_scss/'
             result = ''
 
-            url = self.context.portal_url() + uri
+            url = 'http://%s:%s/%s' %(HA_VINDULAPP_HOST,HA_VINDULAPP_PORT,uri)
 
             scss = requests.get(url)
             result = scss.text.replace('/>',' id="new-theme" />')
@@ -178,20 +180,23 @@ class ManageLinksUserView(grok.View):
                 links = folder_links.objectValues()
                 for link in links:
                     checa = False
-                    if workflow.getInfoFor(link, 'review_state') == 'published':
-                       checa = True
-                    else:
-                        if 'Manager' in user_login.getRoles():
-                            checa = True
+                    try:
+                        if workflow.getInfoFor(link, 'review_state') == 'published':
+                           checa = True
                         else:
-                            for roles in link.get_local_roles():
-                                if user_login.id in roles:
-                                    checa = True
-                                else:
-                                    for group in user_groups:
-                                        if group in roles:
-                                            checa = True
-                                            break
+                            if 'Manager' in user_login.getRoles():
+                                checa = True
+                            else:
+                                for roles in link.get_local_roles():
+                                    if user_login.id in roles:
+                                        checa = True
+                                    else:
+                                        for group in user_groups:
+                                            if group in roles:
+                                                checa = True
+                                                break
+                    except WorkflowException:
+                        continue
 
                     if checa:
                         D ={}
