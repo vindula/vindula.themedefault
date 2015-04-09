@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 import requests
 from Acquisition import aq_inner
+from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from five import grok
+from plone.portlets.interfaces import IPortletRetriever, IPortletManager
 from vindula.myvindula.cache import *
-from zope.component import getMultiAdapter
-from zope.interface import Interface, implements
-from Products.CMFCore.WorkflowCore import WorkflowException
-
-from vindula.themedefault.browser.interfaces import IThemeVindulaView
 from vindula.myvindula.config import HA_VINDULAPP_HOST,HA_VINDULAPP_PORT
+from zope.component import getMultiAdapter, getUtility
+from zope.interface import Interface, implements
+
+from vindula.tile.portlets.tileloads import ITileLoads
+from vindula.themedefault.browser.interfaces import IThemeVindulaView
 
 
 class ThemeVindulaView(BrowserView):
@@ -70,10 +72,29 @@ class ToolsView(grok.View):
             user_roles = merge_permisson(user_roles,user,obj.getObj_layout_C())
             user_roles = merge_permisson(user_roles,user,obj.getObj_layout_topo())
 
+        #Checando os blocos do portlet Carrega Capa
+        for column in ["plone.leftcolumn", "plone.rightcolumn"]:
+            manager = getUtility(IPortletManager, name=column)
+            retriever = getMultiAdapter((self.context, manager), IPortletRetriever)
+            portlets = retriever.getPortlets()
+
+            for portlet in portlets:
+
+                # portlet is {'category': 'context', 'assignment': <FacebookLikeBoxAssignment at facebook-like-box>, 'name': u'facebook-like-box', 'key': '/isleofback/sisalto/huvit-ja-harrasteet
+                # Identify portlet by interface provided by assignment
+                if ITileLoads.providedBy(portlet["assignment"]):
+                    obj_portlet = portlet["assignment"]
+                    if obj_portlet.tiles_list:
+                        try:
+                            obj_layout = self.context.restrictedTraverse('/vindula'+obj_portlet.tiles_list)
+                            if obj_layout:
+                                user_roles = merge_permisson(user_roles, user, obj_layout)
+                        except KeyError:
+                            print 'Ocorreu um erro tentando buscar a Capa:' + obj_portlet.tiles_list
+
         for i in ['editPortlet', 'Editor', 'Contributor', 'Reviewer','Manager']:
             if i in user_roles:
                 return True
-
         return False
 
 
